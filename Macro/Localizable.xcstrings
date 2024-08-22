@@ -1,0 +1,392 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "%@%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@%2$@"
+          }
+        }
+      }
+    },
+    "%lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@"
+          }
+        }
+      }
+    },
+    "Active days" : {
+
+    },
+    "Activities" : {
+      "comment" : "Titulo do botão que leva para a view de atividades"
+    },
+    "Add an group" : {
+
+    },
+    "Add new friend" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add new friend"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un nouvel ami"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar novo amigo"
+          }
+        }
+      }
+    },
+    "Add new group" : {
+      "comment" : "Texto de titulo da view de entrar em um novo grupo"
+    },
+    "back" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "back"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "voltar"
+          }
+        }
+      }
+    },
+    "Birth date" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birth date"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data de nascimento"
+          }
+        }
+      }
+    },
+    "Calories" : {
+
+    },
+    "Cancel" : {
+      "comment" : "texto de cancelamento da ação",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        }
+      }
+    },
+    "Create" : {
+      "comment" : "Create button text\ntexto da home para criar um novo grupo"
+    },
+    "Create User" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create User"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar conta"
+          }
+        }
+      }
+    },
+    "Data selecionada: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected date"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data selecionada"
+          }
+        }
+      }
+    },
+    "Days left" : {
+      "comment" : "Texto que fala quantos dias faltam para o desafio acabar"
+    },
+    "Delete" : {
+
+    },
+    "Delete accout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete accout"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apagar conta"
+          }
+        }
+      }
+    },
+    "Description" : {
+
+    },
+    "Distance" : {
+
+    },
+    "Edit profile" : {
+      "comment" : "texto botão para editar o seu perfil"
+    },
+    "Email" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "End date" : {
+
+    },
+    "Falta codar \n a imagem" : {
+
+    },
+    "First step" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text for explain sign in with apple"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Texto que explica por que precisamos disso e tal...."
+          }
+        }
+      }
+    },
+    "Intensity" : {
+
+    },
+    "Join the group" : {
+      "comment" : "Texto do botão para entrar no grupo pesquisado"
+    },
+    "Name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome"
+          }
+        }
+      }
+    },
+    "Nick name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nick name"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apelido"
+          }
+        }
+      }
+    },
+    "No groups" : {
+
+    },
+    "No groups found with that code. " : {
+      "comment" : "Texto de aviso que o grupo não foi encontrado"
+    },
+    "No image" : {
+      "comment" : "aviso de sem imagem"
+    },
+    "No named" : {
+      "comment" : "texto que avisa que o grupo não possui nome, esse caso não deve acontecer, mas caso aconteça..."
+    },
+    "Opções" : {
+
+    },
+    "Paste the code" : {
+      "comment" : "campo para inserir a chave de acesso do grupo"
+    },
+    "Points system" : {
+
+    },
+    "Save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvar"
+          }
+        }
+      }
+    },
+    "Search a challeger" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Procurar desafiante"
+          }
+        }
+      }
+    },
+    "search un user or name" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "procure por usuário ou nome"
+          }
+        }
+      }
+    },
+    "Selecionar Data" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select date"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecione a data"
+          }
+        }
+      }
+    },
+    "Selecione sua data de nascimento:" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select your birth date"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecione sua data de aniversário"
+          }
+        }
+      }
+    },
+    "Start date" : {
+
+    },
+    "Temporary Loading..." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load temporário..."
+          }
+        }
+      }
+    },
+    "teste" : {
+
+    },
+    "Title" : {
+
+    },
+    "Type anything" : {
+
+    },
+    "Type the code of group" : {
+      "comment" : "Placeholder textfield para inserir código do grupo"
+    },
+    "Unamed" : {
+      "comment" : "quando não há nome aparece esse texto"
+    },
+    "Welcome" : {
+
+    },
+    "Welcome, " : {
+      "comment" : "Frase de bem vido da home"
+    },
+    "Your groups" : {
+      "comment" : "texto da home que lista os grupos que o usuário faz parte"
+    }
+  },
+  "version" : "1.0"
+}
