@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SwiftUI
 //let add : String =  NSLocalizedString("Add new friend", comment: "")
 struct UserModelNames {
     static let name : String =  NSLocalizedString("Name", comment: "")
@@ -41,3 +41,21 @@ let pointsSystemNamesForComparations : [String] = ["Active days","Calories","Dis
 
 
 let noimage : String = "noimage.jpg"
+
+struct ActivityModelNames{
+    static let title : String =  NSLocalizedString("Title", comment: "")
+    static let description : String =  NSLocalizedString("Description", comment: "")
+    static let date : String =  NSLocalizedString("Time", comment: "")
+    static let distance : String =  NSLocalizedString("Distance", comment: "")
+    static let calories : String =  NSLocalizedString("Calories", comment: "")
+    static let duration : String =  NSLocalizedString("Duration", comment: "")
+    static let steps : String =  NSLocalizedString("Steps", comment: "")
+}
+
+let activityexemple = ActivityModel(id: "0000", title: "Exemple title", description: "Exemple Name", date: Date(), distance: 12.35, calories: 1209.32, duration: TimeInterval(), steps: 19240)
+
+struct statesOfMembers{
+    static let owner : String = "owner"
+    static let member : String = "member"
+    static let blocked : String = "blocked"
+}

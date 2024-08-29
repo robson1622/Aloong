@@ -24,8 +24,9 @@ class GroupController: ObservableObject{
         return nil
     }
     
-    func create(model : GroupModel){
-        
+    func create(model : GroupModel) async {
+        let testGroup = await GroupDao().create(group: model)
+        print(testGroup as Any)
     }
     
     func update(model : GroupModel){

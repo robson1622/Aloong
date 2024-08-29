@@ -10,10 +10,11 @@ import FirebaseAnalytics
 
 struct ContentView: View {
     @StateObject var router = ViewsController.shared
-    
+    @State var home : Home = Home()
+    let splash : SplashView = SplashView()
     var body: some View {
         NavigationStack(path: $router.navPath){
-            SplashView().navigationDestination(for: ViewsController.Destination.self){ destination in
+            splash.navigationDestination(for: ViewsController.Destination.self){ destination in
                 let hide = true
                 
                 switch destination{
@@ -37,7 +38,7 @@ struct ContentView: View {
                     
                 //general part
                     case .home :
-                        Home().navigationBarBackButtonHidden(hide)
+                        home.navigationBarBackButtonHidden(hide)
                     case .signIn :
                         SignInView().navigationBarBackButtonHidden(hide)
                     

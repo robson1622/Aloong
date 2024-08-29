@@ -10,8 +10,13 @@ import Foundation
 class MemberDao : ObservableObject{
     static var shared : MemberDao = MemberDao()
     
-    func create(model : GroupModel){
-        print("Função  create (MemberDao) : Não feita")
+    func create(model : MemberModel)async  -> Bool?{
+        let idModel = FirebaseInterface.shared.createDocument(model: model)
+        let withIdModel = MemberModel(groupId: model.groupId, userId: model.userId, state: model.state, id: idModel)
+        if let _ = await FirebaseInterface.shared.updateDocument(model: withIdModel){
+            return true
+        }
+        return nil
     }
     
     func delete(model : GroupModel){

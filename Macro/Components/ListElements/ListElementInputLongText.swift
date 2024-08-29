@@ -19,24 +19,17 @@ struct ListElementInputLongText: View {
         VStack{
             VStack{
                 HStack{
-                    HStack{
-                        Text(title)
-                            .font(.title3)
-                            .bold()
-                            .foregroundColor(Color("TextElements"))
-                        Spacer()
-                    }
-                    .frame(maxWidth: 300)
-                    
+                    Text(title)
+                        .font(.callout)
+                        .bold()
                     Spacer()
-                    
                 }
                 VStack{
                     TextField(placeholdtext, text: $value,  axis: .vertical)
                         .lineLimit(4...10)
+                        .font(.callout)
                 }
             }
-            .padding()
         }
         .frame(maxWidth:.infinity)
         .background(Color("BackgroundElements"))
@@ -45,5 +38,5 @@ struct ListElementInputLongText: View {
 }
 
 #Preview {
-    ListElementInputLongText(title: "Exemple title", value: .constant("Exemple of value"))
+    ListElementInputLongText(title: "Exemple title", value: .constant(""))
 }

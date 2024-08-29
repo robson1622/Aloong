@@ -55,6 +55,13 @@
 		9745A9302C6AC37B00578FEC /* StatisticController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A92F2C6AC37B00578FEC /* StatisticController.swift */; };
 		9745A9322C6AC8BC00578FEC /* UserViewMiniature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9312C6AC8BC00578FEC /* UserViewMiniature.swift */; };
 		9745A9342C6B86D800578FEC /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9332C6B86D800578FEC /* ProgressView.swift */; };
+		974C91FD2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C91FC2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift */; };
+		974C91FF2C7CA588004F1627 /* FirebaseInterfaceGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C91FE2C7CA588004F1627 /* FirebaseInterfaceGroup.swift */; };
+		974C92012C7CBE75004F1627 /* FirebaseIntercafeMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92002C7CBE75004F1627 /* FirebaseIntercafeMember.swift */; };
+		974C92042C80A64C004F1627 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92032C80A64C004F1627 /* ActivityModel.swift */; };
+		974C92062C80A7FE004F1627 /* MediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92052C80A7FE004F1627 /* MediaModel.swift */; };
+		974C92082C80A8A4004F1627 /* UserActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92072C80A8A4004F1627 /* UserActivityModel.swift */; };
+		974C920A2C80AACA004F1627 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92092C80AACA004F1627 /* ActivityView.swift */; };
 		976818AC2C6A3078008CACE8 /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976818AB2C6A3078008CACE8 /* GroupController.swift */; };
 		976818AE2C6A3210008CACE8 /* GroupViewCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976818AD2C6A3210008CACE8 /* GroupViewCreate.swift */; };
 		9796B9F22C755100000F0520 /* UserWelcomeIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9796B9F12C755100000F0520 /* UserWelcomeIcon.swift */; };
@@ -141,6 +148,13 @@
 		9745A92F2C6AC37B00578FEC /* StatisticController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticController.swift; sourceTree = "<group>"; };
 		9745A9312C6AC8BC00578FEC /* UserViewMiniature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewMiniature.swift; sourceTree = "<group>"; };
 		9745A9332C6B86D800578FEC /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		974C91FC2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInterfaceUser.swift; sourceTree = "<group>"; };
+		974C91FE2C7CA588004F1627 /* FirebaseInterfaceGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInterfaceGroup.swift; sourceTree = "<group>"; };
+		974C92002C7CBE75004F1627 /* FirebaseIntercafeMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIntercafeMember.swift; sourceTree = "<group>"; };
+		974C92032C80A64C004F1627 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
+		974C92052C80A7FE004F1627 /* MediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaModel.swift; sourceTree = "<group>"; };
+		974C92072C80A8A4004F1627 /* UserActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityModel.swift; sourceTree = "<group>"; };
+		974C92092C80AACA004F1627 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		976818AB2C6A3078008CACE8 /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		976818AD2C6A3210008CACE8 /* GroupViewCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewCreate.swift; sourceTree = "<group>"; };
 		9796B9F12C755100000F0520 /* UserWelcomeIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWelcomeIcon.swift; sourceTree = "<group>"; };
@@ -207,8 +221,8 @@
 			children = (
 				9705AE232C65794000E73123 /* Macro.entitlements */,
 				9705ADE02C64F55A00E73123 /* Localizable.xcstrings */,
-				9705ADB62C64F53900E73123 /* MacroApp.swift */,
 				97C223022C73881B00470068 /* GoogleService-Info.plist */,
+				9705ADB62C64F53900E73123 /* MacroApp.swift */,
 				9705ADB82C64F53900E73123 /* ContentView.swift */,
 				9705AE0C2C64FBD800E73123 /* SplashView.swift */,
 				97DC06F42C737B6B001F05EE /* Server */,
@@ -293,6 +307,7 @@
 		9705ADE72C64F58E00E73123 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				974C92022C80A60F004F1627 /* Activity */,
 				9705AE142C655D7B00E73123 /* Group */,
 				9705AE132C655C7C00E73123 /* User */,
 				9705AE0A2C64F82F00E73123 /* ChallengersView.swift */,
@@ -320,6 +335,9 @@
 				9705ADFA2C64F6B200E73123 /* UserModel.swift */,
 				9705AE152C65646A00E73123 /* GroupModel.swift */,
 				9796B9FB2C77E04A000F0520 /* MemberModel.swift */,
+				974C92052C80A7FE004F1627 /* MediaModel.swift */,
+				974C92032C80A64C004F1627 /* ActivityModel.swift */,
+				974C92072C80A8A4004F1627 /* UserActivityModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -371,10 +389,21 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		974C92022C80A60F004F1627 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				974C92092C80AACA004F1627 /* ActivityView.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
 		97DC06F42C737B6B001F05EE /* Server */ = {
 			isa = PBXGroup;
 			children = (
 				97C2230B2C73FC6600470068 /* FirebaseInterface.swift */,
+				974C91FC2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift */,
+				974C91FE2C7CA588004F1627 /* FirebaseInterfaceGroup.swift */,
+				974C92002C7CBE75004F1627 /* FirebaseIntercafeMember.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -522,6 +551,7 @@
 				9705ADF12C64F60C00E73123 /* DangerButton.swift in Sources */,
 				973302F32C663B2A00E6A1D9 /* ListElementInputText.swift in Sources */,
 				97DC06F62C737B96001F05EE /* UserLocalSave.swift in Sources */,
+				974C92082C80A8A4004F1627 /* UserActivityModel.swift in Sources */,
 				9745A92E2C6AC08F00578FEC /* GroupView.swift in Sources */,
 				9705ADF72C64F67600E73123 /* UserList.swift in Sources */,
 				9796B9F22C755100000F0520 /* UserWelcomeIcon.swift in Sources */,
@@ -531,8 +561,10 @@
 				9705ADF32C64F63F00E73123 /* DatePickerComponent.swift in Sources */,
 				976818AC2C6A3078008CACE8 /* GroupController.swift in Sources */,
 				9745A9292C6A4AA600578FEC /* GroupViewCard.swift in Sources */,
+				974C92042C80A64C004F1627 /* ActivityModel.swift in Sources */,
 				9745A9322C6AC8BC00578FEC /* UserViewMiniature.swift in Sources */,
 				9796B9F42C75549A000F0520 /* EditButton.swift in Sources */,
+				974C91FF2C7CA588004F1627 /* FirebaseInterfaceGroup.swift in Sources */,
 				9705AE1A2C656AC900E73123 /* GroupViewList.swift in Sources */,
 				9796B9F82C779962000F0520 /* UserViewMyProfile.swift in Sources */,
 				9705AE032C64F77D00E73123 /* UserViewCreate.swift in Sources */,
@@ -546,8 +578,10 @@
 				9705AE162C65646A00E73123 /* GroupModel.swift in Sources */,
 				9796B9FC2C77E04A000F0520 /* MemberModel.swift in Sources */,
 				9705ADED2C64F5E300E73123 /* ListElementBasic.swift in Sources */,
+				974C91FD2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift in Sources */,
 				9705AE0F2C65041300E73123 /* Header.swift in Sources */,
 				9705ADB72C64F53900E73123 /* MacroApp.swift in Sources */,
+				974C920A2C80AACA004F1627 /* ActivityView.swift in Sources */,
 				9705AE072C64F7DE00E73123 /* UserViewProfile.swift in Sources */,
 				9745A9302C6AC37B00578FEC /* StatisticController.swift in Sources */,
 				9705ADF92C64F6A000E73123 /* UserCardList.swift in Sources */,
@@ -562,12 +596,14 @@
 				97C2230C2C73FC6600470068 /* FirebaseInterface.swift in Sources */,
 				9705ADF52C64F65F00E73123 /* ImageLoader.swift in Sources */,
 				9745A9342C6B86D800578FEC /* ProgressView.swift in Sources */,
+				974C92012C7CBE75004F1627 /* FirebaseIntercafeMember.swift in Sources */,
 				9705AE222C6575B900E73123 /* MemberDao.swift in Sources */,
 				9705AE252C6579AE00E73123 /* SignInView.swift in Sources */,
 				9705AE052C64F7A500E73123 /* UserViewEdit.swift in Sources */,
 				9705AE0D2C64FBD800E73123 /* SplashView.swift in Sources */,
 				9796B9F62C775E99000F0520 /* GeneralController.swift in Sources */,
 				973302FB2C66403900E6A1D9 /* ImageUploader.swift in Sources */,
+				974C92062C80A7FE004F1627 /* MediaModel.swift in Sources */,
 				9705ADEF2C64F5F900E73123 /* SaveButton.swift in Sources */,
 				9705AE182C6566D800E73123 /* Enums.swift in Sources */,
 				9705ADFB2C64F6B200E73123 /* UserModel.swift in Sources */,

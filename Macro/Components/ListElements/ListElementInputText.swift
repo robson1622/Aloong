@@ -17,7 +17,7 @@ struct ListElementInputText: View {
             HStack{
                 HStack{
                     Text(title)
-                        .font(.title3)
+                        .font(.callout)
                         .bold()
                     Spacer()
                 }
@@ -26,10 +26,8 @@ struct ListElementInputText: View {
                 Spacer()
                 
             }
-            .padding(14)
         }
         .frame(maxWidth:.infinity)
-        .padding(0)
         
     }
 }
