@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "%@" : {
+
+    },
     "%@%@" : {
       "localizations" : {
         "en" : {
@@ -23,6 +26,12 @@
           }
         }
       }
+    },
+    "1.2km" : {
+
+    },
+    "3.5K steps" : {
+
     },
     "124" : {
 
@@ -61,6 +70,9 @@
     },
     "Add new group" : {
       "comment" : "Texto de titulo da view de entrar em um novo grupo"
+    },
+    "Adicione um Titulo..." : {
+
     },
     "back" : {
       "localizations" : {
@@ -151,6 +163,9 @@
         }
       }
     },
+    "Date" : {
+
+    },
     "Days left" : {
       "comment" : "Texto que fala quantos dias faltam para o desafio acabar"
     },
@@ -204,6 +219,9 @@
       }
     },
     "End date" : {
+
+    },
+    "Escreva uma legenda..." : {
 
     },
     "Falta codar \n a imagem" : {
@@ -376,9 +394,6 @@
       }
     },
     "teste" : {
-
-    },
-    "Time" : {
 
     },
     "Title" : {
