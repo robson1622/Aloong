@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UserWelcomeIcon: View {
+    let user : UserModel
     let welcome : String = NSLocalizedString("Welcome, ", comment: "Frase de bem vido da home")
     let unamed : String = NSLocalizedString("Unamed", comment: "quando não há nome aparece esse texto")
     var body: some View {
@@ -15,7 +16,7 @@ struct UserWelcomeIcon: View {
             Circle()
                 .frame(width: 50)
                 .padding()
-            Text("\(welcome)\(UserLocalSave().loadUser()?.name ?? unamed)")
+            Text("\(welcome)\(user.name ?? unamed)")
                 .font(.title2)
                 .padding(.vertical)
                 .foregroundColor(Color(.black))
@@ -25,5 +26,5 @@ struct UserWelcomeIcon: View {
 }
 
 #Preview {
-    UserWelcomeIcon()
+    UserWelcomeIcon(user: usermodelexemple)
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserViewProfile: View {
-    let model : UserModel
+    @State var model : UserModel
     var thisUser : Bool = false
     var active : String = NSLocalizedString("Activities", comment: "Titulo do botão que leva para a view de atividades")
     var body: some View {
@@ -21,6 +21,21 @@ struct UserViewProfile: View {
             ListElementBasic( title: UserModelNames.birthdate, value: model.birthdate == nil ? "Not date" : formatDate(date: model.birthdate!))
             
             Spacer()
+        }
+        .onAppear{
+            Task{
+                if(model.id != nil){
+                    if let user = await UserDao().read(id: model.id!){
+                        model = user
+                    }
+                    else{
+                        print("ERRO AO TENTAR PEGAR USUÁRIO SALVO EM UserViewProfile/onAppear/ PRIMEIRO ELSE")
+                    }
+                }
+                else{
+                    print("ERRO AO TENTAR LER USUÁRIO SALVO EM UserViewProfile/onAppear/ SEGUNDO ELSE")
+                }
+            }
         }
     }
     

@@ -11,4 +11,7 @@ import Foundation
 struct MemberModel : Codable, Hashable{
     var groupId : String?
     var userId : String?
+    var state : String?
+    var id : String?
 }
+

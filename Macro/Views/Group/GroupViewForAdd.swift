@@ -52,15 +52,15 @@ struct GroupViewForAdd: View {
                     
                 }
             }
-            else if(state == 1 && GroupDao.shared.searchResult != nil){
-                VStack{
-                    GroupViewCard(model: GroupDao.shared.searchResult!)
-                        .padding(.vertical,16)
-                    SaveButton(onTap: {
-                        joinInGroup()
-                    }, text: joinGroup)
-                }
-            }
+//            else if(state == 1 && GroupDao.shared.searchResult != nil){
+//                VStack{
+//                    GroupViewCard(model: GroupDao.shared.searchResult!)
+//                        .padding(.vertical,16)
+//                    SaveButton(onTap: {
+//                        joinInGroup()
+//                    }, text: joinGroup)
+//                }
+//            }
         }
         .frame(minHeight: 200)
         .padding()
@@ -69,7 +69,7 @@ struct GroupViewForAdd: View {
     }
     
     func joinInGroup(){
-        MemberDao.shared.create(model: GroupDao.shared.searchResult!)
+//        MemberDao.shared.create(model: GroupDao.shared.searchResult!)
     }
     
     func searchGroupWithCode(_ to : String) -> Bool?{

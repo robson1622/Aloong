@@ -19,19 +19,17 @@ struct ListElementInputDate: View {
             HStack{
                 HStack{
                     Text(title)
-                        .font(.title3)
+                        .font(.callout)
                         .bold()
-                        .foregroundColor(Color("TextElements"))
                     Spacer()
                 }
                 .frame(maxWidth: 120)
                 Button(action:{
-                    showPicker.toggle()
                     onTap()
+                    showPicker.toggle()
                 }){
                     Text(formatDate(date: date))
                         .font(.callout)
-                        .padding(5)
                         .background(Color(.white))
                         .cornerRadius(5)
                 }
@@ -39,9 +37,8 @@ struct ListElementInputDate: View {
                 Spacer()
                 
             }
-            .padding(14)
             if(showPicker){
-                DatePicker("", selection: $date, in: ...Date(), displayedComponents: .date)
+                DatePicker("", selection: $date, in: Date()..., displayedComponents: .date)
                     .datePickerStyle(WheelDatePickerStyle()) // Estilo de rolagem
                     .background(Color.white)
                     .cornerRadius(8)
@@ -49,8 +46,6 @@ struct ListElementInputDate: View {
                     .transition(.move(edge: .top))
             }
         }
-        .frame(maxWidth:.infinity)
-        .padding(0)
         
     }
 }

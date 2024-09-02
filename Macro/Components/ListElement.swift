@@ -70,11 +70,7 @@ struct ListElement: View {
     
     var inputFloat: some View{
         HStack{
-<<<<<<< Updated upstream
             TextField(symbol == .distance ? "1.2km" : "2.2K steps", text: $inputUser)
-=======
-            TextField( "" , text: $inputUser)
->>>>>>> Stashed changes
                 .keyboardType(.numberPad)
                 .frame(maxWidth: 30)
                 .padding(.trailing,-10)
