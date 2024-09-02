@@ -27,10 +27,9 @@ struct ListElementBasic: View {
                 Spacer()
                 
             }
-            .padding()
+            .padding(.horizontal,16)
         }
         .frame(maxWidth:.infinity,maxHeight: 60)
-        .background(Color(.systemGray6))
         
     }
 }

@@ -26,12 +26,16 @@ class UserDao : ObservableObject{
         }
     }
     
-    func update(model : UserModel?){
-        FirebaseInterface.shared.updateDocument(model: model)
+    func update(model : UserModel?) -> Bool?{
+        if(model != nil){
+            UserLocalSave().saveUser(user: model!)
+        }
+        return FirebaseInterface.shared.updateDocument(model: model)
     }
     
     func read(id : String) async -> UserModel?{
         if let model = await FirebaseInterface.shared.readDocument(userId: id){
+            UserLocalSave().saveUser(user: model)
             return model
         }
         return nil

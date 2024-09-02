@@ -19,8 +19,11 @@ class UserController: ObservableObject{
         user = UserLocalSave().loadUser()
     }
     
-    func load(){
-        user = UserLocalSave().loadUser()
+    func load() async {
+        let id = UserLocalSave().loadUser()?.id
+        if(id != nil){
+            user = await UserDao().read(id: id!)
+        }
     }
     
     func updateUser(){

@@ -13,25 +13,24 @@ struct ListElementInputSelector: View {
     @Binding var pointsSystem : String
     
     var body: some View {
+        
         HStack{
             Text(title)
-                .padding(.leading,16)
+                .font(.callout)
+                .bold()
                 .frame(maxWidth: 120)
-            Picker("Opções", selection: $pointsSystem) {
-                ForEach(options, id: \.self) { option in
-                    Text(option).tag(option)
+            HStack{
+                Picker("Opções", selection: $pointsSystem) {
+                    ForEach(options, id: \.self) { option in
+                        Text(option).tag(option)
+                    }
                 }
+                .pickerStyle(MenuPickerStyle()) // Isso mostra o Picker como um menu suspenso
+                
+                
             }
-            .pickerStyle(MenuPickerStyle()) // Isso mostra o Picker como um menu suspenso
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color(.systemGray5))
-            
             Spacer()
         }
-        .frame(maxWidth: .infinity)
-        .background(Color(.systemGray6))
-        .cornerRadius(10)
     }
 }
 

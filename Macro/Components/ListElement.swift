@@ -52,7 +52,7 @@ struct ListElement: View {
     
     var inputFloat: some View{
         HStack{
-            TextField(symbol == .distance ? "1.2km" : "2.2K steps", text: $inputUser)
+            TextField(symbol == .distance ? "1.2km" : "3.5K steps", text: $inputUser)
                 .keyboardType(.numberPad)
         }
     }

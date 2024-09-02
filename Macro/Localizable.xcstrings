@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "%@" : {
+
+    },
     "%@%@" : {
       "localizations" : {
         "en" : {
@@ -23,6 +26,15 @@
           }
         }
       }
+    },
+    "1.2km" : {
+
+    },
+    "3.5K steps" : {
+
+    },
+    "124" : {
+
     },
     "Active days" : {
 
@@ -58,6 +70,9 @@
     },
     "Add new group" : {
       "comment" : "Texto de titulo da view de entrar em um novo grupo"
+    },
+    "Adicione um Titulo..." : {
+
     },
     "back" : {
       "localizations" : {
@@ -148,6 +163,9 @@
         }
       }
     },
+    "Date" : {
+
+    },
     "Days left" : {
       "comment" : "Texto que fala quantos dias faltam para o desafio acabar"
     },
@@ -177,6 +195,9 @@
     "Distance" : {
 
     },
+    "Duration" : {
+
+    },
     "Edit profile" : {
       "comment" : "texto botão para editar o seu perfil"
     },
@@ -198,6 +219,9 @@
       }
     },
     "End date" : {
+
+    },
+    "Escreva uma legenda..." : {
 
     },
     "Falta codar \n a imagem" : {
@@ -273,6 +297,9 @@
       "comment" : "texto que avisa que o grupo não possui nome, esse caso não deve acontecer, mas caso aconteça..."
     },
     "Opções" : {
+
+    },
+    "Other people" : {
 
     },
     "Paste the code" : {
@@ -351,6 +378,9 @@
       }
     },
     "Start date" : {
+
+    },
+    "Steps" : {
 
     },
     "Temporary Loading..." : {
