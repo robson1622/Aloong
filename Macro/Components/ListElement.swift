@@ -14,9 +14,11 @@ struct ListElement: View {
         case distance
         case steps
         case people
+        case date
+        case calories
     }
     let symbol : symbols
-    @Binding var values : String?
+    @Binding var values : String
     @State var inputUser : String = ""
     var body: some View {
         VStack{
@@ -28,7 +30,7 @@ struct ListElement: View {
                 Image(systemName: self.getNameOfSymbol())
                     .font(.callout)
                     .foregroundColor(.black)
-                if(values != nil){
+                if(!values.isEmpty){
                     switch symbol {
                     case .clock:
                         self.inputClock
@@ -36,30 +38,68 @@ struct ListElement: View {
                         self.inputFloat
                     case .steps:
                         self.inputFloat
-                    case .people:
+                    case .calories:
+                        self.inputFloat
+                    default :
                         VStack{}
                     }
                     
                 }
                 
             }
-            .padding()
             
         }
-        .frame(height: .infinity)
-        .background(Color(.systemGray6))
+        .onAppear{
+            if(!values.isEmpty){
+                inputUser = values
+            }
+            else{
+                switch symbol {
+                case .clock:
+                    inputUser = "1H30M"
+                case .distance:
+                    inputUser = "3.2KM"
+                case .steps:
+                    inputUser = "1.2K Steps"
+                default:
+                    return
+                }
+            }
+        }
     }
     
     var inputFloat: some View{
         HStack{
+<<<<<<< Updated upstream
             TextField(symbol == .distance ? "1.2km" : "2.2K steps", text: $inputUser)
+=======
+            TextField( "" , text: $inputUser)
+>>>>>>> Stashed changes
                 .keyboardType(.numberPad)
+                .frame(maxWidth: 30)
+                .padding(.trailing,-10)
+            if(symbol == .distance){
+                Text("KM")
+                    .font(.callout)
+                    .foregroundStyle(Color(.black))
+            }
+            else if(symbol == .steps){
+                Text("K Steps")
+                    .font(.callout)
+                    .foregroundStyle(Color(.black))
+            }
+            else if(symbol == .calories){
+                Text("Cal")
+                    .font(.callout)
+                    .foregroundStyle(Color(.black))
+            }
+            
         }
     }
     
     var inputClock: some View{
         HStack{
-            Text(values!)
+            Text(values)
                 .font(.callout)
                 .foregroundStyle(Color(.black))
         }
@@ -68,13 +108,17 @@ struct ListElement: View {
     func getNameOfSymbol() -> String{
         switch symbol {
         case .clock:
-            return "clock"
+            return ActivityModelNames.durationIcon
         case .distance:
-            return "arrow.triangle.swap"
+            return ActivityModelNames.distanceIcon
         case .steps:
-            return "figure.walk"
+            return ActivityModelNames.stepsIcon
         case .people:
-            return "person.crop.circle.badge.plus"
+            return ActivityModelNames.addOtherUserIcon
+        case .date:
+            return " "
+        case .calories:
+            return ActivityModelNames.caloriesIcon
         }
     }
     
@@ -82,6 +126,6 @@ struct ListElement: View {
 }
 
 #Preview {
-    @State var teste : String? = "2.2k"
-    return ListElement(title: "Distance", symbol: .distance, values: $teste)
+    @State var teste : String = "2.2"
+    return ListElement(title: "Distance", symbol: .steps, values: $teste)
 }

@@ -57,5 +57,6 @@ struct ListElementInputDate: View {
 
 
 #Preview {
-    return ListElementInputDate(title: "Exemple title",onTap: {}, date: .constant(Date()), showPicker: .constant(false))
+    @State var show : Bool = false
+    return ListElementInputDate(title: "Exemple title",onTap: {}, date: .constant(Date()), showPicker: $show)
 }

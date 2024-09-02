@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9700720E2C865BCA0086BAFF /* ListElementPickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9700720D2C865BCA0086BAFF /* ListElementPickerDate.swift */; };
 		9705ADB72C64F53900E73123 /* MacroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705ADB62C64F53900E73123 /* MacroApp.swift */; };
 		9705ADB92C64F53900E73123 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705ADB82C64F53900E73123 /* ContentView.swift */; };
 		9705ADBB2C64F53A00E73123 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9705ADBA2C64F53A00E73123 /* Assets.xcassets */; };
@@ -89,6 +90,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9700720D2C865BCA0086BAFF /* ListElementPickerDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementPickerDate.swift; sourceTree = "<group>"; };
 		9705ADB32C64F53900E73123 /* Macro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Macro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9705ADB62C64F53900E73123 /* MacroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroApp.swift; sourceTree = "<group>"; };
 		9705ADB82C64F53900E73123 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				9796B9F12C755100000F0520 /* UserWelcomeIcon.swift */,
 				9796B9F32C75549A000F0520 /* EditButton.swift */,
 				9705ADF62C64F67600E73123 /* UserList.swift */,
+				9700720D2C865BCA0086BAFF /* ListElementPickerDate.swift */,
 				973302FA2C66403900E6A1D9 /* ImageUploader.swift */,
 				9705ADF82C64F6A000E73123 /* UserCardList.swift */,
 			);
@@ -519,6 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9700720E2C865BCA0086BAFF /* ListElementPickerDate.swift in Sources */,
 				9705ADF12C64F60C00E73123 /* DangerButton.swift in Sources */,
 				973302F32C663B2A00E6A1D9 /* ListElementInputText.swift in Sources */,
 				97DC06F62C737B96001F05EE /* UserLocalSave.swift in Sources */,
