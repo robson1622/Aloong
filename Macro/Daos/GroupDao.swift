@@ -9,11 +9,11 @@ import Foundation
 
 class GroupDao : ObservableObject{
     static var shared : GroupDao = GroupDao()
-    
+    let collectionName = "groups"
     
     func create(group : GroupModel) async -> GroupModel? {
         if(group.idUser != nil){
-            if let result = FirebaseInterface.shared.createDocument(model: group){
+            if let result = FirebaseInterface.shared.createDocument(model: group,collection: collectionName){
                 let groupSaved = GroupModel(id: result, idUser: group.idUser, title: group.title, description: group.description, startDate: group.startDate, endDate: group.endDate, scoreType: group.scoreType, groupImage: group.groupImage)
                 if let _ = await update(model: groupSaved){
                     return groupSaved
@@ -29,20 +29,31 @@ class GroupDao : ObservableObject{
     }
     
     func delete(model : GroupModel)async -> Bool?{
-        if let result = await FirebaseInterface.shared.deleteDocument(model: model){
-            return result
+        if model.id != nil{
+            if let result = await FirebaseInterface.shared.deleteDocument(id: model.id!, collection: collectionName){
+                return result
+            }
+        }
+        else{
+            print("ID DO GRUPO NULO, NÃO FOI POSSÍVEL APAGAR")
         }
         return nil
     }
     
     func update(model : GroupModel) async -> Bool? {
-        if let _ = await FirebaseInterface.shared.updateDocument(model: model){
-            return true
+        if(model.id != nil){
+            if let _ = await FirebaseInterface.shared.updateDocument(model: model, id: model.id!, collection: collectionName){
+                return true
+            }
+        }
+        else{
+            print("NÃO FOI POSSÍVEL ATUALIZAR GRUPO, ID NULO")
         }
         return nil
     }
     func read(groupId : String) async -> GroupModel?{
-        if let result = await FirebaseInterface.shared.readDocument(groupId: groupId){
+        
+        if let result : GroupModel = await FirebaseInterface.shared.readDocument(id: groupId, collection: collectionName){
             return result
         }
         return nil
@@ -51,12 +62,14 @@ class GroupDao : ObservableObject{
     func read(userId : String) async -> [GroupModel]{
         let result = await FirebaseInterface.shared.readDocuments(userId: userId)
         var groupList : [GroupModel] = []
+        
         for groupRef in result{
-            if let group = await FirebaseInterface.shared.readDocument(groupId: groupRef.groupId!){
+            if let group : GroupModel = await FirebaseInterface.shared.readDocument(id: groupRef.groupId!, collection: collectionName){
                 groupList.append(group)
             }
             else{
                 print("ERRO AO TENTAR PEGAR GRUPO EM GROUPDAO/READ")
+                print(result)
             }
         }
         
@@ -67,7 +80,7 @@ class GroupDao : ObservableObject{
         print("Função  searchGroup (GroupDao) : Não feita")
         
         
-        return true
+        return false
     }
     
     

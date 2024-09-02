@@ -38,7 +38,7 @@ struct ListElementInputDate: View {
                 
             }
             if(showPicker){
-                DatePicker("", selection: $date, in: ...Date(), displayedComponents: .date)
+                DatePicker("", selection: $date, in: Date()..., displayedComponents: .date)
                     .datePickerStyle(WheelDatePickerStyle()) // Estilo de rolagem
                     .background(Color.white)
                     .cornerRadius(8)

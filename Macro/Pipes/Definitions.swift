@@ -45,11 +45,18 @@ let noimage : String = "noimage.jpg"
 struct ActivityModelNames{
     static let title : String =  NSLocalizedString("Title", comment: "")
     static let description : String =  NSLocalizedString("Description", comment: "")
-    static let date : String =  NSLocalizedString("Time", comment: "")
+    static let otherPeople : String = NSLocalizedString("Other people", comment: "")
+    static let date : String =  NSLocalizedString("Date", comment: "")
     static let distance : String =  NSLocalizedString("Distance", comment: "")
     static let calories : String =  NSLocalizedString("Calories", comment: "")
     static let duration : String =  NSLocalizedString("Duration", comment: "")
     static let steps : String =  NSLocalizedString("Steps", comment: "")
+    
+    static let distanceIcon : String = "arrow.triangle.swap"
+    static let caloriesIcon : String = "flame"
+    static let durationIcon : String = "clock"
+    static let stepsIcon : String = "figure.walk"
+    static let addOtherUserIcon : String = "person.crop.circle.badge.plus"
 }
 
 let activityexemple = ActivityModel(id: "0000", title: "Exemple title", description: "Exemple Name", date: Date(), distance: 12.35, calories: 1209.32, duration: TimeInterval(), steps: 19240)
@@ -58,4 +65,9 @@ struct statesOfMembers{
     static let owner : String = "owner"
     static let member : String = "member"
     static let blocked : String = "blocked"
+}
+
+struct statesOfActivityRelation{
+    static let owner : String = "owner"
+    static let aloong : String = "aloong"
 }

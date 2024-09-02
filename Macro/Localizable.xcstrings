@@ -24,6 +24,9 @@
         }
       }
     },
+    "124" : {
+
+    },
     "Active days" : {
 
     },
@@ -177,6 +180,9 @@
     "Distance" : {
 
     },
+    "Duration" : {
+
+    },
     "Edit profile" : {
       "comment" : "texto botão para editar o seu perfil"
     },
@@ -275,6 +281,9 @@
     "Opções" : {
 
     },
+    "Other people" : {
+
+    },
     "Paste the code" : {
       "comment" : "campo para inserir a chave de acesso do grupo"
     },
@@ -353,6 +362,9 @@
     "Start date" : {
 
     },
+    "Steps" : {
+
+    },
     "Temporary Loading..." : {
       "localizations" : {
         "pt-BR" : {
@@ -364,6 +376,9 @@
       }
     },
     "teste" : {
+
+    },
+    "Time" : {
 
     },
     "Title" : {

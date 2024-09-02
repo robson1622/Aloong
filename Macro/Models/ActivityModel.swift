@@ -9,12 +9,12 @@ import Foundation
 
 
 struct ActivityModel : Codable, Hashable{
-    var id : String
-    var title : String
-    var description : String
-    var date : Date
-    var distance : Float
-    var calories : Float
-    var duration : TimeInterval
-    var steps : Int
+    var id : String?
+    var title : String?
+    var description : String?
+    var date : Date?
+    var distance : Float?
+    var calories : Float?
+    var duration : TimeInterval?
+    var steps : Int?
 }

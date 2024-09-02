@@ -10,7 +10,7 @@ import Foundation
 
 
 struct UserActivityModel: Codable, Hashable{
-    var id : String
+    var id : String?
     var idUser : String
     var idActivity : String
     var state : String

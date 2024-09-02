@@ -22,6 +22,9 @@ class ViewsController : ObservableObject{
         case group(GroupModel)
         case createGroup
         case editGroup(GroupModel)
+        //atividade
+        case createActivity
+        case activity(ActivityModel)
         //geral
         case home
         case signIn

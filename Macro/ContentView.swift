@@ -35,6 +35,11 @@ struct ContentView: View {
                         GroupViewCreate().navigationBarBackButtonHidden(hide)
                     case .editGroup(let model):
                         GroupViewEdit(model: model).navigationBarBackButtonHidden(hide)
+                //activity part
+                    case .activity(let model):
+                        ActivityView(model: model).navigationBarBackButtonHidden(hide)
+                case .createActivity:
+                    ActivityViewCreate().navigationBarBackButtonHidden(hide)
                     
                 //general part
                     case .home :
