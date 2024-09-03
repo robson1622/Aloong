@@ -16,6 +16,7 @@ struct ListElement: View {
         case people
         case date
         case calories
+        case time
     }
     let symbol : symbols
     @Binding var values : String
@@ -40,6 +41,10 @@ struct ListElement: View {
                         self.inputFloat
                     case .calories:
                         self.inputFloat
+                    case .time:
+                        Text(values)
+                            .font(.callout)
+                            .foregroundStyle(.black)
                     default :
                         VStack{}
                     }
@@ -111,10 +116,10 @@ struct ListElement: View {
             return ActivityModelNames.stepsIcon
         case .people:
             return ActivityModelNames.addOtherUserIcon
-        case .date:
-            return " "
         case .calories:
             return ActivityModelNames.caloriesIcon
+        default :
+            return ""
         }
     }
     

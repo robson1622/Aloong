@@ -13,26 +13,26 @@ struct ActivityViewCreate: View {
     
     @State var listOfFriends : [UserModel] = []
     @State var listOfAdded : [UserModel] = []
-    @State var showAddFriend : Bool = false
+    @State var showPikerToggle : Bool = false
     
     @State var title : String = ""
     @State var description : String = ""
     @State var date : Date = Date()
-    @State var dateString : String = "1H32M"
     @State var distance : Double = 0.0
     @State var distanceString : String = "3.2"
     @State var calories : Double = 0.0
     @State var caloriesString : String = "192"
-    @State var duration : TimeInterval = TimeInterval()
+    @State var duration : Date = Date()
     @State var steps : Int = 0
     @State var stepsString : String = "3.5"
     
-    @State var showPiker : Bool = false
+    @State var showPiker : String = "VOID"
     
     let informationsText : String = NSLocalizedString("INFORMATIONS", comment: "Texto do titulo da lista de informações das atividades")
     let metricsText : String = NSLocalizedString("METRICS", comment: "Texto do titulo da lista de metricas das atividades")
     let publish : String = NSLocalizedString("Publish", comment: "Botão de ação de publicar a atividade")
     let save: String = NSLocalizedString("Save changes", comment: "Botão de salvar modificações ao editar uma atividade")
+    let today : String = NSLocalizedString("Today", comment: "Texto que fala Hoje na view de criar atividade")
     var body: some View {
         VStack{
             Header(title: "Activity",trailing: [AnyView(Button(action:{
@@ -51,6 +51,7 @@ struct ActivityViewCreate: View {
             informations
             metrics
             Spacer()
+            
         }
         .padding(.horizontal,24)
         .onAppear{
@@ -59,9 +60,20 @@ struct ActivityViewCreate: View {
             listOfFriends.append(usermodelexemple2)
             listOfFriends.append(usermodelexemple)
         }
-        .sheet(isPresented: $showAddFriend){
-            AddFriendActivityView(listOfFriends: $listOfFriends, listOfAdded: $listOfAdded)
-                .presentationDetents([.fraction(0.4)])
+        .sheet(isPresented: $showPikerToggle){
+
+            if (showPiker == "DURATION"){
+                TimePicker(selectDate: $date)
+                    .presentationDetents([.fraction(0.4)])
+            }
+            else if( showPiker == "FRIENDS"){
+                AddFriendActivityView(listOfFriends: $listOfFriends, listOfAdded: $listOfAdded)
+                    .presentationDetents([.fraction(0.4)])
+            }
+            else if ( showPiker == "TIME"){
+                TimePicker(selectDate: $date)
+                    .presentationDetents([.fraction(0.4)])
+            }
         }
     }
     
@@ -95,15 +107,34 @@ struct ActivityViewCreate: View {
                     .padding(.bottom,6)
                 Spacer()
             }
-            //ListElement(title: ActivityModelNames.date, symbol: .date, values: $date)
+            
             VStack{
                 Button(action:{
-                    showAddFriend.toggle()
+                    showPiker = "TIME"
+                    showPikerToggle = true
+                    
+                }){
+                    HStack{
+                        Text(ActivityModelNames.date)
+                            .font(.callout)
+                            .foregroundStyle(Color(.black))
+                        Spacer()
+                        Text("\(today), \(timeIntervalForString(date))")
+                            .font(.callout)
+                            .foregroundStyle(Color(.black))
+                    }
+                }
+                Divider()
+                    .padding(.vertical,4)
+                Button(action:{
+                    showPiker = "FRIENDS"
+                    showPikerToggle = true
                 }){
                     ListElement(title: ActivityModelNames.otherPeople, symbol: .people, values: $title)
-                        .padding()
+                        
                 }
             }
+            .padding()
             .background(Color(.systemGray6))
             .cornerRadius(8)
             
@@ -120,7 +151,23 @@ struct ActivityViewCreate: View {
                 Spacer()
             }
             VStack{
-                ListElement(title: ActivityModelNames.duration, symbol: .clock, values: $dateString)
+                Button(action:{
+                    showPiker = "DURATION"
+                    showPikerToggle = true
+                }){
+                    HStack{
+                        Text(ActivityModelNames.duration)
+                            .font(.callout)
+                            .foregroundStyle(.black)
+                        Spacer()
+                        Image(systemName: ActivityModelNames.durationIcon)
+                            .font(.callout)
+                            .foregroundColor(.black)
+                        Text(timeIntervalForString(duration))
+                            .font(.callout)
+                            .foregroundStyle(.black)
+                    }
+                }
                 Divider()
                     .padding(.vertical,4)
                 ListElement(title: ActivityModelNames.distance, symbol: .distance, values: $distanceString)

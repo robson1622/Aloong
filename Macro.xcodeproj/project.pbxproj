@@ -42,6 +42,7 @@
 		9705AE202C6574F600E73123 /* GroupDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE1F2C6574F600E73123 /* GroupDao.swift */; };
 		9705AE222C6575B900E73123 /* MemberDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE212C6575B900E73123 /* MemberDao.swift */; };
 		9705AE252C6579AE00E73123 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE242C6579AE00E73123 /* SignInView.swift */; };
+		970820942C8660B3009975F6 /* TimerPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820932C8660B3009975F6 /* TimerPicker.swift */; };
 		973302F32C663B2A00E6A1D9 /* ListElementInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F22C663B2A00E6A1D9 /* ListElementInputText.swift */; };
 		973302F52C663BC400E6A1D9 /* ListElementInputDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F42C663BC400E6A1D9 /* ListElementInputDate.swift */; };
 		973302F72C663C9F00E6A1D9 /* ListElementInputMail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F62C663C9F00E6A1D9 /* ListElementInputMail.swift */; };
@@ -144,6 +145,7 @@
 		9705AE212C6575B900E73123 /* MemberDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDao.swift; sourceTree = "<group>"; };
 		9705AE232C65794000E73123 /* Macro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Macro.entitlements; sourceTree = "<group>"; };
 		9705AE242C6579AE00E73123 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		970820932C8660B3009975F6 /* TimerPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPicker.swift; sourceTree = "<group>"; };
 		973302F22C663B2A00E6A1D9 /* ListElementInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputText.swift; sourceTree = "<group>"; };
 		973302F42C663BC400E6A1D9 /* ListElementInputDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputDate.swift; sourceTree = "<group>"; };
 		973302F62C663C9F00E6A1D9 /* ListElementInputMail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputMail.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				9705ADF22C64F63F00E73123 /* DatePickerComponent.swift */,
 				9745A9332C6B86D800578FEC /* ProgressView.swift */,
 				9705ADF42C64F65F00E73123 /* ImageLoader.swift */,
+				970820932C8660B3009975F6 /* TimerPicker.swift */,
 				9796B9F12C755100000F0520 /* UserWelcomeIcon.swift */,
 				9796B9F32C75549A000F0520 /* EditButton.swift */,
 				974C921D2C85DE5A004F1627 /* ListElement.swift */,
@@ -638,6 +641,7 @@
 				9796B9F62C775E99000F0520 /* GeneralController.swift in Sources */,
 				974C92102C80BDD1004F1627 /* CardOfMetric.swift in Sources */,
 				973302FB2C66403900E6A1D9 /* ImageUploader.swift in Sources */,
+				970820942C8660B3009975F6 /* TimerPicker.swift in Sources */,
 				974C921A2C826AB6004F1627 /* NewActivityButton.swift in Sources */,
 				974C92062C80A7FE004F1627 /* MediaModel.swift in Sources */,
 				9705ADEF2C64F5F900E73123 /* SaveButton.swift in Sources */,

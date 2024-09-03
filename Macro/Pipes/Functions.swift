@@ -27,10 +27,17 @@ func timeIntervalForString(_ interval : TimeInterval) -> String{
     // Converter o TimeInterval para horas, minutos e segundos
     let hours = Int(interval) / 3600
     let minutes = (Int(interval) % 3600) / 60
-    let seconds = Int(interval) % 60
     
     // Criar a string formatada
     let formattedString = String(format: "%02dh %02dm", hours, minutes)
     
     return formattedString
+}
+
+func timeIntervalForString(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "H'h'mm"
+    
+    let formattedTime = dateFormatter.string(from: date)
+    return formattedTime
 }
