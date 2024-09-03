@@ -121,12 +121,12 @@ struct GroupView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
                             Spacer()
-                            HStack{
-                                Image(systemName: "hands.and.sparkles")
-                                    .font(.title2)
-                                    .foregroundColor(.preto)
-                                Spacer()
-                            }
+//                            HStack{
+//                                Image(systemName: "hands.and.sparkles")
+//                                    .font(.title2)
+//                                    .foregroundColor(.preto)
+//                                Spacer()
+//                            }
                             
                             
                             
