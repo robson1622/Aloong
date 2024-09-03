@@ -128,7 +128,7 @@
       }
     },
     "Create" : {
-      "comment" : "Create button text\ntexto da home para criar um novo grupo"
+      "comment" : "texto da home para criar um novo grupo\nCreate button text"
     },
     "Create User" : {
       "extractionState" : "stale",

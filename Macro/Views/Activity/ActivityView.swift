@@ -37,8 +37,6 @@ struct ActivityView: View {
                     Text(ActivityModelNames.title)
                         .bold()
                     Spacer()
-                    Text("\(model.title)")
-                        .font(.callout)
                 }
                 .padding(.horizontal,16)
                 Divider()
@@ -46,8 +44,6 @@ struct ActivityView: View {
                     Text(ActivityModelNames.description)
                         .bold()
                     Spacer()
-                    Text("\(model.description)")
-                        .font(.callout)
                 }
                 .padding(.horizontal,16)
             }
@@ -107,8 +103,6 @@ struct ActivityView: View {
                 Text(ActivityModelNames.distance)
                     .bold()
                 Spacer()
-                Text("\(model.distance)")
-                    .font(.callout)
             }
             .padding(.horizontal,16)
             Divider()
@@ -117,8 +111,6 @@ struct ActivityView: View {
                 Text(ActivityModelNames.calories)
                     .bold()
                 Spacer()
-                Text("\(model.calories)")
-                    .font(.callout)
             }
             .padding(.horizontal,16)
             Divider()
