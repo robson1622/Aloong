@@ -64,13 +64,11 @@ struct Home: View {
                         await controller.updateAll()
                         user = controller.user.user!
                         listOfGroups = controller.group.groupsOfThisUser
-                        
                     }
                 }
                 VStack{
                     Spacer()
                     ZStack{
-                        // COLOCAR AQUI O FADE ATRAZ DO BOTAO
                         if(controller.group.groupsOfThisUser.first != nil ){
                             NewActivityButton(onTap: {},groupId: (controller.group.groupsOfThisUser.first?.id!)!)
                         }
@@ -82,18 +80,6 @@ struct Home: View {
         .onAppear(){
             user = controller.user.user!
             listOfGroups = controller.group.groupsOfThisUser
-            
-                
-        }
-    }
-    
-    func funcaoDeTestes(){
-        
-        Task{
-            let act = ActivityModel(title: "Treino", description: "fibrei", date: Date(), distance: 1.0, calories: 1.0, duration: TimeInterval(), steps: 1294312)
-            if let _ = await ActivityDao().create(model: act, idGroup: "WibQN1WBPmPsfdOTgQqX", idUserOwner: "001913.fac7aef0211f4c08a1e928d8837342ec.1839"){
-                
-            }
         }
     }
     

@@ -18,11 +18,12 @@ struct ProgressView: View {
                 ZStack{
                     Rectangle()
                         .frame(width: geometry.size.width,height: 5)
-                        .foregroundColor(Color(.systemGray6))
+                        .foregroundColor(Color(.cinza1))
                         .cornerRadius(3)
                     HStack{
                         Rectangle()
                             .frame(width: geometry.size.width * CGFloat(percent) / CGFloat(total),height: 5)
+                            .foregroundColor(.azul3)
                             .cornerRadius(3)
                         Spacer()
                     }
@@ -32,6 +33,7 @@ struct ProgressView: View {
                     Spacer()
                     Text("\(percent) \(unity)")
                         .font(.callout)
+                        .foregroundColor(.cinza2)
                         .italic()
                 }
             }
