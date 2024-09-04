@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct NewActivityButton: View {
+    @EnvironmentObject var controller : GeneralController
     let onTap : () -> Void
+    let groupId : String?
     var navigateAuto : Bool = true
     var body: some View {
         Button(action:{
@@ -30,10 +32,12 @@ struct NewActivityButton: View {
     }
     
     private func navigate(){
-        ViewsController.shared.navigateTo(to: .createActivity)
+        if(groupId != nil){
+            ViewsController.shared.navigateTo(to: .createActivity((controller.user.user?.id)!,groupId!))
+        }
     }
 }
 
 #Preview {
-    NewActivityButton(onTap: {})
+    NewActivityButton(onTap: {},groupId: "")
 }

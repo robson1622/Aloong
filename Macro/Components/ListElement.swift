@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ListElement: View {
+    @FocusState var focus : Bool
     let title : String
     enum symbols{
         case clock
@@ -21,38 +22,44 @@ struct ListElement: View {
     let symbol : symbols
     @Binding var values : String
     @State var inputUser : String = ""
+    
+    @State var withText : Int = 0
     var body: some View {
         VStack{
-            HStack{
-                Text(title)
-                    .font(.callout)
-                    .foregroundStyle(Color(.black))
-                Spacer()
-                Image(systemName: self.getNameOfSymbol())
-                    .font(.callout)
-                    .foregroundColor(.black)
-                if(!values.isEmpty){
-                    switch symbol {
-                    case .clock:
-                        self.inputClock
-                    case .distance:
-                        self.inputFloat
-                    case .steps:
-                        self.inputFloat
-                    case .calories:
-                        self.inputFloat
-                    case .time:
-                        Text(values)
-                            .font(.callout)
-                            .foregroundStyle(.black)
-                    default :
-                        VStack{}
+            Button(action:{
+                focus = true
+            }){
+                HStack{
+                    Text(title)
+                        .font(.callout)
+                        .foregroundStyle(Color(.black))
+                    Spacer()
+                    Image(systemName: self.getNameOfSymbol())
+                        .font(.callout)
+                        .foregroundColor(.black)
+                    if(!values.isEmpty){
+                        switch symbol {
+                        case .clock:
+                            self.inputClock
+                        case .distance:
+                            self.inputFloat
+                        case .steps:
+                            self.inputFloat
+                        case .calories:
+                            self.inputFloat
+                        case .time:
+                            Text(values)
+                                .font(.callout)
+                                .foregroundStyle(.black)
+                        default :
+                            VStack{}
+                        }
+                        
                     }
                     
                 }
                 
             }
-            
         }
         .onAppear{
             if(!values.isEmpty){
@@ -76,9 +83,13 @@ struct ListElement: View {
     var inputFloat: some View{
         HStack{
             TextField(symbol == .distance ? "1.2km" : "2.2K steps", text: $inputUser)
-                .keyboardType(.numberPad)
-                .frame(maxWidth: 30)
-                .padding(.trailing,-10)
+                .keyboardType(.decimalPad)
+                .frame(width: 5 + (8 * CGFloat(inputUser.count)))
+                .padding(.trailing,-5)
+                .multilineTextAlignment(.trailing)
+                .focused($focus)
+                
+                
             if(symbol == .distance){
                 Text("KM")
                     .font(.callout)
@@ -103,6 +114,7 @@ struct ListElement: View {
             Text(values)
                 .font(.callout)
                 .foregroundStyle(Color(.black))
+                .focused($focus)
         }
     }
     
@@ -123,7 +135,9 @@ struct ListElement: View {
         }
     }
     
-    
+    private func hideKeyboard() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
 }
 
 #Preview {

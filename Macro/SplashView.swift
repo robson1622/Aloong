@@ -9,21 +9,18 @@ import SwiftUI
 
 struct SplashView: View {
     @State var closetab : Bool = false
-    @StateObject var controller : UserController = UserController()
+    @EnvironmentObject var controller : GeneralController
     var body: some View {
         VStack{
             Text("Temporary Loading...")
         }
         .onAppear(){
+            Task{
+                controller.updateAll
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         withAnimation {
                             closetab = true
-                            if(controller.user == nil){
-                                ViewsController.shared.navigateTo(to: .signIn,reset: true)
-                            }
-                            else{
-                                ViewsController.shared.navigateTo(to: .home,reset: true)
-                            }
                         }
                     }
         }

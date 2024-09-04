@@ -11,6 +11,6 @@ import Foundation
 
 struct GroupActivityModel : Codable, Hashable{
     var id : String?
-    var idUser : String
+    var idActivity : String
     var idGroup : String
 }

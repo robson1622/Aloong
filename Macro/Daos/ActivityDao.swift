@@ -38,7 +38,7 @@ class ActivityDao : ObservableObject{
     
     private func createRelationForAnyUser(idGroup : String, idUser : String,idActivity : String, state : String) async -> Bool?{
         // cria a relação com o grupo
-        if let _ = await createRelationActivityWithGroup(idUser: idUser, idGroup: idGroup){
+        if let _ = await createRelationActivityWithGroup(idActivity: idActivity, idGroup: idGroup){
             // cria a relação com o usuário
             if let _ = await createRelationActivityWithUser(idUser: idUser, idActivity: idActivity, state: state){
                 return true
@@ -77,6 +77,10 @@ class ActivityDao : ObservableObject{
         print("NÃO FOI POSSÍVEL LER ATIVIDADE ")
         return nil
     }
+    //retorna todas as relações de atividades com um grupo específico
+    func getAllRelationsOfAGroup(groupId: String){
+        
+    }
     
     func getAllActivitiesOfAGroup(groupId : String) async -> [ActivityModel]{
         
@@ -84,8 +88,8 @@ class ActivityDao : ObservableObject{
     }
     
     
-    private func createRelationActivityWithGroup(idUser: String,idGroup: String) async -> Bool?{
-        var model : GroupActivityModel = GroupActivityModel(idUser: idUser, idGroup : idGroup)
+    private func createRelationActivityWithGroup(idActivity: String,idGroup: String) async -> Bool?{
+        var model : GroupActivityModel = GroupActivityModel(idActivity: idActivity, idGroup: idGroup) 
         if let newRelationWithGroupId = FirebaseInterface.shared.createDocument(model: model , collection: collectionNameRelationGroup){
             model.id = newRelationWithGroupId
             if let _ = await FirebaseInterface.shared.updateDocument(model: model, id: model.id!, collection: collectionNameRelationGroup){

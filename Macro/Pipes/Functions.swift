@@ -41,3 +41,17 @@ func timeIntervalForString(_ date: Date) -> String {
     let formattedTime = dateFormatter.string(from: date)
     return formattedTime
 }
+
+
+func timeIntervalFromDate(_ date: Date) -> TimeInterval {
+    let calendar = Calendar.current
+
+    // Extrair horas e minutos do Date
+    let hours = calendar.component(.hour, from: date)
+    let minutes = calendar.component(.minute, from: date)
+
+    // Converter para TimeInterval (segundos)
+    let timeInterval = TimeInterval(hours * 3600 + minutes * 60)
+
+    return timeInterval
+}

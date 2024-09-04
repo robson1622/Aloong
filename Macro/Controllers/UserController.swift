@@ -30,7 +30,7 @@ class UserController: ObservableObject{
         // atualiza localmente
         UserLocalSave().saveUser(user: user!)
         // atualiza na nuvem
-        dao.update(model: user)
+        _ = dao.update(model: user)
     }
     
     func deleteUser(){

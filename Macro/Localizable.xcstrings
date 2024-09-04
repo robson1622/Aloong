@@ -7,6 +7,16 @@
     "%@" : {
 
     },
+    "%@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
     "%@%@" : {
       "localizations" : {
         "en" : {
@@ -30,7 +40,7 @@
     "1.2km" : {
 
     },
-    "3.5K steps" : {
+    "2.2K steps" : {
 
     },
     "124" : {
@@ -106,6 +116,9 @@
           }
         }
       }
+    },
+    "Cal" : {
+
     },
     "Calories" : {
 
@@ -244,11 +257,26 @@
         }
       }
     },
+    "Hello, World!" : {
+
+    },
+    "INFORMATIONS" : {
+      "comment" : "Texto do titulo da lista de informações das atividades"
+    },
     "Intensity" : {
 
     },
     "Join the group" : {
       "comment" : "Texto do botão para entrar no grupo pesquisado"
+    },
+    "K Steps" : {
+
+    },
+    "KM" : {
+
+    },
+    "METRICS" : {
+      "comment" : "Texto do titulo da lista de metricas das atividades"
     },
     "Name" : {
       "extractionState" : "manual",
@@ -296,6 +324,9 @@
     "No named" : {
       "comment" : "texto que avisa que o grupo não possui nome, esse caso não deve acontecer, mas caso aconteça..."
     },
+    "Ok" : {
+
+    },
     "Opções" : {
 
     },
@@ -307,6 +338,9 @@
     },
     "Points system" : {
 
+    },
+    "Publish" : {
+      "comment" : "Botão de ação de publicar a atividade"
     },
     "Save" : {
       "extractionState" : "manual",
@@ -324,6 +358,12 @@
           }
         }
       }
+    },
+    "Save changes" : {
+      "comment" : "Botão de salvar modificações ao editar uma atividade"
+    },
+    "Search" : {
+
     },
     "Search a challeger" : {
       "localizations" : {
@@ -398,6 +438,9 @@
     },
     "Title" : {
 
+    },
+    "Today" : {
+      "comment" : "Texto que fala Hoje na view de criar atividade"
     },
     "Type anything" : {
 

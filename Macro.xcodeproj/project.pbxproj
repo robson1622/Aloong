@@ -43,6 +43,9 @@
 		9705AE222C6575B900E73123 /* MemberDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE212C6575B900E73123 /* MemberDao.swift */; };
 		9705AE252C6579AE00E73123 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE242C6579AE00E73123 /* SignInView.swift */; };
 		970820942C8660B3009975F6 /* TimerPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820932C8660B3009975F6 /* TimerPicker.swift */; };
+		970820962C878140009975F6 /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820952C878140009975F6 /* OkButton.swift */; };
+		9708209A2C87CF56009975F6 /* ActivitiesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820992C87CF56009975F6 /* ActivitiesController.swift */; };
+		9708209C2C87D750009975F6 /* GroupActivityDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708209B2C87D750009975F6 /* GroupActivityDao.swift */; };
 		973302F32C663B2A00E6A1D9 /* ListElementInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F22C663B2A00E6A1D9 /* ListElementInputText.swift */; };
 		973302F52C663BC400E6A1D9 /* ListElementInputDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F42C663BC400E6A1D9 /* ListElementInputDate.swift */; };
 		973302F72C663C9F00E6A1D9 /* ListElementInputMail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F62C663C9F00E6A1D9 /* ListElementInputMail.swift */; };
@@ -146,6 +149,9 @@
 		9705AE232C65794000E73123 /* Macro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Macro.entitlements; sourceTree = "<group>"; };
 		9705AE242C6579AE00E73123 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		970820932C8660B3009975F6 /* TimerPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPicker.swift; sourceTree = "<group>"; };
+		970820952C878140009975F6 /* OkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
+		970820992C87CF56009975F6 /* ActivitiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesController.swift; sourceTree = "<group>"; };
+		9708209B2C87D750009975F6 /* GroupActivityDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupActivityDao.swift; sourceTree = "<group>"; };
 		973302F22C663B2A00E6A1D9 /* ListElementInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputText.swift; sourceTree = "<group>"; };
 		973302F42C663BC400E6A1D9 /* ListElementInputDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputDate.swift; sourceTree = "<group>"; };
 		973302F62C663C9F00E6A1D9 /* ListElementInputMail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputMail.swift; sourceTree = "<group>"; };
@@ -323,6 +329,7 @@
 				9796B9F92C77DE1E000F0520 /* MembersController.swift */,
 				9796B9F52C775E99000F0520 /* GeneralController.swift */,
 				9705AE002C64F74700E73123 /* ViewsController.swift */,
+				970820992C87CF56009975F6 /* ActivitiesController.swift */,
 				976818AB2C6A3078008CACE8 /* GroupController.swift */,
 			);
 			path = Controllers;
@@ -350,6 +357,7 @@
 				9705AE1F2C6574F600E73123 /* GroupDao.swift */,
 				973302FC2C6641E600E6A1D9 /* MediaDao.swift */,
 				9705AE212C6575B900E73123 /* MemberDao.swift */,
+				9708209B2C87D750009975F6 /* GroupActivityDao.swift */,
 			);
 			path = Daos;
 			sourceTree = "<group>";
@@ -358,11 +366,11 @@
 			isa = PBXGroup;
 			children = (
 				9705ADFA2C64F6B200E73123 /* UserModel.swift */,
-				974C92172C81FC95004F1627 /* GroupActivityModel.swift */,
 				9705AE152C65646A00E73123 /* GroupModel.swift */,
 				9796B9FB2C77E04A000F0520 /* MemberModel.swift */,
 				974C92052C80A7FE004F1627 /* MediaModel.swift */,
 				974C92032C80A64C004F1627 /* ActivityModel.swift */,
+				974C92172C81FC95004F1627 /* GroupActivityModel.swift */,
 				974C92072C80A8A4004F1627 /* UserActivityModel.swift */,
 			);
 			path = Models;
@@ -413,6 +421,7 @@
 			children = (
 				9705ADEE2C64F5F900E73123 /* SaveButton.swift */,
 				974C92192C826AB6004F1627 /* NewActivityButton.swift */,
+				970820952C878140009975F6 /* OkButton.swift */,
 				9705ADF02C64F60C00E73123 /* DangerButton.swift */,
 			);
 			path = Buttons;
@@ -608,6 +617,7 @@
 				973302F52C663BC400E6A1D9 /* ListElementInputDate.swift in Sources */,
 				9705ADFF2C64F72E00E73123 /* UserController.swift in Sources */,
 				976818AE2C6A3210008CACE8 /* GroupViewCreate.swift in Sources */,
+				9708209A2C87CF56009975F6 /* ActivitiesController.swift in Sources */,
 				9705AE012C64F74700E73123 /* ViewsController.swift in Sources */,
 				9705AE162C65646A00E73123 /* GroupModel.swift in Sources */,
 				9796B9FC2C77E04A000F0520 /* MemberModel.swift in Sources */,
@@ -632,6 +642,7 @@
 				97C2230C2C73FC6600470068 /* FirebaseInterface.swift in Sources */,
 				974C920E2C80B5DF004F1627 /* ActivityView.swift in Sources */,
 				9705ADF52C64F65F00E73123 /* ImageLoader.swift in Sources */,
+				9708209C2C87D750009975F6 /* GroupActivityDao.swift in Sources */,
 				9745A9342C6B86D800578FEC /* ProgressView.swift in Sources */,
 				974C92012C7CBE75004F1627 /* FirebaseIntercafeMember.swift in Sources */,
 				9705AE222C6575B900E73123 /* MemberDao.swift in Sources */,
@@ -645,6 +656,7 @@
 				974C921A2C826AB6004F1627 /* NewActivityButton.swift in Sources */,
 				974C92062C80A7FE004F1627 /* MediaModel.swift in Sources */,
 				9705ADEF2C64F5F900E73123 /* SaveButton.swift in Sources */,
+				970820962C878140009975F6 /* OkButton.swift in Sources */,
 				9705AE182C6566D800E73123 /* Enums.swift in Sources */,
 				9705ADFB2C64F6B200E73123 /* UserModel.swift in Sources */,
 			);

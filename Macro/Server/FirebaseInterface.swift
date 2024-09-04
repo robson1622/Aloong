@@ -63,4 +63,21 @@ class FirebaseInterface{
         }
         return nil
     }
+    // query por id
+    func readDocuments<T : Decodable>(id: String, collection : String, field : String) async -> [T]{
+        do {
+            let querySnapshot = try await db.collection(collection).whereField(field, isEqualTo: id).getDocuments()
+            var retorno : [T] = []
+            print(querySnapshot.documents)
+            for doc in querySnapshot.documents {
+                retorno.append(try doc.data(as: T.self))
+            }
+            return retorno
+            
+        }
+        catch {
+            print(error)
+            return []
+        }
+    }
 }

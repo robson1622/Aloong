@@ -9,23 +9,30 @@ import SwiftUI
 
 struct TimePicker: View {
     @Binding var selectDate : Date
+    @Binding var showTab : Bool
     
     var body: some View {
         VStack{
-            Rectangle()
-                .frame(width: 100,height: 5)
-                .cornerRadius(3)
-                .foregroundStyle(Color(.systemGray3))
+            ZStack{
+                HStack{
+                    Spacer()
+                    OkButton(text: "Ok", onTap: {showTab = false})
+                    .padding(.top,24)
+                }
+            }
+            .padding(.top,22)
             DatePicker("", selection: $selectDate,displayedComponents: .hourAndMinute)
                 .datePickerStyle(WheelDatePickerStyle()) // Estilo de rolagem
                 .padding(.trailing,16)
         }
-        .padding(.horizontal,16)
+        .padding(16)
         .frame(height: 250)
+        .background(Color(.white))
     }
 }
 
 #Preview {
     @State var today = Date()
-    return TimePicker(selectDate: $today)
+    @State var show = false
+    return TimePicker(selectDate: $today,showTab: $show)
 }
