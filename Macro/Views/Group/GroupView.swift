@@ -28,7 +28,7 @@ struct GroupView: View {
                     HStack(alignment: .center) {//seu desafio
                         Text("Seu desafio")
                             .font(.title2)
-                            .foregroundColor(Color(.preto))
+                            .foregroundColor(.preto)
                       Spacer()
                     }
                         HStack (alignment:.center, spacing: 22){
@@ -82,7 +82,7 @@ struct GroupView: View {
                 }
                 .padding(24)
                 .frame(width:342, alignment: .top)
-                .background(Color(.branco))
+                .background(.branco)
                 .cornerRadius(6)
                 .shadow(color: .black.opacity(0.1), radius: 24.88501, x: 0, y: 8.295)
                 
@@ -137,7 +137,7 @@ struct GroupView: View {
                     }
                     .padding(16)
                     .frame(width: 342, alignment: .topLeading)
-                    .background(Color(.branco))
+                    .background(.branco)
                     .cornerRadius(6)
                     .shadow(color: .black.opacity(0.1), radius: 24.88501, x: 0, y: 8.295)
                     

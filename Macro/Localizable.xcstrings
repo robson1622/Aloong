@@ -33,6 +33,12 @@
     "3.5K steps" : {
 
     },
+    "10h51" : {
+
+    },
+    "24" : {
+
+    },
     "124" : {
 
     },
@@ -72,6 +78,9 @@
       "comment" : "Texto de titulo da view de entrar em um novo grupo"
     },
     "Adicione um Titulo..." : {
+
+    },
+    "Atividade física yoga ioga corrida e mt suor cardio" : {
 
     },
     "back" : {
@@ -192,6 +201,9 @@
     "Description" : {
 
     },
+    "Dias ativos: 3" : {
+
+    },
     "Distance" : {
 
     },
@@ -250,6 +262,12 @@
     "Join the group" : {
       "comment" : "Texto do botão para entrar no grupo pesquisado"
     },
+    "Líder" : {
+
+    },
+    "MARCELA" : {
+
+    },
     "Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -295,6 +313,9 @@
     },
     "No named" : {
       "comment" : "texto que avisa que o grupo não possui nome, esse caso não deve acontecer, mas caso aconteça..."
+    },
+    "Nome" : {
+
     },
     "Opções" : {
 
@@ -376,6 +397,9 @@
           }
         }
       }
+    },
+    "Seu desafio" : {
+
     },
     "Start date" : {
 
