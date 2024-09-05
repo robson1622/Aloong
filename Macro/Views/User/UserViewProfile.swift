@@ -25,7 +25,7 @@ struct UserViewProfile: View {
         .onAppear{
             Task{
                 if(model.id != nil){
-                    if let user = await UserDao().read(id: model.id!){
+                    if let user = await UserDao().read(userId: model.id!){
                         model = user
                     }
                     else{

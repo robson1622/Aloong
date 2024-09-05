@@ -39,8 +39,10 @@ struct UserViewEdit: View {
                 HStack{
                     Spacer()
                     Button(action:{
-                        saveChanges()
-                        showTab = false
+                        Task{
+                            await saveChanges()
+                            showTab = false
+                        }
                     }){
                         Text(save)
                             .font(.callout)
@@ -81,14 +83,14 @@ struct UserViewEdit: View {
         
     }
     
-    func saveChanges(){
+    func saveChanges()async {
         controller.user?.nickname = nickname
         controller.user?.name = name
         controller.user?.birthdate = birthdate
         controller.user?.email = email
         controller.user?.userimage = userimage
         
-        controller.updateUser()
+        await controller.updateUser()
     }
     
     func deleteUser(){

@@ -45,7 +45,12 @@
 		970820942C8660B3009975F6 /* TimerPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820932C8660B3009975F6 /* TimerPicker.swift */; };
 		970820962C878140009975F6 /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820952C878140009975F6 /* OkButton.swift */; };
 		9708209A2C87CF56009975F6 /* ActivitiesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820992C87CF56009975F6 /* ActivitiesController.swift */; };
-		9708209C2C87D750009975F6 /* GroupActivityDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708209B2C87D750009975F6 /* GroupActivityDao.swift */; };
+		9708209C2C87D750009975F6 /* ActivityGroupDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708209B2C87D750009975F6 /* ActivityGroupDao.swift */; };
+		970820A02C889830009975F6 /* testeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708209F2C889830009975F6 /* testeView.swift */; };
+		970820A22C8919E8009975F6 /* ActivityUserDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820A12C8919E8009975F6 /* ActivityUserDao.swift */; };
+		970820A62C89266E009975F6 /* ActivityGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820A52C89266E009975F6 /* ActivityGroupController.swift */; };
+		970820A82C8927EA009975F6 /* ActivityUserController .swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820A72C8927EA009975F6 /* ActivityUserController .swift */; };
+		970820AB2C89D4A1009975F6 /* ActivityCompleteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820AA2C89D4A1009975F6 /* ActivityCompleteModel.swift */; };
 		973302F32C663B2A00E6A1D9 /* ListElementInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F22C663B2A00E6A1D9 /* ListElementInputText.swift */; };
 		973302F52C663BC400E6A1D9 /* ListElementInputDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F42C663BC400E6A1D9 /* ListElementInputDate.swift */; };
 		973302F72C663C9F00E6A1D9 /* ListElementInputMail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F62C663C9F00E6A1D9 /* ListElementInputMail.swift */; };
@@ -60,18 +65,16 @@
 		9745A9302C6AC37B00578FEC /* StatisticController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A92F2C6AC37B00578FEC /* StatisticController.swift */; };
 		9745A9322C6AC8BC00578FEC /* UserViewMiniature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9312C6AC8BC00578FEC /* UserViewMiniature.swift */; };
 		9745A9342C6B86D800578FEC /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9332C6B86D800578FEC /* ProgressView.swift */; };
-		974C91FD2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C91FC2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift */; };
-		974C92012C7CBE75004F1627 /* FirebaseIntercafeMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92002C7CBE75004F1627 /* FirebaseIntercafeMember.swift */; };
 		974C92042C80A64C004F1627 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92032C80A64C004F1627 /* ActivityModel.swift */; };
 		974C92062C80A7FE004F1627 /* MediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92052C80A7FE004F1627 /* MediaModel.swift */; };
-		974C92082C80A8A4004F1627 /* UserActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92072C80A8A4004F1627 /* UserActivityModel.swift */; };
+		974C92082C80A8A4004F1627 /* ActivityUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92072C80A8A4004F1627 /* ActivityUserModel.swift */; };
 		974C920A2C80AACA004F1627 /* ActivityViewCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92092C80AACA004F1627 /* ActivityViewCreate.swift */; };
 		974C920E2C80B5DF004F1627 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C920D2C80B5DF004F1627 /* ActivityView.swift */; };
 		974C92102C80BDD1004F1627 /* CardOfMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C920F2C80BDD1004F1627 /* CardOfMetric.swift */; };
 		974C92122C812BCF004F1627 /* ListElementInputInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92112C812BCF004F1627 /* ListElementInputInt.swift */; };
 		974C92142C81314C004F1627 /* ListElementInputInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92132C81314C004F1627 /* ListElementInputInteger.swift */; };
 		974C92162C81EA63004F1627 /* ActivityDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92152C81EA63004F1627 /* ActivityDao.swift */; };
-		974C92182C81FC95004F1627 /* GroupActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92172C81FC95004F1627 /* GroupActivityModel.swift */; };
+		974C92182C81FC95004F1627 /* ActivityGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92172C81FC95004F1627 /* ActivityGroupModel.swift */; };
 		974C921A2C826AB6004F1627 /* NewActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92192C826AB6004F1627 /* NewActivityButton.swift */; };
 		974C921C2C83CE31004F1627 /* AddFriendActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C921B2C83CE31004F1627 /* AddFriendActivityView.swift */; };
 		974C921E2C85DE5A004F1627 /* ListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C921D2C85DE5A004F1627 /* ListElement.swift */; };
@@ -151,7 +154,12 @@
 		970820932C8660B3009975F6 /* TimerPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPicker.swift; sourceTree = "<group>"; };
 		970820952C878140009975F6 /* OkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
 		970820992C87CF56009975F6 /* ActivitiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesController.swift; sourceTree = "<group>"; };
-		9708209B2C87D750009975F6 /* GroupActivityDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupActivityDao.swift; sourceTree = "<group>"; };
+		9708209B2C87D750009975F6 /* ActivityGroupDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityGroupDao.swift; sourceTree = "<group>"; };
+		9708209F2C889830009975F6 /* testeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testeView.swift; sourceTree = "<group>"; };
+		970820A12C8919E8009975F6 /* ActivityUserDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityUserDao.swift; sourceTree = "<group>"; };
+		970820A52C89266E009975F6 /* ActivityGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityGroupController.swift; sourceTree = "<group>"; };
+		970820A72C8927EA009975F6 /* ActivityUserController .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityUserController .swift"; sourceTree = "<group>"; };
+		970820AA2C89D4A1009975F6 /* ActivityCompleteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCompleteModel.swift; sourceTree = "<group>"; };
 		973302F22C663B2A00E6A1D9 /* ListElementInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputText.swift; sourceTree = "<group>"; };
 		973302F42C663BC400E6A1D9 /* ListElementInputDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputDate.swift; sourceTree = "<group>"; };
 		973302F62C663C9F00E6A1D9 /* ListElementInputMail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputMail.swift; sourceTree = "<group>"; };
@@ -166,18 +174,16 @@
 		9745A92F2C6AC37B00578FEC /* StatisticController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticController.swift; sourceTree = "<group>"; };
 		9745A9312C6AC8BC00578FEC /* UserViewMiniature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewMiniature.swift; sourceTree = "<group>"; };
 		9745A9332C6B86D800578FEC /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
-		974C91FC2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInterfaceUser.swift; sourceTree = "<group>"; };
-		974C92002C7CBE75004F1627 /* FirebaseIntercafeMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIntercafeMember.swift; sourceTree = "<group>"; };
 		974C92032C80A64C004F1627 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
 		974C92052C80A7FE004F1627 /* MediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaModel.swift; sourceTree = "<group>"; };
-		974C92072C80A8A4004F1627 /* UserActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityModel.swift; sourceTree = "<group>"; };
+		974C92072C80A8A4004F1627 /* ActivityUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityUserModel.swift; sourceTree = "<group>"; };
 		974C92092C80AACA004F1627 /* ActivityViewCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewCreate.swift; sourceTree = "<group>"; };
 		974C920D2C80B5DF004F1627 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		974C920F2C80BDD1004F1627 /* CardOfMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardOfMetric.swift; sourceTree = "<group>"; };
 		974C92112C812BCF004F1627 /* ListElementInputInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputInt.swift; sourceTree = "<group>"; };
 		974C92132C81314C004F1627 /* ListElementInputInteger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputInteger.swift; sourceTree = "<group>"; };
 		974C92152C81EA63004F1627 /* ActivityDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDao.swift; sourceTree = "<group>"; };
-		974C92172C81FC95004F1627 /* GroupActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupActivityModel.swift; sourceTree = "<group>"; };
+		974C92172C81FC95004F1627 /* ActivityGroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityGroupModel.swift; sourceTree = "<group>"; };
 		974C92192C826AB6004F1627 /* NewActivityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewActivityButton.swift; sourceTree = "<group>"; };
 		974C921B2C83CE31004F1627 /* AddFriendActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendActivityView.swift; sourceTree = "<group>"; };
 		974C921D2C85DE5A004F1627 /* ListElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElement.swift; sourceTree = "<group>"; };
@@ -324,9 +330,9 @@
 		9705ADE62C64F58500E73123 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				970820A32C892434009975F6 /* Relations */,
 				9705ADFE2C64F72E00E73123 /* UserController.swift */,
 				9745A92F2C6AC37B00578FEC /* StatisticController.swift */,
-				9796B9F92C77DE1E000F0520 /* MembersController.swift */,
 				9796B9F52C775E99000F0520 /* GeneralController.swift */,
 				9705AE002C64F74700E73123 /* ViewsController.swift */,
 				970820992C87CF56009975F6 /* ActivitiesController.swift */,
@@ -344,6 +350,7 @@
 				9705AE0A2C64F82F00E73123 /* ChallengersView.swift */,
 				9705AE0E2C65041300E73123 /* Header.swift */,
 				9705AE242C6579AE00E73123 /* SignInView.swift */,
+				9708209F2C889830009975F6 /* testeView.swift */,
 				9705AE102C65085300E73123 /* Home.swift */,
 			);
 			path = Views;
@@ -356,8 +363,7 @@
 				974C92152C81EA63004F1627 /* ActivityDao.swift */,
 				9705AE1F2C6574F600E73123 /* GroupDao.swift */,
 				973302FC2C6641E600E6A1D9 /* MediaDao.swift */,
-				9705AE212C6575B900E73123 /* MemberDao.swift */,
-				9708209B2C87D750009975F6 /* GroupActivityDao.swift */,
+				970820A42C8924DD009975F6 /* Relations */,
 			);
 			path = Daos;
 			sourceTree = "<group>";
@@ -370,8 +376,9 @@
 				9796B9FB2C77E04A000F0520 /* MemberModel.swift */,
 				974C92052C80A7FE004F1627 /* MediaModel.swift */,
 				974C92032C80A64C004F1627 /* ActivityModel.swift */,
-				974C92172C81FC95004F1627 /* GroupActivityModel.swift */,
-				974C92072C80A8A4004F1627 /* UserActivityModel.swift */,
+				974C92172C81FC95004F1627 /* ActivityGroupModel.swift */,
+				974C92072C80A8A4004F1627 /* ActivityUserModel.swift */,
+				970820AA2C89D4A1009975F6 /* ActivityCompleteModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -399,6 +406,26 @@
 				9705AE1D2C656C1F00E73123 /* GroupViewEdit.swift */,
 			);
 			path = Group;
+			sourceTree = "<group>";
+		};
+		970820A32C892434009975F6 /* Relations */ = {
+			isa = PBXGroup;
+			children = (
+				9796B9F92C77DE1E000F0520 /* MembersController.swift */,
+				970820A52C89266E009975F6 /* ActivityGroupController.swift */,
+				970820A72C8927EA009975F6 /* ActivityUserController .swift */,
+			);
+			path = Relations;
+			sourceTree = "<group>";
+		};
+		970820A42C8924DD009975F6 /* Relations */ = {
+			isa = PBXGroup;
+			children = (
+				970820A12C8919E8009975F6 /* ActivityUserDao.swift */,
+				9708209B2C87D750009975F6 /* ActivityGroupDao.swift */,
+				9705AE212C6575B900E73123 /* MemberDao.swift */,
+			);
+			path = Relations;
 			sourceTree = "<group>";
 		};
 		973302F82C663CEA00E6A1D9 /* ListElements */ = {
@@ -441,8 +468,6 @@
 			isa = PBXGroup;
 			children = (
 				97C2230B2C73FC6600470068 /* FirebaseInterface.swift */,
-				974C91FC2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift */,
-				974C92002C7CBE75004F1627 /* FirebaseIntercafeMember.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -591,16 +616,19 @@
 				9705ADF12C64F60C00E73123 /* DangerButton.swift in Sources */,
 				973302F32C663B2A00E6A1D9 /* ListElementInputText.swift in Sources */,
 				97DC06F62C737B96001F05EE /* UserLocalSave.swift in Sources */,
-				974C92082C80A8A4004F1627 /* UserActivityModel.swift in Sources */,
+				974C92082C80A8A4004F1627 /* ActivityUserModel.swift in Sources */,
+				970820A02C889830009975F6 /* testeView.swift in Sources */,
 				9745A92E2C6AC08F00578FEC /* GroupView.swift in Sources */,
 				9705ADF72C64F67600E73123 /* UserList.swift in Sources */,
 				9796B9F22C755100000F0520 /* UserWelcomeIcon.swift in Sources */,
 				9705AE0B2C64F82F00E73123 /* ChallengersView.swift in Sources */,
 				974C92162C81EA63004F1627 /* ActivityDao.swift in Sources */,
 				973302FD2C6641E600E6A1D9 /* MediaDao.swift in Sources */,
+				970820A82C8927EA009975F6 /* ActivityUserController .swift in Sources */,
 				973302F72C663C9F00E6A1D9 /* ListElementInputMail.swift in Sources */,
 				9705ADF32C64F63F00E73123 /* DatePickerComponent.swift in Sources */,
 				976818AC2C6A3078008CACE8 /* GroupController.swift in Sources */,
+				970820A22C8919E8009975F6 /* ActivityUserDao.swift in Sources */,
 				9745A9292C6A4AA600578FEC /* GroupViewCard.swift in Sources */,
 				974C921E2C85DE5A004F1627 /* ListElement.swift in Sources */,
 				974C92042C80A64C004F1627 /* ActivityModel.swift in Sources */,
@@ -615,6 +643,7 @@
 				9705ADFD2C64F70F00E73123 /* UserDao.swift in Sources */,
 				9705ADB92C64F53900E73123 /* ContentView.swift in Sources */,
 				973302F52C663BC400E6A1D9 /* ListElementInputDate.swift in Sources */,
+				970820AB2C89D4A1009975F6 /* ActivityCompleteModel.swift in Sources */,
 				9705ADFF2C64F72E00E73123 /* UserController.swift in Sources */,
 				976818AE2C6A3210008CACE8 /* GroupViewCreate.swift in Sources */,
 				9708209A2C87CF56009975F6 /* ActivitiesController.swift in Sources */,
@@ -622,18 +651,18 @@
 				9705AE162C65646A00E73123 /* GroupModel.swift in Sources */,
 				9796B9FC2C77E04A000F0520 /* MemberModel.swift in Sources */,
 				9705ADED2C64F5E300E73123 /* ListElementBasic.swift in Sources */,
-				974C91FD2C7CA4E6004F1627 /* FirebaseInterfaceUser.swift in Sources */,
 				9705AE0F2C65041300E73123 /* Header.swift in Sources */,
 				9705ADB72C64F53900E73123 /* MacroApp.swift in Sources */,
 				974C920A2C80AACA004F1627 /* ActivityViewCreate.swift in Sources */,
 				9705AE072C64F7DE00E73123 /* UserViewProfile.swift in Sources */,
 				9745A9302C6AC37B00578FEC /* StatisticController.swift in Sources */,
-				974C92182C81FC95004F1627 /* GroupActivityModel.swift in Sources */,
+				974C92182C81FC95004F1627 /* ActivityGroupModel.swift in Sources */,
 				9705ADF92C64F6A000E73123 /* UserCardList.swift in Sources */,
 				974C92142C81314C004F1627 /* ListElementInputInteger.swift in Sources */,
 				9705AE112C65085300E73123 /* Home.swift in Sources */,
 				973303012C664F0200E6A1D9 /* Definitions.swift in Sources */,
 				9705AE202C6574F600E73123 /* GroupDao.swift in Sources */,
+				970820A62C89266E009975F6 /* ActivityGroupController.swift in Sources */,
 				9796B9FA2C77DE1E000F0520 /* MembersController.swift in Sources */,
 				973302FF2C66466400E6A1D9 /* ListElementInputSelector.swift in Sources */,
 				9705AE1E2C656C1F00E73123 /* GroupViewEdit.swift in Sources */,
@@ -642,9 +671,8 @@
 				97C2230C2C73FC6600470068 /* FirebaseInterface.swift in Sources */,
 				974C920E2C80B5DF004F1627 /* ActivityView.swift in Sources */,
 				9705ADF52C64F65F00E73123 /* ImageLoader.swift in Sources */,
-				9708209C2C87D750009975F6 /* GroupActivityDao.swift in Sources */,
+				9708209C2C87D750009975F6 /* ActivityGroupDao.swift in Sources */,
 				9745A9342C6B86D800578FEC /* ProgressView.swift in Sources */,
-				974C92012C7CBE75004F1627 /* FirebaseIntercafeMember.swift in Sources */,
 				9705AE222C6575B900E73123 /* MemberDao.swift in Sources */,
 				9705AE252C6579AE00E73123 /* SignInView.swift in Sources */,
 				9705AE052C64F7A500E73123 /* UserViewEdit.swift in Sources */,

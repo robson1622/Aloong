@@ -9,7 +9,8 @@ import Foundation
 
 class GroupDao : ObservableObject{
     static var shared : GroupDao = GroupDao()
-    let collectionName = "groups"
+    private let collectionName = "groups"
+    private let invitationFieldName = "invitationCode"
     
     func create(group : GroupModel) async -> GroupModel? {
         if(group.idUser != nil){
@@ -52,15 +53,17 @@ class GroupDao : ObservableObject{
         return nil
     }
     func read(groupId : String) async -> GroupModel?{
-        
         if let result : GroupModel = await FirebaseInterface.shared.readDocument(id: groupId, collection: collectionName){
             return result
         }
         return nil
     }
-    
+    func read(inviteCode : String) async -> [GroupModel]{
+        let response : [GroupModel] = await FirebaseInterface.shared.readDocumentWithField(isEqualValue: inviteCode, collection: collectionName, field: invitationFieldName)
+        return response
+    }
     func read(userId : String) async -> [GroupModel]{
-        let result = await FirebaseInterface.shared.readDocuments(userId: userId)
+        let result = await MemberDao.shared.readAllMemberOfUser(idUser: userId)
         var groupList : [GroupModel] = []
         
         for groupRef in result{
@@ -75,13 +78,4 @@ class GroupDao : ObservableObject{
         
         return groupList
     }
-    
-    func searchGroup(code: String) -> Bool?{
-        print("Função  searchGroup (GroupDao) : Não feita")
-        
-        
-        return false
-    }
-    
-    
 }

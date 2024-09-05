@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class UserDao : ObservableObject{
+    static var shared : UserDao = UserDao()
+    let collectionName : String = "users"
     
     func create(model : UserModel?){
         if model == nil{
@@ -16,25 +18,27 @@ class UserDao : ObservableObject{
             return
         }
         UserLocalSave().saveUser(user: model!)
-        FirebaseInterface.shared.createDocument(model: model!)
+        _ = FirebaseInterface.shared.createDocument(model: model!, collection: collectionName)
     }
     
     func delete(model : UserModel?){
         UserLocalSave().deleteUser()
         Task{
-            await FirebaseInterface.shared.deleteDocument(model: model)
+            await FirebaseInterface.shared.deleteDocument(id: (model?.id!)!, collection: collectionName)
         }
     }
     
-    func update(model : UserModel?) -> Bool?{
+    func update(model : UserModel?)async -> Bool?{
         if(model != nil){
             UserLocalSave().saveUser(user: model!)
         }
-        return FirebaseInterface.shared.updateDocument(model: model)
+        return await FirebaseInterface.shared.updateDocument(model: model!, id: (model?.id!)!, collection: collectionName)
     }
     
-    func read(id : String) async -> UserModel?{
-        if let model = await FirebaseInterface.shared.readDocument(userId: id){
+    
+    
+    func read(userId : String) async -> UserModel?{
+        if let model : UserModel = await FirebaseInterface.shared.readDocument(id: userId, collection: collectionName){
             UserLocalSave().saveUser(user: model)
             return model
         }

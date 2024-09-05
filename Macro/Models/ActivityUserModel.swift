@@ -9,7 +9,7 @@ import Foundation
 
 
 
-struct UserActivityModel: Codable, Hashable{
+struct ActivityUserModel: Codable, Hashable{
     var id : String?
     var idUser : String
     var idActivity : String

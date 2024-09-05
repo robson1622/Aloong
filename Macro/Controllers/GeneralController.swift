@@ -12,27 +12,31 @@ class GeneralController: ObservableObject{
     @Published var user : UserController = UserController()
     @Published var group : GroupController = GroupController()
     @Published var satistic : StatisticController = StatisticController()
+    @Published var activities : ActivitiesController = ActivitiesController()
+    
+    @Published var mainListActivities : [ActivityCompleteModel] = []
     
     init(){
+        
     }
     
     func updateAll() async{
         await user.load()
         if(user.user?.id != nil){
-            group.groupsOfThisUser = await self.getGroupsOfUser(userId: (user.user?.id)!)
-            
+            await group.load(idUser: (user.user?.id!)!)
+//            activities.load()
         }
+        
+        
     }
     
     
     func createGroup(model : GroupModel) async -> GroupModel? {
-        
         if(model.id != nil || user.user?.id != nil){
             if let result = await GroupDao().create(group: model){
-                if let _ = await self.aloongAnGroup(groupId: result.id!, userId: (user.user?.id)!){
-                    print("SUCESSO AO CRIAR GRUPO E MEMBRO!")
+                if let _ = await group.members.create(idGroup: result.id!, idUser: (user.user?.id!)!,state: statesOfMembers.owner){
+                    return result
                 }
-                return result
             }
         }
         else{
@@ -58,20 +62,26 @@ class GeneralController: ObservableObject{
     }
     
     
-    func aloongAnGroup(groupId : String, userId : String) async -> Bool?{
-        // pesquisa se já existe uma relação do usuário com o grupo
-        // se não houver, crie a relção (entra no grupo)
-        // se houver:
-            // ele pode estar bloqueado do grupo, então não pode entrar
-            // ele pode ser o dono ou membro, também não pode entrar pois já está
-        
-        // teste
-        let newMember = MemberModel(groupId: groupId, userId: userId, state: statesOfMembers.member)
-        if let _ = await MemberDao().create(model: newMember){
-            return true
+    func aloongAnGroup(userId : String, invitationCode : String) async -> Bool?{
+        // busca os grupos com o código
+        let listOfGroups = await group.searchGroup(code: invitationCode)
+        // se não houver retorna nulo
+        if listOfGroups.isEmpty{
+            return nil
         }
-        return nil
-        
+        // se houver, então buscamos se já existe uma relação de membro
+        let members = await group.members.getMembersOfUser(idUser: userId)
+        // se houver verificamos se ele não está bloqueado
+        if let member = members.first(where: { $0.userId == userId }) {
+            // ele pode estar bloqueado do grupo, então não pode entrar
+            if(member.state == statesOfMembers.blocked){
+                return false
+            }
+            if(member.state == statesOfMembers.owner){
+                return true
+            }
+        }
+        return await group.members.create(idGroup: listOfGroups[0].id!, idUser: userId, state: statesOfMembers.member)
     }
     func deleteMemberOfGroup(){
         

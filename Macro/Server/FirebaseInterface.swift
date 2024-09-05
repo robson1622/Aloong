@@ -12,8 +12,6 @@ import FirebaseFirestore
 class FirebaseInterface{
     static var shared : FirebaseInterface = FirebaseInterface()
     var db = Firestore.firestore()
-    let userColectionName : String = "users" // NOME NO BANCO NOSQL PARA SALVAR OS USUÁRIOS
-    let memberColectionName : String = "member"
     
     // criar
     func createDocument<T: Encodable>(model: T,collection: String) -> String? {
@@ -50,7 +48,21 @@ class FirebaseInterface{
             return nil
         }
     }
-    
+    //
+    func readDocumentWithField<T : Decodable>(isEqualValue: String,collection : String, field : String) async -> [T] {
+        do {
+            let querySnapshot = try await db.collection(collection).whereField(field, isEqualTo: isEqualValue).getDocuments()
+            var retorno : [T] = []
+            for doc in querySnapshot.documents {
+                retorno.append(try doc.data(as: T.self))
+            }
+            return retorno
+        }
+        catch {
+            print(error)
+            return []
+        }
+    }
     // apagar
     func deleteDocument(id : String, collection : String) async -> Bool?{
         
@@ -68,7 +80,6 @@ class FirebaseInterface{
         do {
             let querySnapshot = try await db.collection(collection).whereField(field, isEqualTo: id).getDocuments()
             var retorno : [T] = []
-            print(querySnapshot.documents)
             for doc in querySnapshot.documents {
                 retorno.append(try doc.data(as: T.self))
             }

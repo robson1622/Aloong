@@ -9,27 +9,61 @@ import Foundation
 
 
 class ActivitiesController: ObservableObject{
+    @Published var activityGroupRelation : ActivityGroupController = ActivityGroupController()
+    @Published var activityUserRelation : ActivityUserController = ActivityUserController()
     @Published var activities : [ActivityModel] = []
-    @Published var groupsRelationActivities : [GroupActivityModel] = []
-    @Published var userRelationActivities : [UserActivityModel] = []
     
-    func load(){
+    func load(idGroup: String, idUser : String? = nil) async {
         
+        activities = await self.getActivitiesOfGroup(idGroup: idGroup)
     }
-    //retorna todas as atividades do usuário
-    func getActivitiesOfUser(){
-        
+    func load(idUser: String) async {
+        await activityUserRelation.load(idUser: idUser)
+    }
+    func create(model: ActivityModel, idGroup: String, idUserOwner : String, listOfOtherUsersIds: [String] = [] )async -> Bool?{
+        if let sucess = await ActivityDao.shared.create(model: model, idGroup: idGroup, idUserOwner: idUserOwner,listOfUsersIds: listOfOtherUsersIds){
+            await self.load(idGroup: idGroup)
+            return sucess
+        }
+        return nil
+    }
+    func update(model: ActivityModel,idGroup: String)async -> Bool?{
+        if let sucess = await ActivityDao.shared.update(model: model){
+            await self.load(idGroup: idGroup)
+            return sucess
+        }
+        return nil
+    }
+    func delete(model: ActivityModel,idGroup : String) async -> Bool?{
+        if let sucess = await ActivityDao.shared.delete(model: model){
+            await self.load(idGroup: idGroup)
+            return sucess
+        }
+        return nil
     }
     //retorna todas as atividades do grupo
-    func getActivitiesOfGroup(){
-        
+    func getActivitiesOfGroup(idGroup : String) async -> [ActivityModel]{
+        var result : [ActivityModel] = []
+        //primeiro pegamos todas as relacoes de atividades com grupos
+        await activityGroupRelation.load(idGroup: idGroup)
+        let relations = activityGroupRelation.listOfActivityGroup
+        for relation in relations{
+            if let activity : ActivityModel = await ActivityDao.shared.read(id: relation.idActivity){
+                result.append(activity)
+            }
+        }
+        return result
     }
-    //restorna todos os usuário relacionados com a atividade
-    func getUserOfActivityOfGroup(activityId: String, groupId: String) -> [UserModel]{
-        
-        return []
+    //atividades de um usuário especifico
+    func getActivitiesOfUser(idUser : String) async -> [ActivityModel]{
+        var result : [ActivityModel] = []
+        await activityUserRelation.load(idUser: idUser)
+        let relations = activityUserRelation.listOfActivityUser
+        for relation in relations{
+            if let activity : ActivityModel = await ActivityDao.shared.read(id: relation.idUser){
+                result.append(activity)
+            }
+        }
+        return result
     }
-    //retorna usuário pertencentes a um grupo
-    //retorna a quantidade de usuários de um grupo
-    //restorna a quantidade de pessoas marcadas em uma atividade
 }

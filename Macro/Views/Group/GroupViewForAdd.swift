@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GroupViewForAdd: View {
+    @EnvironmentObject var controller : GeneralController
     let placehold : String = NSLocalizedString("Type the code of group", comment: "Placeholder textfield para inserir código do grupo")
     let title : String = NSLocalizedString("Add new group", comment: "Texto de titulo da view de entrar em um novo grupo")
     let error : String = NSLocalizedString("No groups found with that code. ", comment: "Texto de aviso que o grupo não foi encontrado")
@@ -15,7 +16,12 @@ struct GroupViewForAdd: View {
     @State var code : String = ""
     
     @State var result : Bool?
-    @State var state : n_short = 0
+    @State var state : String = ""
+    
+    
+    let groupNotFound : String = NSLocalizedString("Group not found", comment: "texto de erro ao tentar buscar grupo")
+    let youAreBlocked : String = NSLocalizedString("Your are blocked in this group", comment: "texto de erro ao tentar buscar grupo")
+    let sucess : String = NSLocalizedString("Sucess", comment: "texto sucesso ao buscar grupo")
     
     var body: some View {
         VStack{
@@ -29,10 +35,19 @@ struct GroupViewForAdd: View {
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
                 Button(action:{
-                    result = searchGroupWithCode(code)
-                    if result == true{
-                        state = 1
+                    Task{
+                        result = await searchGroupWithCode(code)
+                        if result == true{
+                            state = sucess
+                        }
+                        else if( result == false){
+                            state = youAreBlocked
+                        }
+                        else{
+                            state = groupNotFound
+                        }
                     }
+                    
                 }){
                     Image(systemName: "magnifyingglass.circle.fill")
                         .resizable()
@@ -44,23 +59,13 @@ struct GroupViewForAdd: View {
                 
                 
             }
-            if(result == nil && state == 1){
-                VStack{
-                    Text(error)
-                        .foregroundStyle(Color(.red))
-                        .padding()
-                    
-                }
+            VStack{
+                Text(error)
+                    .foregroundStyle(Color(.red))
+                    .padding()
+                
             }
-//            else if(state == 1 && GroupDao.shared.searchResult != nil){
-//                VStack{
-//                    GroupViewCard(model: GroupDao.shared.searchResult!)
-//                        .padding(.vertical,16)
-//                    SaveButton(onTap: {
-//                        joinInGroup()
-//                    }, text: joinGroup)
-//                }
-//            }
+            
         }
         .frame(minHeight: 200)
         .padding()
@@ -68,12 +73,11 @@ struct GroupViewForAdd: View {
         .cornerRadius(16)
     }
     
-    func joinInGroup(){
-//        MemberDao.shared.create(model: GroupDao.shared.searchResult!)
-    }
-    
-    func searchGroupWithCode(_ to : String) -> Bool?{
-        return GroupDao.shared.searchGroup(code:to)
+    func searchGroupWithCode(_ to : String) async -> Bool?{
+        if let result = await controller.aloongAnGroup(userId: (controller.user.user?.id!)!, invitationCode: to){
+            return result
+        }
+        return nil
     }
 }
 

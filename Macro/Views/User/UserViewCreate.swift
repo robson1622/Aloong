@@ -39,7 +39,9 @@ struct UserViewCreate: View {
             Spacer()
             VStack{
                 SaveButton(onTap: {
-                    create()
+                    Task{
+                        await create()
+                    }
                 }, text: createText)
             }
             
@@ -51,7 +53,7 @@ struct UserViewCreate: View {
             print("\n")
             
             Task{
-                if let verification = await UserDao().read(id:idApple){
+                if let verification = await UserDao().read(userId:idApple){
                     nickname = verification.nickname ?? ""
                     name = verification.name ?? ""
                     birthdate = verification.birthdate ?? Date()
@@ -63,7 +65,7 @@ struct UserViewCreate: View {
         }
     }
     
-    func create(){
+    func create() async {
         controller.user = UserModel()
         controller.user?.id = idApple
         controller.user?.nickname = nickname
@@ -73,7 +75,7 @@ struct UserViewCreate: View {
         controller.user?.userimage = userimage
         
         if(updateUser){
-            controller.updateUser()
+            await controller.updateUser()
         }
         else{
             controller.createUser()

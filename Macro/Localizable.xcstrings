@@ -27,6 +27,9 @@
         }
       }
     },
+    "%lld" : {
+
+    },
     "%lld %@" : {
       "localizations" : {
         "en" : {
@@ -41,6 +44,12 @@
 
     },
     "2.2K steps" : {
+
+    },
+    "10h51" : {
+
+    },
+    "24" : {
 
     },
     "124" : {
@@ -82,6 +91,9 @@
       "comment" : "Texto de titulo da view de entrar em um novo grupo"
     },
     "Adicione um Titulo..." : {
+
+    },
+    "Atividade física yoga ioga corrida e mt suor cardio" : {
 
     },
     "back" : {
@@ -160,6 +172,9 @@
         }
       }
     },
+    "Dark Mode" : {
+
+    },
     "Data selecionada: %@" : {
       "localizations" : {
         "en" : {
@@ -182,6 +197,9 @@
     "Days left" : {
       "comment" : "Texto que fala quantos dias faltam para o desafio acabar"
     },
+    "Deletar conta" : {
+
+    },
     "Delete" : {
 
     },
@@ -203,6 +221,9 @@
       }
     },
     "Description" : {
+
+    },
+    "Dias ativos: 3" : {
 
     },
     "Distance" : {
@@ -257,6 +278,9 @@
         }
       }
     },
+    "Group not found" : {
+      "comment" : "texto de erro ao tentar buscar grupo"
+    },
     "Hello, World!" : {
 
     },
@@ -273,6 +297,12 @@
 
     },
     "KM" : {
+
+    },
+    "Líder" : {
+
+    },
+    "MARCELA" : {
 
     },
     "METRICS" : {
@@ -324,6 +354,9 @@
     "No named" : {
       "comment" : "texto que avisa que o grupo não possui nome, esse caso não deve acontecer, mas caso aconteça..."
     },
+    "Nome" : {
+
+    },
     "Ok" : {
 
     },
@@ -339,8 +372,14 @@
     "Points system" : {
 
     },
+    "PREFERÊNCIAS" : {
+
+    },
     "Publish" : {
       "comment" : "Botão de ação de publicar a atividade"
+    },
+    "Sair" : {
+
     },
     "Save" : {
       "extractionState" : "manual",
@@ -417,11 +456,17 @@
         }
       }
     },
+    "Seu desafio" : {
+
+    },
     "Start date" : {
 
     },
     "Steps" : {
 
+    },
+    "Sucess" : {
+      "comment" : "texto sucesso ao buscar grupo"
     },
     "Temporary Loading..." : {
       "localizations" : {
@@ -456,6 +501,9 @@
     },
     "Welcome, " : {
       "comment" : "Frase de bem vido da home"
+    },
+    "Your are blocked in this group" : {
+      "comment" : "texto de erro ao tentar buscar grupo"
     },
     "Your groups" : {
       "comment" : "texto da home que lista os grupos que o usuário faz parte"

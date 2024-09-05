@@ -32,6 +32,7 @@ struct ContentView: View {
                 //group part
                     case .group(let model):
                         GroupView(model: model).navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
                     case .createGroup:
                         GroupViewCreate().navigationBarBackButtonHidden(hide)
                     case .editGroup(let model):
@@ -41,6 +42,7 @@ struct ContentView: View {
                         ActivityView(model: model).navigationBarBackButtonHidden(hide)
                 case .createActivity(let idUser, let idGroup):
                     ActivityViewCreate(idUser: idUser,idGroup: idGroup).navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
                     
                 //general part
                     case .home :

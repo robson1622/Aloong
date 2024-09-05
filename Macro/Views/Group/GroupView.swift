@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GroupView: View {
+    @EnvironmentObject var controller : GeneralController
     let model : GroupModel
     @State var lider : UserModel = UserModel()
     @State var you : UserModel = UserModel()
@@ -146,6 +147,14 @@ struct GroupView: View {
                 }
                 .padding(0)
                 .frame(width: 342, alignment: .topLeading)
+            }
+            VStack{
+                Spacer()
+                if(controller.group.groupsOfThisUser.first != nil ){
+                    NewActivityButton(onTap: {
+                        ViewsController.shared.navigateTo(to: .createActivity((controller.user.user?.id!)!, (controller.group.groupsOfThisUser.first?.id!)!))
+                    },groupId: (controller.group.groupsOfThisUser.first?.id!)!)
+                }
             }
         }
         .padding(24)

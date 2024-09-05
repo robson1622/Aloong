@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ActivityViewCreate: View {
+    @EnvironmentObject var controller : GeneralController
     let idUser : String
     let idGroup : String
     @State var model : ActivityModel?
@@ -45,9 +46,6 @@ struct ActivityViewCreate: View {
                     if(model?.id == nil){
                         self.create()
                     }
-                    else{
-                        self.update()
-                    }
                 }){
                     Text(model?.id == nil ? publish : save)
                         .font(.body)
@@ -62,10 +60,7 @@ struct ActivityViewCreate: View {
             }
             .padding(.horizontal,24)
             .onAppear{
-                listOfAdded.append("robis")
-                listOfFriends.append(usermodelexemple3)
-                listOfFriends.append(usermodelexemple2)
-                listOfFriends.append(usermodelexemple)
+                listOfFriends = controller.group.usersOfThisGroup
             }
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
@@ -126,7 +121,7 @@ struct ActivityViewCreate: View {
         VStack{
             HStack{
                 Text(informationsText)
-                    .font(.callout)
+                    .font(.caption)
                     .foregroundStyle(Color(.systemGray))
                     .padding(.bottom,6)
                 Spacer()
@@ -181,7 +176,7 @@ struct ActivityViewCreate: View {
         VStack{
             HStack{
                 Text(metricsText)
-                    .font(.callout)
+                    .font(.caption)
                     .foregroundStyle(Color(.systemGray))
                 Spacer()
             }
@@ -270,22 +265,17 @@ struct ActivityViewCreate: View {
             showKeyBoardForCalories = false
         }
     }
-    func update(){
-        self.insertInModel()
-        Task{
-            if let _ = await ActivityDao.shared.update(model: model!){
-                print("SUCESSO AO ATUALIZAR ATIVIDADE")
-            }
-        }
-    }
     
     func create(){
         self.insertInModel()
         Task{
-            if let _ = await ActivityDao.shared.create(model: model!, idGroup: idGroup, idUserOwner: idUser){
-                print("SUCESSO AO CRIAR ATIVIDADE")
+            if let sucess = await controller.activities.create(model: model!, idGroup: idGroup, idUserOwner: idUser, listOfOtherUsersIds: listOfAdded){
+                
             }
-        
+            else{
+                print("ActivityViewCreate - ERRO, NÃO POSSÍVEL CRIAR ATIVIDADE")
+            }
+            
         }
     }
     
