@@ -84,6 +84,7 @@
 		97C2230A2C73FC3100470068 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 97C223092C73FC3100470068 /* FirebaseFirestore */; };
 		97C2230C2C73FC6600470068 /* FirebaseInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C2230B2C73FC6600470068 /* FirebaseInterface.swift */; };
 		97DC06F62C737B96001F05EE /* UserLocalSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC06F52C737B96001F05EE /* UserLocalSave.swift */; };
+		9F29759A2C8881E6001E15F3 /* DetailsGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2975992C8881E6001E15F3 /* DetailsGroupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +183,7 @@
 		97C223022C73881B00470068 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		97C2230B2C73FC6600470068 /* FirebaseInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInterface.swift; sourceTree = "<group>"; };
 		97DC06F52C737B96001F05EE /* UserLocalSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalSave.swift; sourceTree = "<group>"; };
+		9F2975992C8881E6001E15F3 /* DetailsGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsGroupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +385,7 @@
 				976818AD2C6A3210008CACE8 /* GroupViewCreate.swift */,
 				9745A9282C6A4AA600578FEC /* GroupViewCard.swift */,
 				9705AE1D2C656C1F00E73123 /* GroupViewEdit.swift */,
+				9F2975992C8881E6001E15F3 /* DetailsGroupView.swift */,
 			);
 			path = Group;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				9705ADFD2C64F70F00E73123 /* UserDao.swift in Sources */,
 				9705ADB92C64F53900E73123 /* ContentView.swift in Sources */,
 				973302F52C663BC400E6A1D9 /* ListElementInputDate.swift in Sources */,
+				9F29759A2C8881E6001E15F3 /* DetailsGroupView.swift in Sources */,
 				9705ADFF2C64F72E00E73123 /* UserController.swift in Sources */,
 				976818AE2C6A3210008CACE8 /* GroupViewCreate.swift in Sources */,
 				9705AE012C64F74700E73123 /* ViewsController.swift in Sources */,
