@@ -24,7 +24,7 @@ class GroupController: ObservableObject{
     }
     
     func create(model : GroupModel) async -> Bool?{
-        if let response = await GroupDao.shared.create(group: model){
+        if let _ = await GroupDao.shared.create(group: model){
             return true
         }
         return nil

@@ -15,7 +15,8 @@ class GroupDao : ObservableObject{
     func create(group : GroupModel) async -> GroupModel? {
         if(group.idUser != nil){
             if let result = FirebaseInterface.shared.createDocument(model: group,collection: collectionName){
-                let groupSaved = GroupModel(id: result, idUser: group.idUser, title: group.title, description: group.description, startDate: group.startDate, endDate: group.endDate, scoreType: group.scoreType, groupImage: group.groupImage)
+                let code = await generateCode()
+                let groupSaved = GroupModel(id: result, idUser: group.idUser, title: group.title, description: group.description, startDate: group.startDate, endDate: group.endDate, scoreType: group.scoreType,invitationCode: code)
                 if let _ = await update(model: groupSaved){
                     return groupSaved
                 }
@@ -77,5 +78,25 @@ class GroupDao : ObservableObject{
         }
         
         return groupList
+    }
+    
+    
+    func generateCode()async -> String {
+        let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        var randomCode = ""
+
+        for _ in 0..<4 {
+            if let randomCharacter = characters.randomElement() {
+                randomCode.append(randomCharacter)
+            }
+        }
+        // verificar se o código já existe
+        let response : [GroupModel] = await FirebaseInterface.shared.readDocuments(id: randomCode, collection: collectionName, field: "invitationCode")
+        if(response.isEmpty){
+            return randomCode
+        }
+        else{
+            return await self.generateCode()
+        }
     }
 }

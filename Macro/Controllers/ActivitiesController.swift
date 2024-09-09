@@ -6,15 +6,15 @@
 //
 
 import Foundation
-
+import PhotosUI
 
 class ActivitiesController: ObservableObject{
     @Published var activityGroupRelation : ActivityGroupController = ActivityGroupController()
     @Published var activityUserRelation : ActivityUserController = ActivityUserController()
     @Published var activities : [ActivityModel] = []
+    @Published var imagesForNewActivity : UIImage = UIImage()
     
     func load(idGroup: String, idUser : String? = nil) async {
-        
         activities = await self.getActivitiesOfGroup(idGroup: idGroup)
     }
     func load(idUser: String) async {

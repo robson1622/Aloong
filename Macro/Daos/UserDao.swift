@@ -12,19 +12,25 @@ class UserDao : ObservableObject{
     static var shared : UserDao = UserDao()
     let collectionName : String = "users"
     
-    func create(model : UserModel?){
-        if model == nil{
+    func create(model : UserModel?)async  -> Bool? {
+        if (model == nil && model?.id != nil){
             print("NÃO FOI POSSIVEL SALVAR USUÁRIO NO BANCO DE DADOS, PONTEIRO NULO")
-            return
+            return nil
         }
         UserLocalSave().saveUser(user: model!)
-        _ = FirebaseInterface.shared.createDocument(model: model!, collection: collectionName)
+        if let response = await FirebaseInterface.shared.updateDocument(model: model, id: (model?.id!)!, collection: collectionName){
+            return true
+        }
+        else{
+            return nil
+        }
+        
     }
     
     func delete(model : UserModel?){
         UserLocalSave().deleteUser()
         Task{
-            await FirebaseInterface.shared.deleteDocument(id: (model?.id!)!, collection: collectionName)
+            await FirebaseInterface.shared.deleteDocument(id: model!.id!, collection: collectionName)
         }
     }
     
@@ -32,7 +38,7 @@ class UserDao : ObservableObject{
         if(model != nil){
             UserLocalSave().saveUser(user: model!)
         }
-        return await FirebaseInterface.shared.updateDocument(model: model!, id: (model?.id!)!, collection: collectionName)
+        return await FirebaseInterface.shared.updateDocument(model: model!, id: model!.id!, collection: collectionName)
     }
     
     

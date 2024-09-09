@@ -14,14 +14,8 @@ struct SignInView: View {
     var explain : String = NSLocalizedString("First step", comment: "text with all explain about we need login with apple")
     var body: some View {
         VStack{
-            Spacer()
-            Text(title)
-                .font(.title)
             HStack{
-                Image(systemName: "globe")
-                    .padding()
-                Text(explain)
-                    .font(.callout)
+                Spacer()
             }
             Spacer()
             SignInWithAppleButton(.signUp){ request in
@@ -30,28 +24,35 @@ struct SignInView: View {
                 switch result {
                 case .success(let authorization):
                     if let userCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+                        var name : String = ""
+                        var email : String = ""
                         if userCredential.authorizedScopes.contains(.fullName) {
                             controller.user?.name = userCredential.fullName?.namePrefix
+                            name = userCredential.fullName?.namePrefix ?? ""
                         }
                     
                         if userCredential.authorizedScopes.contains(.email) {
                             controller.user?.email = userCredential.email!
+                            email = userCredential.email!
                         }
                         let idApple = userCredential.user
-                        ViewsController.shared.navigateTo(to: .createUser(idApple), reset: true)
-                        
-                        
-                        
-                        
+                        ViewsController.shared.navigateTo(to: .createUser(idApple,name,email), reset: true)
                     }
                 case .failure(_):
                     print("Could not authenticate: \\(error.localizedDescription)")
                     ViewsController.shared.navigateTo(to: .signIn, reset: true)
                 }
             }
-            .frame(height: 60)
+            .frame(width: 350,height: 60)
+            Spacer()
         }
-        .padding()
+        .ignoresSafeArea()
+        .background(
+            Image("backgroudSignIn")
+                .resizable()
+                .scaledToFill()
+                .padding(.top,-25)
+        )
     }
 }
 

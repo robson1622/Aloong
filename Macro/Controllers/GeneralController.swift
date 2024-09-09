@@ -11,8 +11,8 @@ import Foundation
 class GeneralController: ObservableObject{
     @Published var user : UserController = UserController()
     @Published var group : GroupController = GroupController()
-    @Published var satistic : StatisticController = StatisticController()
     @Published var activities : ActivitiesController = ActivitiesController()
+    @Published var statistic : StatisticController = StatisticController()
     
     @Published var mainListActivities : [ActivityCompleteModel] = []
     
@@ -21,13 +21,41 @@ class GeneralController: ObservableObject{
     }
     
     func updateAll() async{
+        mainListActivities.removeAll()
         await user.load()
         if(user.user?.id != nil){
             await group.load(idUser: (user.user?.id!)!)
-//            activities.load()
+            if(group.groupsOfThisUser.first?.id != nil ){
+                await activities.load(idGroup: (group.groupsOfThisUser.first?.id!)!)
+                if(group.groupsOfThisUser.count > 0){
+                    for activity in activities.activities{
+                        // pegar o dono da atividade
+                        await activities.activityUserRelation.load(idUser: (user.user?.id!)!)
+                        if let userOwner = activities.activityUserRelation.listOfActivityUser.first(where : { $0.state == statesOfMembers.owner}){
+                            //todos os usuários da atividade
+                            let allUsers = await user.readAllUsersOfActivity(idActivity: activity.id!)
+                            var newActivityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: allUsers.first(where: { $0.id == userOwner.idUser})!)
+                            // associamos a atividade
+                            newActivityComplete.activity = activity
+                            // sabemos que ela está neste grupo
+                            newActivityComplete.groupsOfthisActivity.append(group.groupsOfThisUser.first!)
+                            // pegamos todos os usuários com relação com esta atividade
+                            newActivityComplete.usersOfthisActivity = allUsers
+                            
+                            
+                            // adicionamos ele na lista
+                            mainListActivities.append(newActivityComplete)
+                        }
+                    }
+                    statistic.listOfUser = group.usersOfThisGroup
+                    statistic.activitiesComplete = mainListActivities
+                    statistic.calculate(idUser: (user.user?.id!)!)
+                }
+                else{
+                    print("ERRO AO TENTAR INICIALIZAR, SEM GRUPOS PARA ESTE USUÁRIO, GeneralController/updateAll")
+                }
+            }
         }
-        
-        
     }
     
     
@@ -92,8 +120,9 @@ class GeneralController: ObservableObject{
     
 
     
-    func createUser(){
-        
+    func createUser(model : UserModel){
+        user.user = model
+        user.createUser()
     }
     func updateUser(){
         

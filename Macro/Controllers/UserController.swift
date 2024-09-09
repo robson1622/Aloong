@@ -42,23 +42,39 @@ class UserController: ObservableObject{
         // cria localmente
         UserLocalSave().saveUser(user: user!)
         // e em seguina na nuvem
-        dao.create(model: user)
+        Task{
+            await dao.create(model: user)
+        }
     }
     
     func readAllUsersOfGroup(idGroup : String) async -> [UserModel]{
         let members : [MemberModel] = await MemberDao.shared.readAllMembersOfGroup(idGroup: idGroup)
-        var usersOfGroup : [UserModel] = []
+        usersOfGroups = []
         for member in members{
             if(member.userId != nil){
                 if let user : UserModel = await UserDao.shared.read(userId: member.userId!){
-                    usersOfGroup.append(user)
+                    usersOfGroups.append(user)
                 }
             }
             else{
                 print("ERRO AO TENTAR CARREGAR USUÁRIOS DE UM GRUPO, member.userId nulo UserDao/readAllUsersOfGroup")
             }
         }
-        return usersOfGroup
+        return usersOfGroups
+    }
+    func readAllUsersOfActivity(idActivity : String) async -> [UserModel]{
+        let activityUserRelation : [ActivityUserModel] = await ActivityUserDao.shared.readAllActivityUserOfActivity(idActivity: idActivity)
+        var listOfUserThisActivity : [UserModel] = []
+        for relation in activityUserRelation{
+            if let user = await self.read(idUser: relation.idUser){
+                listOfUserThisActivity.append(user)
+            }
+        }
+        return listOfUserThisActivity
+    }
+    
+    private func read(idUser: String) async -> UserModel?{
+        return await UserDao.shared.read(userId: idUser)
     }
 }
 

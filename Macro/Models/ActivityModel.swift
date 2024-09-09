@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct ActivityModel : Codable, Hashable{
+struct ActivityModel : Codable, Hashable, Identifiable{
     var id : String?
     var title : String?
     var description : String?

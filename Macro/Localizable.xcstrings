@@ -4,8 +4,15 @@
     "" : {
 
     },
-    "%@" : {
-
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
     },
     "%@, %@" : {
       "localizations" : {
@@ -13,6 +20,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
           }
         }
       }
@@ -46,20 +63,14 @@
     "2.2K steps" : {
 
     },
-    "10h51" : {
-
-    },
-    "24" : {
-
-    },
-    "124" : {
-
-    },
     "Active days" : {
 
     },
     "Activities" : {
       "comment" : "Titulo do botão que leva para a view de atividades"
+    },
+    "activities and challenge your friends" : {
+
     },
     "Add an group" : {
 
@@ -87,13 +98,7 @@
         }
       }
     },
-    "Add new group" : {
-      "comment" : "Texto de titulo da view de entrar em um novo grupo"
-    },
     "Adicione um Titulo..." : {
-
-    },
-    "Atividade física yoga ioga corrida e mt suor cardio" : {
 
     },
     "back" : {
@@ -111,6 +116,12 @@
           }
         }
       }
+    },
+    "Back" : {
+      "comment" : " texto do botão de voltar na barra do teclado "
+    },
+    "Be active with" : {
+
     },
     "Birth date" : {
       "extractionState" : "manual",
@@ -137,6 +148,7 @@
     },
     "Cancel" : {
       "comment" : "texto de cancelamento da ação",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -152,8 +164,20 @@
         }
       }
     },
+    "Challenge not found" : {
+      "comment" : "Mensagem de erro ao não encontrar desafio"
+    },
+    "Choose the name, description and duration of the challenge" : {
+      "comment" : "Texto de descrição da criação do desafio"
+    },
+    "Click here" : {
+      "comment" : "Texto do botão para entrar em um grupo com o código"
+    },
     "Create" : {
       "comment" : "Create button text\ntexto da home para criar um novo grupo"
+    },
+    "Create a challenge" : {
+      "comment" : "Texto do botão para criar um novo desafio no onboarding"
     },
     "Create User" : {
       "extractionState" : "stale",
@@ -195,7 +219,7 @@
 
     },
     "Days left" : {
-      "comment" : "Texto que fala quantos dias faltam para o desafio acabar"
+      "comment" : "Texto que fala quantos dias faltam para o desafio acabar\ntexto da contagem de dias restantes"
     },
     "Deletar conta" : {
 
@@ -220,6 +244,9 @@
         }
       }
     },
+    "Descriptio" : {
+      "comment" : "Nome do desafio placeholder"
+    },
     "Description" : {
 
     },
@@ -229,8 +256,14 @@
     "Distance" : {
 
     },
+    "Do you have a code?" : {
+      "comment" : "Texto que questiona se a pessoa tem um código"
+    },
     "Duration" : {
-
+      "comment" : "Nome do desafio placeholder"
+    },
+    "Edit" : {
+      "comment" : "Texto do botão para editar a atividade"
     },
     "Edit profile" : {
       "comment" : "texto botão para editar o seu perfil"
@@ -261,6 +294,9 @@
     "Falta codar \n a imagem" : {
 
     },
+    "Final date" : {
+      "comment" : "texto que fala a data de fim do desafio"
+    },
     "First step" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -278,8 +314,8 @@
         }
       }
     },
-    "Group not found" : {
-      "comment" : "texto de erro ao tentar buscar grupo"
+    "friends" : {
+
     },
     "Hello, World!" : {
 
@@ -287,11 +323,11 @@
     "INFORMATIONS" : {
       "comment" : "Texto do titulo da lista de informações das atividades"
     },
+    "Insert the code sent by your friend here" : {
+      "comment" : "Texto da tela de inserção do código, headline"
+    },
     "Intensity" : {
 
-    },
-    "Join the group" : {
-      "comment" : "Texto do botão para entrar no grupo pesquisado"
     },
     "K Steps" : {
 
@@ -299,10 +335,19 @@
     "KM" : {
 
     },
-    "Líder" : {
-
+    "Let's get to the challenge" : {
+      "comment" : "Texto que explica o que fazer na view de escolha entre criar um grupo e entrar em um"
     },
-    "MARCELA" : {
+    "Let's go " : {
+      "comment" : "Texto do botão de criar grupo"
+    },
+    "Let's go..." : {
+      "comment" : "Texto que explica por que criar o grupo, está dentro do botão de criar"
+    },
+    "Líder" : {
+      "comment" : "Titulo da view de grupo que denota o lider"
+    },
+    "Log" : {
 
     },
     "METRICS" : {
@@ -325,6 +370,9 @@
         }
       }
     },
+    "Next" : {
+      "comment" : " texto do botão de próximo na barra do teclado \nBotão de prosseguir com a criação do perfil"
+    },
     "Nick name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -345,9 +393,6 @@
     "No groups" : {
 
     },
-    "No groups found with that code. " : {
-      "comment" : "Texto de aviso que o grupo não foi encontrado"
-    },
     "No image" : {
       "comment" : "aviso de sem imagem"
     },
@@ -358,7 +403,10 @@
 
     },
     "Ok" : {
-
+      "comment" : " texto do botão OK na barra do teclado "
+    },
+    "Oops, \n there's nothing here yet..." : {
+      "comment" : "Texto que fala que não há atividadesainda"
     },
     "Opções" : {
 
@@ -368,6 +416,9 @@
     },
     "Paste the code" : {
       "comment" : "campo para inserir a chave de acesso do grupo"
+    },
+    "Personalize your challenge" : {
+      "comment" : "Texto da criação de grupo, título"
     },
     "Points system" : {
 
@@ -405,6 +456,7 @@
 
     },
     "Search a challeger" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -415,6 +467,7 @@
       }
     },
     "search un user or name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -456,7 +509,7 @@
         }
       }
     },
-    "Seu desafio" : {
+    "Skip" : {
 
     },
     "Start date" : {
@@ -465,10 +518,11 @@
     "Steps" : {
 
     },
-    "Sucess" : {
-      "comment" : "texto sucesso ao buscar grupo"
+    "Tell us more" : {
+      "comment" : "Botão de prosseguir com a criação do perfil"
     },
     "Temporary Loading..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -490,20 +544,44 @@
     "Type anything" : {
 
     },
-    "Type the code of group" : {
-      "comment" : "Placeholder textfield para inserir código do grupo"
+    "Type the code" : {
+      "comment" : "Texto da tela de inserção do código"
+    },
+    "Type your name or nickname" : {
+      "comment" : " placeholder da caixa de texto de nome"
     },
     "Unamed" : {
       "comment" : "quando não há nome aparece esse texto"
     },
     "Welcome" : {
-
+      "comment" : "texto de bem vindo da tela de criar conta"
     },
     "Welcome, " : {
       "comment" : "Frase de bem vido da home"
     },
-    "Your are blocked in this group" : {
-      "comment" : "texto de erro ao tentar buscar grupo"
+    "What do you want to be called?" : {
+      "comment" : " subtitulo da tela de criar perfil"
+    },
+    "Without text" : {
+      "comment" : "texto para se caso haja campos vazios"
+    },
+    "Yehh, sucess!!" : {
+      "comment" : "Mensagem de sucesso ao procurar desafio"
+    },
+    "You" : {
+      "comment" : "Titulo da view de grupo que denota o lider"
+    },
+    "You can choose to create a challenge or enter one with a code" : {
+      "comment" : "Texto a baixo do titulo na tela de criar ou entrar em um grupo"
+    },
+    "your" : {
+
+    },
+    "Your challenger" : {
+      "comment" : "Caso não haja nome no grupo, este nome será mostrado"
+    },
+    "your daily " : {
+
     },
     "Your groups" : {
       "comment" : "texto da home que lista os grupos que o usuário faz parte"

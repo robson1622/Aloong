@@ -8,22 +8,25 @@
 import SwiftUI
 
 struct OkButton: View {
+    var active : Bool = true
     var text : String = "Ok"
     let onTap : () -> Void
     let backColor = Color(.verde)
     let textColor = Color(.azul3)
     var body: some View {
         Button(action:{
-            onTap()
+            if(active){
+                onTap()
+            }
         }){
             VStack{
                 Text(text)
                     .font(.callout)
-                    .foregroundStyle(textColor)
+                    .foregroundStyle(active ? textColor : Color(.systemGray2))
                     .bold()
             }
             .padding(8)
-            .background(backColor)
+            .background(active ? backColor : Color(.systemGray5))
             .cornerRadius(10)
             .padding(.horizontal,5)
         }
@@ -31,5 +34,5 @@ struct OkButton: View {
 }
 
 #Preview {
-    OkButton(text: "vrau",onTap: {})
+    OkButton(active: false,text: "vrau",onTap: {})
 }

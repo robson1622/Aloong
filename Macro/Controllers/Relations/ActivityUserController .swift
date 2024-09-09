@@ -11,6 +11,6 @@ class ActivityUserController: ObservableObject{
     @Published var listOfActivityUser : [ActivityUserModel] = []
     
     func load(idUser: String)async {
-        listOfActivityUser = await ActivityUserDao.shared.readAllActivitiesOfUser(idUser: idUser)
+        listOfActivityUser = await ActivityUserDao.shared.readAllActivityUserOfUser(idUser: idUser)
     }
 }

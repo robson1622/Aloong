@@ -63,7 +63,6 @@ struct GroupViewEdit: View {
             startDate = model.startDate!
             endDate = model.endDate!
             scoreType = model.scoreType!
-            groupImage = model.groupImage ?? noimage
         }
     }
     

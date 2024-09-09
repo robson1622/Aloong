@@ -73,9 +73,7 @@ struct UserViewEdit: View {
         .padding()
         .onAppear(){
             
-            nickname = controller.user?.nickname ?? ""
             name = controller.user?.name ?? ""
-            birthdate = controller.user?.birthdate ?? Date()
             email = controller.user?.email ?? ""
             userimage = controller.user?.userimage ?? ""
         }
@@ -84,9 +82,7 @@ struct UserViewEdit: View {
     }
     
     func saveChanges()async {
-        controller.user?.nickname = nickname
         controller.user?.name = name
-        controller.user?.birthdate = birthdate
         controller.user?.email = email
         controller.user?.userimage = userimage
         

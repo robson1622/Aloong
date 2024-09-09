@@ -17,8 +17,6 @@ struct UserViewProfile: View {
             ImageLoader(url: model.userimage)
                 .frame(width: 70,height: 70)
             ListElementBasic( title: UserModelNames.name, value: model.name ?? "Unamed")
-            ListElementBasic( title: UserModelNames.nickname, value: model.nickname ?? "Unamed")
-            ListElementBasic( title: UserModelNames.birthdate, value: model.birthdate == nil ? "Not date" : formatDate(date: model.birthdate!))
             
             Spacer()
         }

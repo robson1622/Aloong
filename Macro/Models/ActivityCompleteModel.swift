@@ -9,9 +9,10 @@ import Foundation
 
 
 
-struct ActivityCompleteModel : Hashable, Codable{
-    var id : String?
-    var user : UserModel?
-    var group : GroupModel?
+struct ActivityCompleteModel : Hashable, Codable,Identifiable{
+    var id = UUID()
+    var owner : UserModel
+    var usersOfthisActivity : [UserModel] = []
+    var groupsOfthisActivity : [GroupModel] = []
     var activity : ActivityModel?
 }

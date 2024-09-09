@@ -11,6 +11,8 @@ import Foundation
 class ActivityUserDao: ObservableObject{
     static var shared : ActivityUserDao = ActivityUserDao()
     let collectionName : String = "activityuser"
+    let collectionFieldIdActivity : String = "idActivity"
+    let collectionFieldIdUser : String = "idUser"
     
     func create(model : ActivityUserModel) async -> Bool?{
         if let idModel = FirebaseInterface.shared.createDocument(model: model, collection: collectionName){
@@ -51,7 +53,11 @@ class ActivityUserDao: ObservableObject{
         return nil
     }
     
-    func readAllActivitiesOfUser(idUser: String) async -> [ActivityUserModel]{
-        return await FirebaseInterface.shared.readDocuments(id: idUser, collection: collectionName, field: "idUser")
+    func readAllActivityUserOfUser(idUser: String) async -> [ActivityUserModel]{
+        return await FirebaseInterface.shared.readDocuments(id: idUser, collection: collectionName, field: collectionFieldIdUser)
+    }
+    
+    func readAllActivityUserOfActivity(idActivity : String) async -> [ActivityUserModel]{
+        return await FirebaseInterface.shared.readDocuments(id: idActivity, collection: collectionName, field: collectionFieldIdActivity)
     }
 }

@@ -12,7 +12,6 @@ import FirebaseFirestore
 class FirebaseInterface{
     static var shared : FirebaseInterface = FirebaseInterface()
     var db = Firestore.firestore()
-    
     // criar
     func createDocument<T: Encodable>(model: T,collection: String) -> String? {
         do {

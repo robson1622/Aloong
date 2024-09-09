@@ -8,18 +8,20 @@
 import SwiftUI
 
 struct SaveButton: View {
+    var active : Bool = false
     let onTap : () -> Void
     let text : String
     var body: some View {
         Button(action:{
-            onTap()
+            if(active){
+                onTap()
+            }
         }){
             Text(text)
                 .font(.callout)
-                .foregroundColor(.blue)
-                .frame(maxWidth: .infinity)
+                .foregroundColor( active ? .white : .white)
                 .padding()
-                .background(Color("BackgroundElements"))
+                .background( active ? Color(.blue) : Color(.systemGray4))
                 .cornerRadius(10)
         }
     }

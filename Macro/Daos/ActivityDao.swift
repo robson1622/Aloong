@@ -36,10 +36,10 @@ class ActivityDao : ObservableObject{
     
     private func createRelationForAnyUser(idGroup : String, idUser : String,idActivity : String, state : String) async -> Bool?{
         // cria a relação com o grupo
-        var newGroupActivity = ActivityGroupModel(idActivity: idActivity, idGroup: idGroup)
+        let newGroupActivity = ActivityGroupModel(idActivity: idActivity, idGroup: idGroup)
         if let _ = await ActivityGroupDao.shared.create(model: newGroupActivity){
             // cria a relação com o usuário
-            var newUserActivity = ActivityUserModel(idUser: idUser, idActivity: idActivity, state: state)
+            let newUserActivity = ActivityUserModel(idUser: idUser, idActivity: idActivity, state: state)
             if let _ = await ActivityUserDao.shared.create(model: newUserActivity){
                 return true
             }

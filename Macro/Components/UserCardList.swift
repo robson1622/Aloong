@@ -27,9 +27,6 @@ struct UserCardList: View {
                         Spacer()
                     }
                     HStack{
-                        Text("@" + ( model.nickname ?? ""))
-                            .foregroundColor(.black)
-                        Spacer()
                     }
                 }
             }

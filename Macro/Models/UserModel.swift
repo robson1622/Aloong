@@ -10,9 +10,7 @@ import Foundation
 
 struct UserModel:  Codable, Hashable{
     var id : String?
-    var nickname : String?
     var name : String?
-    var birthdate : Date?
     var email : String?
     var userimage : String?
 }

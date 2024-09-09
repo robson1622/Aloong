@@ -31,7 +31,6 @@
 		9705AE032C64F77D00E73123 /* UserViewCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE022C64F77D00E73123 /* UserViewCreate.swift */; };
 		9705AE052C64F7A500E73123 /* UserViewEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE042C64F7A500E73123 /* UserViewEdit.swift */; };
 		9705AE072C64F7DE00E73123 /* UserViewProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE062C64F7DE00E73123 /* UserViewProfile.swift */; };
-		9705AE0B2C64F82F00E73123 /* ChallengersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE0A2C64F82F00E73123 /* ChallengersView.swift */; };
 		9705AE0D2C64FBD800E73123 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE0C2C64FBD800E73123 /* SplashView.swift */; };
 		9705AE0F2C65041300E73123 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE0E2C65041300E73123 /* Header.swift */; };
 		9705AE112C65085300E73123 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9705AE102C65085300E73123 /* Home.swift */; };
@@ -46,11 +45,77 @@
 		970820962C878140009975F6 /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820952C878140009975F6 /* OkButton.swift */; };
 		9708209A2C87CF56009975F6 /* ActivitiesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820992C87CF56009975F6 /* ActivitiesController.swift */; };
 		9708209C2C87D750009975F6 /* ActivityGroupDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708209B2C87D750009975F6 /* ActivityGroupDao.swift */; };
-		970820A02C889830009975F6 /* testeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708209F2C889830009975F6 /* testeView.swift */; };
 		970820A22C8919E8009975F6 /* ActivityUserDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820A12C8919E8009975F6 /* ActivityUserDao.swift */; };
 		970820A62C89266E009975F6 /* ActivityGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820A52C89266E009975F6 /* ActivityGroupController.swift */; };
 		970820A82C8927EA009975F6 /* ActivityUserController .swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820A72C8927EA009975F6 /* ActivityUserController .swift */; };
 		970820AB2C89D4A1009975F6 /* ActivityCompleteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820AA2C89D4A1009975F6 /* ActivityCompleteModel.swift */; };
+		970820AD2C8A4932009975F6 /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820AC2C8A4932009975F6 /* ActivityCard.swift */; };
+		970820AF2C8A58B2009975F6 /* MetricsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820AE2C8A58B2009975F6 /* MetricsComponent.swift */; };
+		970820B12C8A6258009975F6 /* AloongComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970820B02C8A6258009975F6 /* AloongComponent.swift */; };
+		970820F42C8B28C1009975F6 /* DegularText-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820B42C8B28C1009975F6 /* DegularText-Black.otf */; };
+		970820F52C8B28C1009975F6 /* DegularText-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820B52C8B28C1009975F6 /* DegularText-BlackItalic.otf */; };
+		970820F62C8B28C1009975F6 /* DegularText-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820B62C8B28C1009975F6 /* DegularText-Bold.otf */; };
+		970820F72C8B28C1009975F6 /* DegularText-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820B72C8B28C1009975F6 /* DegularText-BoldItalic.otf */; };
+		970820F82C8B28C1009975F6 /* DegularText-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820B82C8B28C1009975F6 /* DegularText-Light.otf */; };
+		970820F92C8B28C1009975F6 /* DegularText-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820B92C8B28C1009975F6 /* DegularText-LightItalic.otf */; };
+		970820FA2C8B28C1009975F6 /* DegularText-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820BA2C8B28C1009975F6 /* DegularText-Medium.otf */; };
+		970820FB2C8B28C1009975F6 /* DegularText-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820BB2C8B28C1009975F6 /* DegularText-MediumItalic.otf */; };
+		970820FC2C8B28C1009975F6 /* DegularText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820BC2C8B28C1009975F6 /* DegularText-Regular.otf */; };
+		970820FD2C8B28C1009975F6 /* DegularText-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820BD2C8B28C1009975F6 /* DegularText-RegularItalic.otf */; };
+		970820FE2C8B28C1009975F6 /* DegularText-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820BE2C8B28C1009975F6 /* DegularText-Semibold.otf */; };
+		970820FF2C8B28C1009975F6 /* DegularText-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820BF2C8B28C1009975F6 /* DegularText-SemiboldItalic.otf */; };
+		970821002C8B28C1009975F6 /* DegularText-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820C02C8B28C1009975F6 /* DegularText-Thin.otf */; };
+		970821012C8B28C1009975F6 /* DegularText-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820C12C8B28C1009975F6 /* DegularText-ThinItalic.otf */; };
+		970821022C8B28C1009975F6 /* DegularVariable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 970820C32C8B28C1009975F6 /* DegularVariable.ttf */; };
+		970821032C8B28C1009975F6 /* Degular-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820C52C8B28C1009975F6 /* Degular-Black.otf */; };
+		970821042C8B28C1009975F6 /* Degular-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820C62C8B28C1009975F6 /* Degular-BlackItalic.otf */; };
+		970821052C8B28C1009975F6 /* Degular-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820C72C8B28C1009975F6 /* Degular-Bold.otf */; };
+		970821062C8B28C1009975F6 /* Degular-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820C82C8B28C1009975F6 /* Degular-BoldItalic.otf */; };
+		970821072C8B28C1009975F6 /* Degular-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820C92C8B28C1009975F6 /* Degular-Light.otf */; };
+		970821082C8B28C1009975F6 /* Degular-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820CA2C8B28C1009975F6 /* Degular-LightItalic.otf */; };
+		970821092C8B28C1009975F6 /* Degular-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820CB2C8B28C1009975F6 /* Degular-Medium.otf */; };
+		9708210A2C8B28C1009975F6 /* Degular-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820CC2C8B28C1009975F6 /* Degular-MediumItalic.otf */; };
+		9708210B2C8B28C1009975F6 /* Degular-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820CD2C8B28C1009975F6 /* Degular-Regular.otf */; };
+		9708210C2C8B28C1009975F6 /* Degular-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820CE2C8B28C1009975F6 /* Degular-RegularItalic.otf */; };
+		9708210D2C8B28C1009975F6 /* Degular-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820CF2C8B28C1009975F6 /* Degular-Semibold.otf */; };
+		9708210E2C8B28C1009975F6 /* Degular-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820D02C8B28C1009975F6 /* Degular-SemiboldItalic.otf */; };
+		9708210F2C8B28C1009975F6 /* Degular-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820D12C8B28C1009975F6 /* Degular-Thin.otf */; };
+		970821102C8B28C1009975F6 /* Degular-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820D22C8B28C1009975F6 /* Degular-ThinItalic.otf */; };
+		970821112C8B28C1009975F6 /* DegularDisplay-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820D42C8B28C1009975F6 /* DegularDisplay-Black.otf */; };
+		970821122C8B28C1009975F6 /* DegularDisplay-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820D52C8B28C1009975F6 /* DegularDisplay-BlackItalic.otf */; };
+		970821132C8B28C1009975F6 /* DegularDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820D62C8B28C1009975F6 /* DegularDisplay-Bold.otf */; };
+		970821142C8B28C1009975F6 /* DegularDisplay-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820D72C8B28C1009975F6 /* DegularDisplay-BoldItalic.otf */; };
+		970821152C8B28C1009975F6 /* DegularDisplay-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820D82C8B28C1009975F6 /* DegularDisplay-Light.otf */; };
+		970821162C8B28C1009975F6 /* DegularDisplay-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820D92C8B28C1009975F6 /* DegularDisplay-LightItalic.otf */; };
+		970821172C8B28C1009975F6 /* DegularDisplay-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820DA2C8B28C1009975F6 /* DegularDisplay-Medium.otf */; };
+		970821182C8B28C1009975F6 /* DegularDisplay-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820DB2C8B28C1009975F6 /* DegularDisplay-MediumItalic.otf */; };
+		970821192C8B28C1009975F6 /* DegularDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820DC2C8B28C1009975F6 /* DegularDisplay-Regular.otf */; };
+		9708211A2C8B28C1009975F6 /* DegularDisplay-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820DD2C8B28C1009975F6 /* DegularDisplay-RegularItalic.otf */; };
+		9708211B2C8B28C1009975F6 /* DegularDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820DE2C8B28C1009975F6 /* DegularDisplay-Semibold.otf */; };
+		9708211C2C8B28C1009975F6 /* DegularDisplay-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820DF2C8B28C1009975F6 /* DegularDisplay-SemiboldItalic.otf */; };
+		9708211D2C8B28C1009975F6 /* DegularDisplay-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820E02C8B28C1009975F6 /* DegularDisplay-Thin.otf */; };
+		9708211E2C8B28C1009975F6 /* DegularDisplay-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820E12C8B28C1009975F6 /* DegularDisplay-ThinItalic.otf */; };
+		9708211F2C8B28C1009975F6 /* DegularMono-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820E32C8B28C1009975F6 /* DegularMono-Black.otf */; };
+		970821202C8B28C1009975F6 /* DegularMono-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820E42C8B28C1009975F6 /* DegularMono-BlackItalic.otf */; };
+		970821212C8B28C1009975F6 /* DegularMono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820E52C8B28C1009975F6 /* DegularMono-Bold.otf */; };
+		970821222C8B28C1009975F6 /* DegularMono-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820E62C8B28C1009975F6 /* DegularMono-BoldItalic.otf */; };
+		970821232C8B28C1009975F6 /* DegularMono-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820E72C8B28C1009975F6 /* DegularMono-Light.otf */; };
+		970821242C8B28C1009975F6 /* DegularMono-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820E82C8B28C1009975F6 /* DegularMono-LightItalic.otf */; };
+		970821252C8B28C1009975F6 /* DegularMono-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820E92C8B28C1009975F6 /* DegularMono-Medium.otf */; };
+		970821262C8B28C1009975F6 /* DegularMono-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820EA2C8B28C1009975F6 /* DegularMono-MediumItalic.otf */; };
+		970821272C8B28C1009975F6 /* DegularMono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820EB2C8B28C1009975F6 /* DegularMono-Regular.otf */; };
+		970821282C8B28C1009975F6 /* DegularMono-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820EC2C8B28C1009975F6 /* DegularMono-RegularItalic.otf */; };
+		970821292C8B28C1009975F6 /* DegularMono-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820ED2C8B28C1009975F6 /* DegularMono-Semibold.otf */; };
+		9708212A2C8B28C1009975F6 /* DegularMono-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820EE2C8B28C1009975F6 /* DegularMono-SemiboldItalic.otf */; };
+		9708212B2C8B28C1009975F6 /* DegularMono-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820EF2C8B28C1009975F6 /* DegularMono-Thin.otf */; };
+		9708212C2C8B28C1009975F6 /* DegularMono-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 970820F02C8B28C1009975F6 /* DegularMono-ThinItalic.otf */; };
+		9708212D2C8B28C1009975F6 /* DegularMonoVariable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 970820F22C8B28C1009975F6 /* DegularMonoVariable.ttf */; };
+		970821322C8B2B5A009975F6 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970821312C8B2B5A009975F6 /* Fonts.swift */; };
+		970821342C8B38E0009975F6 /* AloongGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970821332C8B38E0009975F6 /* AloongGroupView.swift */; };
+		970821362C8D2482009975F6 /* PickerIntegerKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970821352C8D2482009975F6 /* PickerIntegerKeyboard.swift */; };
+		970821382C8D2A07009975F6 /* KeyboardBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970821372C8D2A07009975F6 /* KeyboardBar.swift */; };
+		9708213A2C8DCB56009975F6 /* DecisionCreateOrAloongGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970821392C8DCB56009975F6 /* DecisionCreateOrAloongGroupView.swift */; };
+		9708213C2C8DD568009975F6 /* OnboardInforsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708213B2C8DD568009975F6 /* OnboardInforsView.swift */; };
 		973302F32C663B2A00E6A1D9 /* ListElementInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F22C663B2A00E6A1D9 /* ListElementInputText.swift */; };
 		973302F52C663BC400E6A1D9 /* ListElementInputDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F42C663BC400E6A1D9 /* ListElementInputDate.swift */; };
 		973302F72C663C9F00E6A1D9 /* ListElementInputMail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973302F62C663C9F00E6A1D9 /* ListElementInputMail.swift */; };
@@ -60,10 +125,9 @@
 		973303012C664F0200E6A1D9 /* Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973303002C664F0200E6A1D9 /* Definitions.swift */; };
 		9745A9272C6A39AF00578FEC /* ListElementInputLongText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9262C6A39AF00578FEC /* ListElementInputLongText.swift */; };
 		9745A9292C6A4AA600578FEC /* GroupViewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9282C6A4AA600578FEC /* GroupViewCard.swift */; };
-		9745A92B2C6A505C00578FEC /* GroupViewForAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A92A2C6A505C00578FEC /* GroupViewForAdd.swift */; };
 		9745A92E2C6AC08F00578FEC /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A92D2C6AC08F00578FEC /* GroupView.swift */; };
 		9745A9302C6AC37B00578FEC /* StatisticController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A92F2C6AC37B00578FEC /* StatisticController.swift */; };
-		9745A9322C6AC8BC00578FEC /* UserViewMiniature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9312C6AC8BC00578FEC /* UserViewMiniature.swift */; };
+		9745A9322C6AC8BC00578FEC /* UserViewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9312C6AC8BC00578FEC /* UserViewCard.swift */; };
 		9745A9342C6B86D800578FEC /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9332C6B86D800578FEC /* ProgressView.swift */; };
 		974C92042C80A64C004F1627 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92032C80A64C004F1627 /* ActivityModel.swift */; };
 		974C92062C80A7FE004F1627 /* MediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92052C80A7FE004F1627 /* MediaModel.swift */; };
@@ -78,6 +142,7 @@
 		974C921A2C826AB6004F1627 /* NewActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92192C826AB6004F1627 /* NewActivityButton.swift */; };
 		974C921C2C83CE31004F1627 /* AddFriendActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C921B2C83CE31004F1627 /* AddFriendActivityView.swift */; };
 		974C921E2C85DE5A004F1627 /* ListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C921D2C85DE5A004F1627 /* ListElement.swift */; };
+		975BB8102C8E5CAD00FA86FE /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975BB80F2C8E5CAD00FA86FE /* CameraView.swift */; };
 		976818AC2C6A3078008CACE8 /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976818AB2C6A3078008CACE8 /* GroupController.swift */; };
 		976818AE2C6A3210008CACE8 /* GroupViewCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976818AD2C6A3210008CACE8 /* GroupViewCreate.swift */; };
 		9796B9F22C755100000F0520 /* UserWelcomeIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9796B9F12C755100000F0520 /* UserWelcomeIcon.swift */; };
@@ -139,7 +204,6 @@
 		9705AE022C64F77D00E73123 /* UserViewCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewCreate.swift; sourceTree = "<group>"; };
 		9705AE042C64F7A500E73123 /* UserViewEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewEdit.swift; sourceTree = "<group>"; };
 		9705AE062C64F7DE00E73123 /* UserViewProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewProfile.swift; sourceTree = "<group>"; };
-		9705AE0A2C64F82F00E73123 /* ChallengersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengersView.swift; sourceTree = "<group>"; };
 		9705AE0C2C64FBD800E73123 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		9705AE0E2C65041300E73123 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		9705AE102C65085300E73123 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -155,11 +219,78 @@
 		970820952C878140009975F6 /* OkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
 		970820992C87CF56009975F6 /* ActivitiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesController.swift; sourceTree = "<group>"; };
 		9708209B2C87D750009975F6 /* ActivityGroupDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityGroupDao.swift; sourceTree = "<group>"; };
-		9708209F2C889830009975F6 /* testeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testeView.swift; sourceTree = "<group>"; };
 		970820A12C8919E8009975F6 /* ActivityUserDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityUserDao.swift; sourceTree = "<group>"; };
 		970820A52C89266E009975F6 /* ActivityGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityGroupController.swift; sourceTree = "<group>"; };
 		970820A72C8927EA009975F6 /* ActivityUserController .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityUserController .swift"; sourceTree = "<group>"; };
 		970820AA2C89D4A1009975F6 /* ActivityCompleteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCompleteModel.swift; sourceTree = "<group>"; };
+		970820AC2C8A4932009975F6 /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
+		970820AE2C8A58B2009975F6 /* MetricsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsComponent.swift; sourceTree = "<group>"; };
+		970820B02C8A6258009975F6 /* AloongComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AloongComponent.swift; sourceTree = "<group>"; };
+		970820B42C8B28C1009975F6 /* DegularText-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-Black.otf"; sourceTree = "<group>"; };
+		970820B52C8B28C1009975F6 /* DegularText-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-BlackItalic.otf"; sourceTree = "<group>"; };
+		970820B62C8B28C1009975F6 /* DegularText-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-Bold.otf"; sourceTree = "<group>"; };
+		970820B72C8B28C1009975F6 /* DegularText-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-BoldItalic.otf"; sourceTree = "<group>"; };
+		970820B82C8B28C1009975F6 /* DegularText-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-Light.otf"; sourceTree = "<group>"; };
+		970820B92C8B28C1009975F6 /* DegularText-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-LightItalic.otf"; sourceTree = "<group>"; };
+		970820BA2C8B28C1009975F6 /* DegularText-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-Medium.otf"; sourceTree = "<group>"; };
+		970820BB2C8B28C1009975F6 /* DegularText-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-MediumItalic.otf"; sourceTree = "<group>"; };
+		970820BC2C8B28C1009975F6 /* DegularText-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-Regular.otf"; sourceTree = "<group>"; };
+		970820BD2C8B28C1009975F6 /* DegularText-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-RegularItalic.otf"; sourceTree = "<group>"; };
+		970820BE2C8B28C1009975F6 /* DegularText-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-Semibold.otf"; sourceTree = "<group>"; };
+		970820BF2C8B28C1009975F6 /* DegularText-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		970820C02C8B28C1009975F6 /* DegularText-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-Thin.otf"; sourceTree = "<group>"; };
+		970820C12C8B28C1009975F6 /* DegularText-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularText-ThinItalic.otf"; sourceTree = "<group>"; };
+		970820C32C8B28C1009975F6 /* DegularVariable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DegularVariable.ttf; sourceTree = "<group>"; };
+		970820C52C8B28C1009975F6 /* Degular-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-Black.otf"; sourceTree = "<group>"; };
+		970820C62C8B28C1009975F6 /* Degular-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-BlackItalic.otf"; sourceTree = "<group>"; };
+		970820C72C8B28C1009975F6 /* Degular-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-Bold.otf"; sourceTree = "<group>"; };
+		970820C82C8B28C1009975F6 /* Degular-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-BoldItalic.otf"; sourceTree = "<group>"; };
+		970820C92C8B28C1009975F6 /* Degular-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-Light.otf"; sourceTree = "<group>"; };
+		970820CA2C8B28C1009975F6 /* Degular-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-LightItalic.otf"; sourceTree = "<group>"; };
+		970820CB2C8B28C1009975F6 /* Degular-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-Medium.otf"; sourceTree = "<group>"; };
+		970820CC2C8B28C1009975F6 /* Degular-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-MediumItalic.otf"; sourceTree = "<group>"; };
+		970820CD2C8B28C1009975F6 /* Degular-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-Regular.otf"; sourceTree = "<group>"; };
+		970820CE2C8B28C1009975F6 /* Degular-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-RegularItalic.otf"; sourceTree = "<group>"; };
+		970820CF2C8B28C1009975F6 /* Degular-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-Semibold.otf"; sourceTree = "<group>"; };
+		970820D02C8B28C1009975F6 /* Degular-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		970820D12C8B28C1009975F6 /* Degular-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-Thin.otf"; sourceTree = "<group>"; };
+		970820D22C8B28C1009975F6 /* Degular-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Degular-ThinItalic.otf"; sourceTree = "<group>"; };
+		970820D42C8B28C1009975F6 /* DegularDisplay-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-Black.otf"; sourceTree = "<group>"; };
+		970820D52C8B28C1009975F6 /* DegularDisplay-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-BlackItalic.otf"; sourceTree = "<group>"; };
+		970820D62C8B28C1009975F6 /* DegularDisplay-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-Bold.otf"; sourceTree = "<group>"; };
+		970820D72C8B28C1009975F6 /* DegularDisplay-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-BoldItalic.otf"; sourceTree = "<group>"; };
+		970820D82C8B28C1009975F6 /* DegularDisplay-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-Light.otf"; sourceTree = "<group>"; };
+		970820D92C8B28C1009975F6 /* DegularDisplay-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-LightItalic.otf"; sourceTree = "<group>"; };
+		970820DA2C8B28C1009975F6 /* DegularDisplay-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-Medium.otf"; sourceTree = "<group>"; };
+		970820DB2C8B28C1009975F6 /* DegularDisplay-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-MediumItalic.otf"; sourceTree = "<group>"; };
+		970820DC2C8B28C1009975F6 /* DegularDisplay-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-Regular.otf"; sourceTree = "<group>"; };
+		970820DD2C8B28C1009975F6 /* DegularDisplay-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-RegularItalic.otf"; sourceTree = "<group>"; };
+		970820DE2C8B28C1009975F6 /* DegularDisplay-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-Semibold.otf"; sourceTree = "<group>"; };
+		970820DF2C8B28C1009975F6 /* DegularDisplay-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		970820E02C8B28C1009975F6 /* DegularDisplay-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-Thin.otf"; sourceTree = "<group>"; };
+		970820E12C8B28C1009975F6 /* DegularDisplay-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularDisplay-ThinItalic.otf"; sourceTree = "<group>"; };
+		970820E32C8B28C1009975F6 /* DegularMono-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-Black.otf"; sourceTree = "<group>"; };
+		970820E42C8B28C1009975F6 /* DegularMono-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-BlackItalic.otf"; sourceTree = "<group>"; };
+		970820E52C8B28C1009975F6 /* DegularMono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-Bold.otf"; sourceTree = "<group>"; };
+		970820E62C8B28C1009975F6 /* DegularMono-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-BoldItalic.otf"; sourceTree = "<group>"; };
+		970820E72C8B28C1009975F6 /* DegularMono-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-Light.otf"; sourceTree = "<group>"; };
+		970820E82C8B28C1009975F6 /* DegularMono-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-LightItalic.otf"; sourceTree = "<group>"; };
+		970820E92C8B28C1009975F6 /* DegularMono-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-Medium.otf"; sourceTree = "<group>"; };
+		970820EA2C8B28C1009975F6 /* DegularMono-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-MediumItalic.otf"; sourceTree = "<group>"; };
+		970820EB2C8B28C1009975F6 /* DegularMono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-Regular.otf"; sourceTree = "<group>"; };
+		970820EC2C8B28C1009975F6 /* DegularMono-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-RegularItalic.otf"; sourceTree = "<group>"; };
+		970820ED2C8B28C1009975F6 /* DegularMono-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-Semibold.otf"; sourceTree = "<group>"; };
+		970820EE2C8B28C1009975F6 /* DegularMono-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		970820EF2C8B28C1009975F6 /* DegularMono-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-Thin.otf"; sourceTree = "<group>"; };
+		970820F02C8B28C1009975F6 /* DegularMono-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DegularMono-ThinItalic.otf"; sourceTree = "<group>"; };
+		970820F22C8B28C1009975F6 /* DegularMonoVariable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DegularMonoVariable.ttf; sourceTree = "<group>"; };
+		970821302C8B2A39009975F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		970821312C8B2B5A009975F6 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		970821332C8B38E0009975F6 /* AloongGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AloongGroupView.swift; sourceTree = "<group>"; };
+		970821352C8D2482009975F6 /* PickerIntegerKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerIntegerKeyboard.swift; sourceTree = "<group>"; };
+		970821372C8D2A07009975F6 /* KeyboardBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardBar.swift; sourceTree = "<group>"; };
+		970821392C8DCB56009975F6 /* DecisionCreateOrAloongGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionCreateOrAloongGroupView.swift; sourceTree = "<group>"; };
+		9708213B2C8DD568009975F6 /* OnboardInforsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardInforsView.swift; sourceTree = "<group>"; };
 		973302F22C663B2A00E6A1D9 /* ListElementInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputText.swift; sourceTree = "<group>"; };
 		973302F42C663BC400E6A1D9 /* ListElementInputDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputDate.swift; sourceTree = "<group>"; };
 		973302F62C663C9F00E6A1D9 /* ListElementInputMail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputMail.swift; sourceTree = "<group>"; };
@@ -169,10 +300,9 @@
 		973303002C664F0200E6A1D9 /* Definitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definitions.swift; sourceTree = "<group>"; };
 		9745A9262C6A39AF00578FEC /* ListElementInputLongText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElementInputLongText.swift; sourceTree = "<group>"; };
 		9745A9282C6A4AA600578FEC /* GroupViewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewCard.swift; sourceTree = "<group>"; };
-		9745A92A2C6A505C00578FEC /* GroupViewForAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewForAdd.swift; sourceTree = "<group>"; };
 		9745A92D2C6AC08F00578FEC /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
 		9745A92F2C6AC37B00578FEC /* StatisticController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticController.swift; sourceTree = "<group>"; };
-		9745A9312C6AC8BC00578FEC /* UserViewMiniature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewMiniature.swift; sourceTree = "<group>"; };
+		9745A9312C6AC8BC00578FEC /* UserViewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewCard.swift; sourceTree = "<group>"; };
 		9745A9332C6B86D800578FEC /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		974C92032C80A64C004F1627 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
 		974C92052C80A7FE004F1627 /* MediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaModel.swift; sourceTree = "<group>"; };
@@ -187,6 +317,7 @@
 		974C92192C826AB6004F1627 /* NewActivityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewActivityButton.swift; sourceTree = "<group>"; };
 		974C921B2C83CE31004F1627 /* AddFriendActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendActivityView.swift; sourceTree = "<group>"; };
 		974C921D2C85DE5A004F1627 /* ListElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElement.swift; sourceTree = "<group>"; };
+		975BB80F2C8E5CAD00FA86FE /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		976818AB2C6A3078008CACE8 /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		976818AD2C6A3210008CACE8 /* GroupViewCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewCreate.swift; sourceTree = "<group>"; };
 		9796B9F12C755100000F0520 /* UserWelcomeIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWelcomeIcon.swift; sourceTree = "<group>"; };
@@ -251,6 +382,7 @@
 		9705ADB52C64F53900E73123 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
+				970821302C8B2A39009975F6 /* Info.plist */,
 				9705AE232C65794000E73123 /* Macro.entitlements */,
 				9705ADE02C64F55A00E73123 /* Localizable.xcstrings */,
 				97C223022C73881B00470068 /* GoogleService-Info.plist */,
@@ -265,6 +397,7 @@
 				9705ADE52C64F57B00E73123 /* Components */,
 				9705ADE42C64F57200E73123 /* Pipes */,
 				9705ADBA2C64F53A00E73123 /* Assets.xcassets */,
+				970820B32C8B2888009975F6 /* Fonts */,
 				9705ADBC2C64F53A00E73123 /* Preview Content */,
 			);
 			path = Macro;
@@ -312,9 +445,14 @@
 				973302F82C663CEA00E6A1D9 /* ListElements */,
 				973302F92C663D3700E6A1D9 /* Buttons */,
 				9705ADF22C64F63F00E73123 /* DatePickerComponent.swift */,
+				970820AC2C8A4932009975F6 /* ActivityCard.swift */,
+				970820B02C8A6258009975F6 /* AloongComponent.swift */,
+				970821352C8D2482009975F6 /* PickerIntegerKeyboard.swift */,
 				9745A9332C6B86D800578FEC /* ProgressView.swift */,
+				970821372C8D2A07009975F6 /* KeyboardBar.swift */,
 				9705ADF42C64F65F00E73123 /* ImageLoader.swift */,
 				970820932C8660B3009975F6 /* TimerPicker.swift */,
+				970820AE2C8A58B2009975F6 /* MetricsComponent.swift */,
 				9796B9F12C755100000F0520 /* UserWelcomeIcon.swift */,
 				9796B9F32C75549A000F0520 /* EditButton.swift */,
 				974C921D2C85DE5A004F1627 /* ListElement.swift */,
@@ -344,13 +482,13 @@
 		9705ADE72C64F58E00E73123 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				970820B22C8B251C009975F6 /* OnBoarding */,
 				974C92022C80A60F004F1627 /* Activity */,
 				9705AE142C655D7B00E73123 /* Group */,
 				9705AE132C655C7C00E73123 /* User */,
-				9705AE0A2C64F82F00E73123 /* ChallengersView.swift */,
 				9705AE0E2C65041300E73123 /* Header.swift */,
 				9705AE242C6579AE00E73123 /* SignInView.swift */,
-				9708209F2C889830009975F6 /* testeView.swift */,
+				975BB80F2C8E5CAD00FA86FE /* CameraView.swift */,
 				9705AE102C65085300E73123 /* Home.swift */,
 			);
 			path = Views;
@@ -388,7 +526,7 @@
 			children = (
 				9705AE062C64F7DE00E73123 /* UserViewProfile.swift */,
 				9796B9F72C779962000F0520 /* UserViewMyProfile.swift */,
-				9745A9312C6AC8BC00578FEC /* UserViewMiniature.swift */,
+				9745A9312C6AC8BC00578FEC /* UserViewCard.swift */,
 				9705AE022C64F77D00E73123 /* UserViewCreate.swift */,
 				9705AE042C64F7A500E73123 /* UserViewEdit.swift */,
 			);
@@ -400,7 +538,6 @@
 			children = (
 				9705AE192C656AC800E73123 /* GroupViewList.swift */,
 				9745A92D2C6AC08F00578FEC /* GroupView.swift */,
-				9745A92A2C6A505C00578FEC /* GroupViewForAdd.swift */,
 				976818AD2C6A3210008CACE8 /* GroupViewCreate.swift */,
 				9745A9282C6A4AA600578FEC /* GroupViewCard.swift */,
 				9705AE1D2C656C1F00E73123 /* GroupViewEdit.swift */,
@@ -426,6 +563,130 @@
 				9705AE212C6575B900E73123 /* MemberDao.swift */,
 			);
 			path = Relations;
+			sourceTree = "<group>";
+		};
+		970820B22C8B251C009975F6 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				970821332C8B38E0009975F6 /* AloongGroupView.swift */,
+				9708213B2C8DD568009975F6 /* OnboardInforsView.swift */,
+				970821392C8DCB56009975F6 /* DecisionCreateOrAloongGroupView.swift */,
+			);
+			path = OnBoarding;
+			sourceTree = "<group>";
+		};
+		970820B32C8B2888009975F6 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				970821312C8B2B5A009975F6 /* Fonts.swift */,
+				970820D32C8B28C1009975F6 /* Degular (14) */,
+				970820E22C8B28C1009975F6 /* Degular Display (14) */,
+				970820F12C8B28C1009975F6 /* Degular Mono (14) */,
+				970820F32C8B28C1009975F6 /* Degular Mono Variable */,
+				970820C22C8B28C1009975F6 /* Degular Text (14) */,
+				970820C42C8B28C1009975F6 /* Degular Variable */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		970820C22C8B28C1009975F6 /* Degular Text (14) */ = {
+			isa = PBXGroup;
+			children = (
+				970820B42C8B28C1009975F6 /* DegularText-Black.otf */,
+				970820B52C8B28C1009975F6 /* DegularText-BlackItalic.otf */,
+				970820B62C8B28C1009975F6 /* DegularText-Bold.otf */,
+				970820B72C8B28C1009975F6 /* DegularText-BoldItalic.otf */,
+				970820B82C8B28C1009975F6 /* DegularText-Light.otf */,
+				970820B92C8B28C1009975F6 /* DegularText-LightItalic.otf */,
+				970820BA2C8B28C1009975F6 /* DegularText-Medium.otf */,
+				970820BB2C8B28C1009975F6 /* DegularText-MediumItalic.otf */,
+				970820BC2C8B28C1009975F6 /* DegularText-Regular.otf */,
+				970820BD2C8B28C1009975F6 /* DegularText-RegularItalic.otf */,
+				970820BE2C8B28C1009975F6 /* DegularText-Semibold.otf */,
+				970820BF2C8B28C1009975F6 /* DegularText-SemiboldItalic.otf */,
+				970820C02C8B28C1009975F6 /* DegularText-Thin.otf */,
+				970820C12C8B28C1009975F6 /* DegularText-ThinItalic.otf */,
+			);
+			path = "Degular Text (14)";
+			sourceTree = "<group>";
+		};
+		970820C42C8B28C1009975F6 /* Degular Variable */ = {
+			isa = PBXGroup;
+			children = (
+				970820C32C8B28C1009975F6 /* DegularVariable.ttf */,
+			);
+			path = "Degular Variable";
+			sourceTree = "<group>";
+		};
+		970820D32C8B28C1009975F6 /* Degular (14) */ = {
+			isa = PBXGroup;
+			children = (
+				970820C52C8B28C1009975F6 /* Degular-Black.otf */,
+				970820C62C8B28C1009975F6 /* Degular-BlackItalic.otf */,
+				970820C72C8B28C1009975F6 /* Degular-Bold.otf */,
+				970820C82C8B28C1009975F6 /* Degular-BoldItalic.otf */,
+				970820C92C8B28C1009975F6 /* Degular-Light.otf */,
+				970820CA2C8B28C1009975F6 /* Degular-LightItalic.otf */,
+				970820CB2C8B28C1009975F6 /* Degular-Medium.otf */,
+				970820CC2C8B28C1009975F6 /* Degular-MediumItalic.otf */,
+				970820CD2C8B28C1009975F6 /* Degular-Regular.otf */,
+				970820CE2C8B28C1009975F6 /* Degular-RegularItalic.otf */,
+				970820CF2C8B28C1009975F6 /* Degular-Semibold.otf */,
+				970820D02C8B28C1009975F6 /* Degular-SemiboldItalic.otf */,
+				970820D12C8B28C1009975F6 /* Degular-Thin.otf */,
+				970820D22C8B28C1009975F6 /* Degular-ThinItalic.otf */,
+			);
+			path = "Degular (14)";
+			sourceTree = "<group>";
+		};
+		970820E22C8B28C1009975F6 /* Degular Display (14) */ = {
+			isa = PBXGroup;
+			children = (
+				970820D42C8B28C1009975F6 /* DegularDisplay-Black.otf */,
+				970820D52C8B28C1009975F6 /* DegularDisplay-BlackItalic.otf */,
+				970820D62C8B28C1009975F6 /* DegularDisplay-Bold.otf */,
+				970820D72C8B28C1009975F6 /* DegularDisplay-BoldItalic.otf */,
+				970820D82C8B28C1009975F6 /* DegularDisplay-Light.otf */,
+				970820D92C8B28C1009975F6 /* DegularDisplay-LightItalic.otf */,
+				970820DA2C8B28C1009975F6 /* DegularDisplay-Medium.otf */,
+				970820DB2C8B28C1009975F6 /* DegularDisplay-MediumItalic.otf */,
+				970820DC2C8B28C1009975F6 /* DegularDisplay-Regular.otf */,
+				970820DD2C8B28C1009975F6 /* DegularDisplay-RegularItalic.otf */,
+				970820DE2C8B28C1009975F6 /* DegularDisplay-Semibold.otf */,
+				970820DF2C8B28C1009975F6 /* DegularDisplay-SemiboldItalic.otf */,
+				970820E02C8B28C1009975F6 /* DegularDisplay-Thin.otf */,
+				970820E12C8B28C1009975F6 /* DegularDisplay-ThinItalic.otf */,
+			);
+			path = "Degular Display (14)";
+			sourceTree = "<group>";
+		};
+		970820F12C8B28C1009975F6 /* Degular Mono (14) */ = {
+			isa = PBXGroup;
+			children = (
+				970820E32C8B28C1009975F6 /* DegularMono-Black.otf */,
+				970820E42C8B28C1009975F6 /* DegularMono-BlackItalic.otf */,
+				970820E52C8B28C1009975F6 /* DegularMono-Bold.otf */,
+				970820E62C8B28C1009975F6 /* DegularMono-BoldItalic.otf */,
+				970820E72C8B28C1009975F6 /* DegularMono-Light.otf */,
+				970820E82C8B28C1009975F6 /* DegularMono-LightItalic.otf */,
+				970820E92C8B28C1009975F6 /* DegularMono-Medium.otf */,
+				970820EA2C8B28C1009975F6 /* DegularMono-MediumItalic.otf */,
+				970820EB2C8B28C1009975F6 /* DegularMono-Regular.otf */,
+				970820EC2C8B28C1009975F6 /* DegularMono-RegularItalic.otf */,
+				970820ED2C8B28C1009975F6 /* DegularMono-Semibold.otf */,
+				970820EE2C8B28C1009975F6 /* DegularMono-SemiboldItalic.otf */,
+				970820EF2C8B28C1009975F6 /* DegularMono-Thin.otf */,
+				970820F02C8B28C1009975F6 /* DegularMono-ThinItalic.otf */,
+			);
+			path = "Degular Mono (14)";
+			sourceTree = "<group>";
+		};
+		970820F32C8B28C1009975F6 /* Degular Mono Variable */ = {
+			isa = PBXGroup;
+			children = (
+				970820F22C8B28C1009975F6 /* DegularMonoVariable.ttf */,
+			);
+			path = "Degular Mono Variable";
 			sourceTree = "<group>";
 		};
 		973302F82C663CEA00E6A1D9 /* ListElements */ = {
@@ -584,10 +845,68 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				970821162C8B28C1009975F6 /* DegularDisplay-LightItalic.otf in Resources */,
+				970820FF2C8B28C1009975F6 /* DegularText-SemiboldItalic.otf in Resources */,
+				970821092C8B28C1009975F6 /* Degular-Medium.otf in Resources */,
+				970821142C8B28C1009975F6 /* DegularDisplay-BoldItalic.otf in Resources */,
+				970821262C8B28C1009975F6 /* DegularMono-MediumItalic.otf in Resources */,
+				970821072C8B28C1009975F6 /* Degular-Light.otf in Resources */,
+				9708211A2C8B28C1009975F6 /* DegularDisplay-RegularItalic.otf in Resources */,
+				970821232C8B28C1009975F6 /* DegularMono-Light.otf in Resources */,
+				970821042C8B28C1009975F6 /* Degular-BlackItalic.otf in Resources */,
+				970820F42C8B28C1009975F6 /* DegularText-Black.otf in Resources */,
+				9708212D2C8B28C1009975F6 /* DegularMonoVariable.ttf in Resources */,
+				970821272C8B28C1009975F6 /* DegularMono-Regular.otf in Resources */,
+				970821222C8B28C1009975F6 /* DegularMono-BoldItalic.otf in Resources */,
+				9708212C2C8B28C1009975F6 /* DegularMono-ThinItalic.otf in Resources */,
+				9708210C2C8B28C1009975F6 /* Degular-RegularItalic.otf in Resources */,
+				9708210A2C8B28C1009975F6 /* Degular-MediumItalic.otf in Resources */,
+				970820F62C8B28C1009975F6 /* DegularText-Bold.otf in Resources */,
+				970820FE2C8B28C1009975F6 /* DegularText-Semibold.otf in Resources */,
+				9708212B2C8B28C1009975F6 /* DegularMono-Thin.otf in Resources */,
+				9708211D2C8B28C1009975F6 /* DegularDisplay-Thin.otf in Resources */,
+				970820FC2C8B28C1009975F6 /* DegularText-Regular.otf in Resources */,
+				970820F52C8B28C1009975F6 /* DegularText-BlackItalic.otf in Resources */,
+				9708210F2C8B28C1009975F6 /* Degular-Thin.otf in Resources */,
+				970821182C8B28C1009975F6 /* DegularDisplay-MediumItalic.otf in Resources */,
+				9708211B2C8B28C1009975F6 /* DegularDisplay-Semibold.otf in Resources */,
+				970821242C8B28C1009975F6 /* DegularMono-LightItalic.otf in Resources */,
+				970820FD2C8B28C1009975F6 /* DegularText-RegularItalic.otf in Resources */,
+				9708211F2C8B28C1009975F6 /* DegularMono-Black.otf in Resources */,
+				970821112C8B28C1009975F6 /* DegularDisplay-Black.otf in Resources */,
+				970821172C8B28C1009975F6 /* DegularDisplay-Medium.otf in Resources */,
+				970821122C8B28C1009975F6 /* DegularDisplay-BlackItalic.otf in Resources */,
 				9705ADBE2C64F53A00E73123 /* Preview Assets.xcassets in Resources */,
+				970821052C8B28C1009975F6 /* Degular-Bold.otf in Resources */,
+				970821252C8B28C1009975F6 /* DegularMono-Medium.otf in Resources */,
+				9708210E2C8B28C1009975F6 /* Degular-SemiboldItalic.otf in Resources */,
+				970821132C8B28C1009975F6 /* DegularDisplay-Bold.otf in Resources */,
+				970821022C8B28C1009975F6 /* DegularVariable.ttf in Resources */,
+				970821292C8B28C1009975F6 /* DegularMono-Semibold.otf in Resources */,
+				9708211E2C8B28C1009975F6 /* DegularDisplay-ThinItalic.otf in Resources */,
+				9708212A2C8B28C1009975F6 /* DegularMono-SemiboldItalic.otf in Resources */,
+				970820F92C8B28C1009975F6 /* DegularText-LightItalic.otf in Resources */,
+				970820F82C8B28C1009975F6 /* DegularText-Light.otf in Resources */,
+				970821012C8B28C1009975F6 /* DegularText-ThinItalic.otf in Resources */,
+				970821002C8B28C1009975F6 /* DegularText-Thin.otf in Resources */,
 				9705ADBB2C64F53A00E73123 /* Assets.xcassets in Resources */,
+				970821202C8B28C1009975F6 /* DegularMono-BlackItalic.otf in Resources */,
+				970821152C8B28C1009975F6 /* DegularDisplay-Light.otf in Resources */,
 				9705ADE12C64F55A00E73123 /* Localizable.xcstrings in Resources */,
+				9708211C2C8B28C1009975F6 /* DegularDisplay-SemiboldItalic.otf in Resources */,
+				970821282C8B28C1009975F6 /* DegularMono-RegularItalic.otf in Resources */,
+				970820FB2C8B28C1009975F6 /* DegularText-MediumItalic.otf in Resources */,
+				970821082C8B28C1009975F6 /* Degular-LightItalic.otf in Resources */,
+				970821102C8B28C1009975F6 /* Degular-ThinItalic.otf in Resources */,
+				970821192C8B28C1009975F6 /* DegularDisplay-Regular.otf in Resources */,
+				970821212C8B28C1009975F6 /* DegularMono-Bold.otf in Resources */,
+				970820F72C8B28C1009975F6 /* DegularText-BoldItalic.otf in Resources */,
+				970821062C8B28C1009975F6 /* Degular-BoldItalic.otf in Resources */,
+				970820FA2C8B28C1009975F6 /* DegularText-Medium.otf in Resources */,
+				9708210B2C8B28C1009975F6 /* Degular-Regular.otf in Resources */,
+				970821032C8B28C1009975F6 /* Degular-Black.otf in Resources */,
 				97C223032C73881B00470068 /* GoogleService-Info.plist in Resources */,
+				9708210D2C8B28C1009975F6 /* Degular-Semibold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,37 +936,39 @@
 				973302F32C663B2A00E6A1D9 /* ListElementInputText.swift in Sources */,
 				97DC06F62C737B96001F05EE /* UserLocalSave.swift in Sources */,
 				974C92082C80A8A4004F1627 /* ActivityUserModel.swift in Sources */,
-				970820A02C889830009975F6 /* testeView.swift in Sources */,
 				9745A92E2C6AC08F00578FEC /* GroupView.swift in Sources */,
 				9705ADF72C64F67600E73123 /* UserList.swift in Sources */,
 				9796B9F22C755100000F0520 /* UserWelcomeIcon.swift in Sources */,
-				9705AE0B2C64F82F00E73123 /* ChallengersView.swift in Sources */,
 				974C92162C81EA63004F1627 /* ActivityDao.swift in Sources */,
+				975BB8102C8E5CAD00FA86FE /* CameraView.swift in Sources */,
+				970821342C8B38E0009975F6 /* AloongGroupView.swift in Sources */,
 				973302FD2C6641E600E6A1D9 /* MediaDao.swift in Sources */,
 				970820A82C8927EA009975F6 /* ActivityUserController .swift in Sources */,
 				973302F72C663C9F00E6A1D9 /* ListElementInputMail.swift in Sources */,
 				9705ADF32C64F63F00E73123 /* DatePickerComponent.swift in Sources */,
 				976818AC2C6A3078008CACE8 /* GroupController.swift in Sources */,
+				970820AF2C8A58B2009975F6 /* MetricsComponent.swift in Sources */,
 				970820A22C8919E8009975F6 /* ActivityUserDao.swift in Sources */,
 				9745A9292C6A4AA600578FEC /* GroupViewCard.swift in Sources */,
 				974C921E2C85DE5A004F1627 /* ListElement.swift in Sources */,
 				974C92042C80A64C004F1627 /* ActivityModel.swift in Sources */,
-				9745A9322C6AC8BC00578FEC /* UserViewMiniature.swift in Sources */,
+				9745A9322C6AC8BC00578FEC /* UserViewCard.swift in Sources */,
 				9796B9F42C75549A000F0520 /* EditButton.swift in Sources */,
 				974C921C2C83CE31004F1627 /* AddFriendActivityView.swift in Sources */,
 				9705AE1A2C656AC900E73123 /* GroupViewList.swift in Sources */,
 				9796B9F82C779962000F0520 /* UserViewMyProfile.swift in Sources */,
 				974C92122C812BCF004F1627 /* ListElementInputInt.swift in Sources */,
 				9705AE032C64F77D00E73123 /* UserViewCreate.swift in Sources */,
-				9745A92B2C6A505C00578FEC /* GroupViewForAdd.swift in Sources */,
 				9705ADFD2C64F70F00E73123 /* UserDao.swift in Sources */,
 				9705ADB92C64F53900E73123 /* ContentView.swift in Sources */,
 				973302F52C663BC400E6A1D9 /* ListElementInputDate.swift in Sources */,
+				970821362C8D2482009975F6 /* PickerIntegerKeyboard.swift in Sources */,
 				970820AB2C89D4A1009975F6 /* ActivityCompleteModel.swift in Sources */,
 				9705ADFF2C64F72E00E73123 /* UserController.swift in Sources */,
 				976818AE2C6A3210008CACE8 /* GroupViewCreate.swift in Sources */,
 				9708209A2C87CF56009975F6 /* ActivitiesController.swift in Sources */,
 				9705AE012C64F74700E73123 /* ViewsController.swift in Sources */,
+				970820B12C8A6258009975F6 /* AloongComponent.swift in Sources */,
 				9705AE162C65646A00E73123 /* GroupModel.swift in Sources */,
 				9796B9FC2C77E04A000F0520 /* MemberModel.swift in Sources */,
 				9705ADED2C64F5E300E73123 /* ListElementBasic.swift in Sources */,
@@ -656,24 +977,29 @@
 				974C920A2C80AACA004F1627 /* ActivityViewCreate.swift in Sources */,
 				9705AE072C64F7DE00E73123 /* UserViewProfile.swift in Sources */,
 				9745A9302C6AC37B00578FEC /* StatisticController.swift in Sources */,
+				970821382C8D2A07009975F6 /* KeyboardBar.swift in Sources */,
 				974C92182C81FC95004F1627 /* ActivityGroupModel.swift in Sources */,
 				9705ADF92C64F6A000E73123 /* UserCardList.swift in Sources */,
 				974C92142C81314C004F1627 /* ListElementInputInteger.swift in Sources */,
 				9705AE112C65085300E73123 /* Home.swift in Sources */,
 				973303012C664F0200E6A1D9 /* Definitions.swift in Sources */,
+				9708213C2C8DD568009975F6 /* OnboardInforsView.swift in Sources */,
 				9705AE202C6574F600E73123 /* GroupDao.swift in Sources */,
 				970820A62C89266E009975F6 /* ActivityGroupController.swift in Sources */,
 				9796B9FA2C77DE1E000F0520 /* MembersController.swift in Sources */,
+				970820AD2C8A4932009975F6 /* ActivityCard.swift in Sources */,
 				973302FF2C66466400E6A1D9 /* ListElementInputSelector.swift in Sources */,
 				9705AE1E2C656C1F00E73123 /* GroupViewEdit.swift in Sources */,
 				9705ADEB2C64F5B400E73123 /* Functions.swift in Sources */,
 				9745A9272C6A39AF00578FEC /* ListElementInputLongText.swift in Sources */,
+				9708213A2C8DCB56009975F6 /* DecisionCreateOrAloongGroupView.swift in Sources */,
 				97C2230C2C73FC6600470068 /* FirebaseInterface.swift in Sources */,
 				974C920E2C80B5DF004F1627 /* ActivityView.swift in Sources */,
 				9705ADF52C64F65F00E73123 /* ImageLoader.swift in Sources */,
 				9708209C2C87D750009975F6 /* ActivityGroupDao.swift in Sources */,
 				9745A9342C6B86D800578FEC /* ProgressView.swift in Sources */,
 				9705AE222C6575B900E73123 /* MemberDao.swift in Sources */,
+				970821322C8B2B5A009975F6 /* Fonts.swift in Sources */,
 				9705AE252C6579AE00E73123 /* SignInView.swift in Sources */,
 				9705AE052C64F7A500E73123 /* UserViewEdit.swift in Sources */,
 				9705AE0D2C64FBD800E73123 /* SplashView.swift in Sources */,
@@ -854,6 +1180,7 @@
 				DEVELOPMENT_TEAM = 7P8CW3852J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Macro/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Aloong;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -890,6 +1217,7 @@
 				DEVELOPMENT_TEAM = 7P8CW3852J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Macro/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Aloong;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

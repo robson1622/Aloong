@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ActivityViewCreate: View {
     @EnvironmentObject var controller : GeneralController
+    @State var image : UIImage?
     let idUser : String
     let idGroup : String
     @State var model : ActivityModel?
@@ -61,6 +62,7 @@ struct ActivityViewCreate: View {
             .padding(.horizontal,24)
             .onAppear{
                 listOfFriends = controller.group.usersOfThisGroup
+                image = controller.activities.imagesForNewActivity
             }
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
@@ -100,9 +102,11 @@ struct ActivityViewCreate: View {
     var header: some View{
         VStack{
             HStack(alignment: .top){
-                ImageLoader(url: "nome da image", squere: true)
-                    .cornerRadius(15)
-                    .frame(width: 115, height: 144)
+                if image != nil{
+                    Image(uiImage: image!)
+                        .resizable()
+                        .scaledToFit()
+                }
                 
                 VStack{
                     TextField("Adicione um Titulo...", text: $title)
@@ -269,8 +273,10 @@ struct ActivityViewCreate: View {
     func create(){
         self.insertInModel()
         Task{
-            if let sucess = await controller.activities.create(model: model!, idGroup: idGroup, idUserOwner: idUser, listOfOtherUsersIds: listOfAdded){
-                
+            if let _ = await controller.activities.create(model: model!, idGroup: idGroup, idUserOwner: idUser, listOfOtherUsersIds: listOfAdded){
+                if(controller.user.user != nil && controller.group.groupsOfThisUser.first != nil){
+                    ViewsController.shared.navigateTo(to: .group(controller.group.groupsOfThisUser.first!),reset: true)
+                }
             }
             else{
                 print("ActivityViewCreate - ERRO, NÃO POSSÍVEL CRIAR ATIVIDADE")

@@ -15,6 +15,5 @@ struct GroupModel:  Codable, Hashable, Identifiable{
     var startDate : Date?
     var endDate : Date?
     var scoreType : String?
-    var groupImage : String?
     var invitationCode : String?
 }

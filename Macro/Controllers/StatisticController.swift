@@ -7,30 +7,41 @@
 
 import Foundation
 
+struct PositionUser{
+    let user : UserModel
+    let points : Int
+}
 
 class StatisticController: ObservableObject{
     
 //   private var listOfActivities : Activity?
-    private var listOfMembers : UserModel?
+    @Published var listOfUser : [UserModel]?
+    @Published var listOfPositionUser : [PositionUser]?
+    @Published var activitiesComplete : [ActivityCompleteModel]?
     
-    // estas listas seram ordenadas de acordo a colocação do usuário
-    @Published var activeDaysPositions : UserModel?
-    var caloriesPositions : UserModel?
-    var distancePositions : UserModel?
-    var intensityPositions : UserModel?
-    
-    @Published var lider : UserModel?
-    @Published var you : UserModel?
-    @Published var countDown : Int?
-    
-    var totalActivities : Int?
-    var totalCalories : Int?
-    var totalDistance : Int?
+    @Published var lider : PositionUser?
+    @Published var you : PositionUser?
     
     // calcula todas as estatísticas do grupo
-    func calculate(group: GroupModel){
-        //precisa solicitar o grupo ao servidor
-        //precisa solicitar todas as atividades do grupo
-        
+    func calculate(idUser : String){
+        if let activities = activitiesComplete, let users = listOfUser {
+            var pointsCounter: [PositionUser] = []
+            // Contar as atividades por usuário
+            for user in users {
+                let quantity = self.filterActivitiesByOwner(listActivities: activities, idUserAtual: user.id!)
+                pointsCounter.append(PositionUser(user: user, points: quantity.count))
+            }
+            // Ordenar os usuários pela pontuação, do maior para o menor
+            let sortedMembers = pointsCounter.sorted { $0.points > $1.points }
+            
+            lider = sortedMembers.first
+            you = sortedMembers.first { $0.user.id == idUser }  // Substituir por lógica para pegar o usuário atual
+        } else {
+            print("LISTA DE ATIVIDADES COMPLETAS OU LISTA DE USUÁRIOS NULA EM StatisticController/calculate")
+        }
+    }
+    
+    private func filterActivitiesByOwner(listActivities: [ActivityCompleteModel], idUserAtual: String) -> [ActivityCompleteModel] {
+        return listActivities.filter { $0.owner.id == idUserAtual }
     }
 }

@@ -55,3 +55,26 @@ func timeIntervalFromDate(_ date: Date) -> TimeInterval {
 
     return timeInterval
 }
+
+func formattedTime(from date: Date?) -> String {
+    guard let date = date else {
+        return "Invalid Date"
+    }
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm" // Formato de 24 horas
+    return dateFormatter.string(from: date)
+}
+
+func formattedDateAndTime(from date: Date?) -> String {
+    guard let date = date else {
+        return "Data inválida"
+    }
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale.current // Localização para o Brasil (ou outra, se desejar)
+    
+    // Formatar o dia e mês por extenso
+    dateFormatter.dateFormat = "d 'de' MMMM 'às' HH'h'mm"
+    return dateFormatter.string(from: date)
+}
