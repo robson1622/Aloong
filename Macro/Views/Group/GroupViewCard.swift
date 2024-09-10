@@ -45,8 +45,8 @@ struct GroupViewCard: View {
             }
             .padding(.vertical,16)
             HStack{
-                ProgressView(percent: differenceInDays(start: model.startDate, end: Date()), total: differenceInDays(start: model.startDate, end: model.endDate), unity: daysLeft )
-                    .padding(.vertical,16)
+//                ProgressView(percent: differenceInDays(start: model.startDate, end: Date()), total: differenceInDays(start: model.startDate, end: model.endDate), unity: daysLeft )
+//                    .padding(.vertical,16)
             }
         }
         .padding()

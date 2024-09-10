@@ -69,6 +69,7 @@ struct GroupView: View {
                 listActivities = controller.mainListActivities
                 you = controller.statistic.you ?? PositionUser(user: usermodelexemple, points: 0)
                 lider = controller.statistic.lider ?? you
+                self.calculateProgress(startDate: model.startDate!, endDate: model.endDate!)
             }
             
             VStack{
@@ -109,8 +110,9 @@ struct GroupView: View {
             Task{
                 await controller.updateAll()
                 listActivities = controller.mainListActivities
+                self.calculateProgress(startDate: model.startDate!, endDate: model.endDate!)
             }
-            self.calculateProgress(startDate: model.startDate!, endDate: model.endDate!)
+            
         }
     }
     
@@ -169,7 +171,7 @@ struct GroupView: View {
                 }
                 
             }
-            ProgressView(percent: lastDays, total: totalDays, unity: daysLeft)
+            ProgressView(percent: $lastDays, total: $totalDays, unity: daysLeft)
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity, alignment: .center)
         }
@@ -182,9 +184,9 @@ struct GroupView: View {
     
     
     func calculateProgress(startDate: Date, endDate: Date) {
+        
         totalDays = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0
         let daysPassed = Calendar.current.dateComponents([.day], from: startDate, to: Date()).day ?? 0
-
         lastDays = min(max(daysPassed, 0), totalDays) // Garantir que percent esteja no intervalo válido
     }
     
