@@ -57,7 +57,7 @@ struct UserViewMyProfile: View {
                                 Spacer()
                                 Button(action: {
                                     // Ação que será executada quando o botão for pressionado
-                                    print("Botão pressionado!")
+//                                    print("Botão pressionado!")
                                 }) {
                                     ZStack(alignment:.center){
                                         Circle()
@@ -141,7 +141,7 @@ struct UserViewMyProfile: View {
                         
                         Button(action: {
                             // Ação que será executada quando o botão for pressionado
-                            print("Botão pressionado!")
+//                            print("Botão pressionado!")
                         }) {
                             HStack(alignment: .center, spacing: 4) {
                                 // Body/Regular
@@ -165,7 +165,7 @@ struct UserViewMyProfile: View {
                         
                         Button(action: {
                             // Ação que será executada quando o botão for pressionado
-                            print("Botão pressionado!")
+//                            print("Botão pressionado!")
                         }) {
                             HStack(alignment: .center, spacing: 4) {
                                 // Body/Regular
