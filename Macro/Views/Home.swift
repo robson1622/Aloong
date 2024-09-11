@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Home: View {
-    @StateObject var controller : GeneralController = GeneralController()
+    @EnvironmentObject var controller : GeneralController
     @State var user : UserModel = UserModel()
     @State var listOfGroups : [GroupModel] = []
     @State var updating : Bool = false
@@ -61,50 +61,28 @@ struct Home: View {
                 }
                 .refreshable{
                     Task{
-                        listOfGroups.removeAll()
-                        self.load()
+                        await controller.updateAll()
+                        user = controller.user.user!
+                        listOfGroups = controller.group.groupsOfThisUser
                     }
                 }
                 VStack{
                     Spacer()
                     ZStack{
-                        // COLOCAR AQUI O FADE ATRAZ DO BOTAO
-                        NewActivityButton(onTap: {})
+                        if(controller.group.groupsOfThisUser.first != nil ){
+                            NewActivityButton(onTap: {},groupId: (controller.group.groupsOfThisUser.first?.id!)!)
+                        }
                     }
                 }
             }
         }
         .analyticsScreen(name: "Home view")
         .onAppear(){
-            self.load()
-//            self.funcaoDeTestes()
-                
+            user = controller.user.user!
+            listOfGroups = controller.group.groupsOfThisUser
         }
     }
     
-    func funcaoDeTestes(){
-        
-        Task{
-            let act = ActivityModel(title: "Treino", description: "fibrei", date: Date(), distance: 1.0, calories: 1.0, duration: TimeInterval(), steps: 1294312)
-            if let _ = await ActivityDao().create(model: act, idGroup: "WibQN1WBPmPsfdOTgQqX", idUserOwner: "001913.fac7aef0211f4c08a1e928d8837342ec.1839"){
-                
-            }
-        }
-    }
-    
-    func load(){
-        if(!updating){
-            updating = true
-            Task{
-                await controller.updateAll()
-                if(controller.user.user != nil){
-                    user = controller.user.user!
-                }
-                listOfGroups = controller.group.groupsOfThisUser
-                updating = false
-            }
-        }
-    }
 }
 
 #Preview {

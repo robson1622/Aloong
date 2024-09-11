@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ProgressView: View {
-    @State var percent : Int
-    @State var total : Int
+    @Binding var percent : Int
+    @Binding var total : Int
+    @State var progresBarPercent : CGFloat = 0
     let unity : String
-    let haight : CGFloat = 130.0
     var body: some View {
         GeometryReader{ geometry in
             VStack{
@@ -22,16 +22,22 @@ struct ProgressView: View {
                         .cornerRadius(3)
                     HStack{
                         Rectangle()
-                            .frame(width: geometry.size.width * CGFloat(percent) / CGFloat(total),height: 5)
+                            .frame(width: progresBarPercent ,height: 5)
                             .foregroundColor(.azul3)
                             .cornerRadius(3)
+                            .onChange(of: percent){ newvalue in
+                                self.calculate(width: geometry.size.width)
+                            }
+                            .onAppear{
+                                self.calculate(width: geometry.size.width)
+                            }
                         Spacer()
                     }
                     
                 }
                 HStack{
                     Spacer()
-                    Text("\(percent) \(unity)")
+                    Text("\(total - percent) \(unity)")
                         .font(.callout)
                         .foregroundColor(.cinza2)
                         .italic()
@@ -40,9 +46,17 @@ struct ProgressView: View {
             
         }
         .frame(height: 30)
+        
+    }
+    
+    private func calculate(width : CGFloat){
+        progresBarPercent = abs( width * CGFloat(CGFloat(percent)  / CGFloat(total) ))
+        if( progresBarPercent > width){
+            progresBarPercent = width
+        }
     }
 }
 
 #Preview {
-    ProgressView(percent: 50, total: 100,unity: "%")
+    ProgressView(percent: .constant(50), total: .constant(100),unity: "%")
 }

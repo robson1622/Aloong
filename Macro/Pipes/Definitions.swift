@@ -17,11 +17,11 @@ struct UserModelNames {
 }
 
 //let aniversario = Date("2023-05-19 10:30:00 +0000")
-let usermodelexemple : UserModel = UserModel(id: "ebv7e128hdixnws",nickname: "Barbs", name: "barbs",birthdate: Date(),email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lij324w")
-let usermodelexemple2 : UserModel = UserModel(id: "hew9829823giucgosa",nickname: "Nicole", name: "nico",birthdate: Date(),email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
-let usermodelexemple3 : UserModel = UserModel(id: "dnvuudbvscw98yw-0",nickname: "Robson", name: "robis",birthdate: Date(),email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
-let usermodelexemple4 : UserModel = UserModel(id: "cnkjbsdg8y8quwh",nickname: "Yana", name: "yan",birthdate: Date(),email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
-let usermodelexemple5 : UserModel = UserModel(id: "vcbdy8729ihdoih",nickname: "Flora", name: "flor",birthdate: Date(),email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
+let usermodelexemple : UserModel = UserModel(id: "ebv7e128hdixnws", name: "barbs",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lij324w")
+let usermodelexemple2 : UserModel = UserModel(id: "hew9829823giucgosa", name: "nico",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
+let usermodelexemple3 : UserModel = UserModel(id: "dnvuudbvscw98yw-0", name: "robis",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
+let usermodelexemple4 : UserModel = UserModel(id: "cnkjbsdg8y8quwh", name: "yan",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
+let usermodelexemple5 : UserModel = UserModel(id: "vcbdy8729ihdoih", name: "flor",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
 
 
 
@@ -33,7 +33,7 @@ struct GroupModelNames {
     static let scoreType : String =  NSLocalizedString("Points system", comment: "")
 }
 
-let exempleGroup : GroupModel = GroupModel(id: "ebv7e128hdixnws", idUser: "sjcb87w801hdo8y7cguos", title: "Grupo da Fibração", description: "Exemplo de grupo para mostrar como ficaria quando estivesse um pronto para começar a ver as organizações de texto, de imagens e lista de coisas, com um texto maior podemos ver também como ficaria a quebra de linhas do campo de texto.", startDate: Date(), endDate: Date(), scoreType: "Dias ativos", groupImage: "noimage")
+let exempleGroup : GroupModel = GroupModel(id: "ebv7e128hdixnws", idUser: "sjcb87w801hdo8y7cguos", title: "Grupo da Fibração", description: "Exemplo de grupo para mostrar como ficaria quando estivesse um pronto para começar a ver as organizações de texto, de imagens e lista de coisas, com um texto maior podemos ver também como ficaria a quebra de linhas do campo de texto.", startDate: Date(), endDate: Date(), scoreType: "Dias ativos")
 
 
 let pointsSystemNames : [String] = [NSLocalizedString("Active days", comment: ""),NSLocalizedString("Calories", comment: ""),NSLocalizedString("Distance", comment: ""),NSLocalizedString("Intensity", comment: "")]

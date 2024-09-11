@@ -8,25 +8,49 @@
 import SwiftUI
 
 struct SplashView: View {
-    @State var closetab : Bool = false
-    @StateObject var controller : UserController = UserController()
+    @State var isAnimating : Bool = false
+    @EnvironmentObject var controller : GeneralController
     var body: some View {
         VStack{
-            Text("Temporary Loading...")
+            Image("aloong_logo_png")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 250)
+                .scaleEffect(isAnimating ? 1.2 : 1.0) // Animação de pulso
+                .animation(Animation.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: isAnimating)
+                .onAppear {
+                    isAnimating = true
+                }
+                
         }
+        .ignoresSafeArea()
+        .frame(maxWidth: .infinity,maxHeight: .infinity)
+        .background(
+        Image("backgroudSignIn")
+            .resizable()
+            .scaledToFill()
+        )
         .onAppear(){
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        withAnimation {
-                            closetab = true
-                            if(controller.user == nil){
-                                ViewsController.shared.navigateTo(to: .signIn,reset: true)
-                            }
-                            else{
-                                ViewsController.shared.navigateTo(to: .home,reset: true)
-                            }
-                        }
+            Task{
+                await controller.updateAll()
+                if(UserLocalSave().loadOnboardingSkip() == true){
+                    if(controller.user.user != nil && controller.group.groupsOfThisUser.first != nil){
+                        ViewsController.shared.navigateTo(to: .group(controller.group.groupsOfThisUser.first!),reset: true)
                     }
+                    else if(controller.user.user != nil){
+                        ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
+                    }
+                    else{
+                        ViewsController.shared.navigateTo(to: .signIn,reset: true)
+                    }
+                }
+                else{
+                    ViewsController.shared.navigateTo(to: .onboarding, reset: true)
+                }
+            }
+           
         }
+        
     }
 }
 

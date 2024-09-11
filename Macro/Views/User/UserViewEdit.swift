@@ -39,8 +39,10 @@ struct UserViewEdit: View {
                 HStack{
                     Spacer()
                     Button(action:{
-                        saveChanges()
-                        showTab = false
+                        Task{
+                            await saveChanges()
+                            showTab = false
+                        }
                     }){
                         Text(save)
                             .font(.callout)
@@ -71,9 +73,7 @@ struct UserViewEdit: View {
         .padding()
         .onAppear(){
             
-            nickname = controller.user?.nickname ?? ""
             name = controller.user?.name ?? ""
-            birthdate = controller.user?.birthdate ?? Date()
             email = controller.user?.email ?? ""
             userimage = controller.user?.userimage ?? ""
         }
@@ -81,14 +81,12 @@ struct UserViewEdit: View {
         
     }
     
-    func saveChanges(){
-        controller.user?.nickname = nickname
+    func saveChanges()async {
         controller.user?.name = name
-        controller.user?.birthdate = birthdate
         controller.user?.email = email
         controller.user?.userimage = userimage
         
-        controller.updateUser()
+        await controller.updateUser()
     }
     
     func deleteUser(){

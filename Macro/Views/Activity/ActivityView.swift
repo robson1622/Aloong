@@ -8,140 +8,93 @@
 import SwiftUI
 
 struct ActivityView: View {
-    @State var model : ActivityModel
-    @State var listOfImages : [String] = []
+    @EnvironmentObject var controller : GeneralController
+    @State var userOwner : Bool = false
+    let activity : ActivityModel
+    let user : UserModel
+    let imagesString : [String]
+    @State var listOfImages : [UIImage] = []
+    @State var numberOfAloongs : Int = 12
+    @State var aloongActive : Bool = false
     
-    
+    let edit : String = NSLocalizedString("Edit", comment: "Texto do botão para editar a atividade")
     var body: some View {
         VStack{
-            Header(title: "Activity")
-            ScrollView{
-                header
-                firstInput
+            Header(trailing: [AnyView(
+                VStack{
+                    if(userOwner){
+                        Button(action:{
+                            
+                        }){
+                            Text(edit)
+                                .font(.callout)
+                                .foregroundColor(.azul4)
+                        }
+                    }
+                }
+            )])
+            UserViewCard(model: user, description: formattedDateAndTime(from: activity.date))
+                .padding(.bottom,6)
+            ZStack(alignment:.bottom){
+                ImageLoader(url: imagesString.first, squere: true, largeImage: true)
+                HStack{
+                    MetricsComponent(icon: .duration, value: formattedTime(from: activity.date))
+                    if(activity.distance != nil){
+                        MetricsComponent(icon: .distance, value: String(format: "%.1f", activity.distance!))
+                    }
+                    if(activity.steps != nil){
+                        MetricsComponent(icon: .steps, value: String(format: "%.1f", activity.steps!))
+                    }
+//                    if(activity.calories != nil){
+//                        MetricsComponent(icon: .calories, value: String(format: "%.1f", activity.calories!))
+//                    }
+                    Spacer()
+                }
+                .padding(.bottom,12)
+                .padding(.leading,12)
             }
+            HStack{
+                Text(activity.title ?? "")
+                    .font(.title3)
+                    .foregroundColor(.black)
+                Spacer()
+            }
+            .padding(.top,12)
+            HStack{
+                Text(activity.description ?? "")
+                    .font(.footnote)
+                    .foregroundColor(Color(.systemGray))
+                Spacer()
+            }
+            HStack{
+                //AloongComponent(marcador: $numberOfAloongs, active: $aloongActive)
+                Spacer()
+            }
+            Spacer()
+        }
+        .padding(24)
+        .onAppear{
         }
         .refreshable {
             
         }
     }
     
-    var header: some View{
-        VStack{
-            ImageLoader(url: "nome da image", squere: true)
-                .cornerRadius(15)
-                .frame(height: 400)
-                .padding()
-                
-            VStack{
-                HStack{
-                    Text(ActivityModelNames.title)
-                        .bold()
-                    Spacer()
-                }
-                .padding(.horizontal,16)
-                Divider()
-                HStack{
-                    Text(ActivityModelNames.description)
-                        .bold()
-                    Spacer()
-                }
-                .padding(.horizontal,16)
-            }
-            .padding(16)
-            .background(Color(.systemGray6))
-            .cornerRadius(10)
-            .padding()
-        }
-    }
-    
-    var firstInput: some View{
-        VStack{
-            HStack{
-                Text(ActivityModelNames.otherPeople)
-                    .bold()
-                    .font(.callout)
-                Spacer()
-                ZStack{
-                    Circle()
-                        .frame(width: 35)
-                        .foregroundColor(.green)
-                        .padding(.trailing,45)
-                    Circle()
-                        .frame(width: 35)
-                        .foregroundColor(.red)
-                    ZStack{
-                        Circle()
-                            .frame(width: 35)
-                            .foregroundColor(.blue)
-                        VStack{
-                            Image(systemName: "plus")
-                                .foregroundColor(.white)
-                                .bold()
-                                .font(.callout)
-                            Text("124")
-                                .font(.callout)
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .padding(.leading,35)
-                }
-            }
-            .padding(.horizontal,16)
-            Divider()
-                .padding(.horizontal,16)
-            HStack{
-                Text(ActivityModelNames.duration)
-                    .bold()
-                Spacer()
-                Text(timeIntervalForString(model.duration!))
-                    .font(.callout)
-            }
-            .padding(.horizontal,16)
-            Divider()
-                .padding(.horizontal,16)
-            HStack{
-                Text(ActivityModelNames.distance)
-                    .bold()
-                Spacer()
-            }
-            .padding(.horizontal,16)
-            Divider()
-                .padding(.horizontal,16)
-            HStack{
-                Text(ActivityModelNames.calories)
-                    .bold()
-                Spacer()
-            }
-            .padding(.horizontal,16)
-            Divider()
-                .padding(.horizontal,16)
-            HStack{
-                Text(ActivityModelNames.steps)
-                    .bold()
-                Spacer()
-                Text("\(String(describing: model.steps))")
-                    .font(.callout)
-            }
-            .padding(.horizontal,16)
-        }
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(10)
-        .padding()
-        
-    }
-    
-    var secondImput: some View{
-        VStack{
-            
-        }
-    }
     
     func update(){
-        print("CONDAR A FUNÇÃO DE RECARREGAR A ATIVIDADE EM ActivityView/update")
+        Task{
+            listOfImages.removeAll()
+            for image in imagesString{
+                controller.downloadImage(from: image) { response in
+                    if let response = response{
+                        listOfImages.append(response)
+                    }
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    ActivityView(model: activityexemple)
+    ActivityView(activity: activityexemple, user: usermodelexemple5,imagesString: [])
 }

@@ -6,15 +6,13 @@
 //
 
 import Foundation
-
+import PhotosUI
 
 class ActivityDao : ObservableObject{
     static var shared : ActivityDao = ActivityDao()
     let collectionName = "activities"
-    let collectionNameRelationGroup = "activitygroup"
-    let collectionNameRelationUser = "activityuser"
-    
-    func create(model : ActivityModel,idGroup : String, idUserOwner : String, listOfUsersIds : [String] = []) async -> Bool?{
+    let collectionImagesName = "activityimages"
+    func create(model : ActivityModel,idGroup : String, idUserOwner : String, listOfUsersIds : [String] = [],listOfImages : [UIImage] = []) async -> Bool?{
         // cria a atividade
         if let result = FirebaseInterface.shared.createDocument(model: model, collection: collectionName){
             var withId = model
@@ -30,6 +28,7 @@ class ActivityDao : ObservableObject{
                     
                 }
             }
+            _ = self.createImageRelation(listOfImages: listOfImages, idActivity: result)
             return await self.update(model: withId)
         }
         print("NÃO FOI POSSÍVEL CRIAR ATIVIDADE EM ActivityDao/create")
@@ -38,9 +37,11 @@ class ActivityDao : ObservableObject{
     
     private func createRelationForAnyUser(idGroup : String, idUser : String,idActivity : String, state : String) async -> Bool?{
         // cria a relação com o grupo
-        if let _ = await createRelationActivityWithGroup(idUser: idUser, idGroup: idGroup){
+        let newGroupActivity = ActivityGroupModel(idActivity: idActivity, idGroup: idGroup)
+        if let _ = await ActivityGroupDao.shared.create(model: newGroupActivity){
             // cria a relação com o usuário
-            if let _ = await createRelationActivityWithUser(idUser: idUser, idActivity: idActivity, state: state){
+            let newUserActivity = ActivityUserModel(idUser: idUser, idActivity: idActivity, state: state)
+            if let _ = await ActivityUserDao.shared.create(model: newUserActivity){
                 return true
             }
         }
@@ -78,35 +79,20 @@ class ActivityDao : ObservableObject{
         return nil
     }
     
-    func getAllActivitiesOfAGroup(groupId : String) async -> [ActivityModel]{
-        
-        return []
-    }
-    
-    
-    private func createRelationActivityWithGroup(idUser: String,idGroup: String) async -> Bool?{
-        var model : GroupActivityModel = GroupActivityModel(idUser: idUser, idGroup : idGroup)
-        if let newRelationWithGroupId = FirebaseInterface.shared.createDocument(model: model , collection: collectionNameRelationGroup){
-            model.id = newRelationWithGroupId
-            if let _ = await FirebaseInterface.shared.updateDocument(model: model, id: model.id!, collection: collectionNameRelationGroup){
-                print("RELAÇÃO CRIADA COM SUCESSO")
-                return true
+    private func createImageRelation(listOfImages : [UIImage],idActivity : String) -> Bool?{
+        var retorno : Bool? = true
+        for image in listOfImages{
+            FirebaseInterface.shared.uploadImage(image: image, type: .activity) { url in
+                var relation : ActivityImageModel = ActivityImageModel(idActivity: idActivity,imageURL: url)
+                if let idRelation = FirebaseInterface.shared.createDocument(model: relation, collection: self.collectionImagesName){
+                    relation.id = idRelation
+                }
+                else{
+                    retorno = false
+                    print("ERRO AO TENTAR ENVIAR ActivityImageModel para o servidor em ActivityDao/createImageRelation")
+                }
             }
         }
-        print("NÃO FOI POSSÍVEL CRIAR A RELAÇÃO DA ATIVIDADE COM O GRUPO EM ActivityDao/createRelationGroup")
-        return nil
-    }
-    
-    private func createRelationActivityWithUser(idUser: String,idActivity: String,state : String) async -> Bool?{
-        var model : UserActivityModel = UserActivityModel(idUser: idUser, idActivity: idActivity, state: state)
-        if let newRelationWithGroupId = FirebaseInterface.shared.createDocument(model: model , collection: collectionNameRelationUser){
-            model.id = newRelationWithGroupId
-            if let _ = await FirebaseInterface.shared.updateDocument(model: model, id: model.id!, collection: collectionNameRelationUser){
-                print("RELAÇÃO CRIADA COM SUCESSO")
-                return true
-            }
-        }
-        print("NÃO FOI POSSÍVEL CRIAR A RELAÇÃO DA ATIVIDADE COM O GRUPO EM ActivityDao/createRelationGroup")
-        return nil
+        return retorno
     }
 }

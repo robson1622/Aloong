@@ -8,80 +8,139 @@
 import SwiftUI
 
 struct ListElement: View {
+    @FocusState var focus : Bool
     let title : String
     enum symbols{
         case clock
         case distance
         case steps
         case people
+        case date
+        case calories
+        case time
     }
     let symbol : symbols
-    @Binding var values : String?
+    @Binding var values : String
     @State var inputUser : String = ""
+    
+    @State var withText : Int = 0
     var body: some View {
         VStack{
-            HStack{
-                Text(title)
-                    .font(.callout)
-                    .foregroundStyle(Color(.black))
-                Spacer()
-                Image(systemName: self.getNameOfSymbol())
-                    .font(.callout)
-                    .foregroundColor(.black)
-                if(values != nil){
-                    switch symbol {
-                    case .clock:
-                        self.inputClock
-                    case .distance:
-                        self.inputFloat
-                    case .steps:
-                        self.inputFloat
-                    case .people:
-                        VStack{}
+            Button(action:{
+                focus = true
+            }){
+                HStack{
+                    Text(title)
+                        .font(.callout)
+                        .foregroundStyle(Color(.black))
+                    Spacer()
+                    Image(systemName: self.getNameOfSymbol())
+                        .font(.callout)
+                        .foregroundColor(.black)
+                    if(!values.isEmpty){
+                        switch symbol {
+                        case .clock:
+                            self.inputClock
+                        case .distance:
+                            self.inputFloat
+                        case .steps:
+                            self.inputFloat
+                        case .calories:
+                            self.inputFloat
+                        case .time:
+                            Text(values)
+                                .font(.callout)
+                                .foregroundStyle(.black)
+                        default :
+                            VStack{}
+                        }
+                        
                     }
                     
                 }
                 
             }
-            .padding()
-            
         }
-        .frame(height: .infinity)
-        .background(Color(.systemGray6))
+        .onAppear{
+            if(!values.isEmpty){
+                inputUser = values
+            }
+            else{
+                switch symbol {
+                case .clock:
+                    inputUser = "1H30M"
+                case .distance:
+                    inputUser = "3.2KM"
+                case .steps:
+                    inputUser = "1.2K Steps"
+                default:
+                    return
+                }
+            }
+        }
     }
     
     var inputFloat: some View{
         HStack{
-            TextField(symbol == .distance ? "1.2km" : "3.5K steps", text: $inputUser)
-                .keyboardType(.numberPad)
+            TextField(symbol == .distance ? "1.2km" : "2.2K steps", text: $inputUser)
+                .keyboardType(.decimalPad)
+                .frame(width: 5 + (8 * CGFloat(inputUser.count)))
+                .padding(.trailing,-5)
+                .multilineTextAlignment(.trailing)
+                .focused($focus)
+                
+                
+            if(symbol == .distance){
+                Text("KM")
+                    .font(.callout)
+                    .foregroundStyle(Color(.black))
+            }
+            else if(symbol == .steps){
+                Text("K Steps")
+                    .font(.callout)
+                    .foregroundStyle(Color(.black))
+            }
+            else if(symbol == .calories){
+                Text("Cal")
+                    .font(.callout)
+                    .foregroundStyle(Color(.black))
+            }
+            
         }
     }
     
     var inputClock: some View{
         HStack{
-            Text(values!)
+            Text(values)
                 .font(.callout)
                 .foregroundStyle(Color(.black))
+                .focused($focus)
         }
     }
     
     func getNameOfSymbol() -> String{
         switch symbol {
         case .clock:
-            return "clock"
+            return ActivityModelNames.durationIcon
         case .distance:
-            return "arrow.triangle.swap"
+            return ActivityModelNames.distanceIcon
         case .steps:
-            return "figure.walk"
+            return ActivityModelNames.stepsIcon
         case .people:
-            return "person.crop.circle.badge.plus"
+            return ActivityModelNames.addOtherUserIcon
+        case .calories:
+            return ActivityModelNames.caloriesIcon
+        default :
+            return ""
         }
     }
     
-    
+    private func hideKeyboard() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
 }
 
 #Preview {
-    @State var teste : String? = "2.2k"
-    return ListElement(title: "Distance", symbol: .distance, values: $teste)
+    @State var teste : String = "2.2"
+    return ListElement(title: "Distance", symbol: .steps, values: $teste)
 }

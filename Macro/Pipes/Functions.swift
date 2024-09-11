@@ -27,10 +27,54 @@ func timeIntervalForString(_ interval : TimeInterval) -> String{
     // Converter o TimeInterval para horas, minutos e segundos
     let hours = Int(interval) / 3600
     let minutes = (Int(interval) % 3600) / 60
-    let seconds = Int(interval) % 60
     
     // Criar a string formatada
     let formattedString = String(format: "%02dh %02dm", hours, minutes)
     
     return formattedString
+}
+
+func timeIntervalForString(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "H'h'mm"
+    
+    let formattedTime = dateFormatter.string(from: date)
+    return formattedTime
+}
+
+
+func timeIntervalFromDate(_ date: Date) -> TimeInterval {
+    let calendar = Calendar.current
+
+    // Extrair horas e minutos do Date
+    let hours = calendar.component(.hour, from: date)
+    let minutes = calendar.component(.minute, from: date)
+
+    // Converter para TimeInterval (segundos)
+    let timeInterval = TimeInterval(hours * 3600 + minutes * 60)
+
+    return timeInterval
+}
+
+func formattedTime(from date: Date?) -> String {
+    guard let date = date else {
+        return "Invalid Date"
+    }
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm" // Formato de 24 horas
+    return dateFormatter.string(from: date)
+}
+
+func formattedDateAndTime(from date: Date?) -> String {
+    guard let date = date else {
+        return "Data inválida"
+    }
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale.current // Localização para o Brasil (ou outra, se desejar)
+    
+    // Formatar o dia e mês por extenso
+    dateFormatter.dateFormat = "d 'de' MMMM 'às' HH'h'mm"
+    return dateFormatter.string(from: date)
 }

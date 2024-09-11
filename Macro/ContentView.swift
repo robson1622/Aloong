@@ -11,6 +11,7 @@ import FirebaseAnalytics
 struct ContentView: View {
     @StateObject var router = ViewsController.shared
     @State var home : Home = Home()
+    @StateObject var controller : GeneralController = GeneralController()
     let splash : SplashView = SplashView()
     var body: some View {
         NavigationStack(path: $router.navPath){
@@ -22,35 +23,49 @@ struct ContentView: View {
                 //user part
                     case .user(let model):
                         UserViewProfile(model: model).navigationBarBackButtonHidden(hide)
-                    case .challengers :
-                        ChallengersView().navigationBarBackButtonHidden(hide)
-                    case .createUser(let id):
-                        UserViewCreate(idApple : id).navigationBarBackButtonHidden(hide)
+                    case .createUser(let idApple, let name, let email):
+                        UserViewCreate(idApple : idApple,name : name, email: email).navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
                     case .myProfile:
                         UserViewMyProfile().navigationBarBackButtonHidden(hide)
                 //group part
                     case .group(let model):
                         GroupView(model: model).navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
                     case .createGroup:
                         GroupViewCreate().navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
                     case .editGroup(let model):
                         GroupViewEdit(model: model).navigationBarBackButtonHidden(hide)
+                    case .aloongInGroup:
+                        AloongGroupView().navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
                 //activity part
-                    case .activity(let model):
-                        ActivityView(model: model).navigationBarBackButtonHidden(hide)
-                case .createActivity:
-                    ActivityViewCreate().navigationBarBackButtonHidden(hide)
+                    case .activity(let activity, let user, let listImagesString):
+                    ActivityView(activity: activity, user: user,imagesString : listImagesString).navigationBarBackButtonHidden(hide)
+                    case .createActivity(let idUser, let idGroup):
+                        ActivityViewCreate(idUser: idUser,idGroup: idGroup).navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
                     
                 //general part
                     case .home :
                         home.navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
                     case .signIn :
                         SignInView().navigationBarBackButtonHidden(hide)
-                    
+                    case .decisionCreateOrAloong:
+                        DecisionCreateOrAloongGroupView().navigationBarBackButtonHidden(hide)
+                    case .onboarding:
+                        OnboardInforsView().navigationBarBackButtonHidden(hide)
+                    case .camera:
+                        CameraView().navigationBarBackButtonHidden(hide)
+                            .environmentObject(controller)
                 }
                 
             }
+            .environmentObject(controller)
         }
+        
     }
 }
 

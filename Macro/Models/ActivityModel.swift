@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct ActivityModel : Codable, Hashable{
+struct ActivityModel : Codable, Hashable, Identifiable{
     var id : String?
     var title : String?
     var description : String?
@@ -17,4 +17,5 @@ struct ActivityModel : Codable, Hashable{
     var calories : Float?
     var duration : TimeInterval?
     var steps : Int?
+    var image : String?
 }
