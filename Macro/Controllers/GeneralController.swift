@@ -6,7 +6,8 @@
 //
 
 import Foundation
-
+import SwiftUI
+import PhotosUI
 
 class GeneralController: ObservableObject{
     @Published var user : UserController = UserController()
@@ -41,8 +42,14 @@ class GeneralController: ObservableObject{
                             newActivityComplete.groupsOfthisActivity.append(group.groupsOfThisUser.first!)
                             // pegamos todos os usuários com relação com esta atividade
                             newActivityComplete.usersOfthisActivity = allUsers
-                            
-                            
+                            // pegando as imagens
+                            let listOfImages = await ActivityImageDao.shared.readAllActivityImagesOfActivity(idActivity: activity.id!)
+                            for element in listOfImages{
+                                if let url = element.imageURL{
+                                    print(" url :\(url)")
+                                    newActivityComplete.images.append(url)
+                                }
+                            }
                             // adicionamos ele na lista
                             mainListActivities.append(newActivityComplete)
                         }
@@ -131,4 +138,20 @@ class GeneralController: ObservableObject{
         
     }
     
+    func uploadImage(image: UIImage,type: localImage,url: String? = nil, completion: @escaping(String?) -> Void){
+        FirebaseInterface.shared.uploadImage(image: image, type: type, url: url) { response in
+            completion(response)
+        }
+    }
+    
+    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        if (!urlString.isEmpty){
+            FirebaseInterface.shared.downloadImage(from: urlString){ response in
+                completion(response)
+            }
+        }
+        else{
+            completion(nil)
+        }
+    }
 }

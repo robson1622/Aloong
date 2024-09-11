@@ -30,7 +30,6 @@ struct SplashView: View {
             .resizable()
             .scaledToFill()
         )
-        .padding(.top,-25)
         .onAppear(){
             Task{
                 await controller.updateAll()
@@ -39,7 +38,7 @@ struct SplashView: View {
                         ViewsController.shared.navigateTo(to: .group(controller.group.groupsOfThisUser.first!),reset: true)
                     }
                     else if(controller.user.user != nil){
-                        ViewsController.shared.navigateTo(to: .createGroup, reset: true)
+                        ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
                     }
                     else{
                         ViewsController.shared.navigateTo(to: .signIn,reset: true)

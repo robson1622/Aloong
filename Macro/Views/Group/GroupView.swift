@@ -15,6 +15,8 @@ struct GroupView: View {
     @State var totalDays : Int = 0
     @State var lastDays : Int = 0
     @State var lider : PositionUser?
+    @State var liderImage : UIImage?
+    @State var youImage : UIImage?
     @State var you : PositionUser?
     @State var listActivities : [ActivityCompleteModel]?
     
@@ -32,7 +34,12 @@ struct GroupView: View {
                         Image("aloong_logo")
                             .frame(width: 134, height: 41.07149)
                         Spacer()
-                        ImageLoader(url: "")
+                        Button(action:{
+                            ViewsController.shared.navigateTo(to: .myProfile)
+                        }){
+                            ImageLoader(url: controller.user.user?.userimage ,squere: false,largeImage: false)
+                        }
+                        
                     }
                     .padding(.horizontal,24)
                     .padding(.top,45)
@@ -44,9 +51,9 @@ struct GroupView: View {
                             ForEach(listActivities!, id: \.id ){ index in
                                 if(index.activity != nil){
                                     Button(action:{
-                                        ViewsController.shared.navigateTo(to: .activity(index.activity!,index.owner))
+                                        ViewsController.shared.navigateTo(to: .activity(index.activity!,index.owner,index.images))
                                     }){
-                                        ActivityCard(activity: index.activity!, user: index.owner)
+                                        ActivityCard(imageURL: index.images.first,activity: index.activity!, user: index.owner)
                                     }
                                 }
                             }
@@ -66,10 +73,7 @@ struct GroupView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.branco)
             .onAppear{
-                listActivities = controller.mainListActivities
-                you = controller.statistic.you ?? PositionUser(user: usermodelexemple, points: 0)
-                lider = controller.statistic.lider ?? you
-                self.calculateProgress(startDate: model.startDate!, endDate: model.endDate!)
+                self.update()
             }
             
             VStack{
@@ -108,11 +112,9 @@ struct GroupView: View {
         }
         .refreshable {
             Task{
-                await controller.updateAll()
-                listActivities = controller.mainListActivities
-                self.calculateProgress(startDate: model.startDate!, endDate: model.endDate!)
+                await self.updateAll()
+                self.update()
             }
-            
         }
     }
     
@@ -129,7 +131,7 @@ struct GroupView: View {
             HStack (alignment:.center, spacing: 22){
                 
                 HStack (spacing: 9){
-                    ImageLoader(url: "")
+                    ImageLoader(squere: false,largeImage: false,image: liderImage ?? UIImage())
                     VStack (alignment:.leading){
                         // Callout/Emphasized
                         Text("\(lider?.points ?? 0 )")
@@ -154,7 +156,7 @@ struct GroupView: View {
                     )
                 
                 HStack (spacing: 9){
-                    ImageLoader(url: "")
+                    ImageLoader(url: controller.user.user?.userimage, squere: false,largeImage: false)
                     VStack (alignment:.leading){
                         // Callout/Emphasized
                         Text("\(you?.points ?? 0 )")
@@ -190,6 +192,32 @@ struct GroupView: View {
         lastDays = min(max(daysPassed, 0), totalDays) // Garantir que percent esteja no intervalo válido
     }
     
+    private func update(){
+        listActivities = controller.mainListActivities
+        self.calculateProgress(startDate: model.startDate!, endDate: model.endDate!)
+        
+        you = controller.statistic.you ?? PositionUser(user: usermodelexemple, points: 0)
+        lider = controller.statistic.lider ?? you
+        if(you!.user.userimage != nil && you!.user.userimage!.isEmpty){
+            FirebaseInterface.shared.downloadImage(from: (you?.user.userimage)!) { image in
+                youImage = image
+            }
+        }
+        if(lider!.user.userimage != nil && lider!.user.userimage!.isEmpty){
+            FirebaseInterface.shared.downloadImage(from: (lider?.user.userimage)!) { image in
+                liderImage = image
+            }
+        }
+        self.calculateProgress(startDate: model.startDate!, endDate: model.endDate!)
+        Task{
+            let teste : [ActivityImageModel] = await FirebaseInterface.shared.readDocuments(id: "YMGpkBoFuFqQZPijyr7G", collection: "activityimages", field: "idActivity")
+            print(teste)
+        }
+    }
+    
+    private func updateAll() async{
+        await controller.updateAll()
+    }
 }
 
 #Preview {

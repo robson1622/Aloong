@@ -12,7 +12,8 @@ struct ActivityView: View {
     @State var userOwner : Bool = false
     let activity : ActivityModel
     let user : UserModel
-    @State var listOfImages : [String] = []
+    let imagesString : [String]
+    @State var listOfImages : [UIImage] = []
     @State var numberOfAloongs : Int = 12
     @State var aloongActive : Bool = false
     
@@ -35,10 +36,7 @@ struct ActivityView: View {
             UserViewCard(model: user, description: formattedDateAndTime(from: activity.date))
                 .padding(.bottom,6)
             ZStack(alignment:.bottom){
-                Rectangle()
-                    .foregroundColor(.blue)
-                    .frame(height: 426)
-                    .cornerRadius(8)
+                ImageLoader(url: imagesString.first, squere: true, largeImage: true)
                 HStack{
                     MetricsComponent(icon: .duration, value: formattedTime(from: activity.date))
                     if(activity.distance != nil){
@@ -69,12 +67,14 @@ struct ActivityView: View {
                 Spacer()
             }
             HStack{
-                AloongComponent(marcador: $numberOfAloongs, active: $aloongActive)
+                //AloongComponent(marcador: $numberOfAloongs, active: $aloongActive)
                 Spacer()
             }
             Spacer()
         }
         .padding(24)
+        .onAppear{
+        }
         .refreshable {
             
         }
@@ -82,10 +82,19 @@ struct ActivityView: View {
     
     
     func update(){
-        print("CONDAR A FUNÇÃO DE RECARREGAR A ATIVIDADE EM ActivityView/update")
+        Task{
+            listOfImages.removeAll()
+            for image in imagesString{
+                controller.downloadImage(from: image) { response in
+                    if let response = response{
+                        listOfImages.append(response)
+                    }
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    ActivityView(activity: activityexemple, user: usermodelexemple5)
+    ActivityView(activity: activityexemple, user: usermodelexemple5,imagesString: [])
 }

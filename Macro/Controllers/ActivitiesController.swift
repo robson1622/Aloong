@@ -20,8 +20,8 @@ class ActivitiesController: ObservableObject{
     func load(idUser: String) async {
         await activityUserRelation.load(idUser: idUser)
     }
-    func create(model: ActivityModel, idGroup: String, idUserOwner : String, listOfOtherUsersIds: [String] = [] )async -> Bool?{
-        if let sucess = await ActivityDao.shared.create(model: model, idGroup: idGroup, idUserOwner: idUserOwner,listOfUsersIds: listOfOtherUsersIds){
+    func create(model: ActivityModel, idGroup: String, idUserOwner : String, listOfOtherUsersIds: [String] = [] ,images : [UIImage] = [])async -> Bool?{
+        if let sucess = await ActivityDao.shared.create(model: model, idGroup: idGroup, idUserOwner: idUserOwner,listOfUsersIds: listOfOtherUsersIds,listOfImages: images){
             await self.load(idGroup: idGroup)
             return sucess
         }

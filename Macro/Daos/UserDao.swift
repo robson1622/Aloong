@@ -19,7 +19,7 @@ class UserDao : ObservableObject{
         }
         UserLocalSave().saveUser(user: model!)
         if let response = await FirebaseInterface.shared.updateDocument(model: model, id: (model?.id!)!, collection: collectionName){
-            return true
+            return response
         }
         else{
             return nil

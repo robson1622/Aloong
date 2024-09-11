@@ -17,4 +17,5 @@ struct ActivityModel : Codable, Hashable, Identifiable{
     var calories : Float?
     var duration : TimeInterval?
     var steps : Int?
+    var image : String?
 }

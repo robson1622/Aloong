@@ -4,42 +4,46 @@
 //
 //  Created by Robson Borges on 22/08/24.
 //
-
+import PhotosUI
 import SwiftUI
 
 struct UserViewMyProfile: View {
-    @StateObject var controller : UserController = UserController()
+    @StateObject var controller : GeneralController = GeneralController()
+    @State var user : UserModel?
+    @State var name : String = ""
+    @State var image : UIImage?
+    @StateObject var pickerPhoto = PhotoSelectorViewModel()
     @State var showEdit : Bool = false
     var active : String = NSLocalizedString("Activities", comment: "Titulo do botão que leva para a view de atividades")
     @State private var text: String = ""
     @State var toggle : Bool = false
     
+    let yourProfileText : String = NSLocalizedString("Your profile", comment: "Titulo da tela de perfil")
+    let saveText : String = NSLocalizedString("Save", comment: "Texto do botão para salvar as mudanças do perfil")
+    let deleteAccount : String = NSLocalizedString("Delete account", comment: "texto do botão de deletar conta")
+    let getOut : String = NSLocalizedString("Get out", comment: "Texto do botão de sair da conta")
+    let activeDays : String = NSLocalizedString("Active days", comment: "Texto que descreve os dias ativos da pessoa no seu perfil")
+    let references : String = NSLocalizedString("REFERENCES", comment: "Titulo do cabeçalho da view do perfil do usuário")
     var body: some View {
-        //        VStack{
-        //            Header(title: "About your",trailing: [AnyView(EditButton(onTap: {
-        //                showEdit = true
-        //            }))])
-        //            ImageLoader(url: controller.user?.userimage)
-        //                .frame(width: 70,height: 70)
-        //            ListElementBasic( title: UserModelNames.name, value: controller.user?.name ?? "Unamed")
-        //            ListElementBasic( title: UserModelNames.nickname, value: controller.user?.nickname ?? "Unamed")
-        //            ListElementBasic( title: UserModelNames.birthdate, value: controller.user?.birthdate == nil ? "Not date" : formatDate(date: controller.user?.birthdate!))
-        //
-        //            Spacer()
-        //        }
-        //        .sheet(isPresented: $showEdit){
-        //            UserViewEdit(showTab: $showEdit)
-        //        }
         
         ZStack (alignment: .center){
             VStack(spacing: 24){
+                Header(title: yourProfileText, trailing: [AnyView(
+                    Button(action:{
+                        self.saveChanges()
+                    }){
+                        Text(saveText)
+                            .font(.body)
+                            .foregroundColor(.azul4)
+                    }
+                )])
                 VStack (alignment: .center, spacing:16){
                     ZStack {
                         Rectangle()
                             .foregroundColor(.clear)
                             .frame(width: 130, height: 130)
                             .background(
-                                Image("PATH_TO_IMAGE")
+                                Image(uiImage: pickerPhoto.images.first ?? image ?? UIImage())
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 130, height: 130)
@@ -55,23 +59,32 @@ struct UserViewMyProfile: View {
                             Spacer()
                             HStack{
                                 Spacer()
-                                Button(action: {
-                                    // Ação que será executada quando o botão for pressionado
-//                                    print("Botão pressionado!")
-                                }) {
-                                    ZStack(alignment:.center){
-                                        Circle()
-                                            .frame(width: 38, height: 38) // Define o tamanho do círculo
-                                            .foregroundColor(.branco) // Define a cor de preenchimento do círculo
-                                            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8) // Ajustes na sombra
-                                        Image(systemName: "square.and.pencil")
-                                            .font(.title2)
-                                            .foregroundColor(.azul3)
-                                            .bold()
+                                VStack {
+                                    PhotosPicker(
+                                        selection: $pickerPhoto.selectedPhotos, // holds the selected photos from the picker
+                                        maxSelectionCount: 1, // sets the max number of photos the user can select
+                                        selectionBehavior: .ordered, // ensures we get the photos in the same order that the user selected them
+                                        matching: .images // filter the photos library to only show images
+                                    ) {
+                                        ZStack(alignment:.center){
+                                            Circle()
+                                                .frame(width: 38, height: 38) // Define o tamanho do círculo
+                                                .foregroundColor(.branco) // Define a cor de preenchimento do círculo
+                                                .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8) // Ajustes na sombra
+                                            Image(systemName: "square.and.pencil")
+                                                .font(.title2)
+                                                .foregroundColor(.azul3)
+                                                .bold()
+                                        }
+                                        .frame(width: 38, height: 38)
+                                        .padding(0)
                                     }
-                                    .frame(width: 38, height: 38)
-                                    .padding(0)
                                 }
+                                .padding()
+                                .onChange(of: pickerPhoto.selectedPhotos) { _ in
+                                    pickerPhoto.convertDataToImage()
+                                }
+                                    
                             }
                         }
                     }
@@ -79,14 +92,14 @@ struct UserViewMyProfile: View {
                     .padding(0)
                     
                     VStack(){
-                        Text("Nome")
+                        Text(user?.name ?? "Unamed")
                             .font(.title2)
                             .foregroundColor(.azul3)
                         HStack (alignment: .center, spacing: 4){
                             Image(systemName: "hands.and.sparkles")
                                 .font(.callout)
                                 .foregroundColor(.azul3)
-                            Text("Dias ativos: 3")
+                            Text(activeDays)
                                 .font(.callout)
                                 .foregroundColor(.azul3)
                         }
@@ -99,7 +112,7 @@ struct UserViewMyProfile: View {
                 VStack(spacing:32){
                     HStack(alignment: .top, spacing: 20) {
                         // Body/Regular
-                        TextField("Nome", text: $text)
+                        TextField(user?.name ?? "Unamed", text: $name)
                             .font(.body)
                             .foregroundColor(.cinza2)
                             .padding()
@@ -113,7 +126,7 @@ struct UserViewMyProfile: View {
                     
                     VStack(spacing:8){
                         HStack{
-                            Text("PREFERÊNCIAS")
+                            Text(references)
                                 .font(.caption)
                                 .foregroundColor(.cinza2)
                                 .padding(.leading, 4)
@@ -150,7 +163,7 @@ struct UserViewMyProfile: View {
                                     .font(.body)
                                     .foregroundColor(.branco)
                                     .padding(.horizontal,0)
-                                Text("Sair")
+                                Text(getOut)
                                     .font(.body)
                                     .foregroundColor(.branco)
                                     .padding(.horizontal,0)
@@ -174,7 +187,7 @@ struct UserViewMyProfile: View {
                                     .font(.body)
                                     .foregroundColor(.branco)
                                     .padding(.horizontal,0)
-                                Text("Deletar conta")
+                                Text(deleteAccount)
                                     .font(.body)
                                     .foregroundColor(.branco)
                                     .padding(.horizontal,0)
@@ -198,7 +211,43 @@ struct UserViewMyProfile: View {
         .padding(.vertical,18)
         .frame(width: 390, height: 844)
         .background(.branco)
+        .onAppear{
+            user = usermodelexemple
+            if let savedUser = controller.user.user {
+                user = savedUser
+                name = user?.name ?? ""
+                if let imagename = user?.userimage{
+                    controller.downloadImage(from: imagename){ response in
+                        image = response
+                    }
+                }
+            }
+        }
         
+    }
+                       
+    private func saveChanges(){
+        
+        Task{
+            controller.user.user?.name = name
+            if(!pickerPhoto.images.isEmpty){
+                await withCheckedContinuation { continuation in
+                    FirebaseInterface.shared.uploadImage(image: pickerPhoto.images.first!, type: .profile, url: user?.userimage) { url in
+                        user?.userimage = url
+                        controller.user.user?.userimage = url
+                        
+                        // Sinaliza que o upload foi concluído
+                        continuation.resume()
+                    }
+                }
+            }
+            await controller.user.updateUser()
+            if let group = controller.group.groupsOfThisUser.first{
+                ViewsController.shared.navigateTo(to: .myProfile,reset :true)
+                ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                
+            }
+        }
     }
 }
 #Preview {

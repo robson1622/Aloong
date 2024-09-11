@@ -6,13 +6,13 @@
 //
 
 import Foundation
-
+import PhotosUI
 
 class ActivityDao : ObservableObject{
     static var shared : ActivityDao = ActivityDao()
     let collectionName = "activities"
-    
-    func create(model : ActivityModel,idGroup : String, idUserOwner : String, listOfUsersIds : [String] = []) async -> Bool?{
+    let collectionImagesName = "activityimages"
+    func create(model : ActivityModel,idGroup : String, idUserOwner : String, listOfUsersIds : [String] = [],listOfImages : [UIImage] = []) async -> Bool?{
         // cria a atividade
         if let result = FirebaseInterface.shared.createDocument(model: model, collection: collectionName){
             var withId = model
@@ -28,6 +28,7 @@ class ActivityDao : ObservableObject{
                     
                 }
             }
+            _ = self.createImageRelation(listOfImages: listOfImages, idActivity: result)
             return await self.update(model: withId)
         }
         print("NÃO FOI POSSÍVEL CRIAR ATIVIDADE EM ActivityDao/create")
@@ -76,5 +77,22 @@ class ActivityDao : ObservableObject{
         }
         print("NÃO FOI POSSÍVEL LER ATIVIDADE ")
         return nil
+    }
+    
+    private func createImageRelation(listOfImages : [UIImage],idActivity : String) -> Bool?{
+        var retorno : Bool? = true
+        for image in listOfImages{
+            FirebaseInterface.shared.uploadImage(image: image, type: .activity) { url in
+                var relation : ActivityImageModel = ActivityImageModel(idActivity: idActivity,imageURL: url)
+                if let idRelation = FirebaseInterface.shared.createDocument(model: relation, collection: self.collectionImagesName){
+                    relation.id = idRelation
+                }
+                else{
+                    retorno = false
+                    print("ERRO AO TENTAR ENVIAR ActivityImageModel para o servidor em ActivityDao/createImageRelation")
+                }
+            }
+        }
+        return retorno
     }
 }

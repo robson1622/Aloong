@@ -24,7 +24,7 @@ struct OtpModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .multilineTextAlignment(.center)
-            .keyboardType(.numberPad)
+            .keyboardType(.alphabet)
             .frame(width: 45, height: 45)
             .background(Color.white.cornerRadius(5))
             .background(

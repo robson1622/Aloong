@@ -6,66 +6,106 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ImageLoader: View {
-    let url : String?
+    @State var url : String?
     var squere : Bool = false
+    var largeImage : Bool = false
+    @State var image : UIImage?
     var body: some View {
         VStack{
-            if(!squere){
-//                ZStack{
-//                    Circle()
-//                    Text("Falta codar \n a imagem")
-//                        .foregroundColor(.white)
-//                }
-                Rectangle()
-                  .foregroundColor(.clear)
-                  .frame(width: 44, height: 44)
-                  .background(
-                    Image("PATH_TO_IMAGE")
-                      .resizable()
-                      .aspectRatio(contentMode: .fill)
-                      .frame(width: 44, height: 44)
-                      .clipped()
-                  )
-                  .background(Color(.cinza1))
-                  .cornerRadius(44)
-                  .shadow(color: .black.opacity(0.1), radius: 20.635, x: 0, y: 6.88)
-                  .overlay(
-                    RoundedRectangle(cornerRadius: 44)
-                      .inset(by: 2)
-                      .stroke(Color(.azul3), lineWidth: 4)
-                  )
+            if squere{
+                if largeImage{
+                    Image(uiImage: image ?? UIImage())
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 342, height: 426)
+                        .clipped()
+                        .cornerRadius(8)
+                }
+                else{
+                    Image(uiImage: image ?? UIImage())
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 97, height: 121)
+                        .clipped()
+                        .cornerRadius(8)
+                }
             }
             else{
-//                ZStack{
-//                    Rectangle()
-//                    Text("Falta codar \n a imagem")
-//                        .foregroundColor(.white)
-//                }
-                Rectangle()
-                  .foregroundColor(.clear)
-                  .frame(width: 44, height: 44)
-                  .background(
-                    Image("PATH_TO_IMAGE")
-                      .resizable()
-                      .aspectRatio(contentMode: .fill)
-                      .frame(width: 44, height: 44)
-                      .clipped()
-                  )
-                  .background(Color(.cinza1))
-                  .cornerRadius(44)
-                  .shadow(color: .black.opacity(0.1), radius: 20.635, x: 0, y: 6.88)
-                  .overlay(
-                    RoundedRectangle(cornerRadius: 44)
-                      .inset(by: 2)
-                      .stroke(Color(.azul3), lineWidth: 4)
-                  )
+                if largeImage{
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 130, height: 130)
+                        .background(
+                            Image(uiImage: image ?? UIImage())
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 130, height: 130)
+                                .clipped()
+                        )
+                        .background(Color(.cinza1))
+                        .cornerRadius(130)
+                        .shadow(color: .black.opacity(0.1), radius: 20.635, x: 0, y: 6.88)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 130)
+                                .inset(by: 2)
+                                .stroke(Color(.azul3), lineWidth: 8)
+                        )
+                }
+                else{
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 44, height: 44)
+                        .background(
+                            Image(uiImage: image ?? UIImage())
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 44, height: 44)
+                                .clipped()
+                        )
+                        .background(Color(.cinza1))
+                        .cornerRadius(44)
+                        .shadow(color: .black.opacity(0.1), radius: 20.635, x: 0, y: 6.88)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 44)
+                                .inset(by: 2)
+                                .stroke(Color(.azul3), lineWidth: 4)
+                        )
+                }
+            }
+        
+        }
+        .onChange(of: url){ newValue in
+            if let url = url{
+                if(!url.isEmpty){
+                    FirebaseInterface.shared.downloadImage(from: url){ response in
+                        image = response
+                    }
+                }
+            }
+        }
+        .onChange(of: image){ newValue in
+            self.image = newValue
+        }
+        .onAppear{
+            if let image = image{
+                self.image = image
+            }
+            else{
+                if let url = url{
+                    if(!url.isEmpty){
+                        FirebaseInterface.shared.downloadImage(from: url){ response in
+                            image = response
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 #Preview {
-    ImageLoader(url: "image")
+    ImageLoader(url: "profileimage/1A504F81-A3BD-49E1-BD84-F0F9E490D673",squere: true ,largeImage: false)
 }

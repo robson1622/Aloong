@@ -273,7 +273,7 @@ struct ActivityViewCreate: View {
     func create(){
         self.insertInModel()
         Task{
-            if let _ = await controller.activities.create(model: model!, idGroup: idGroup, idUserOwner: idUser, listOfOtherUsersIds: listOfAdded){
+            if let _ = await controller.activities.create(model: model!, idGroup: idGroup, idUserOwner: idUser, listOfOtherUsersIds: listOfAdded,images: [image!]){
                 if(controller.user.user != nil && controller.group.groupsOfThisUser.first != nil){
                     ViewsController.shared.navigateTo(to: .group(controller.group.groupsOfThisUser.first!),reset: true)
                 }

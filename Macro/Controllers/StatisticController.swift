@@ -8,8 +8,8 @@
 import Foundation
 
 struct PositionUser{
-    let user : UserModel
-    let points : Int
+    var user : UserModel
+    var points : Int
 }
 
 class StatisticController: ObservableObject{

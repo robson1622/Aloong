@@ -24,7 +24,7 @@ class ViewsController : ObservableObject{
         case decisionCreateOrAloong
         //atividade
         case createActivity(String,String)
-        case activity(ActivityModel,UserModel)
+        case activity(ActivityModel,UserModel,[String])
         //geral
         case home
         case signIn

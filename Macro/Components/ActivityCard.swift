@@ -8,24 +8,16 @@
 import SwiftUI
 
 struct ActivityCard: View {
+    let imageURL : String?
     let activity : ActivityModel
     let user : UserModel
     
     let withoutText : String = NSLocalizedString("Without text", comment: "texto para se caso haja campos vazios")
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
-            Rectangle()
-              .foregroundColor(.clear)
-              .frame(width: 96.8, height: 121)
-              .background(
-                Image("img_teste")
-                  .resizable()
-                  .aspectRatio(contentMode: .fill)
-                  .frame(width: 96.80000305175781, height: 121)
-                  .clipped()
-              )
-              .cornerRadius(1)
-            
+            if let imageURL = imageURL{
+                ImageLoader(url: imageURL,squere: true,largeImage: false)
+            }
             VStack (spacing: 10){
                 HStack{
                     Text(user.name ?? withoutText)
@@ -66,5 +58,5 @@ struct ActivityCard: View {
 }
 
 #Preview {
-    ActivityCard(activity: activityexemple, user: usermodelexemple)
+    ActivityCard(imageURL : "",activity: activityexemple, user: usermodelexemple)
 }

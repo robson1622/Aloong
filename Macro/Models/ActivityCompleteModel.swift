@@ -14,5 +14,6 @@ struct ActivityCompleteModel : Hashable, Codable,Identifiable{
     var owner : UserModel
     var usersOfthisActivity : [UserModel] = []
     var groupsOfthisActivity : [GroupModel] = []
+    var images : [String] = []
     var activity : ActivityModel?
 }

@@ -41,8 +41,8 @@ struct ContentView: View {
                         AloongGroupView().navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                 //activity part
-                    case .activity(let activity, let user):
-                        ActivityView(activity: activity, user: user).navigationBarBackButtonHidden(hide)
+                    case .activity(let activity, let user, let listImagesString):
+                    ActivityView(activity: activity, user: user,imagesString : listImagesString).navigationBarBackButtonHidden(hide)
                     case .createActivity(let idUser, let idGroup):
                         ActivityViewCreate(idUser: idUser,idGroup: idGroup).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
@@ -64,14 +64,6 @@ struct ContentView: View {
                 
             }
             .environmentObject(controller)
-        }
-        .onAppear(){
-            Task{
-                await controller.updateAll()
-                if(controller.group.groupsOfThisUser.first != nil){
-                    ViewsController.shared.navigateTo(to: .group(controller.group.groupsOfThisUser.first!), reset: true)
-                }
-            }
         }
         
     }
