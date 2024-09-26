@@ -6,18 +6,22 @@
 //
 
 import SwiftUI
-
+import PhotosUI
 struct GroupView: View {
     @EnvironmentObject var controller : GeneralController
+    @State var updateView = GeneralController.shared.update
+    
+    @State var isCameraPresented : Bool = false
+    @State var isGalleryPresented : Bool = false
     @State var image : UIImage?
     @State var showCamera : Bool = false
     let model : GroupModel
     @State var totalDays : Int = 0
     @State var lastDays : Int = 0
-    @State var lider : PositionUser?
+    @State var lider : PointsOfUser?
     @State var liderImage : UIImage?
     @State var youImage : UIImage?
-    @State var you : PositionUser?
+    @State var you : PointsOfUser?
     @State var listActivities : [ActivityCompleteModel]?
     
     let youCgallenge : String = NSLocalizedString("Your challenger", comment: "Caso não haja nome no grupo, este nome será mostrado")
@@ -25,41 +29,24 @@ struct GroupView: View {
     let youText : String = NSLocalizedString("You", comment: "Titulo da view de grupo que denota o lider")
     let daysLeft : String = NSLocalizedString("Days left", comment: "texto da contagem de dias restantes")
     let withoutActivityText : String = NSLocalizedString("Oops, \n there's nothing here yet...", comment: "Texto que fala que não há atividadesainda")
+    
     var body: some View {
-        
         ZStack (alignment: .center){//fundo
             ScrollView{
                 VStack(spacing: 24){ //vstack geral
-                    HStack(alignment: .center) {//logo + perfil
-                        Image("aloong_logo")
-                            .frame(width: 134, height: 41.07149)
-                        Spacer()
+                    HeaderGroupView()
+                    if let lider = lider, let you = you{
                         Button(action:{
-                            ViewsController.shared.navigateTo(to: .myProfile)
-                        }){
-                            ImageLoader(url: controller.user.user?.userimage ,squere: false,largeImage: false)
-                        }
-                        
-                    }
-                    .padding(.horizontal,24)
-                    .padding(.top,45)
-                    
-                    card
-                    
-                    if(listActivities != nil){
-                        VStack(alignment: .leading, spacing: 6) {
-                            ForEach(listActivities!, id: \.id ){ index in
-                                if(index.activity != nil){
-                                    Button(action:{
-                                        ViewsController.shared.navigateTo(to: .activity(index.activity!,index.owner,index.images))
-                                    }){
-                                        ActivityCard(imageURL: index.images.first,activity: index.activity!, user: index.owner)
-                                    }
-                                }
+                            if let pointsList = controller.statisticController.listOfPositionUser{
+                                ViewsController.shared.navigateTo(to: .groupDetails(pointsList, model))
                             }
+                        }){
+                            GroupScoreBoardView(model: model, lider: lider, you: you)
                         }
-                        .padding(0)
-                        .frame(width: 342, alignment: .topLeading)
+                    }
+                    
+                    if let list = listActivities{
+                        ActivitiesList(listOfActivitiesComplete: list)
                     }
                     else{
                         Text(withoutActivityText)
@@ -72,9 +59,7 @@ struct GroupView: View {
             .ignoresSafeArea()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.branco)
-            .onAppear{
-                self.update()
-            }
+            
             
             VStack{
                 Spacer()
@@ -98,127 +83,109 @@ struct GroupView: View {
                 }, groupId: model.id,navigateAuto: false)
             }
         }
-        .onChange(of: image){ newvalue in
-            if(image != nil){
-                controller.activities.imagesForNewActivity = image!
-                ViewsController.shared.navigateTo(to: .createActivity((controller.user.user?.id!)!, (controller.group.groupsOfThisUser.first?.id)!))
-            }
-        }
         .fullScreenCover(isPresented: self.$showCamera) {
-            VStack{
-                accessCameraView(selectedImage: self.$image)
+            ZStack{
+                accessCameraView(selectedImage: $image)
+                if let idUser = controller.userController.myUser?.id, let idGroup = model.id{
+                    CameraButton(onPhotosAdded: {
+                        showCamera = false
+                        controller.activityController.imagesForNewActivity.removeAll()
+                    }, idGroup: idGroup, idUser: idUser)
+                        .environmentObject(controller)
+                }
+                    
+                
             }
             .background(Color(.black))
         }
+        .onChange(of : updateView){ _ in
+            if let id = model.id{
+                Task{
+                    await listActivities = controller.getActivitiesComplete(idGroup: id)
+                }
+            }
+        }
+        .onChange(of: image) { _ in
+            if image != nil{
+                controller.activityController.imagesForNewActivity.removeAll()
+                controller.activityController.imagesForNewActivity.append(image!)
+                if let idUser = controller.userController.myUser?.id, let idGroup = model.id{
+                    ViewsController.shared.navigateTo(to: .createActivity(idUser,idGroup))
+                }
+            }
+        }
         .refreshable {
             Task{
-                await self.updateAll()
                 self.update()
             }
         }
-    }
-    
-    
-    var card : some View{
-        VStack(alignment: .center, spacing: 24) {//card
-            
-            HStack(alignment: .center) {//seu desafio
-                Text(model.title ?? "")
-                    .font(.title2)
-                    .foregroundColor(.preto)
-                Spacer()
-            }
-            HStack (alignment:.center, spacing: 22){
-                
-                HStack (spacing: 9){
-                    ImageLoader(squere: false,largeImage: false,image: liderImage ?? UIImage())
-                    VStack (alignment:.leading){
-                        // Callout/Emphasized
-                        Text("\(lider?.points ?? 0 )")
-                            .font(.callout)
-                            .foregroundColor(.preto)
-                            .bold()
-                        
-                        // Caption1/Regular
-                        Text(liderText)
-                            .font(.caption)
-                            .foregroundColor(.preto)
-                    }
-                    Spacer()
-                }
-                
-                RoundedRectangle(cornerRadius: 5) // Ajuste o cornerRadius conforme necessário
-                    .frame(width: 0.5, height: 44) // Altere o width conforme necessário
-                    .foregroundColor(.preto) // Define a cor de preenchimento como transparente
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color.black, lineWidth: 0.75) // Define a borda do retângulo
-                    )
-                
-                HStack (spacing: 9){
-                    ImageLoader(url: controller.user.user?.userimage, squere: false,largeImage: false)
-                    VStack (alignment:.leading){
-                        // Callout/Emphasized
-                        Text("\(you?.points ?? 0 )")
-                            .font(.callout)
-                            .foregroundColor(.preto)
-                            .bold()
-                        
-                        // Caption1/Regular
-                        Text(youText)
-                            .font(.caption)
-                            .foregroundColor(.preto)
-                    }
-                    Spacer()
-                }
-                
-            }
-            ProgressView(percent: $lastDays, total: $totalDays, unity: daysLeft)
-                .padding(.top, 10)
-                .frame(maxWidth: .infinity, alignment: .center)
+        .onAppear{
+            self.update()
         }
-        .padding(24)
-        .frame(width:342, alignment: .top)
-        .background(.branco)
-        .cornerRadius(6)
-        .shadow(color: .black.opacity(0.1), radius: 24.88501, x: 0, y: 8.295)
+        .background(Color(.branco))
     }
-    
-    
-    func calculateProgress(startDate: Date, endDate: Date) {
-        
-        totalDays = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0
-        let daysPassed = Calendar.current.dateComponents([.day], from: startDate, to: Date()).day ?? 0
-        lastDays = min(max(daysPassed, 0), totalDays) // Garantir que percent esteja no intervalo válido
-    }
-    
     private func update(){
-        listActivities = controller.mainListActivities
-        self.calculateProgress(startDate: model.startDate!, endDate: model.endDate!)
+        Task{
+            listActivities = await controller.getActivitiesComplete(idGroup: model.id!)
+        }
         
-        you = controller.statistic.you ?? PositionUser(user: usermodelexemple, points: 0)
-        lider = controller.statistic.lider ?? you
-        if(you!.user.userimage != nil && you!.user.userimage!.isEmpty){
-            FirebaseInterface.shared.downloadImage(from: (you?.user.userimage)!) { image in
+        you = controller.statisticController.you ?? PointsOfUser(user: usermodelexemple, points: 0)
+        lider = controller.statisticController.lider ?? you
+        if let userImageUrl = controller.userController.myUser?.userimage{
+            BucketOfImages.shared.download(from: userImageUrl) { image in
                 youImage = image
             }
         }
-        if(lider!.user.userimage != nil && lider!.user.userimage!.isEmpty){
-            FirebaseInterface.shared.downloadImage(from: (lider?.user.userimage)!) { image in
+        if let liderImageUrl = controller.statisticController.lider?.user.userimage{
+            BucketOfImages.shared.download(from: liderImageUrl) { image in
                 liderImage = image
             }
         }
-        self.calculateProgress(startDate: model.startDate!, endDate: model.endDate!)
-        Task{
-            let teste : [ActivityImageModel] = await FirebaseInterface.shared.readDocuments(id: "YMGpkBoFuFqQZPijyr7G", collection: "activityimages", field: "idActivity")
-            print(teste)
-        }
     }
     
-    private func updateAll() async{
-        await controller.updateAll()
+}
+
+struct CameraButton : View{
+    @EnvironmentObject var controller : GeneralController
+    @StateObject var pickerPhoto = PhotoSelectorViewModel()
+    let onPhotosAdded : () -> Void
+    let idGroup : String
+    let idUser : String
+    var body: some View{
+        VStack{
+            HStack{
+                Spacer()
+                VStack {
+                    PhotosPicker(
+                        selection: $pickerPhoto.selectedPhotos, // holds the selected photos from the picker
+                        maxSelectionCount: 5, // sets the max number of photos the user can select
+                        selectionBehavior: .ordered, // ensures we get the photos in the same order that the user selected them
+                        matching: .images // filter the photos library to only show images
+                    ) {
+                        Image(systemName: "photo.on.rectangle")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                        
+                    }
+                }
+                .padding(.horizontal,16)
+                .padding(.vertical,8)
+                .onChange(of: pickerPhoto.selectedPhotos) { _ in
+                    Task{
+                        await pickerPhoto.convertDataToImage()
+                        if !pickerPhoto.images.isEmpty {
+                            onPhotosAdded()
+                            controller.activityController.imagesForNewActivity = pickerPhoto.images
+                            ViewsController.shared.navigateTo(to: .createActivity(idUser,idGroup))
+                        }
+                    }
+                }
+            }
+            Spacer()
+        }
     }
 }
+
 
 #Preview {
     GroupView(model: exempleGroup)

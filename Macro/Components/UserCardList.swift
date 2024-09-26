@@ -21,7 +21,7 @@ struct UserCardList: View {
                 
                 VStack{
                     HStack{
-                        Text(model.name ?? "")
+                        Text(model.name)
                             .font(.title2)
                             .foregroundColor(.black)
                         Spacer()

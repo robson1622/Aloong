@@ -22,14 +22,15 @@ class ViewsController : ObservableObject{
         case editGroup(GroupModel)
         case aloongInGroup
         case decisionCreateOrAloong
+        case groupDetails([PointsOfUser],GroupModel)
         //atividade
         case createActivity(String,String)
         case activity(ActivityModel,UserModel,[String])
         //geral
-        case home
         case signIn
         case onboarding
         case camera
+        case splash
     }
     
 //    public var tab :

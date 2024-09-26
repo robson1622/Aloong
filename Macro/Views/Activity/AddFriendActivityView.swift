@@ -10,8 +10,8 @@ import SwiftUI
 struct AddFriendActivityView: View {
     @Binding var listOfFriends : [UserModel]
     @Binding var listOfAdded : [String]
-    @Binding var showTab : Bool
     @State var searchfield : String = ""
+    @State var idOfThisUser : String = ""
     let search : String = NSLocalizedString("Search", comment: "")
     let ok : String = NSLocalizedString("Ok", comment: "")
     var searchResults: [UserModel] {
@@ -19,7 +19,7 @@ struct AddFriendActivityView: View {
                 return listOfFriends
             } else {
                 return listOfFriends.filter { user in
-                    let nameMatch = user.name?.range(of: searchfield, options: .caseInsensitive) != nil
+                    let nameMatch = user.name.range(of: searchfield, options: .caseInsensitive) != nil
                     return nameMatch
                 }
             }
@@ -46,11 +46,6 @@ struct AddFriendActivityView: View {
                     .frame(minHeight: 40)
                     .background(Color(.systemGray6))
                     .cornerRadius(16)
-                    
-                    OkButton(text: ok, onTap: {
-                        showTab = false
-                        self.hideKeyboard()
-                    })
                         
                     
                 }
@@ -59,42 +54,45 @@ struct AddFriendActivityView: View {
             
             ScrollView{
                 ForEach(searchResults.indices, id: \.self){ index in
-                    HStack{
-                        ZStack{
-                            Circle()
-                                .foregroundColor(.verde3)
-                                .frame(width: 50,height: 50)
-                            Circle()
-                                .foregroundColor(.gray)
-                                .frame(width: 40,height: 40)
-                        }
+                    if idOfThisUser == searchResults[index].id{
                         
-                        Text(searchResults[index].name ?? "Unamed")
-                            .font(.callout)
-                            .padding(.leading,10)
-                        Spacer()
-                        Button(action:{
-                            if(listOfAdded.contains(searchResults[index].id!)){
-                                if let elemento = listOfAdded.firstIndex(of: searchResults[index].id!){
-                                    listOfAdded.remove(at: elemento)
-                                }
-                            }
-                            else{
-                                listOfAdded.append(searchResults[index].id!)
-                            }
-                        }){
-                            Image(systemName: listOfAdded.contains(searchResults[index].id!) ? "circle.inset.filled" : "circle")
-                                .font(.title2)
-                                .bold()
-                                .foregroundColor(listOfAdded.contains(searchResults[index].id!) ? .purple : .black)
-                        }
                     }
-                    .padding(.horizontal,16)
+                    else{
+                        HStack{
+                            ImageLoader(url:searchResults[index].userimage)
+                            Text(searchResults[index].name)
+                                .font(.callout)
+                                .padding(.leading,10)
+                                .foregroundColor(Color.preto)
+                            Spacer()
+                            Button(action:{
+                                if(listOfAdded.contains(searchResults[index].id)){
+                                    if let elemento = listOfAdded.firstIndex(of: searchResults[index].id){
+                                        listOfAdded.remove(at: elemento)
+                                    }
+                                }
+                                else{
+                                    listOfAdded.append(searchResults[index].id)
+                                }
+                            }){
+                                Image(systemName: listOfAdded.contains(searchResults[index].id) ? "circle.inset.filled" : "circle")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(listOfAdded.contains(searchResults[index].id) ? .purple : .branco)
+                            }
+                        }
+                        .padding(.horizontal,16)
+                    }
                 }
             }
         }
-        .background(Color(.white))
+        .background(Color(.branco))
         .frame(height: 250)
+        .onAppear{
+            if let idUser = UserController.shared.myUser?.id{
+                idOfThisUser = idUser
+            }
+        }
     }
     
     private func hideKeyboard() {
@@ -103,7 +101,7 @@ struct AddFriendActivityView: View {
 }
 
 #Preview {
-    @State var amigo = [usermodelexemple,usermodelexemple2,usermodelexemple3,usermodelexemple4]
-    @State var selecionados : [String] = []
-    return AddFriendActivityView(listOfFriends: $amigo, listOfAdded: $selecionados,showTab: .constant(true))
+    let amigo = [usermodelexemple,usermodelexemple2,usermodelexemple3,usermodelexemple4]
+    let selecionados : [String] = []
+    return AddFriendActivityView(listOfFriends: .constant(amigo), listOfAdded: .constant(selecionados))
 }

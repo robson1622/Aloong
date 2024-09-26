@@ -16,24 +16,8 @@ struct UserViewProfile: View {
             Header(title: "About your")
             ImageLoader(url: model.userimage)
                 .frame(width: 70,height: 70)
-            ListElementBasic( title: UserModelNames.name, value: model.name ?? "Unamed")
             
             Spacer()
-        }
-        .onAppear{
-            Task{
-                if(model.id != nil){
-                    if let user = await UserDao().read(userId: model.id!){
-                        model = user
-                    }
-                    else{
-                        print("ERRO AO TENTAR PEGAR USUÁRIO SALVO EM UserViewProfile/onAppear/ PRIMEIRO ELSE")
-                    }
-                }
-                else{
-                    print("ERRO AO TENTAR LER USUÁRIO SALVO EM UserViewProfile/onAppear/ SEGUNDO ELSE")
-                }
-            }
         }
     }
     

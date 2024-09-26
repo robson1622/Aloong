@@ -7,7 +7,11 @@
 
 import Foundation
 
-
+struct GroupsAndActivitiesModel : Hashable, Codable, Identifiable{
+    var id = UUID()
+    var idGroups : String
+    var activitiesComplete : [ActivityCompleteModel] = []
+}
 
 struct ActivityCompleteModel : Hashable, Codable,Identifiable{
     var id = UUID()

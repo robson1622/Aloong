@@ -53,7 +53,7 @@ struct UserViewMyProfile: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 130)
                                     .inset(by: 4)
-                                    .stroke(.azul3, lineWidth: 8)
+                                    .stroke(.azul4, lineWidth: 8)
                             )
                         VStack{
                             Spacer()
@@ -73,7 +73,7 @@ struct UserViewMyProfile: View {
                                                 .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8) // Ajustes na sombra
                                             Image(systemName: "square.and.pencil")
                                                 .font(.title2)
-                                                .foregroundColor(.azul3)
+                                                .foregroundColor(.azul4)
                                                 .bold()
                                         }
                                         .frame(width: 38, height: 38)
@@ -82,7 +82,9 @@ struct UserViewMyProfile: View {
                                 }
                                 .padding()
                                 .onChange(of: pickerPhoto.selectedPhotos) { _ in
-                                    pickerPhoto.convertDataToImage()
+                                    Task{
+                                        await pickerPhoto.convertDataToImage()
+                                    }
                                 }
                                     
                             }
@@ -94,14 +96,14 @@ struct UserViewMyProfile: View {
                     VStack(){
                         Text(user?.name ?? "Unamed")
                             .font(.title2)
-                            .foregroundColor(.azul3)
+                            .foregroundColor(.azul4)
                         HStack (alignment: .center, spacing: 4){
                             Image(systemName: "hands.and.sparkles")
                                 .font(.callout)
-                                .foregroundColor(.azul3)
+                                .foregroundColor(.azul4)
                             Text(activeDays)
                                 .font(.callout)
-                                .foregroundColor(.azul3)
+                                .foregroundColor(.azul4)
                         }
                         .padding(0)
                     }
@@ -114,9 +116,9 @@ struct UserViewMyProfile: View {
                         // Body/Regular
                         TextField(user?.name ?? "Unamed", text: $name)
                             .font(.body)
-                            .foregroundColor(.cinza2)
+                            .foregroundColor(.preto)
                             .padding()
-                            .background(.branco)
+                            .background(.cinza3)
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .cornerRadius(8)
                             .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 8)
@@ -125,39 +127,42 @@ struct UserViewMyProfile: View {
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                     
                     VStack(spacing:8){
-                        HStack{
-                            Text(references)
-                                .font(.caption)
-                                .foregroundColor(.cinza2)
-                                .padding(.leading, 4)
-                            Spacer()
-                        }
-                        .padding(0)
+//                        HStack{
+//                            Text(references)
+//                                .font(.caption)
+//                                .foregroundColor(.cinza3)
+//                                .padding(.leading, 4)
+//                            Spacer()
+//                        }
+//                        .padding(0)
                         
-                        HStack(alignment: .center, spacing: 20) {
-                            // Body/Regular
-                            Text("Dark Mode")
-                                .font(.body)
-                                .foregroundColor(.cinza2)
-                                .padding(.vertical,0)
-                                .padding(.leading,16)
-                            Spacer()
-                            Toggle("", isOn: $toggle)
-                                .padding(.vertical, 11)
-                                .padding(.trailing,16)
-                        }
-                        .background(.branco)
-                        .frame(maxWidth: .infinity, alignment: .topLeading)
-                        .cornerRadius(8)
-                        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 8)
-                        .padding(0)
+//                        HStack(alignment: .center, spacing: 20) {
+//                            // Body/Regular
+//                            Text("Dark Mode")
+//                                .font(.body)
+//                                .foregroundColor(.cinza3)
+//                                .padding(.vertical,0)
+//                                .padding(.leading,16)
+//                            Spacer()
+//                            Toggle("", isOn: $toggle)
+//                                .padding(.vertical, 11)
+//                                .padding(.trailing,16)
+//                        }
+//                        .background(.branco)
+//                        .frame(maxWidth: .infinity, alignment: .topLeading)
+//                        .cornerRadius(8)
+//                        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 8)
+//                        .padding(0)
                         
                         Button(action: {
-                            // Ação que será executada quando o botão for pressionado
-//                            print("Botão pressionado!")
+                            Task{
+                                if let sucess = await controller.userController.myUser?.delete(){
+                                    UserLocalSave().deleteUser()
+                                    ViewsController.shared.navigateTo(to: .signIn, reset: true)
+                                }
+                            }
                         }) {
                             HStack(alignment: .center, spacing: 4) {
-                                // Body/Regular
                                 Spacer()
                                 Image(systemName: "rectangle.portrait.and.arrow.forward")
                                     .font(.body)
@@ -170,15 +175,13 @@ struct UserViewMyProfile: View {
                                     .padding(.vertical)
                                 Spacer()
                             }
-                            .background(.azul3)
+                            .background(.azul4)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .cornerRadius(8)
                             .padding(0)
                         }
                         
                         Button(action: {
-                            // Ação que será executada quando o botão for pressionado
-//                            print("Botão pressionado!")
                         }) {
                             HStack(alignment: .center, spacing: 4) {
                                 // Body/Regular
@@ -194,7 +197,7 @@ struct UserViewMyProfile: View {
                                     .padding(.vertical)
                                 Spacer()
                             }
-                            .background(.azul3)
+                            .background(.azul4)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .cornerRadius(8)
                             .padding(0)
@@ -213,11 +216,11 @@ struct UserViewMyProfile: View {
         .background(.branco)
         .onAppear{
             user = usermodelexemple
-            if let savedUser = controller.user.user {
+            if let savedUser = controller.userController.loadUser() {
                 user = savedUser
                 name = user?.name ?? ""
                 if let imagename = user?.userimage{
-                    controller.downloadImage(from: imagename){ response in
+                    BucketOfImages.shared.download(from: imagename){ response in
                         image = response
                     }
                 }
@@ -227,22 +230,19 @@ struct UserViewMyProfile: View {
     }
                        
     private func saveChanges(){
-        
         Task{
-            controller.user.user?.name = name
             if(!pickerPhoto.images.isEmpty){
                 await withCheckedContinuation { continuation in
-                    FirebaseInterface.shared.uploadImage(image: pickerPhoto.images.first!, type: .profile, url: user?.userimage) { url in
+                    BucketOfImages.shared.upload(image: pickerPhoto.images.first!, type: .profile){ url in
                         user?.userimage = url
-                        controller.user.user?.userimage = url
-                        
-                        // Sinaliza que o upload foi concluído
                         continuation.resume()
+                        Task{
+                            await user?.update()
+                        }
                     }
                 }
             }
-            await controller.user.updateUser()
-            if let group = controller.group.groupsOfThisUser.first{
+            if let group = await controller.groupController.readAllGroupsOfUser().first{
                 ViewsController.shared.navigateTo(to: .myProfile,reset :true)
                 ViewsController.shared.navigateTo(to: .group(group), reset: true)
                 

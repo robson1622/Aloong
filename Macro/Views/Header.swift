@@ -18,7 +18,7 @@ struct Header: View {
                 HStack {
                     if title != nil {
                         Text(title!)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(Color(.preto))
                             .bold()
                     }
                 }
@@ -39,9 +39,10 @@ struct Header: View {
                         } label: {
                             HStack {
                                 Image(systemName: "chevron.left")
-                                    .foregroundStyle(.black)
+                                    .foregroundStyle(.preto)
                                 
                                 Text("back")
+                                    .foregroundStyle(.preto)
                             }
                             .tint(.white)
                             .foregroundStyle(.black)

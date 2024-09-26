@@ -18,12 +18,12 @@ struct ProgressView: View {
                 ZStack{
                     Rectangle()
                         .frame(width: geometry.size.width,height: 5)
-                        .foregroundColor(Color(.cinza1))
+                        .foregroundColor(Color(.cinza2))
                         .cornerRadius(3)
                     HStack{
                         Rectangle()
                             .frame(width: progresBarPercent ,height: 5)
-                            .foregroundColor(.azul3)
+                            .foregroundColor(.azul4)
                             .cornerRadius(3)
                             .onChange(of: percent){ newvalue in
                                 self.calculate(width: geometry.size.width)

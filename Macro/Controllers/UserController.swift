@@ -9,72 +9,97 @@ import Foundation
 
 
 class UserController: ObservableObject{
+    static var shared : UserController = UserController()
     
+    private struct UsersGroupCollection{
+        var idGroup : String
+        var users : [UserModel]
+    }
+    
+    private struct UserActivityCollection{
+        var idActivity : String
+        var users : [UserModel]
+    }
+    @Published private var userActivities : [UserActivityCollection] = []
+    @Published private var usersGroups : [UsersGroupCollection] = []
     //usuário atual
-    @Published var user : UserModel?
-    @Published var usersOfGroups : [UserModel] = []
-    var dao : UserDao = UserDao()
+    @Published var myUser : UserModel?
     
     init(){
-        user = UserLocalSave().loadUser()
-    }
-    
-    func load() async {
-        let id = UserLocalSave().loadUser()?.id
-        if(id != nil){
-            user = await UserDao().read(userId: id!)
+        DispatchQueue.main.async {
+            self.myUser = UserLocalSave().loadUser()
         }
     }
     
-    func updateUser()async{
-        // atualiza localmente
-        UserLocalSave().saveUser(user: user!)
-        // atualiza na nuvem
-        _ = await dao.update(model: user)
-    }
     
-    func deleteUser(){
-        UserLocalSave().deleteUser()
-        dao.delete(model: user)
-    }
-    
-    func createUser(){
-        // cria localmente
-        UserLocalSave().saveUser(user: user!)
-        // e em seguina na nuvem
-        Task{
-            await dao.create(model: user)
-        }
-    }
-    
-    func readAllUsersOfGroup(idGroup : String) async -> [UserModel]{
-        let members : [MemberModel] = await MemberDao.shared.readAllMembersOfGroup(idGroup: idGroup)
-        usersOfGroups = []
-        for member in members{
-            if(member.userId != nil){
-                if let user : UserModel = await UserDao.shared.read(userId: member.userId!){
-                    usersOfGroups.append(user)
+    func readAllUsersOfGroup(idGroup : String, reset : Bool) async -> [UserModel] {
+        if(reset || usersGroups.isEmpty){
+            usersGroups.removeAll()
+            var new = UsersGroupCollection(idGroup: idGroup, users: [])
+            let membersmodels = await MembersController.shared.readAllMembersOfGroup(idGroup: idGroup, reset: false)
+            for member in membersmodels{
+                if let user : UserModel = await DatabaseInterface.shared.read(id: member.userId, table: .user){
+                    new.users.append(user)
                 }
             }
+            usersGroups.append(new)
+            return new.users
+        }
+        else{
+            if let index = usersGroups.firstIndex(where: {$0.idGroup == idGroup}){
+                return usersGroups[index].users
+            }
             else{
-                print("ERRO AO TENTAR CARREGAR USUÁRIOS DE UM GRUPO, member.userId nulo UserDao/readAllUsersOfGroup")
+                var new = UsersGroupCollection(idGroup: idGroup, users: [])
+                let membersmodels = await MembersController.shared.readAllMembersOfGroup(idGroup: idGroup, reset: false)
+                for member in membersmodels{
+                    if let user : UserModel = await DatabaseInterface.shared.read(id: member.userId, table: .user){
+                        new.users.append(user)
+                    }
+                }
+                usersGroups.append(new)
+                return new.users
             }
         }
-        return usersOfGroups
-    }
-    func readAllUsersOfActivity(idActivity : String) async -> [UserModel]{
-        let activityUserRelation : [ActivityUserModel] = await ActivityUserDao.shared.readAllActivityUserOfActivity(idActivity: idActivity)
-        var listOfUserThisActivity : [UserModel] = []
-        for relation in activityUserRelation{
-            if let user = await self.read(idUser: relation.idUser){
-                listOfUserThisActivity.append(user)
-            }
-        }
-        return listOfUserThisActivity
     }
     
-    private func read(idUser: String) async -> UserModel?{
-        return await UserDao.shared.read(userId: idUser)
+    func readAllUsersOfActivity(idActivity : String, reset : Bool) async -> [UserModel]{
+        if(reset || userActivities.isEmpty){
+            userActivities.removeAll()
+            var new = UserActivityCollection(idActivity: idActivity, users: [])
+            let activityusers = await ActivityUserController.shared.readAllActivityUserOfActivity(idActivity: idActivity)
+            for act in activityusers{
+                if let user : UserModel = await DatabaseInterface.shared.read(id: act.idUser, table: .user){
+                    new.users.append(user)
+                }
+            }
+            userActivities.append(new)
+            return new.users
+        }
+        else{
+            if let index = userActivities.firstIndex(where: {$0.idActivity == idActivity}){
+                return userActivities[index].users
+            }
+            else{
+                var new = UserActivityCollection(idActivity: idActivity, users: [])
+                let activityusers = await ActivityUserController.shared.readAllActivityUserOfActivity(idActivity: idActivity)
+                for act in activityusers{
+                    if let user : UserModel = await DatabaseInterface.shared.read(id: act.idUser, table: .user){
+                        new.users.append(user)
+                    }
+                }
+                userActivities.append(new)
+                return new.users
+            }
+        }
+    }
+    
+    func loadUser() -> UserModel?{
+        if let myUser = UserLocalSave().loadUser(){
+            self.myUser = myUser
+            return myUser
+        }
+        return nil
     }
 }
 

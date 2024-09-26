@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct NewActivityButton: View {
+    @Environment(\.colorScheme) var colorScheme
     let onTap : () -> Void
     let groupId : String?
     var navigateAuto : Bool = true
@@ -20,11 +21,11 @@ struct NewActivityButton: View {
             ZStack{
                 Circle()
                     .frame(width: 70, height: 70)
-                    .foregroundStyle(Color(.azul4))
+                    .foregroundStyle( Color(.azul4))
                 Image(systemName: "plus")
                     .font(.title)
                     .bold()
-                    .foregroundStyle(Color(.black))
+                    .foregroundStyle(colorScheme == .dark ? Color(.black) : Color(.white))
             }
         }
     }

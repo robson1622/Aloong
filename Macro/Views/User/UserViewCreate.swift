@@ -33,7 +33,9 @@ struct UserViewCreate: View {
                 VStack{
                     Button(action:{
                         Task{
-                            await self.create()
+                            if name.count > 2{
+                                await self.create()
+                            }
                         }
                     }){
                         HStack{
@@ -91,8 +93,9 @@ struct UserViewCreate: View {
     
     func create() async {
         let user = UserModel(id: idApple, name: name, email: email, userimage: userimage)
-        controller.createUser(model: user)
-        ViewsController.shared.navigateTo(to: .decisionCreateOrAloong,reset: true)
+        _ = await user.create()
+        UserLocalSave().saveUser(user: user)
+        ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
     }
 }
 

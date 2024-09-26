@@ -20,19 +20,19 @@ struct ActivityCard: View {
             }
             VStack (spacing: 10){
                 HStack{
-                    Text(user.name ?? withoutText)
+                    Text(user.name)
                         .font(.caption)
                         .foregroundColor(.preto)
                     Spacer()
                     // Caption1/Italic
-                    Text(getFormatDate().string(from: activity.date!))
+                    Text(getFormatDate().string(from: activity.date))
                         .font(.caption)
                         .foregroundColor(.cinza2)
                         .multilineTextAlignment(.trailing)
                         .italic()
                 }
                 
-                Text(activity.description ?? withoutText)
+                Text(activity.description)
                     .font(.subheadline)
                     .foregroundColor(.preto)
                     .multilineTextAlignment(.leading)

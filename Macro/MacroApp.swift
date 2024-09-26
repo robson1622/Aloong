@@ -24,11 +24,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct MacroApp: App {
   // register app delegate for Firebase setup
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-
+    @State var content : ContentView = ContentView()
   var body: some Scene {
     WindowGroup {
       NavigationView {
-        ContentView()
+        content
       }
     }
   }

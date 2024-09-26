@@ -78,3 +78,23 @@ func formattedDateAndTime(from date: Date?) -> String {
     dateFormatter.dateFormat = "d 'de' MMMM 'às' HH'h'mm"
     return dateFormatter.string(from: date)
 }
+
+
+func generateInvitationCode()async -> String {
+    let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    var randomCode = ""
+
+    for _ in 0..<4 {
+        if let randomCharacter = characters.randomElement() {
+            randomCode.append(randomCharacter)
+        }
+    }
+    // verificar se o código já existe
+    let response : [GroupModel] = await DatabaseInterface.shared.readDocuments(isEqualValue: randomCode, table: .group, field: "invitationCode")
+    if(response.isEmpty){
+        return randomCode
+    }
+    else{
+        return await generateInvitationCode()
+    }
+}

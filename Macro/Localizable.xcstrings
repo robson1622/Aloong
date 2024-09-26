@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "--" : {
+
+    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -34,16 +37,6 @@
         }
       }
     },
-    "%@%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@%2$@"
-          }
-        }
-      }
-    },
     "%lld" : {
 
     },
@@ -53,6 +46,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$lld %2$@"
+          }
+        }
+      }
+    },
+    "%lldº   %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lldº   %2$@"
           }
         }
       }
@@ -70,9 +73,6 @@
       "comment" : "Titulo do botão que leva para a view de atividades"
     },
     "activities and challenge your friends" : {
-
-    },
-    "Add an group" : {
 
     },
     "Add new friend" : {
@@ -97,6 +97,9 @@
           }
         }
       }
+    },
+    "Add plus image" : {
+
     },
     "Adicione um Titulo..." : {
 
@@ -143,12 +146,14 @@
     "Cal" : {
 
     },
+    "CAL" : {
+
+    },
     "Calories" : {
 
     },
     "Cancel" : {
       "comment" : "texto de cancelamento da ação",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -173,8 +178,11 @@
     "Click here" : {
       "comment" : "Texto do botão para entrar em um grupo com o código"
     },
+    "Click me!" : {
+
+    },
     "Create" : {
-      "comment" : "Create button text\ntexto da home para criar um novo grupo"
+      "comment" : "Create button text"
     },
     "Create a challenge" : {
       "comment" : "Texto do botão para criar um novo desafio no onboarding"
@@ -196,10 +204,8 @@
         }
       }
     },
-    "Dark Mode" : {
-
-    },
     "Data selecionada: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -219,7 +225,7 @@
 
     },
     "Days left" : {
-      "comment" : "Texto que fala quantos dias faltam para o desafio acabar\ntexto da contagem de dias restantes"
+      "comment" : "texto da contagem de dias restantes"
     },
     "Delete" : {
 
@@ -253,6 +259,12 @@
     "Description" : {
 
     },
+    "DESCRIPTION" : {
+
+    },
+    "Details of group" : {
+      "comment" : "Texto do titulo da view de details que mostra os detalhes do grupo"
+    },
     "Distance" : {
 
     },
@@ -267,9 +279,6 @@
     },
     "Edit" : {
       "comment" : "Texto do botão para editar a atividade"
-    },
-    "Edit profile" : {
-      "comment" : "texto botão para editar o seu perfil"
     },
     "Email" : {
       "extractionState" : "manual",
@@ -291,10 +300,10 @@
     "End date" : {
 
     },
-    "Escreva uma legenda..." : {
+    "Enter your name" : {
 
     },
-    "Falta codar \n a imagem" : {
+    "Escreva uma legenda..." : {
 
     },
     "Final date" : {
@@ -335,11 +344,20 @@
     "Intensity" : {
 
     },
+    "Invite friends" : {
+      "comment" : "Texto do botão de convidar amigo"
+    },
+    "K" : {
+
+    },
     "K Steps" : {
 
     },
     "KM" : {
 
+    },
+    "Left days" : {
+      "comment" : "Marcador de dias que faltam"
     },
     "Let's get to the challenge" : {
       "comment" : "Texto que explica o que fazer na view de escolha entre criar um grupo e entrar em um"
@@ -396,15 +414,6 @@
         }
       }
     },
-    "No groups" : {
-
-    },
-    "No image" : {
-      "comment" : "aviso de sem imagem"
-    },
-    "No named" : {
-      "comment" : "texto que avisa que o grupo não possui nome, esse caso não deve acontecer, mas caso aconteça..."
-    },
     "Nome" : {
 
     },
@@ -414,14 +423,8 @@
     "Oops, \n there's nothing here yet..." : {
       "comment" : "Texto que fala que não há atividadesainda"
     },
-    "Opções" : {
-
-    },
     "Other people" : {
 
-    },
-    "Paste the code" : {
-      "comment" : "campo para inserir a chave de acesso do grupo"
     },
     "Personalize your challenge" : {
       "comment" : "Texto da criação de grupo, título"
@@ -431,6 +434,9 @@
     },
     "Publish" : {
       "comment" : "Botão de ação de publicar a atividade"
+    },
+    "RANKING" : {
+      "comment" : "Texto do titulo da view de details que mostra a classificação"
     },
     "REFERENCES" : {
       "comment" : "Titulo do cabeçalho da view do perfil do usuário"
@@ -481,6 +487,7 @@
       }
     },
     "Selecionar Data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -497,6 +504,7 @@
       }
     },
     "Selecione sua data de nascimento:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -535,17 +543,11 @@
         }
       }
     },
-    "teste" : {
-
-    },
     "Title" : {
 
     },
     "Today" : {
       "comment" : "Texto que fala Hoje na view de criar atividade"
-    },
-    "Type anything" : {
-
     },
     "Type the code" : {
       "comment" : "Texto da tela de inserção do código"
@@ -553,14 +555,8 @@
     "Type your name or nickname" : {
       "comment" : " placeholder da caixa de texto de nome"
     },
-    "Unamed" : {
-      "comment" : "quando não há nome aparece esse texto"
-    },
     "Welcome" : {
       "comment" : "texto de bem vindo da tela de criar conta"
-    },
-    "Welcome, " : {
-      "comment" : "Frase de bem vido da home"
     },
     "What do you want to be called?" : {
       "comment" : " subtitulo da tela de criar perfil"
@@ -588,9 +584,6 @@
     },
     "your daily " : {
 
-    },
-    "Your groups" : {
-      "comment" : "texto da home que lista os grupos que o usuário faz parte"
     },
     "Your profile" : {
       "comment" : "Titulo da tela de perfil"

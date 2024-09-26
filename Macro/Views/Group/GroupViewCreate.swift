@@ -130,13 +130,13 @@ struct GroupViewCreate: View {
     }
     
     func createGroup(){
-        if(controller.user.user != nil && controller.user.user?.id != nil){
-            let newGroup = GroupModel(idUser: (controller.user.user?.id!)!, title: name, description: description, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: durations,to: Date()), scoreType: pointsSystemNamesForComparations[0] , invitationCode: "")
+        if let idUser = controller.userController.myUser?.id{
+            let newGroup = GroupModel(idUser: idUser, title: name, description: description, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: durations,to: Date())!, scoreType: pointsSystemNamesForComparations[0] , invitationCode: "")
             Task{
-                if let _ = await controller.createGroup(model: newGroup){
-                    await controller.updateAll()
-                    if(controller.group.groupsOfThisUser.first != nil){
-                        ViewsController.shared.navigateTo(to: .group(controller.group.groupsOfThisUser.first!), reset: true)
+                if let _ = await newGroup.create(){
+                    let listOfGroups = await controller.groupController.readAllGroupsOfUser()
+                    if(listOfGroups.first != nil){
+                        ViewsController.shared.navigateTo(to: .group(listOfGroups.first!), reset: true)
                     }
                 }
             }

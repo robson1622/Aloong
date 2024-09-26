@@ -13,19 +13,18 @@ class PhotoSelectorViewModel: ObservableObject {
     @Published var selectedPhotos = [PhotosPickerItem]()
     
     @MainActor
-    func convertDataToImage() {
+    func convertDataToImage() async {
         // reset the images array before adding more/new photos
         images.removeAll()
         
         if !selectedPhotos.isEmpty {
             for eachItem in selectedPhotos {
-                Task {
-                    if let imageData = try? await eachItem.loadTransferable(type: Data.self) {
-                        if let image = UIImage(data: imageData) {
-                            images.append(image)
-                        }
+                if let imageData = try? await eachItem.loadTransferable(type: Data.self) {
+                    if let image = UIImage(data: imageData) {
+                        images.append(image)
                     }
                 }
+                
             }
         }
         
@@ -62,7 +61,9 @@ struct PhotoPickerButton: View {
         }
         .padding()
         .onChange(of: vm.selectedPhotos) { _ in
-            vm.convertDataToImage()
+            Task{
+                await vm.convertDataToImage()
+            }
         }
     }
 }

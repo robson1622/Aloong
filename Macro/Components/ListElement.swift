@@ -141,6 +141,6 @@ struct ListElement: View {
 }
 
 #Preview {
-    @State var teste : String = "2.2"
-    return ListElement(title: "Distance", symbol: .steps, values: $teste)
+    let teste : String = "2.2"
+    return ListElement(title: "Distance", symbol: .steps, values: .constant(teste))
 }

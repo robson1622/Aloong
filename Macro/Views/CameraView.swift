@@ -10,8 +10,9 @@ import PhotosUI
 
 struct CameraView: View {
     @EnvironmentObject var controller : GeneralController
-    @State private var showCamera = true
+    @State private var isPresented = true
     @State private var selectedImage: UIImage?
+    @State private var galeryImages : [UIImage] = []
     @State var image: UIImage?
     var body: some View {
         VStack {
@@ -20,22 +21,32 @@ struct CameraView: View {
                     .resizable()
                     .scaledToFit()
                     .onAppear{
-                        if(controller.user.user?.id != nil && controller.group.groupsOfThisUser.first != nil){
-                            controller.activities.imagesForNewActivity = selectedImage
-                            ViewsController.shared.navigateTo(to: .createActivity((controller.user.user?.id!)!, controller.group.groupsOfThisUser.first!.id!))
+                        if let idUser = controller.userController.myUser?.id{
+                            controller.activityController.imagesForNewActivity.append(selectedImage)
+                            ViewsController.shared.navigateTo(to: .createActivity(idUser, (controller.groupController.groupsOfThisUser.first?.id)!))
                         }
                         else{
                             print("ERRO EM CamaeraView/.onAppear , id ou grupo nulo")
                         }
                     }
             }
+            else if (isPresented){
+                accessCameraView(selectedImage: self.$selectedImage)
+                    .ignoresSafeArea()
+            }
             
         }
         .ignoresSafeArea()
         .frame(maxWidth: .infinity,maxHeight: .infinity)
-        .fullScreenCover(isPresented: self.$showCamera) {
-            accessCameraView(selectedImage: self.$selectedImage)
+//        .fullScreenCover(isPresented: self.$showCamera) {
+//            
+//        }
+        .onChange(of: isPresented){ newValue in
+            if(!isPresented){
+                ViewsController.shared.back()
+            }
         }
+        .background(Color.black)
     }
 }
 

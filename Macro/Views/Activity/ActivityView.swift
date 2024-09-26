@@ -33,8 +33,8 @@ struct ActivityView: View {
                     }
                 }
             )])
-            UserViewCard(model: user, description: formattedDateAndTime(from: activity.date))
-                .padding(.bottom,6)
+            //UserViewCard(model: user, description: formattedDateAndTime(from: activity.date))
+             //   .padding(.bottom,6)
             ZStack(alignment:.bottom){
                 ImageLoader(url: imagesString.first, squere: true, largeImage: true)
                 HStack{
@@ -54,14 +54,14 @@ struct ActivityView: View {
                 .padding(.leading,12)
             }
             HStack{
-                Text(activity.title ?? "")
+                Text(activity.title)
                     .font(.title3)
                     .foregroundColor(.black)
                 Spacer()
             }
             .padding(.top,12)
             HStack{
-                Text(activity.description ?? "")
+                Text(activity.description)
                     .font(.footnote)
                     .foregroundColor(Color(.systemGray))
                 Spacer()
@@ -78,6 +78,7 @@ struct ActivityView: View {
         .refreshable {
             
         }
+        .background(Color(.branco))
     }
     
     
@@ -85,7 +86,7 @@ struct ActivityView: View {
         Task{
             listOfImages.removeAll()
             for image in imagesString{
-                controller.downloadImage(from: image) { response in
+                BucketOfImages.shared.download(from: image) { response in
                     if let response = response{
                         listOfImages.append(response)
                     }

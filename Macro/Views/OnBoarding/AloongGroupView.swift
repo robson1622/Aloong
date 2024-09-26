@@ -136,7 +136,9 @@ struct AloongGroupView: View {
                                     if (sucessInSearchGroup != nil && sucessInSearchGroup!){
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                             withAnimation {
-                                                // aqui vai o direcionador de view
+                                                if let group = controller.groupController.groupsOfThisUser.first{
+                                                    ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                                                }
                                                 
                                             }
                                         }
@@ -197,13 +199,14 @@ struct AloongGroupView: View {
     }
     
     func searchGroup()async {
-        if(controller.user.user != nil && controller.user.user?.id != nil){
-            let result = await controller.group.searchGroup(code: pinOne + pinTwo + pinThree + pinFour)
+        if let idUser = controller.userController.myUser?.id{
+            let result = await controller.groupController.searchGroup(code: pinOne + pinTwo + pinThree + pinFour)
             if (result.count > 0 ){
-                sucessInSearchGroup = await controller.group.members.create(idGroup: result[0].id!, idUser: (controller.user.user?.id!)!, state: statesOfMembers.member)
-                await controller.updateAll()
-                if(controller.group.groupsOfThisUser.first != nil){
-                    ViewsController.shared.navigateTo(to: .group(controller.group.groupsOfThisUser.first!), reset: true)
+                let member = MemberModel(groupId: result[0].id!, userId: idUser, state: statesOfMembers.member)
+                if let _ = await member.create(){
+                    sucessInSearchGroup = true
+                    controller.groupController.groupsOfThisUser.append(result[0])
+                    controller.groupController.saveLocalMainGroup(group: result[0])
                 }
             }
             else{

@@ -33,7 +33,7 @@ struct GroupModelNames {
     static let scoreType : String =  NSLocalizedString("Points system", comment: "")
 }
 
-let exempleGroup : GroupModel = GroupModel(id: "ebv7e128hdixnws", idUser: "sjcb87w801hdo8y7cguos", title: "Grupo da Fibração", description: "Exemplo de grupo para mostrar como ficaria quando estivesse um pronto para começar a ver as organizações de texto, de imagens e lista de coisas, com um texto maior podemos ver também como ficaria a quebra de linhas do campo de texto.", startDate: Date(), endDate: Date(), scoreType: "Dias ativos")
+let exempleGroup : GroupModel = GroupModel(id: "ebv7e128hdixnws", idUser: "sjcb87w801hdo8y7cguos", title: "Grupo da Fibração", description: "Exemplo de grupo para mostrar como ficaria quando estivesse um pronto para começar a ver as organizações de texto, de imagens e lista de coisas, com um texto maior podemos ver também como ficaria a quebra de linhas do campo de texto.", startDate: Date(), endDate: Date(), scoreType: "Dias ativos",invitationCode: "A2P9")
 
 
 let pointsSystemNames : [String] = [NSLocalizedString("Active days", comment: ""),NSLocalizedString("Calories", comment: ""),NSLocalizedString("Distance", comment: ""),NSLocalizedString("Intensity", comment: "")]

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SplashView: View {
+    @Binding var isPresented: Bool
     @State var isAnimating : Bool = false
-    @EnvironmentObject var controller : GeneralController
     var body: some View {
         VStack{
             Image("aloong_logo_png")
@@ -30,30 +30,10 @@ struct SplashView: View {
             .resizable()
             .scaledToFill()
         )
-        .onAppear(){
-            Task{
-                await controller.updateAll()
-                if(UserLocalSave().loadOnboardingSkip() == true){
-                    if(controller.user.user != nil && controller.group.groupsOfThisUser.first != nil){
-                        ViewsController.shared.navigateTo(to: .group(controller.group.groupsOfThisUser.first!),reset: true)
-                    }
-                    else if(controller.user.user != nil){
-                        ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
-                    }
-                    else{
-                        ViewsController.shared.navigateTo(to: .signIn,reset: true)
-                    }
-                }
-                else{
-                    ViewsController.shared.navigateTo(to: .onboarding, reset: true)
-                }
-            }
-           
-        }
         
     }
 }
 
 #Preview {
-    SplashView()
+    SplashView(isPresented: .constant(true))
 }

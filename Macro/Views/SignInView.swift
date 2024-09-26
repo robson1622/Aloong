@@ -27,12 +27,10 @@ struct SignInView: View {
                         var name : String = ""
                         var email : String = ""
                         if userCredential.authorizedScopes.contains(.fullName) {
-                            controller.user?.name = userCredential.fullName?.namePrefix
                             name = userCredential.fullName?.namePrefix ?? ""
                         }
                     
                         if userCredential.authorizedScopes.contains(.email) {
-                            controller.user?.email = userCredential.email!
                             email = userCredential.email!
                         }
                         let idApple = userCredential.user

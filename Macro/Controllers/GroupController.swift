@@ -10,38 +10,68 @@ import Foundation
 
 
 class GroupController: ObservableObject{
-    @Published var members : MembersController = MembersController()
+    static var shared = GroupController()
     @Published var groupsOfThisUser : [GroupModel] = []
-    @Published var usersOfThisGroup : [UserModel] = []
-    @Published var search : GroupModel?
+    private let idUserMemberFieldName = "userId"
+    private let collectionName = "groups"
+    private let invitationFieldName = "invitationCode"
+    
+    private let keyLocalMainGroup = "keyLocalMainGroup"
     
     func load(idUser : String) async {
-        groupsOfThisUser = await GroupDao.shared.read(userId: idUser)
+        let relations : [MemberModel] = await DatabaseInterface.shared.readDocuments(isEqualValue: idUser, table: .member, field: idUserMemberFieldName)
+        for relation in relations{
+            if let group : GroupModel = await DatabaseInterface.shared.read(id: relation.groupId, table: .group){
+                groupsOfThisUser.append(group)
+            }
+        }
     }
     
     func searchGroup(code : String) async -> [GroupModel]{
-        return await GroupDao.shared.read(inviteCode: code)
+        return await DatabaseInterface.shared.readDocuments(isEqualValue: code, table: .group, field: invitationFieldName)
     }
     
-    func create(model : GroupModel) async -> Bool?{
-        if let _ = await GroupDao.shared.create(group: model){
-            return true
+    func readMainGroupOfUser() -> GroupModel?{
+        guard let data = UserDefaults.standard.data(forKey: keyLocalMainGroup) else {
+            return nil
         }
-        return nil
+        
+        do {
+            let group = try JSONDecoder().decode(GroupModel.self, from: data)
+            return group
+        } catch {
+            print("Erro ao carregar o usuário: \(error)")
+            return nil
+        }
     }
     
-    func update(model : GroupModel)async -> Bool?{
-        if let response = await GroupDao.shared.update(model: model){
-            return response
+    func saveLocalMainGroup(group : GroupModel) {
+        do {
+            let data = try JSONEncoder().encode(group)
+            UserDefaults.standard.set(data, forKey: keyLocalMainGroup)
+        } catch {
+            print("Erro ao salvar o usuário: \(error)")
         }
-        return nil
     }
     
-    func delete(model : GroupModel)async -> Bool?{
-        if let response = await GroupDao.shared.delete(model: model){
-            return response
+    func readAllGroupsOfUser(reset : Bool = false) async -> [GroupModel]{
+        if let idUser = UserController.shared.myUser?.id{
+            if reset{
+                groupsOfThisUser.removeAll()
+            }
+            let members : [MemberModel] = await DatabaseInterface.shared.readDocuments(isEqualValue: idUser, table: .member, field: idUserMemberFieldName)
+            for member in members{
+                if let group : GroupModel = await DatabaseInterface.shared.read(id: member.groupId, table: .group){
+                    if let index = groupsOfThisUser.firstIndex(where: {$0.id == group.id}){
+                        groupsOfThisUser[index] = group
+                    }
+                    else{
+                        groupsOfThisUser.append(group)
+                    }
+                }
+            }
         }
-        return nil
+        return groupsOfThisUser
     }
     
 }

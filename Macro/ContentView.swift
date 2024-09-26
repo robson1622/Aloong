@@ -9,64 +9,93 @@ import SwiftUI
 import FirebaseAnalytics
 
 struct ContentView: View {
+    @State var loading : Bool = true
     @StateObject var router = ViewsController.shared
-    @State var home : Home = Home()
-    @StateObject var controller : GeneralController = GeneralController()
-    let splash : SplashView = SplashView()
+    @StateObject var controller : GeneralController = GeneralController.shared
+    
     var body: some View {
         NavigationStack(path: $router.navPath){
-            splash.navigationDestination(for: ViewsController.Destination.self){ destination in
+            SplashView(isPresented: $loading).navigationDestination(for: ViewsController.Destination.self){ destination in
                 let hide = true
                 
                 switch destination{
                     
-                //user part
-                    case .user(let model):
-                        UserViewProfile(model: model).navigationBarBackButtonHidden(hide)
-                    case .createUser(let idApple, let name, let email):
-                        UserViewCreate(idApple : idApple,name : name, email: email).navigationBarBackButtonHidden(hide)
+                    //user part
+                case .user(let model):
+                    UserViewProfile(model: model).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
-                    case .myProfile:
-                        UserViewMyProfile().navigationBarBackButtonHidden(hide)
-                //group part
-                    case .group(let model):
-                        GroupView(model: model).navigationBarBackButtonHidden(hide)
+                case .createUser(let idApple, let name, let email):
+                    UserViewCreate(idApple : idApple,name : name, email: email).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
-                    case .createGroup:
-                        GroupViewCreate().navigationBarBackButtonHidden(hide)
+                case .myProfile:
+                    UserViewMyProfile().navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
-                    case .editGroup(let model):
-                        GroupViewEdit(model: model).navigationBarBackButtonHidden(hide)
-                    case .aloongInGroup:
-                        AloongGroupView().navigationBarBackButtonHidden(hide)
+                    //group part
+                case .group(let model):
+                    GroupView(model: model).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
-                //activity part
-                    case .activity(let activity, let user, let listImagesString):
+                case .createGroup:
+                    GroupViewCreate().navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
+                case .editGroup(let model):
+                    GroupViewEdit(model: model).navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
+                case .aloongInGroup:
+                    AloongGroupView().navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
+                case .groupDetails(let listOfPoints, let group):
+                    GroupViewDetails(listOfPositions: listOfPoints,group:group).navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
+                    //activity part
+                case .activity(let activity, let user, let listImagesString):
                     ActivityView(activity: activity, user: user,imagesString : listImagesString).navigationBarBackButtonHidden(hide)
-                    case .createActivity(let idUser, let idGroup):
-                        ActivityViewCreate(idUser: idUser,idGroup: idGroup).navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
+                case .createActivity(let idUser, let idGroup):
+                    ActivityViewCreate(idUser: idUser,idGroup: idGroup).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                     
-                //general part
-                    case .home :
-                        home.navigationBarBackButtonHidden(hide)
+                    
+                    //general part
+                case .signIn :
+                    SignInView().navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
-                    case .signIn :
-                        SignInView().navigationBarBackButtonHidden(hide)
-                    case .decisionCreateOrAloong:
-                        DecisionCreateOrAloongGroupView().navigationBarBackButtonHidden(hide)
-                    case .onboarding:
-                        OnboardInforsView().navigationBarBackButtonHidden(hide)
-                    case .camera:
-                        CameraView().navigationBarBackButtonHidden(hide)
-                            .environmentObject(controller)
+                case .decisionCreateOrAloong:
+                    DecisionCreateOrAloongGroupView().navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
+                case .onboarding:
+                    OnboardInforsView().navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
+                case .camera:
+                    CameraView().navigationBarBackButtonHidden(hide)
+                        .environmentObject(controller)
+                case .splash:
+                    SplashView(isPresented: $loading)
+                    
                 }
                 
             }
-            .environmentObject(controller)
+            .onAppear {
+                if false{
+                    ViewsController.shared.navigateTo(to: .createActivity("", ""), reset: true)
+                }
+                else{
+                    Task{
+                        await self.controller.loadAllLists()  // Carrega listas do controller
+                        loading = false
+                        if let group = await self.controller.groupController.readAllGroupsOfUser().first {
+                            ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                            controller.groupController.saveLocalMainGroup(group: group)
+                        }
+                        else{
+                            ViewsController.shared.navigateTo(to: .onboarding,reset: true)
+                        }
+                    }
+                }
+            }
         }
         
     }
+    
 }
 
 #Preview {

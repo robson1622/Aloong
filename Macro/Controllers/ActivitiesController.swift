@@ -9,61 +9,65 @@ import Foundation
 import PhotosUI
 
 class ActivitiesController: ObservableObject{
-    @Published var activityGroupRelation : ActivityGroupController = ActivityGroupController()
-    @Published var activityUserRelation : ActivityUserController = ActivityUserController()
+    static var shared : ActivitiesController = ActivitiesController()
+    @Published var activityGroupController = ActivityGroupController.shared
+    @Published var activityUserController = ActivityUserController.shared
     @Published var activities : [ActivityModel] = []
-    @Published var imagesForNewActivity : UIImage = UIImage()
+    @Published var imagesForNewActivity : [UIImage] = []
     
-    func load(idGroup: String, idUser : String? = nil) async {
-        activities = await self.getActivitiesOfGroup(idGroup: idGroup)
+    private struct ActivitiesOfGroups {
+        var idGroup : String
+        var activities : [ActivityModel]
     }
-    func load(idUser: String) async {
-        await activityUserRelation.load(idUser: idUser)
-    }
-    func create(model: ActivityModel, idGroup: String, idUserOwner : String, listOfOtherUsersIds: [String] = [] ,images : [UIImage] = [])async -> Bool?{
-        if let sucess = await ActivityDao.shared.create(model: model, idGroup: idGroup, idUserOwner: idUserOwner,listOfUsersIds: listOfOtherUsersIds,listOfImages: images){
-            await self.load(idGroup: idGroup)
-            return sucess
-        }
-        return nil
-    }
-    func update(model: ActivityModel,idGroup: String)async -> Bool?{
-        if let sucess = await ActivityDao.shared.update(model: model){
-            await self.load(idGroup: idGroup)
-            return sucess
-        }
-        return nil
-    }
-    func delete(model: ActivityModel,idGroup : String) async -> Bool?{
-        if let sucess = await ActivityDao.shared.delete(model: model){
-            await self.load(idGroup: idGroup)
-            return sucess
-        }
-        return nil
-    }
+    
+    @Published private var activitiesOfGroups : [ActivitiesOfGroups] = []
     //retorna todas as atividades do grupo
-    func getActivitiesOfGroup(idGroup : String) async -> [ActivityModel]{
-        var result : [ActivityModel] = []
-        //primeiro pegamos todas as relacoes de atividades com grupos
-        await activityGroupRelation.load(idGroup: idGroup)
-        let relations = activityGroupRelation.listOfActivityGroup
-        for relation in relations{
-            if let activity : ActivityModel = await ActivityDao.shared.read(id: relation.idActivity){
-                result.append(activity)
+    func readActivitiesOfGroup(idGroup : String) async -> [ActivityModel]{
+        if let index = activitiesOfGroups.firstIndex(where: { $0.idGroup == idGroup }){
+            //primeiro pegamos todas as relacoes de atividades com grupos
+            if activitiesOfGroups[index].activities.isEmpty{
+                let relations = await activityGroupController.readAllActivityGroupsOfGroup(idGroup: idGroup)
+                for relation in relations{
+                    if let activity : ActivityModel = await DatabaseInterface.shared.read(id: relation.idActivity, table: .activity){
+                        if let indexInActivity = activitiesOfGroups[index].activities.firstIndex(where: {$0.id == activity.id}){
+                            activitiesOfGroups[index].activities[indexInActivity] = activity
+                        }
+                        else{
+                            activitiesOfGroups[index].activities.append(activity)
+                        }
+                    }
+                }
+                return activitiesOfGroups[index].activities
             }
+            return activitiesOfGroups[index].activities
+            
         }
-        return result
+        else{
+            var newGroupActivities : ActivitiesOfGroups = ActivitiesOfGroups(idGroup: idGroup, activities: [])
+            let relations = await activityGroupController.readAllActivityGroupsOfGroup(idGroup: idGroup)
+            for relation in relations{
+                if let activity : ActivityModel = await DatabaseInterface.shared.read(id: relation.idActivity, table: .activity){
+                    newGroupActivities.activities.append(activity)
+                }
+            }
+            activitiesOfGroups.append(newGroupActivities)
+            return newGroupActivities.activities
+        }
     }
     //atividades de um usuário especifico
-    func getActivitiesOfUser(idUser : String) async -> [ActivityModel]{
+    func readActivitiesOfUser(idUser : String) async -> [ActivityModel]{
         var result : [ActivityModel] = []
-        await activityUserRelation.load(idUser: idUser)
-        let relations = activityUserRelation.listOfActivityUser
+        //primeiro pegamos todas as relacoes de atividades com user
+        let relations = await activityUserController.readAllActivityUserOfUser(idUser: idUser)
         for relation in relations{
-            if let activity : ActivityModel = await ActivityDao.shared.read(id: relation.idUser){
+            if let activity : ActivityModel = await DatabaseInterface.shared.read(id: relation.idActivity, table: .activity){
                 result.append(activity)
             }
         }
         return result
+    }
+    //delete todas
+    func deleteAllActivitiesOfUser(idUser : String) async{
+        print("Não está pronto em ActivitiesController/deleteAllActivitiesOfUser")
     }
 }

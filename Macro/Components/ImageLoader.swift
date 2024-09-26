@@ -45,13 +45,13 @@ struct ImageLoader: View {
                                 .frame(width: 130, height: 130)
                                 .clipped()
                         )
-                        .background(Color(.cinza1))
+                        .background(Color(.cinza))
                         .cornerRadius(130)
                         .shadow(color: .black.opacity(0.1), radius: 20.635, x: 0, y: 6.88)
                         .overlay(
                             RoundedRectangle(cornerRadius: 130)
                                 .inset(by: 2)
-                                .stroke(Color(.azul3), lineWidth: 8)
+                                .stroke(Color(.azul4), lineWidth: 8)
                         )
                 }
                 else{
@@ -65,13 +65,13 @@ struct ImageLoader: View {
                                 .frame(width: 44, height: 44)
                                 .clipped()
                         )
-                        .background(Color(.cinza1))
+                        .background(Color(.cinza))
                         .cornerRadius(44)
                         .shadow(color: .black.opacity(0.1), radius: 20.635, x: 0, y: 6.88)
                         .overlay(
                             RoundedRectangle(cornerRadius: 44)
                                 .inset(by: 2)
-                                .stroke(Color(.azul3), lineWidth: 4)
+                                .stroke(Color(.azul4), lineWidth: 4)
                         )
                 }
             }
@@ -80,7 +80,7 @@ struct ImageLoader: View {
         .onChange(of: url){ newValue in
             if let url = url{
                 if(!url.isEmpty){
-                    FirebaseInterface.shared.downloadImage(from: url){ response in
+                    BucketOfImages.shared.download(from: url){ response in
                         image = response
                     }
                 }
@@ -96,7 +96,7 @@ struct ImageLoader: View {
             else{
                 if let url = url{
                     if(!url.isEmpty){
-                        FirebaseInterface.shared.downloadImage(from: url){ response in
+                        BucketOfImages.shared.download(from: url){ response in
                             image = response
                         }
                     }

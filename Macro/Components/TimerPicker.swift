@@ -9,14 +9,11 @@ import SwiftUI
 
 struct TimePicker: View {
     @Binding var selectDate : Date
-    @Binding var showTab : Bool
-    
     var body: some View {
         VStack{
             ZStack{
                 HStack{
                     Spacer()
-                    OkButton(text: "Ok", onTap: {showTab = false})
                     .padding(.top,24)
                 }
             }
@@ -27,12 +24,11 @@ struct TimePicker: View {
         }
         .padding(16)
         .frame(height: 250)
-        .background(Color(.white))
+        .background(Color(.branco))
     }
 }
 
 #Preview {
-    @State var today = Date()
-    @State var show = false
-    return TimePicker(selectDate: $today,showTab: $show)
+    let today = Date()
+    return TimePicker(selectDate: .constant(today))
 }
