@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ActivityViewCreate: View {
     @EnvironmentObject var controller : GeneralController
+    @State var loadingState : LoadingStates = .idle
+    
     enum FocusPin {
         case  title,description,date,people,duration,distance,steps,calories
     }
@@ -55,9 +57,17 @@ struct ActivityViewCreate: View {
                         self.create()
                     }
                 }){
-                    Text(model?.id == nil ? publish : save)
-                        .font(.body)
-                        .foregroundStyle(Color(.azul4))
+                    if loadingState == .idle{
+                        Text(model?.id == nil ? publish : save)
+                            .font(.body)
+                            .foregroundStyle(Color(.azul4))
+                    }
+                    else{
+                        Text(LoadingStateString(loadingState))
+                            .font(.body)
+                            .foregroundStyle(Color(.azul4))
+                    }
+                    
                 })])
                 ScrollView{
                     header
@@ -152,6 +162,7 @@ struct ActivityViewCreate: View {
     }
     
     func create(){
+        loadingState = .loading
         Task{
             self.insertInModel()
             if listOfAdded.count > 0{
@@ -160,6 +171,7 @@ struct ActivityViewCreate: View {
                     controller.activityController.activities.append(newActivity)
                     _ = await controller.getActivitiesComplete(idGroup: idGroup)
                     ViewsController.shared.back()
+                    loadingState = .done
                 }
             }
             else if listOfAdded.count == 0{
@@ -167,6 +179,7 @@ struct ActivityViewCreate: View {
                     controller.activityController.activities.append(newActivity)
                     _ = await controller.getActivitiesComplete(idGroup: idGroup)
                     ViewsController.shared.back()
+                    loadingState = .done
                 }
             }
         }

@@ -40,6 +40,16 @@
     "%lld" : {
 
     },
+    "%lld / %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld"
+          }
+        }
+      }
+    },
     "%lld %@" : {
       "localizations" : {
         "en" : {
@@ -71,9 +81,6 @@
     },
     "Activities" : {
       "comment" : "Titulo do botão que leva para a view de atividades"
-    },
-    "activities and challenge your friends" : {
-
     },
     "Add new friend" : {
       "extractionState" : "manual",
@@ -122,9 +129,6 @@
     },
     "Back" : {
       "comment" : " texto do botão de voltar na barra do teclado "
-    },
-    "Be active with" : {
-
     },
     "Birth date" : {
       "extractionState" : "manual",
@@ -181,6 +185,9 @@
     "Click me!" : {
 
     },
+    "Competir nunca foi tão fácil!" : {
+
+    },
     "Create" : {
       "comment" : "Create button text"
     },
@@ -223,6 +230,9 @@
     },
     "Date" : {
 
+    },
+    "days" : {
+      "comment" : "texto da unidade de medida da duação do desafio"
     },
     "Days left" : {
       "comment" : "texto da contagem de dias restantes"
@@ -326,9 +336,6 @@
         }
       }
     },
-    "friends" : {
-
-    },
     "Get out" : {
       "comment" : "Texto do botão de sair da conta"
     },
@@ -371,7 +378,7 @@
     "Líder" : {
       "comment" : "Titulo da view de grupo que denota o lider"
     },
-    "Log" : {
+    "Logue suas atividades diárias e desafie seus amigos!" : {
 
     },
     "METRICS" : {
@@ -520,9 +527,6 @@
         }
       }
     },
-    "Skip" : {
-
-    },
     "Start date" : {
 
     },
@@ -573,17 +577,11 @@
     "You can choose to create a challenge or enter one with a code" : {
       "comment" : "Texto a baixo do titulo na tela de criar ou entrar em um grupo"
     },
-    "your" : {
-
-    },
     "Your age" : {
 
     },
     "Your challenger" : {
       "comment" : "Caso não haja nome no grupo, este nome será mostrado"
-    },
-    "your daily " : {
-
     },
     "Your profile" : {
       "comment" : "Titulo da tela de perfil"

@@ -11,9 +11,9 @@ struct UserList: View {
     @Binding var listModels : [UserModel]
     var body: some View {
         ForEach(listModels, id: \.self) { element in
-            UserCardList(model: element, onTap: {
-                
-            })
+//            UserCardList(model: element, onTap: {
+//                
+//            })
         }
     }
 }

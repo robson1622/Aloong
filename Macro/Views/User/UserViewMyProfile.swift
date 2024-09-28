@@ -43,7 +43,7 @@ struct UserViewMyProfile: View {
                             .foregroundColor(.clear)
                             .frame(width: 130, height: 130)
                             .background(
-                                Image(uiImage: pickerPhoto.images.first ?? image ?? UIImage())
+                                Image(uiImage: image ?? UIImage())
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 130, height: 130)
@@ -84,6 +84,9 @@ struct UserViewMyProfile: View {
                                 .onChange(of: pickerPhoto.selectedPhotos) { _ in
                                     Task{
                                         await pickerPhoto.convertDataToImage()
+                                        if let newImage = pickerPhoto.images.first{
+                                            image = newImage
+                                        }
                                     }
                                 }
                                     
@@ -156,9 +159,9 @@ struct UserViewMyProfile: View {
                         
                         Button(action: {
                             Task{
-                                if let sucess = await controller.userController.myUser?.delete(){
+                                if let _ = await controller.userController.myUser?.delete(){
                                     UserLocalSave().deleteUser()
-                                    ViewsController.shared.navigateTo(to: .signIn, reset: true)
+                                    ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
                                 }
                             }
                         }) {
@@ -231,22 +234,28 @@ struct UserViewMyProfile: View {
                        
     private func saveChanges(){
         Task{
-            if(!pickerPhoto.images.isEmpty){
-                await withCheckedContinuation { continuation in
-                    BucketOfImages.shared.upload(image: pickerPhoto.images.first!, type: .profile){ url in
+            await withCheckedContinuation { continuation in
+                if let uiimage = image{
+                    BucketOfImages.shared.upload(image: uiimage, type: .profile){ url in
+                        let oldImage = user?.userimage
                         user?.userimage = url
+                        user?.name = name
                         continuation.resume()
                         Task{
-                            await user?.update()
+                            _ = await user?.update()
+                            if let oldImage{
+                                print(oldImage)
+                                BucketOfImages.shared.deleteImage(url: oldImage){ _ in
+                                    ViewsController.shared.back()
+                                    ViewsController.shared.navigateTo(to: .myProfile)
+                                }
+                            }
                         }
+                        
                     }
                 }
             }
-            if let group = await controller.groupController.readAllGroupsOfUser().first{
-                ViewsController.shared.navigateTo(to: .myProfile,reset :true)
-                ViewsController.shared.navigateTo(to: .group(group), reset: true)
-                
-            }
+            
         }
     }
 }

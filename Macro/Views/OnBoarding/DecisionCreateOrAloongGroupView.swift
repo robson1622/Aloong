@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DecisionCreateOrAloongGroupView: View {
+    @Environment(\.colorScheme) var colorScheme
     let textTitle : String = NSLocalizedString("Let's get to the challenge", comment: "Texto que explica o que fazer na view de escolha entre criar um grupo e entrar em um")
     let textDescriptio : String = NSLocalizedString("You can choose to create a challenge or enter one with a code", comment: "Texto a baixo do titulo na tela de criar ou entrar em um grupo")
     let iHaveACodeText : String = NSLocalizedString("Do you have a code?", comment: "Texto que questiona se a pessoa tem um código")
@@ -39,14 +40,14 @@ struct DecisionCreateOrAloongGroupView: View {
                         HStack{
                             Text(createChanllenge)
                                 .font(.degularLargeSemiBold)
-                                .foregroundColor(.white)
+                                .foregroundColor(.branco)
                                 .multilineTextAlignment(.leading)
                             Spacer()
                         }
                         HStack{
                             Text(createChanllengeExplain)
                                 .font(.subheadline)
-                                .foregroundColor(.white)
+                                .foregroundColor(.branco)
                             Spacer()
                         }
                     }
@@ -58,7 +59,7 @@ struct DecisionCreateOrAloongGroupView: View {
                 }
                 Text(iHaveACodeText)
                     .font(.subheadline)
-                    .foregroundColor(.black.opacity(0.8))
+                    .foregroundColor( colorScheme == .dark ? .white : .black)
                     .italic()
                     .padding(.top,24)
                 
@@ -67,7 +68,7 @@ struct DecisionCreateOrAloongGroupView: View {
                 }){
                     Text(clickHere)
                         .font(.subheadline)
-                        .foregroundColor(.azul4)
+                        .foregroundColor(.branco)
                         .padding(.top,6)
                 }
             }
@@ -77,9 +78,10 @@ struct DecisionCreateOrAloongGroupView: View {
         }
         .ignoresSafeArea()
         .background(
-            Image("backgroundLacoVerde")
+            Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
                 .resizable()
                 .scaledToFill()
+                .ignoresSafeArea()
         )
     }
     

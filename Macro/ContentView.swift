@@ -56,14 +56,11 @@ struct ContentView: View {
                     
                     
                     //general part
-                case .signIn :
-                    SignInView().navigationBarBackButtonHidden(hide)
+                case .onboardingSignIn :
+                    OnboardSignInView().navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                 case .decisionCreateOrAloong:
                     DecisionCreateOrAloongGroupView().navigationBarBackButtonHidden(hide)
-                        .environmentObject(controller)
-                case .onboarding:
-                    OnboardInforsView().navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                 case .camera:
                     CameraView().navigationBarBackButtonHidden(hide)
@@ -79,7 +76,7 @@ struct ContentView: View {
                     ViewsController.shared.navigateTo(to: .createActivity("", ""), reset: true)
                 }
                 else{
-                    Task{
+                    Task{ 
                         await self.controller.loadAllLists()  // Carrega listas do controller
                         loading = false
                         if let group = await self.controller.groupController.readAllGroupsOfUser().first {
@@ -87,7 +84,7 @@ struct ContentView: View {
                             controller.groupController.saveLocalMainGroup(group: group)
                         }
                         else{
-                            ViewsController.shared.navigateTo(to: .onboarding,reset: true)
+                            ViewsController.shared.navigateTo(to: .onboardingSignIn,reset: true)
                         }
                     }
                 }

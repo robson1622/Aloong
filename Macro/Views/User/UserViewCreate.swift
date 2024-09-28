@@ -10,6 +10,7 @@ import SwiftUI
 
 
 struct UserViewCreate: View {
+    @Environment(\.colorScheme) var colorScheme
     let idApple : String
     @EnvironmentObject var controller : GeneralController
     @State var updateUser : Bool = false
@@ -56,10 +57,10 @@ struct UserViewCreate: View {
             VStack{
                 Text(tellUsMore)
                     .font(.degularLargeSemiBold)
-                    .foregroundColor(.azul4)
+                    .foregroundColor(colorScheme == .dark ? .white : .azul4)
                 Text(setYourName)
                     .font(.subheadline)
-                    .foregroundColor(.azul4)
+                    .foregroundColor(colorScheme == .dark ? .white : .azul4)
             }
             HStack{
                 TextField(placeholderName, text: $name)
@@ -72,22 +73,24 @@ struct UserViewCreate: View {
                 }){
                     Image(systemName: "x.circle.fill")
                         .font(.body)
-                        .foregroundColor(name.count > 0 ? .azul3 : Color(.systemGray))
+                        .foregroundColor(name.count > 0 ? .azul4 : Color(.systemGray))
                         .padding(.trailing,16)
                         
                 }
                 
             }
-            .background(Color(.white))
+            .background(Color(.systemGray6))
             .cornerRadius(10)
             .padding(24)
             
             Spacer()
         }
         .background(
-            Image("backgroundLacoVerde")
+            Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
                 .resizable()
                 .scaledToFill()
+                .ignoresSafeArea()
+                .opacity(0.5)
         )
     }
     

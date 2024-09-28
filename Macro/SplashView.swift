@@ -29,6 +29,7 @@ struct SplashView: View {
         Image("backgroudSignIn")
             .resizable()
             .scaledToFill()
+            .ignoresSafeArea()
         )
         
     }

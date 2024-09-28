@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct OtpModifier: ViewModifier {
-    
     @Binding var pin : String
     
     var textLimit = 1
@@ -36,7 +35,11 @@ struct OtpModifier: ViewModifier {
 
 struct AloongGroupView: View {
     //MARK -> PROPERTIES
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var controller : GeneralController
+    
+    @State var loading : LoadingStates = .idle
+    
     enum FocusPin {
         case  pinOne, pinTwo, pinThree, pinFour
     }
@@ -61,19 +64,19 @@ struct AloongGroupView: View {
                     Spacer()
                     Text(typeTheCode)
                         .font(.degularLargeSemiBold)
-                        .foregroundColor(Color(.azul4))
+                        .foregroundColor(colorScheme == .dark ? .white : Color.azul4)
                     Spacer()
                 }
                    
                 Text(typeTheCodeSubtitle)
                     .font(.subheadline)
-                    .foregroundColor(Color(.azul4))
+                    .foregroundColor(colorScheme == .dark ? .white : Color.azul4)
                
                 HStack(spacing:16, content: {
                     
                     TextField("", text: $pinOne)
                         .frame(width: 50,height: 67)
-                        .background(Color(.white))
+                        .background( colorScheme == .dark ? Color(.systemGray2) : Color(.white))
                         .cornerRadius(4)
                         .shadow(color: Color(.systemGray4), radius: 5, x: 0, y: 0)
                         .modifier(OtpModifier(pin:$pinOne))
@@ -81,19 +84,34 @@ struct AloongGroupView: View {
                             if (newVal.count == 1) {
                                 pinFocusState = .pinTwo
                             }
+                            else if (newVal.count > 1){
+                                let firstCharacter : Character = pinOne.first!
+                                pinOne.removeFirst()
+                                pinTwo = pinOne
+                                pinOne.removeAll()
+                                pinOne.append(firstCharacter)
+                            }
                         }
                         .focused($pinFocusState, equals: .pinOne)
                     
                     TextField("", text:  $pinTwo)
                         .frame(width: 50,height: 67)
-                        .background(Color(.white))
+                        .background( colorScheme == .dark ? Color(.systemGray2) : Color(.white))
                         .cornerRadius(4)
                         .shadow(color: Color(.systemGray4), radius: 5, x: 0, y: 0)
                         .modifier(OtpModifier(pin:$pinTwo))
                         .onChange(of:pinTwo){newVal in
                             if (newVal.count == 1) {
                                 pinFocusState = .pinThree
-                            }else {
+                            }
+                            else if (newVal.count > 1){
+                                let firstCharacter : Character = pinTwo.first!
+                                pinTwo.removeFirst()
+                                pinThree = pinTwo
+                                pinTwo.removeAll()
+                                pinTwo.append(firstCharacter)
+                            }
+                            else {
                                 if (newVal.count == 0) {
                                     pinFocusState = .pinOne
                                 }
@@ -104,14 +122,22 @@ struct AloongGroupView: View {
                     
                     TextField("", text:$pinThree)
                         .frame(width: 50,height: 67)
-                        .background(Color(.white))
+                        .background( colorScheme == .dark ? Color(.systemGray2) : Color(.white))
                         .cornerRadius(4)
                         .shadow(color: Color(.systemGray4), radius: 5, x: 0, y: 0)
                         .modifier(OtpModifier(pin:$pinThree))
                         .onChange(of:pinThree){newVal in
                             if (newVal.count == 1) {
                                 pinFocusState = .pinFour
-                            }else {
+                            }
+                            else if (newVal.count > 1){
+                                let firstCharacter : Character = pinThree.first!
+                                pinThree.removeFirst()
+                                pinFour = pinThree
+                                pinThree.removeAll()
+                                pinThree.append(firstCharacter)
+                            }
+                            else {
                                 if (newVal.count == 0) {
                                     pinFocusState = .pinTwo
                                 }
@@ -122,13 +148,18 @@ struct AloongGroupView: View {
                     
                     TextField("", text:$pinFour)
                         .frame(width: 50,height: 67)
-                        .background(Color(.white))
+                        .background( colorScheme == .dark ? Color(.systemGray2) : Color(.white))
                         .cornerRadius(4)
                         .shadow(color: Color(.systemGray4), radius: 5, x: 0, y: 0)
                         .modifier(OtpModifier(pin:$pinFour))
                         .onChange(of:pinFour){newVal in
                             if (newVal.count == 0) {
                                 pinFocusState = .pinThree
+                            }
+                            else if (newVal.count > 1){
+                                let firstCharacter : Character = pinFour.first!
+                                pinFour.removeAll()
+                                pinFour.append(firstCharacter)
                             }
                             else{
                                 Task{
@@ -150,7 +181,17 @@ struct AloongGroupView: View {
                         .focused($pinFocusState, equals: .pinFour)
                 })
                 .padding(.vertical,24)
-                resultOfSearch
+                if loading == .loading{
+                    Text(LoadingStateString(loading))
+                        .font(.callout)
+                        .foregroundColor(.azul4)
+                        .italic()
+                        .padding()
+                }
+                else if loading == .done{
+                    resultOfSearch
+                }
+                
                 Spacer()
             }
             .padding(.horizontal,24)
@@ -158,12 +199,10 @@ struct AloongGroupView: View {
                 pinFocusState = .pinOne
             }
             .background(
-                Image("backgroundLacoVerde")
+                Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
                     .resizable()
-                    .frame(maxHeight: .infinity)
                     .scaledToFill()
-                    
-                
+                    .ignoresSafeArea()
             )
             
         
@@ -199,8 +238,10 @@ struct AloongGroupView: View {
     }
     
     func searchGroup()async {
+        loading = .loading
         if let idUser = controller.userController.myUser?.id{
             let result = await controller.groupController.searchGroup(code: pinOne + pinTwo + pinThree + pinFour)
+            print(result)
             if (result.count > 0 ){
                 let member = MemberModel(groupId: result[0].id!, userId: idUser, state: statesOfMembers.member)
                 if let _ = await member.create(){
@@ -216,6 +257,7 @@ struct AloongGroupView: View {
         else{
             print("NÃO FOI POSSÍVEL ENTRAR NO GRUPO, IDS DE USUÁRIO NULO AloongGroupView/searchGroup")
         }
+        loading = .done
     }
     
 }

@@ -25,58 +25,37 @@ class BucketOfImages: ObservableObject{
     
     private var images : [ImageCash] = []
     
-    private let profileImageReference : String = "profileimages"
-    private let activityImageReference : String = "activityimages"
+    private let profileImageReference : String = "/profileimage/"
+    private let activityImageReference : String = "/activityimages/"
     private let localStorageImages : String = "gs://aloong-40645.appspot.com/"
     
-    func delete(type: localImage,url: String? = nil) -> Bool?{
-        
-        return nil
-    }
     
-    func upload(image: UIImage,type: localImage,url: String? = nil, completion: @escaping(String?) -> Void) {
-        if (url != nil && ((url?.isEmpty) == nil)){
-            self.replace(image: image, path: url!,type: type) { newUrl in
-                    completion(newUrl)
-            }
+    func upload(image: UIImage,type: localImage, completion: @escaping(String?) -> Void) {
+        let imageResized = type == .profile ? self.resizeImage(image: image, targetSize: CGSize(width: 260, height: 260)) : image
+        guard let imageData = imageResized.jpegData(compressionQuality: type == .profile ? 1.0 : 0.75) else {return}
+        let fileName = NSUUID().uuidString
+        var ref = storage.reference(withPath: profileImageReference + fileName)
+        if(type == .activity){
+            ref = storage.reference(withPath: activityImageReference + fileName)
         }
-        else{
-            let imageResized = type == .profile ? self.resizeImage(image: image, targetSize: CGSize(width: 260, height: 260)) : image
-            guard let imageData = imageResized.jpegData(compressionQuality: type == .profile ? 1.0 : 0.75) else {return}
-            let fileName = NSUUID().uuidString
-            var ref = storage.reference(withPath: "/profileimage/\(fileName)")
-            if(type == .activity){
-                ref = storage.reference(withPath: "/activityimages/\(fileName)")
-            }
-            ref.putData(imageData, metadata: nil) { metadata, error in
-                if let error = error {
-                    print("Err: Failed to upload image \(error.localizedDescription)")
-                    return
-                }
-                completion(ref.fullPath)
-            }
-        }
-    }
-    
-    private func replace(image: UIImage, path: String,type : localImage, completion: @escaping (String) -> Void) {
-        let imageResized = type == .profile ? self.resizeImage(image: image, targetSize: CGSize(width: 130, height: 130)) : image
-        // Converte a imagem redimensionada para JPEG com qualidade de 0.75
-        guard let imageData = imageResized.jpegData(compressionQuality: 1) else { return }
-        
-        // Usa o mesmo caminho fornecido para substituir a imagem existente
-        let ref = storage.reference(withPath: path)
-        
-        // Faz o upload da imagem, substituindo a existente
         ref.putData(imageData, metadata: nil) { metadata, error in
             if let error = error {
-                print("Erro ao substituir a imagem: \(error.localizedDescription)")
+                print("Err: Failed to upload image \(error.localizedDescription)")
                 return
             }
-            
-            // Obtém a URL de download da imagem substituída
-            ref.downloadURL { url, error in
-                guard let imageURL = url?.absoluteString else { return }
-                completion(imageURL)
+            completion(ref.fullPath)
+        }
+        
+    }
+    
+    func deleteImage(url: String, completion: @escaping (Error?) -> Void) {
+        let storageRef = Storage.storage().reference(forURL: localStorageImages + url)
+
+        storageRef.delete { error in
+            if let error = error {
+                completion(error)
+            } else {
+                completion(nil)
             }
         }
     }

@@ -27,8 +27,7 @@ class ViewsController : ObservableObject{
         case createActivity(String,String)
         case activity(ActivityModel,UserModel,[String])
         //geral
-        case signIn
-        case onboarding
+        case onboardingSignIn
         case camera
         case splash
     }

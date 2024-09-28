@@ -19,9 +19,9 @@ struct SaveButton: View {
         }){
             Text(text)
                 .font(.callout)
-                .foregroundColor( active ? .white : .white)
+                .foregroundColor( active ? .branco : .white)
                 .padding()
-                .background( active ? Color(.blue) : Color(.systemGray4))
+                .background( active ? .azul4 : Color(.systemGray4))
                 .cornerRadius(10)
         }
     }

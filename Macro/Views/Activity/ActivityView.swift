@@ -16,6 +16,7 @@ struct ActivityView: View {
     @State var listOfImages : [UIImage] = []
     @State var numberOfAloongs : Int = 12
     @State var aloongActive : Bool = false
+    @State var atualTab : Int = 0
     
     let edit : String = NSLocalizedString("Edit", comment: "Texto do botão para editar a atividade")
     var body: some View {
@@ -33,30 +34,56 @@ struct ActivityView: View {
                     }
                 }
             )])
-            //UserViewCard(model: user, description: formattedDateAndTime(from: activity.date))
-             //   .padding(.bottom,6)
-            ZStack(alignment:.bottom){
-                ImageLoader(url: imagesString.first, squere: true, largeImage: true)
-                HStack{
-                    MetricsComponent(icon: .duration, value: formattedTime(from: activity.date))
-                    if(activity.distance != nil){
-                        MetricsComponent(icon: .distance, value: String(format: "%.1f", activity.distance!))
+            UserHeader(model: user, subtitle: dateToLocalizedString( activity.date), activieShare: false, onTapShare: {})
+            ZStack{
+                TabView {
+                    ForEach(imagesString.indices, id: \.self) { i in
+                        ImageLoader(url: imagesString[i], squere: true, largeImage: true)
+                            .overlay(
+                                VStack {
+                                    HStack {
+                                        Spacer()
+                                        // Indicador de páginas dentro da imagem
+                                        Text("\(i + 1) / \(imagesString.count)")
+                                            .font(.footnote)
+                                            .bold()
+                                            .padding(4)
+                                            .background(Color.branco.opacity(0.8))
+                                            .foregroundColor(.preto)
+                                            .cornerRadius(4)
+                                            .padding(8)
+                                    }
+                                    Spacer()
+                                }
+                            )
                     }
-                    if(activity.steps != nil){
-                        MetricsComponent(icon: .steps, value: String(format: "%.1f", activity.steps!))
-                    }
-//                    if(activity.calories != nil){
-//                        MetricsComponent(icon: .calories, value: String(format: "%.1f", activity.calories!))
-//                    }
-                    Spacer()
                 }
-                .padding(.bottom,12)
-                .padding(.leading,12)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                VStack{
+                    Spacer()
+                    HStack{
+                        if let duration = activity.duration{
+                            MetricsComponent(icon: .duration, value:timeIntervalToString( duration))
+                        }
+                        if(activity.distance != nil){
+                            MetricsComponent(icon: .distance, value: String(format: "%.1f", activity.distance!))
+                        }
+                        if(activity.steps != nil){
+                            MetricsComponent(icon: .steps, value: String(format: "%.1f", activity.steps!))
+                        }
+                        Spacer()
+                    }
+                    .padding(.bottom,8)
+                    .padding(.leading,12)
+                }
             }
+            .frame(width: 342, height: 426)
+            .padding(.vertical,12)
+            
             HStack{
                 Text(activity.title)
                     .font(.title3)
-                    .foregroundColor(.black)
+                    .foregroundColor(.preto)
                 Spacer()
             }
             .padding(.top,12)
@@ -78,6 +105,7 @@ struct ActivityView: View {
         .refreshable {
             
         }
+        .ignoresSafeArea()
         .background(Color(.branco))
     }
     
@@ -93,6 +121,21 @@ struct ActivityView: View {
                 }
             }
         }
+    }
+    
+    func timeIntervalToString(_ interval: TimeInterval) -> String {
+        let hours = Int(interval) / 3600
+        let minutes = (Int(interval) % 3600) / 60
+        return "\(hours)h\(minutes)m"
+    }
+    
+    func dateToLocalizedString(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current // Usa a localização atual do dispositivo
+        formatter.dateStyle = .long // Formato longo, adequado para exibir dia, mês, ano
+        formatter.timeStyle = .short // Formato curto para horas e minutos
+        
+        return formatter.string(from: date)
     }
 }
 

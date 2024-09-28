@@ -6,103 +6,110 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
-struct OnboardInforsView: View {
+struct OnboardSignInView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State var selectedTab = 0
     
-    let markedTextFirst : String = NSLocalizedString("Be active with", comment: "")
-    let textFirstContinuation : String = NSLocalizedString("your", comment: "")
-    let textFirstSecond : String = NSLocalizedString("friends", comment: "")
-    
-    let markedTextSecond : String = NSLocalizedString("Log", comment: "")
-    let textSecondContinuation : String = NSLocalizedString("your daily ", comment: "")
-    let textSecondSecond : String = NSLocalizedString("activities and challenge your friends", comment: "")
-    
-    let skip : String = NSLocalizedString("Skip", comment: "")
+    let firstText : String = NSLocalizedString("Logue suas atividades diárias e desafie seus amigos!", comment: "")
+    let secondText : String = NSLocalizedString("Competir nunca foi tão fácil!", comment: "")
     var body: some View {
-        VStack{
-            Header(trailing: [AnyView(
-                Button(action:{
-                    if(selectedTab == 1){
-                        self.skipOnboarding()
-                    }
-                }){
-                    HStack{
-                        Text(skip)
-                            .font(.body)
-                            .foregroundColor(selectedTab == 1 ? .white : .gray)
-                    Image(systemName: "chevron.right")
-                            .font(.body)
-                            .foregroundColor(selectedTab == 1 ? .white : .gray)
-                    }
-                    .padding(24)
-                    .padding(.top,16)
-                }
-            )])
-            Spacer()
-            VStack {
-                // Custom page indicator
-                HStack {
-                    Circle()
-                        .fill(selectedTab == 0 ? Color.azul4 : Color.white) // Cor customizada
-                        .frame(width: 10)
-                        .overlay(
-                            Circle().stroke(Color.azul4, lineWidth: 2) // Borda arredondada
-                        )
-                    Circle()
-                        .fill(selectedTab == 1 ? Color.azul4 : Color.white) // Cor customizada
-                        .frame(width: 10, height: 10)
-                        .overlay(
-                            Circle().stroke(Color.azul4, lineWidth: 2) // Borda arredondada
-                        )
-                }
-                .padding(.top, 10)
-                
-                TabView(selection: $selectedTab) {
-                    first
-                        .tag(0)
-                    second
-                        .tag(1)
-                }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // Esconde o indicador padrão
+        
+        ZStack {
+            Image("backgroundOnboardAzul")
+                .resizable()
+                .scaledToFill()
                 .ignoresSafeArea()
-                
+            
+            VStack{
+                VStack {
+                    // Custom page indicator
+                    HStack {
+                        Circle()
+                            .fill(selectedTab == 0 ? Color.white : Color.clear) // Cor customizada
+                            .frame(width: 10)
+                            .overlay(
+                                Circle().stroke(Color.white, lineWidth: 2) // Borda arredondada
+                            )
+                        Circle()
+                            .fill(selectedTab == 1 ? Color.white : Color.clear) // Cor customizada
+                            .frame(width: 10, height: 10)
+                            .overlay(
+                                Circle().stroke(Color.white, lineWidth: 2) // Borda arredondada
+                            )
+                    }
+                    
+                    TabView(selection: $selectedTab) {
+                        first
+                            .tag(0)
+                        second
+                            .tag(1)
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // Esconde o indicador padrão
+                    .frame(height: 550)
+                    
+                    //botão de signin
+                    SignInWithAppleButton(.signUp){ request in
+                        request.requestedScopes = [.fullName,.email]
+                    } onCompletion: { result in
+                        switch result {
+                        case .success(let authorization):
+                            if let userCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+                                var name : String = ""
+                                var email : String = ""
+                                if userCredential.authorizedScopes.contains(.fullName) {
+                                    name = userCredential.fullName?.namePrefix ?? ""
+                                }
+                            
+                                if userCredential.authorizedScopes.contains(.email) {
+                                    email = userCredential.email!
+                                }
+                                let idApple = userCredential.user
+                                ViewsController.shared.navigateTo(to: .createUser(idApple,name,email), reset: true)
+                            }
+                        case .failure(_):
+                            print("Could not authenticate: \\(error.localizedDescription)")
+                            ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
+                        }
+                    }
+                    .frame(width: 350,height: 60)
+                }
                 
             }
-            .frame(height: 400)
-            .background(Color(.systemGray6))
         }
-        .frame(maxWidth: .infinity,maxHeight: .infinity)
-        .ignoresSafeArea()
-        .background(
-        Image("backgroundOnboardAzul")
-            .resizable()
-            .scaledToFill()
-            .padding(.top,-32))
     }
     
     var first : some View{
         VStack{
-            HStack{
-                Text(markedTextFirst)
-                    .font(.degularLargeSemiBold)
-                    .foregroundColor(.black)
-                    .padding(.vertical,0)
-                    .padding(.horizontal,11)
-                    .background(Color(.verde2))
-                    .cornerRadius(24)
-                Text(textFirstContinuation)
-                    .font(.degularLargeSemiBold)
-                    .foregroundColor(.black)
-                    .padding(.leading,-11)
-                Spacer()
+            ZStack {
+                Image("art3")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 330, height:  330)
+                    .padding()
+                VStack{
+                    HStack{
+                        Ballon(text:"é nóis",leftBorder: false)
+                        Spacer()
+                    }
+                    HStack{
+                        Ballon(leftBorder: false)
+                            .padding(.leading,32)
+                        Spacer()
+                    }
+                    HStack{
+                        Spacer()
+                        Ballon(text:"arrasou!",leftBorder: true)
+                            .padding(.leading,32)
+                    }
+                }
             }
+            
             HStack{
-                Text(textFirstSecond)
+                Text(firstText)
                     .font(.degularLargeSemiBold)
-                    .foregroundColor(.black)
-                    .padding(.leading,11)
-            Spacer()
+                    .foregroundColor(.white)
             }
         }
         .padding(.horizontal,35)
@@ -110,37 +117,40 @@ struct OnboardInforsView: View {
     
     var second : some View{
         VStack{
-            HStack{
-                Text(markedTextSecond)
-                    .font(.degularLargeSemiBold)
-                    .foregroundColor(.black)
-                    .padding(.vertical,0)
-                    .padding(.horizontal,11)
-                    .background(Color(.verde2))
-                    .cornerRadius(24)
-                Text(textSecondContinuation)
-                    .font(.degularLargeSemiBold)
-                    .foregroundColor(.black)
-                    .padding(.leading,-11)
-                Spacer()
+            ZStack {
+                Image("art2")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 330, height:  330)
+                    .padding()
+                VStack{
+                    HStack{
+                        Spacer()
+                        Ballon(text:"é nóis",leftBorder: true)
+                    }
+                    HStack{
+                        Spacer()
+                        Ballon(leftBorder: true)
+                            .padding(.leading,32)
+                    }
+                    HStack{
+                        Ballon(text:"arrasou!",leftBorder: false)
+                            .padding(.leading,32)
+                        Spacer()
+                    }
+                }
             }
+            
             HStack{
-                Text(textSecondSecond)
+                Text(secondText)
                     .font(.degularLargeSemiBold)
-                    .foregroundColor(.black)
-                    .padding(.leading,11)
-            Spacer()
+                    .foregroundColor(.white)
             }
         }
         .padding(.horizontal,35)
     }
-    
-    func skipOnboarding(){
-        UserLocalSave().saveOnboardingSkip(skip: true)
-        ViewsController.shared.navigateTo(to: .signIn, reset: true)
-    }
 }
 
 #Preview {
-    OnboardInforsView()
+    OnboardSignInView()
 }

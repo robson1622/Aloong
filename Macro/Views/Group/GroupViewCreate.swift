@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GroupViewCreate: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var controller : GeneralController
     
     enum FocusPin {
@@ -31,6 +32,7 @@ struct GroupViewCreate: View {
     let descriptionText : String = NSLocalizedString("Descriptio", comment: "Nome do desafio placeholder")
     let letsGo : String = NSLocalizedString("Let's go ", comment: "Texto do botão de criar grupo")
     let finalDateText : String = NSLocalizedString("Final date", comment: "texto que fala a data de fim do desafio")
+    let days : String = NSLocalizedString("days", comment: "texto da unidade de medida da duação do desafio")
     var body : some View{
         ZStack{
             VStack{
@@ -49,21 +51,40 @@ struct GroupViewCreate: View {
                 }
                 
                 VStack{
-                    TextField(nameText, text: $name)
-                        .font(.body)
-                        .padding(.horizontal,16)
-                        .padding(.top,15)
-                        .focused($pinFocusState, equals: .name)
-                    
+                    Button(action:{
+                        showKeyboardInteger = false
+                        pinFocusState = .name
+                    }){
+                        HStack{
+                            TextField(nameText, text: $name)
+                                .font(.body)
+                                .padding(.horizontal,16)
+                                .padding(.top,15)
+                                .focused($pinFocusState, equals: .name)
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(pinFocusState == .name ? .azul4 : .preto)
+                            Spacer()
+                        }
+                    }
                     Divider()
                         .padding(.top,11)
                         .padding(.leading,16)
-                    
-                    TextField(descriptionText, text: $description)
-                        .font(.body)
-                        .padding(.horizontal,16)
-                        .padding(.top,15)
-                        .focused($pinFocusState, equals: .description)
+                    Button(action:{
+                        showKeyboardInteger = false
+                        pinFocusState = .description
+                    }){
+                        HStack{
+                            TextField(descriptionText, text: $description)
+                                .font(.body)
+                                .padding(.horizontal,16)
+                                .padding(.top,15)
+                                .focused($pinFocusState, equals: .description)
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(pinFocusState == .description ? .azul4 : .preto)
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
                     
                     Divider()
                         .padding(.top,11)
@@ -71,16 +92,17 @@ struct GroupViewCreate: View {
                     
                     Button(action:{
                         showKeyboardInteger.toggle()
-                        pinFocusState = .none
+                        pinFocusState = .duration
+                        self.hideKeyboard()
                     }){
                         HStack{
                             Text(durationText)
                                 .font(.body)
-                                .foregroundColor(.black)
+                                .foregroundColor(showKeyboardInteger ? .azul4 : .preto)
                             Spacer()
-                            Text("\(durations)")
+                            Text("\(durations) \(days)")
                                 .font(.body)
-                                .foregroundColor(.black)
+                                .foregroundColor(showKeyboardInteger ? .azul4 : .preto)
                             
                         }
                         .pickerStyle(MenuPickerStyle())
@@ -90,7 +112,7 @@ struct GroupViewCreate: View {
                     .padding(.vertical,16)
                     .focused($pinFocusState, equals: .duration)
                 }
-                .background(.white)
+                .background(Color(.systemGray6))
                 .cornerRadius(8)
                 HStack{
                     Spacer()
@@ -106,13 +128,11 @@ struct GroupViewCreate: View {
                 Spacer()
             }
             .padding(24)
-            if((showKeyboardInteger && pinFocusState != .name && pinFocusState != .description) || pinFocusState == .duration){
+            if(showKeyboardInteger){
                 VStack{
                     Spacer()
                     VStack{
-                        KeyboardBar(showNext: false, showBack: true,onTapNext: {}, onTapBack: {}, onTapOk: {
-                            showKeyboardInteger.toggle()
-                        })
+                        toolbar
                         PickerIntegerKeyboard(value: $durations, descriptionText: durationText, range: 7..<365, pace: 7)
                     }
                     .background(Color(.systemGray6))
@@ -120,24 +140,33 @@ struct GroupViewCreate: View {
             }
             
         }
-        .focused($pinFocusState, equals: .none)
+        .toolbar{
+            ToolbarItemGroup(placement: .keyboard) {
+                toolbar
+            }
+        }
         .background(
-            Image("backgroundLacoVerde")
+            Image( colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
                 .resizable()
                 .scaledToFill()
+                .ignoresSafeArea()
         )
+        .onTapGesture{
+            pinFocusState = .none
+            showKeyboardInteger = false
+        }
         
     }
     
     func createGroup(){
         if let idUser = controller.userController.myUser?.id{
-            let newGroup = GroupModel(idUser: idUser, title: name, description: description, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: durations,to: Date())!, scoreType: pointsSystemNamesForComparations[0] , invitationCode: "")
+            var newGroup = GroupModel(idUser: idUser, title: name, description: description, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: durations,to: Date())!, scoreType: pointsSystemNamesForComparations[0] , invitationCode: "")
+            
             Task{
-                if let _ = await newGroup.create(){
-                    let listOfGroups = await controller.groupController.readAllGroupsOfUser()
-                    if(listOfGroups.first != nil){
-                        ViewsController.shared.navigateTo(to: .group(listOfGroups.first!), reset: true)
-                    }
+                if let newGroup = await newGroup.create(){
+                    controller.groupController.saveLocalMainGroup(group: newGroup)
+                    ViewsController.shared.navigateTo(to: .group(newGroup), reset: true)
+                    
                 }
             }
         }
@@ -150,6 +179,52 @@ struct GroupViewCreate: View {
         dateFormatter.locale = Locale.current // Ajusta ao local do usuário
         return dateFormatter.string(from: date)
     }
+    
+    
+    var toolbar : some View{
+        HStack{
+            OkButton(active: pinFocusState != .name,text: "Back", onTap: {
+                switch pinFocusState {
+                    case .description:
+                        pinFocusState = FocusPin.name
+                        showKeyboardInteger = false
+                    case .duration:
+                        pinFocusState = FocusPin.description
+                        showKeyboardInteger = false
+                    default:
+                    pinFocusState = FocusPin.description
+                    showKeyboardInteger = false
+                }
+            })
+            OkButton(active: pinFocusState != .duration && !showKeyboardInteger ,text: "Next", onTap: {
+                switch pinFocusState {
+                    case .name:
+                        pinFocusState = FocusPin.description
+                        showKeyboardInteger = false
+                    case .description:
+                        pinFocusState = FocusPin.duration
+                        showKeyboardInteger = true
+                        self.hideKeyboard()
+                    default:
+                        self.hideKeyboard()
+                        showKeyboardInteger = false
+                        pinFocusState = .none
+                }
+            })
+            Spacer()
+            OkButton(text: "Ok", onTap: {
+                self.hideKeyboard()
+                pinFocusState = .none
+                showKeyboardInteger = false
+            })
+        }
+    }
+    
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+
 }
 
 

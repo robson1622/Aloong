@@ -25,7 +25,7 @@ struct MetricsComponent: View {
                 .weight(.bold)
                 )
                 .kerning(0.06)
-                .foregroundColor(.black)
+                .foregroundColor(.preto)
 
 
             Text("\(value) \(self.getMetterUnit())")
@@ -34,13 +34,13 @@ struct MetricsComponent: View {
                 .weight(.bold)
                 )
                 .kerning(0.06)
-                .foregroundColor(.black)
+                .foregroundColor(.preto)
                 .padding(.leading,-5)
 
         }
         .padding(.horizontal,6)
         .padding(.vertical,10)
-        .background(.white)
+        .background(.branco)
         .cornerRadius(5)
     }
     
