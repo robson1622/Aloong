@@ -36,7 +36,7 @@ struct GroupViewCreate: View {
     var body : some View{
         ZStack{
             VStack{
-                Header()
+                Header(onTapBack: {})
                 VStack{
                     Text(personalize)
                         .font(.degularLargeSemiBold)

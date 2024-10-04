@@ -22,42 +22,44 @@ class GeneralController: ObservableObject{
     @Published var memberController = MembersController.shared
     @Published var statisticController = StatisticController.shared
     
-    @Published var myGrouspsWithActivities : [GroupsAndActivitiesModel] = []
+    @Published var activityCompleteList : [ActivityCompleteModel] = []
     @Published var update : Bool = false
     
-    func getActivitiesComplete(idGroup : String)async -> [ActivityCompleteModel]{
-        if let index = myGrouspsWithActivities.firstIndex(where: { $0.idGroups == idGroup }){
-            let listOfActivities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
-            for activity in listOfActivities{
-                if let completeAcitivity = await getActivityCompleteOfActivity(activity: activity){
-                    if let indexInActivities = myGrouspsWithActivities[index].activitiesComplete.firstIndex(where: { $0.activity?.id == activity.id }){
-                        myGrouspsWithActivities[index].activitiesComplete[indexInActivities] = completeAcitivity
-                    }
-                    else{
-                        myGrouspsWithActivities[index].activitiesComplete.append(completeAcitivity)
-                    }
-                }
-            }
-            
-            return myGrouspsWithActivities[index].activitiesComplete
-        }
-        else{
-            var newGroupsWithActivities = GroupsAndActivitiesModel(idGroups: idGroup, activitiesComplete: [])
-            let listOfActivities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
-            for activity in listOfActivities{
-                if let completeAcitivity = await getActivityCompleteOfActivity(activity: activity){
-                    newGroupsWithActivities.activitiesComplete.append(completeAcitivity)
-                }
-            }
-            myGrouspsWithActivities.append(newGroupsWithActivities)
-            return newGroupsWithActivities.activitiesComplete
-        }
-    }
     
     func loadAllLists() async{
         _ = self.userController.loadUser()
         if let groupId = self.groupController.readMainGroupOfUser()?.id{
             await self.loadGroup(idGroup: groupId)
+            let listOfActivities = await activityController.readActivitiesOfGroup(idGroup: groupId)
+            if let savedlist = self.loadActivityCompleteList(){
+                DispatchQueue.main.async{
+                    self.activityCompleteList = savedlist
+                }
+                if let idUser = UserLocalSave().loadUser()?.id{
+                    _ = await statisticController.calculate(idGroup: groupId, idMyUser: idUser, activitiesCompleteList: activityCompleteList, listOfUsers: userController.readAllUsersOfGroup(idGroup: groupId, reset: false))
+                }
+            }
+            
+            Task{
+                for activity in listOfActivities{
+                    if let completeAcitivity = await getActivityCompleteOfActivity(activity: activity, idGroup: groupId){
+                        if let index = activityCompleteList.firstIndex(where: {$0.activity?.id == completeAcitivity.activity?.id}){
+                            DispatchQueue.main.async{
+                                self.activityCompleteList[index] = completeAcitivity
+                            }
+                        }
+                        else{
+                            DispatchQueue.main.async{
+                                self.activityCompleteList.append(completeAcitivity)
+                            }
+                        }
+                    }
+                }
+                self.saveActivityCompleteList(activityCompleteList)
+                if let idUser = UserLocalSave().loadUser()?.id{
+                    _ = await statisticController.calculate(idGroup: groupId, idMyUser: idUser, activitiesCompleteList: activityCompleteList, listOfUsers: userController.readAllUsersOfGroup(idGroup: groupId, reset: false))
+                }
+            }
         }
         else{
             if let groupId = await self.groupController.readAllGroupsOfUser().first?.id{
@@ -65,61 +67,40 @@ class GeneralController: ObservableObject{
                 await self.loadGroup(idGroup: groupId)
             }
         }
+        
+        
+        
     }
     
     func loadGroup(idGroup: String) async {
         _ = await activityController.readActivitiesOfGroup(idGroup: idGroup)
         _ = await commentController.readAllCommitsOfGroup(idGroup: idGroup)
         _ = await reactionController.readAllReactionsOfAGroup(idGroup: idGroup)
-        if let idUser = UserLocalSave().loadUser()?.id{
-            let activiesCompleteOfThisGroup = await getActivitiesComplete(idGroup: idGroup)
-            _ = await statisticController.calculate(idGroup: idGroup, idMyUser: idUser, activitiesCompleteList: activiesCompleteOfThisGroup, listOfUsers: userController.readAllUsersOfGroup(idGroup: idGroup, reset: false))
-        }
-        else{
-            print("ERRO AOCARRREGAR USUÁRIO, ID NULO EM GeneralController/loadGroup")
-        }
-            
-        
     }
     
     func readPlusTenActivities(idGroup: String) async -> [ActivityCompleteModel]{
-        if let index = myGrouspsWithActivities.firstIndex(where: {$0.idGroups == idGroup}){
             print("FALTA CODAR A REQUISIÇÃO DE MAIS 10 ATIVIDADES EM GeneralController/readPlusTenActivities")
-            return myGrouspsWithActivities[index].activitiesComplete
-        }
         return []
     }
     
-    func updateActivitiesOfGroup(idGroup: String) async{
-        if let index = myGrouspsWithActivities.firstIndex(where: {$0.idGroups == idGroup}){
-            // carregar todas as atividades desse grupo
-            let activities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
-            for activity in activities{
-                //se já houver a atividade a gente só subistitui
-                if let activityIndex = myGrouspsWithActivities[index].activitiesComplete.firstIndex(where: {$0.activity?.id == activity.id}){
-                    if let activitycomplete = await self.getActivityCompleteOfActivity(activity: activity){
-                        myGrouspsWithActivities[index].activitiesComplete[activityIndex] = activitycomplete
-                    }
-                }
-                else{
-                    if let activitycomplete = await self.getActivityCompleteOfActivity(activity: activity){
-                        myGrouspsWithActivities[index].activitiesComplete.append(activitycomplete)
-                    }
+    func updateActivitiesComplete(idGroup: String) async{
+        let activities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
+        for activity in activities{
+            //se já houver a atividade a gente só subistitui
+            if let activityIndex = activityCompleteList.firstIndex(where: {$0.activity?.id == activity.id}){
+                if let activitycomplete = await self.getActivityCompleteOfActivity(activity: activity, idGroup: idGroup){
+                    activityCompleteList[activityIndex] = activitycomplete
                 }
             }
-        }
-        else{
-            let activities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
-            var newGroupAndActivities : GroupsAndActivitiesModel = GroupsAndActivitiesModel(idGroups: idGroup, activitiesComplete: [])
-            for activity in activities{
-                if let activitycomplete = await self.getActivityCompleteOfActivity(activity: activity){
-                    newGroupAndActivities.activitiesComplete.append(activitycomplete)
+            else{
+                if let activitycomplete = await self.getActivityCompleteOfActivity(activity: activity, idGroup: idGroup){
+                    activityCompleteList.append(activitycomplete)
                 }
             }
         }
     }
     
-    private func getActivityCompleteOfActivity(activity : ActivityModel) async -> ActivityCompleteModel?{
+    private func getActivityCompleteOfActivity(activity : ActivityModel, idGroup : String) async -> ActivityCompleteModel?{
         var result : ActivityCompleteModel? = nil
         let activityUsersRelations = await activityUserController.readAllActivityUserOfActivity(idActivity: activity.id!)
         var users : [UserModel] = []
@@ -161,52 +142,30 @@ class GeneralController: ObservableObject{
         
     }
     
-//    func updateAll() async{
-//        mainListActivities.removeAll()
-//        await user.load()
-//        if(user.user?.id != nil){
-//            await group.load(idUser: (user.user?.id!)!)
-//            if(group.groupsOfThisUser.first?.id != nil ){
-//                await activities.load(idGroup: (group.groupsOfThisUser.first?.id!)!)
-//                if(group.groupsOfThisUser.count > 0){
-//                    for activity in activities.activities{
-//                        // pegar o dono da atividade
-//                        await activities.activityUserRelation.load(idUser: (user.user?.id!)!)
-//                        if let userOwner = activities.activityUserRelation.listOfActivityUser.first(where : { $0.state == statesOfMembers.owner}){
-//                            //todos os usuários da atividade
-//                            let allUsers = await user.readAllUsersOfActivity(idActivity: activity.id!)
-//                            if let owner = allUsers.first(where: { $0.id == userOwner.idUser}){
-//                                var newActivityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: owner)
-//                                
-//                                // associamos a atividade
-//                                newActivityComplete.activity = activity
-//                                // sabemos que ela está neste grupo
-//                                newActivityComplete.groupsOfthisActivity.append(group.groupsOfThisUser.first!)
-//                                // pegamos todos os usuários com relação com esta atividade
-//                                newActivityComplete.usersOfthisActivity = allUsers
-//                                // pegando as imagens
-//                                let listOfImages = await ActivityImageDao.shared.readAllActivityImagesOfActivity(idActivity: activity.id!)
-//                                for element in listOfImages{
-//                                    if let url = element.imageURL{
-//                                        print(" url :\(url)")
-//                                        newActivityComplete.images.append(url)
-//                                    }
-//                                }
-//                                
-//                                // adicionamos ele na lista
-//                                mainListActivities.append(newActivityComplete)
-//                            }
-//                        }
-//                    }
-//                    statistic.listOfUser = group.usersOfThisGroup
-//                    statistic.activitiesComplete = mainListActivities
-//                    statistic.calculate(idUser: (user.user?.id!)!)
-//                }
-//                else{
-//                    print("ERRO AO TENTAR INICIALIZAR, SEM GRUPOS PARA ESTE USUÁRIO, GeneralController/updateAll")
-//                }
-//            }
-//        }
-//    }
+    private func saveActivityCompleteList(_ list : [ActivityCompleteModel]) {
+        do {
+            let data = try JSONEncoder().encode(list)
+            UserDefaults.standard.set(data, forKey: "main_list")
+        } catch {
+            print("Erro ao salvar o usuário: \(error)")
+        }
+    }
     
+    private func loadActivityCompleteList() -> [ActivityCompleteModel]? {
+        guard let data = UserDefaults.standard.data(forKey: "main_list") else {
+            return nil
+        }
+        
+        do {
+            let user = try JSONDecoder().decode([ActivityCompleteModel].self, from: data)
+            return user
+        } catch {
+            print("Erro ao carregar o usuário: \(error)")
+            return nil
+        }
+    }
+    
+    private func deleteUser() {
+        UserDefaults.standard.removeObject(forKey: "main_list")
+    }
 }

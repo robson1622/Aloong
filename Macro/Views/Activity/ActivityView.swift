@@ -13,7 +13,6 @@ struct ActivityView: View {
     let activity : ActivityModel
     let user : UserModel
     let imagesString : [String]
-    @State var listOfImages : [UIImage] = []
     @State var numberOfAloongs : Int = 12
     @State var aloongActive : Bool = false
     @State var atualTab : Int = 0
@@ -33,7 +32,11 @@ struct ActivityView: View {
                         }
                     }
                 }
-            )])
+            )],onTapBack: {
+                for image in imagesString{
+                    BucketOfImages.shared.removeImageOfRAM(url: image)
+                }
+            })
             UserHeader(model: user, subtitle: dateToLocalizedString( activity.date), activieShare: false, onTapShare: {})
             ZStack{
                 TabView {
@@ -109,18 +112,8 @@ struct ActivityView: View {
         .background(Color(.branco))
     }
     
-    
     func update(){
-        Task{
-            listOfImages.removeAll()
-            for image in imagesString{
-                BucketOfImages.shared.download(from: image) { response in
-                    if let response = response{
-                        listOfImages.append(response)
-                    }
-                }
-            }
-        }
+        print("FALTA CODAR ActivityView/update")
     }
     
     func timeIntervalToString(_ interval: TimeInterval) -> String {

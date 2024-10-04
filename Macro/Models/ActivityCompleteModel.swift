@@ -19,5 +19,7 @@ struct ActivityCompleteModel : Hashable, Codable,Identifiable{
     var usersOfthisActivity : [UserModel] = []
     var groupsOfthisActivity : [GroupModel] = []
     var images : [String] = []
+    var reactions : [ReactionModel] = []
+    var comments : [CommentModel] = []
     var activity : ActivityModel?
 }

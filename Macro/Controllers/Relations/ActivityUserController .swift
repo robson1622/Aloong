@@ -30,9 +30,8 @@ class ActivityUserController: ObservableObject{
                 await insertRelationsInListUser(index: index, idUser: idUser)
             }
             else{
-                Task{
-                    await insertRelationsInListUser(index: index, idUser: idUser)
-                }
+                await insertRelationsInListUser(index: index, idUser: idUser)
+                
             }
             return listOfRelationsWithUser[index].listOfActivityUser
         }
@@ -53,9 +52,8 @@ class ActivityUserController: ObservableObject{
                 await insertRelationsInListActivity(index: index, idActivity: idActivity)
             }
             else{
-                Task{
-                    await insertRelationsInListActivity(index: index, idActivity: idActivity)
-                }
+                await insertRelationsInListActivity(index: index, idActivity: idActivity)
+                
             }
             return listOfRelationsWithActivity[index].listOfActivityUser
         }
@@ -76,7 +74,7 @@ class ActivityUserController: ObservableObject{
             if let indexRelation = listOfRelationsWithActivity[index].listOfActivityUser.firstIndex(where:{$0.id == relation.id}){
                 listOfRelationsWithActivity[index].listOfActivityUser[indexRelation] = relation
             }
-            else{
+            else if index < listOfRelationsWithActivity.count{
                 listOfRelationsWithActivity[index].listOfActivityUser.append(relation)
             }
         }

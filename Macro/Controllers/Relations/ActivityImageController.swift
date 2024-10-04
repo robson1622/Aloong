@@ -19,10 +19,17 @@ class ActivityImageController: ObservableObject{
             if(self.listOfActivityImages.isEmpty){
                 return await DatabaseInterface.shared.readDocuments(isEqualValue: idActivity!, table: .activityImage, field: activityIdFieldName)
             }
-            return self.listOfActivityImages.filter { actimage in
+            let retorno = self.listOfActivityImages.filter { actimage in
                 let response = actimage.idActivity?.range(of: idActivity!, options: .caseInsensitive) != nil
                 return response
             }
+            for image in retorno{
+                if let url = image.imageURL{
+                    BucketOfImages.shared.download(from: url){ _ in }
+                }
+            }
+            
+            return retorno
         } else { return [] }
     }
     

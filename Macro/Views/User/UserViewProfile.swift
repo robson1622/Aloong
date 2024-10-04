@@ -13,7 +13,7 @@ struct UserViewProfile: View {
     var active : String = NSLocalizedString("Activities", comment: "Titulo do botão que leva para a view de atividades")
     var body: some View {
         VStack{
-            Header(title: "About your")
+            Header(title: "About your",onTapBack: {})
             ImageLoader(url: model.userimage)
                 .frame(width: 70,height: 70)
             

@@ -36,7 +36,7 @@ struct UserViewMyProfile: View {
                             .font(.body)
                             .foregroundColor(.azul4)
                     }
-                )])
+                )],onTapBack: {})
                 VStack (alignment: .center, spacing:16){
                     ZStack {
                         Rectangle()
@@ -121,7 +121,7 @@ struct UserViewMyProfile: View {
                             .font(.body)
                             .foregroundColor(.preto)
                             .padding()
-                            .background(.cinza3)
+                            .background(Color(.systemGray5))
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .cornerRadius(8)
                             .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 8)

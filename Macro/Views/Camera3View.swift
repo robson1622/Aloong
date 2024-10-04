@@ -24,7 +24,7 @@ struct CustomCameraView: View {
             VStack {
                 
                 HStack{
-                    Header()
+                    Header(onTapBack: {})
                 }
                 .padding()
                 .background(Color.black.opacity(0.5))

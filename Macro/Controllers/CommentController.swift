@@ -41,9 +41,8 @@ class CommentController: ObservableObject{
                 await insertInlistOfCommitsPerActivity(index: index, idActivity: idActivity)
             }
             else{
-                Task{
-                    await insertInlistOfCommitsPerActivity(index: index, idActivity: idActivity)
-                }
+                await insertInlistOfCommitsPerActivity(index: index, idActivity: idActivity)
+                
             }
             return listOfCommitsPerActivity[index].listOfCommits
         }
@@ -64,9 +63,7 @@ class CommentController: ObservableObject{
                 await insertInlistOfCommitsPerUser(index: index, idUser: idUser)
             }
             else{
-                Task{
-                    await insertInlistOfCommitsPerUser(index: index, idUser: idUser)
-                }
+                await insertInlistOfCommitsPerUser(index: index, idUser: idUser)
             }
             return listOfCommitsPerUser[index].listOfCommits
         }
@@ -87,9 +84,7 @@ class CommentController: ObservableObject{
                 await insertInlistOfCommitsPerGroup(index: index, idGroup: idGroup)
             }
             else{
-                Task{
-                    await insertInlistOfCommitsPerGroup(index: index, idGroup: idGroup)
-                }
+                await insertInlistOfCommitsPerGroup(index: index, idGroup: idGroup)
             }
             return listOfCommitsPerGroup[index].listOfCommits
         }

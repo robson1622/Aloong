@@ -57,7 +57,7 @@ struct AloongGroupView: View {
     //MARK -> BODY
     var body: some View {
             VStack {
-                Header()
+                Header(onTapBack: {})
                 
                 Spacer()
                 HStack{
@@ -240,8 +240,8 @@ struct AloongGroupView: View {
     func searchGroup()async {
         loading = .loading
         if let idUser = controller.userController.myUser?.id{
-            let result = await controller.groupController.searchGroup(code: pinOne + pinTwo + pinThree + pinFour)
-            print(result)
+            let code = String (pinOne + pinTwo + pinThree + pinFour).uppercased()
+            let result = await controller.groupController.searchGroup(code: code)
             if (result.count > 0 ){
                 let member = MemberModel(groupId: result[0].id!, userId: idUser, state: statesOfMembers.member)
                 if let _ = await member.create(){

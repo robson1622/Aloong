@@ -51,10 +51,21 @@ struct ActivityModel : Codable, Hashable, Identifiable{
                 }
             }
             // criar as relações image-atividade
+            var firstUrl : String? = nil
+            var othersUrls : String = ""
+            var counter : Int = 2
             for image in listOfImages{
-                BucketOfImages.shared.upload(image: image, type: .activity){ url in
+                if firstUrl != nil{
+                    othersUrls = firstUrl! + "\(counter)"
+                    counter += 1
+                }
+                BucketOfImages.shared.upload(image: image, type: .activity,url: firstUrl){ url in
+                    if firstUrl == nil, let url = url{
+                        firstUrl = url
+                        othersUrls = url
+                    }
                     Task{
-                        let newRelation = ActivityImageModel(idActivity: idServer,imageURL: url)
+                        let newRelation = ActivityImageModel(idActivity: idServer,imageURL: othersUrls)
                         if let relationId = await newRelation.create(){
                             listOfRelationsImageCreated.append(relationId)
                         }
@@ -94,13 +105,14 @@ struct ActivityModel : Codable, Hashable, Identifiable{
         return erro
     }
     
-    func createForOneGroup(listOfOtherUsersIds : [String],myIdUser : String,idGroup : String,listOfImages : [UIImage])async -> ActivityModel?{
+    func createForOneGroup(listOfOtherUsersIds : [String],myIdUser : String,idGroup : String,listOfImages : [UIImage],completion: @escaping (ActivityModel?,[String]) -> Void)async {
         var erro : Bool = false
         var idActivityCreated : String = ""
         var ownerRelation : String = ""
         var listOfRelationsUserCreated : [String] = []
         var idrelationsGroupCreated : String = ""
         var listOfRelationsImageCreated : [String] = []
+        var listOfIdsImages : [String] = []
         if let idServer = DatabaseInterface.shared.create(model: self, table: .activity){
             idActivityCreated = idServer
             var new = self
@@ -135,21 +147,33 @@ struct ActivityModel : Codable, Hashable, Identifiable{
                 print("ERRO AO TENTAR CRIAR RELACAO DA ATIVIDADE COM O USUÁRIO DONO EM ActivityModel/createForOneGroup")
                 erro = true
             }
-            // criar relação com as imagens
+            // criar as relações image-atividade
+            var firstUrl : String? = nil
+            var othersUrls : String = ""
+            var counter : Int = 2
             for image in listOfImages{
-                BucketOfImages.shared.upload(image: image, type: .activity){ url in
+                if firstUrl != nil{
+                    othersUrls = firstUrl! + "\(counter)"
+                    counter += 1
+                }
+                BucketOfImages.shared.upload(image: image, type: .activity,url: firstUrl){ url in
+                    if firstUrl == nil, let url = url{
+                        firstUrl = url
+                        othersUrls = url
+                    }
                     Task{
-                        if let idRelation = await ActivityImageModel(idActivity: idServer, imageURL: url).create(){
-                            listOfRelationsImageCreated.append(idRelation)
+                        let newRelation = ActivityImageModel(idActivity: idServer,imageURL: othersUrls)
+                        if let relationId = await newRelation.create(){
+                            listOfRelationsImageCreated.append(relationId)
                         }
                         else{
-                            print("ERRO AO TENTAR CRIAR RELACAO DA ATIVIDADE COM IMAGEM EM ActivityModel/createForOneGroup")
+                            print("ERRO AO TENTAR CRIAR RELAÇÃO DE ATIVIDADE COM IMAGEM EM ActivityModel/createForManyGroups")
                             erro = true
                         }
                     }
                 }
             }
-            return new
+            completion(new,listOfIdsImages)
         }
         else{
             print("ERRO AO TENTAR CRIAR DE ATIVIDADE EM ActivityModel/createForOneGroup")
@@ -169,8 +193,6 @@ struct ActivityModel : Codable, Hashable, Identifiable{
                 }
             }
         }
-
-        return nil
     }
     
     private func uploadImages(_ images : UIImage ) async {

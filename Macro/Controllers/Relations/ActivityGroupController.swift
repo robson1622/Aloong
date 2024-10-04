@@ -25,9 +25,8 @@ class ActivityGroupController: ObservableObject{
                 await insertRelationsInListActivityGroup(index: index, idGroup: idGroup)
             }
             else{
-                Task{
-                    await insertRelationsInListActivityGroup(index: index, idGroup: idGroup)
-                }
+                await insertRelationsInListActivityGroup(index: index, idGroup: idGroup)
+                
             }
             return listOfActivityGroup[index].listOfActivityGroup
         }

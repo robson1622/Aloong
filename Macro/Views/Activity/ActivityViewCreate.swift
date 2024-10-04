@@ -68,7 +68,7 @@ struct ActivityViewCreate: View {
                             .foregroundStyle(Color(.azul4))
                     }
                     
-                })])
+                })],onTapBack: {})
                 ScrollView{
                     header
                     informations
@@ -167,19 +167,33 @@ struct ActivityViewCreate: View {
             self.insertInModel()
             if listOfAdded.count > 0{
                 // cria a atividade em grupo
-                if let newActivity = await model?.createForOneGroup(listOfOtherUsersIds: listOfAdded, myIdUser: idUser, idGroup: idGroup, listOfImages: images){
-                    controller.activityController.activities.append(newActivity)
-                    _ = await controller.getActivitiesComplete(idGroup: idGroup)
-                    ViewsController.shared.back()
-                    loadingState = .done
+                await model?.createForOneGroup(listOfOtherUsersIds: listOfAdded, myIdUser: idUser, idGroup: idGroup, listOfImages: images){ activity,images in
+                    if let activity = activity{
+                        controller.activityController.activities.append(activity)
+                        ViewsController.shared.back()
+                        loadingState = .done
+                    }
                 }
             }
-            else if listOfAdded.count == 0{
-                if let newActivity = await model?.createForOneGroup(listOfOtherUsersIds: [], myIdUser: idUser, idGroup: idGroup, listOfImages: images){
-                    controller.activityController.activities.append(newActivity)
-                    _ = await controller.getActivitiesComplete(idGroup: idGroup)
-                    ViewsController.shared.back()
-                    loadingState = .done
+            else{
+                await model?.createForOneGroup(listOfOtherUsersIds: [], myIdUser: idUser, idGroup: idGroup, listOfImages: images){ activity,images in
+                    if let activity = activity{
+                        controller.activityController.activities.append(activity)
+                        var friendsInActivityModel : [UserModel] = []
+                        for friend in listOfFriends {
+                            if listOfAdded.contains(friend.id){
+                                friendsInActivityModel.append(friend)
+                            }
+                        }
+                        if let myUser = controller.userController.myUser, let group = controller.groupController.readMainGroupOfUser(){
+                            let activityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: myUser, usersOfthisActivity: friendsInActivityModel, groupsOfthisActivity: [group], images: images, reactions: [], comments: [], activity: activity)
+                            DispatchQueue.main.async{
+                                controller.activityCompleteList.append(activityComplete)
+                            }
+                            ViewsController.shared.back()
+                            loadingState = .done
+                        }
+                    }
                 }
             }
         }

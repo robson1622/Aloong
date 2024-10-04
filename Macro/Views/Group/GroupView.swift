@@ -22,7 +22,7 @@ struct GroupView: View {
     @State var liderImage : UIImage?
     @State var youImage : UIImage?
     @State var you : PointsOfUser?
-    @State var listActivities : [ActivityCompleteModel]?
+    @State var listActivities : [ActivityCompleteModel] = []
     
     let youCgallenge : String = NSLocalizedString("Your challenger", comment: "Caso não haja nome no grupo, este nome será mostrado")
     let liderText : String = NSLocalizedString("Líder", comment: "Titulo da view de grupo que denota o lider")
@@ -45,8 +45,8 @@ struct GroupView: View {
                         }
                     }
                     
-                    if let list = listActivities{
-                        ActivitiesList(listOfActivitiesComplete: list)
+                    if !listActivities.isEmpty{
+                        ActivitiesList(listOfActivitiesComplete: listActivities)
                     }
                     else{
                         Text(withoutActivityText)
@@ -98,13 +98,6 @@ struct GroupView: View {
             }
             .background(Color(.black))
         }
-        .onChange(of : updateView){ _ in
-            if let id = model.id{
-                Task{
-                    await listActivities = controller.getActivitiesComplete(idGroup: id)
-                }
-            }
-        }
         .onChange(of: image) { _ in
             if image != nil{
                 controller.activityController.imagesForNewActivity.removeAll()
@@ -115,32 +108,33 @@ struct GroupView: View {
             }
         }
         .refreshable {
-            Task{
-                self.update()
-            }
+            self.update()
         }
         .onAppear{
-            self.update()
+            self.update(reload: true)
         }
         .background(Color(.branco))
     }
-    private func update(){
+    private func update(reload: Bool = false){
         Task{
-            listActivities = await controller.getActivitiesComplete(idGroup: model.id!)
+            if reload{
+                await controller.loadAllLists()
+            }
+            self.listActivities = controller.activityCompleteList
+            you = controller.statisticController.you ?? PointsOfUser(user: usermodelexemple, points: 0)
+            lider = controller.statisticController.lider ?? you
+            if let userImageUrl = controller.userController.myUser?.userimage{
+                BucketOfImages.shared.download(from: userImageUrl) { image in
+                    youImage = image
+                }
+            }
+            if let liderImageUrl = controller.statisticController.lider?.user.userimage{
+                BucketOfImages.shared.download(from: liderImageUrl) { image in
+                    liderImage = image
+                }
+            }
         }
         
-        you = controller.statisticController.you ?? PointsOfUser(user: usermodelexemple, points: 0)
-        lider = controller.statisticController.lider ?? you
-        if let userImageUrl = controller.userController.myUser?.userimage{
-            BucketOfImages.shared.download(from: userImageUrl) { image in
-                youImage = image
-            }
-        }
-        if let liderImageUrl = controller.statisticController.lider?.user.userimage{
-            BucketOfImages.shared.download(from: liderImageUrl) { image in
-                liderImage = image
-            }
-        }
     }
     
 }

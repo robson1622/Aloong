@@ -18,7 +18,7 @@ struct ProgressView: View {
                 ZStack{
                     Rectangle()
                         .frame(width: geometry.size.width,height: 5)
-                        .foregroundColor(Color(.cinza2))
+                        .foregroundColor(Color(.systemGray4))
                         .cornerRadius(3)
                     HStack{
                         Rectangle()

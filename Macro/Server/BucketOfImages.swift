@@ -8,7 +8,15 @@
 import Foundation
 import PhotosUI
 import FirebaseStorage
+import UIKit
 
+/* este balde está dividido da seguinte forma:
+ImageCash sao as imagens que estão na memoria RAM
+ 
+ImageSaved registra onde está salva a imagem localmente(offline) na ROM
+ 
+
+ */
 class BucketOfImages: ObservableObject{
     static var shared : BucketOfImages = BucketOfImages()
     private var storage = Storage.storage()
@@ -16,7 +24,14 @@ class BucketOfImages: ObservableObject{
     private struct ImageCash {
         var id : String
         var image : UIImage
+        var date : Date
     }
+    
+    private struct ImagesSaved: Codable {
+        var url: String
+        var date: Date
+    }
+
     
     enum localImage{
         case profile
@@ -28,12 +43,49 @@ class BucketOfImages: ObservableObject{
     private let profileImageReference : String = "/profileimage/"
     private let activityImageReference : String = "/activityimages/"
     private let localStorageImages : String = "gs://aloong-40645.appspot.com/"
+
+    init() {
+        let calendar = Calendar.current
+        var list = readImageDocument()
+        var elementsToRemove : [Int] = []
+        for index in 0..<list.count{
+            if let diference = calendar.dateComponents([.day], from: list[index].date, to: Date()).day{
+                if diference > 10{
+                    elementsToRemove.append(index)
+                }
+            }
+        }
+        for index in elementsToRemove.reversed(){
+            self.deleteImage(fileName: list[index].url)
+            if let exist = images.firstIndex(where: {$0.id == list[index].url}){
+                images.remove(at: exist)
+            }
+            list.remove(at: index)
+        }
+        self.saveImageDocument(list)
+        for element in list{
+            if let image = self.loadImageLocally(fileName: element.url){
+                let imageCash = ImageCash(id: element.url,image: image, date: element.date)
+                self.images.append(imageCash)
+            }
+        }
+        
+        
+    }
+
+    func removeImageOfRAM(url : String){
+        if let index = images.firstIndex(where: {$0.id == url}){
+            images.remove(at: index)
+        }
+    }
     
-    
-    func upload(image: UIImage,type: localImage, completion: @escaping(String?) -> Void) {
+    func upload(image: UIImage,type: localImage,url: String? = nil, completion: @escaping(String?) -> Void) {
         let imageResized = type == .profile ? self.resizeImage(image: image, targetSize: CGSize(width: 260, height: 260)) : image
-        guard let imageData = imageResized.jpegData(compressionQuality: type == .profile ? 1.0 : 0.75) else {return}
-        let fileName = NSUUID().uuidString
+        guard let imageData = imageResized.jpegData(compressionQuality: type == .profile ? 1.0 : 0.55) else {return}
+        var fileName = NSUUID().uuidString
+        if let url = url{
+            fileName = url
+        }
         var ref = storage.reference(withPath: profileImageReference + fileName)
         if(type == .activity){
             ref = storage.reference(withPath: activityImageReference + fileName)
@@ -54,6 +106,10 @@ class BucketOfImages: ObservableObject{
         storageRef.delete { error in
             if let error = error {
                 completion(error)
+                self.deleteImage(fileName: url)
+                if let savedImage = self.images.firstIndex(where: { $0.id == url}){
+                    self.images.remove(at: savedImage)
+                }
             } else {
                 completion(nil)
             }
@@ -63,6 +119,12 @@ class BucketOfImages: ObservableObject{
     func download(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         if let savedImage = self.images.first(where: { $0.id == urlString}){
             completion(savedImage.image)
+        }
+        else if let imageLocal = self.loadImageLocally(fileName: urlString){
+            let newImageCash = ImageCash(id: urlString, image: imageLocal,date: Date())
+            self.images.append(newImageCash)
+            completion(imageLocal)
+            return
         }
         else{
             let ref = storage.reference(forURL: localStorageImages + urlString)
@@ -76,8 +138,14 @@ class BucketOfImages: ObservableObject{
                 
                 // Converte os dados baixados em uma UIImage
                 if let data = data, let image = UIImage(data: data) {
-                    let newImageCash = ImageCash(id: urlString, image: image)
+                    let newImageCash = ImageCash(id: urlString, image: image,date: Date())
                     self.images.append(newImageCash)
+                    let imageSaved = ImagesSaved(url: urlString, date: Date())
+                    var list = self.readImageDocument()
+                    list.append(imageSaved)
+                    self.saveImageDocument(list)
+                    
+                    _ = self.saveImageLocally(image: image, fileName: urlString)
                     completion(image)
                 } else {
                     completion(nil)
@@ -108,5 +176,84 @@ class BucketOfImages: ObservableObject{
         UIGraphicsEndImageContext()
 
         return newImage ?? image
+    }
+    
+    ///
+    ///
+    ///     FUNÇÕES QUE SALVAM OFILINE
+    ///
+    ///
+
+    private func saveImageLocally(image: UIImage, fileName: String) -> URL? {
+        let bucketLocal : [ImagesSaved] = self.readImageDocument()
+        
+        
+        
+        guard let data = image.jpegData(compressionQuality: 1.0) else { return nil }
+        
+        // Caminho para o diretório de documentos
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        
+        // Cria o URL para salvar a imagem
+        if let fileURL = documentsDirectory?.appendingPathComponent(fileName) {
+            do {
+                try data.write(to: fileURL)
+                print(fileURL)
+                return fileURL // Retorna o caminho da imagem salva
+            } catch {
+                print("Erro ao salvar a imagem: \(error)")
+            }
+        }
+        return nil
+    }
+    
+    private func loadImageLocally(fileName: String) -> UIImage? {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        if let fileURL = documentsDirectory?.appendingPathComponent(fileName),
+           FileManager.default.fileExists(atPath: fileURL.path) {
+            return UIImage(contentsOfFile: fileURL.path) // Carrega a imagem a partir do caminho
+        }
+        return nil
+    }
+    
+    private func deleteImage(fileName: String) {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        if let fileURL = documentsDirectory?.appendingPathComponent(fileName) {
+            do {
+                try FileManager.default.removeItem(at: fileURL)
+            } catch {
+                print("Erro ao excluir a imagem: \(error)")
+            }
+        }
+    }
+    
+    private func saveImageDocument(_ list : [ImagesSaved]){
+        let key = "imagedocuments"
+        do {
+            let data = try JSONEncoder().encode(list)
+            UserDefaults.standard.set(data, forKey: key)
+        } catch {
+            print("Erro ao salvar o usuário: \(error)")
+        }
+    }
+    
+    private func readImageDocument() -> [ImagesSaved]{
+        let key = "imagedocuments"
+        guard let data = UserDefaults.standard.data(forKey: key) else {
+            return []
+        }
+        
+        do {
+            let list = try JSONDecoder().decode([ImagesSaved].self, from: data)
+            return list
+        } catch {
+            print("Erro ao carregar o usuário: \(error)")
+            return []
+        }
+    }
+    
+    private func deleteImageDocument(){
+        let key = "imagedocuments"
+        UserDefaults.standard.removeObject(forKey: key)
     }
 }

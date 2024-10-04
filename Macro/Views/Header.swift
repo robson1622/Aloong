@@ -10,7 +10,7 @@ import SwiftUI
 struct Header: View {
     var title: String?
     var trailing: [AnyView] = []
-    
+    var onTapBack : () -> Void?
     var body: some View {
         VStack(spacing: 0) {
 
@@ -36,6 +36,7 @@ struct Header: View {
                     if (ViewsController.shared.navPath.count > 1) {
                         Button {
                             ViewsController.shared.back()
+                            onTapBack()
                         } label: {
                             HStack {
                                 Image(systemName: "chevron.left")
@@ -57,5 +58,5 @@ struct Header: View {
 }
 
 #Preview {
-    Header(title: "teste")
+    Header(title: "teste",onTapBack: {})
 }

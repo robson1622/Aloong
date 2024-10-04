@@ -27,7 +27,7 @@ struct GroupViewDetails: View {
         
         ZStack (alignment: .center){
             VStack(spacing: 36){
-                Header(title: detailsOfGroupText )
+                Header(title: detailsOfGroupText,onTapBack: {} )
                 VStack(spacing: 10){
                     HStack(alignment: .center) {//seu desafio
                         Text(group.title)

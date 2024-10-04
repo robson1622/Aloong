@@ -79,7 +79,11 @@ struct ContentView: View {
                     Task{ 
                         await self.controller.loadAllLists()  // Carrega listas do controller
                         loading = false
-                        if let group = await self.controller.groupController.readAllGroupsOfUser().first {
+                        if let group = self.controller.groupController.readMainGroupOfUser() {
+                            ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                            controller.groupController.saveLocalMainGroup(group: group)
+                        }
+                        else if let group = await self.controller.groupController.readAllGroupsOfUser().first {
                             ViewsController.shared.navigateTo(to: .group(group), reset: true)
                             controller.groupController.saveLocalMainGroup(group: group)
                         }
