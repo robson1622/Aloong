@@ -11,8 +11,6 @@ import PhotosUI
 class UserController: ObservableObject{
     static var shared : UserController = UserController()
     
-    
-    
     private struct UsersGroupCollection{
         var idGroup : String
         var users : [UserModel]
@@ -44,7 +42,6 @@ class UserController: ObservableObject{
             }
         }
     }
-    
     
     func readAllUsersOfGroup(idGroup : String, reset : Bool) async -> [UserModel] {
         if(reset || usersGroups.isEmpty){

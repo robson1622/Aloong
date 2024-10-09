@@ -58,7 +58,7 @@ class GeneralController: ObservableObject{
     }
     
     func readPlusTenActivities(idGroup: String) async -> [ActivityCompleteModel]{
-            print("FALTA CODAR A REQUISIÇÃO DE MAIS 10 ATIVIDADES EM GeneralController/readPlusTenActivities")
+        print("FALTA CODAR A REQUISIÇÃO DE MAIS 10 ATIVIDADES EM GeneralController/readPlusTenActivities")
         return []
     }
     
