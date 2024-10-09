@@ -163,13 +163,23 @@ struct ActivityViewCreate: View {
     
     func create(){
         loadingState = .loading
+        var friendsInActivityModel : [UserModel] = []
+        for friend in listOfFriends {
+            if listOfAdded.contains(friend.id){
+                friendsInActivityModel.append(friend)
+            }
+        }
         Task{
             self.insertInModel()
             if listOfAdded.count > 0{
                 // cria a atividade em grupo
                 await model?.createForOneGroup(listOfOtherUsersIds: listOfAdded, myIdUser: idUser, idGroup: idGroup, listOfImages: images){ activity,images in
-                    if let activity = activity{
+                    if let activity = activity,let myUser = controller.userController.myUser, let group = controller.groupController.readMainGroupOfUser(){
+                        let activityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: myUser, usersOfthisActivity: friendsInActivityModel, groupsOfthisActivity: [group], images: images, reactions: [], comments: [], activity: activity)
                         controller.activityController.activities.append(activity)
+                        DispatchQueue.main.sync{
+                            controller.activityCompleteList.append(activityComplete)
+                        }
                         ViewsController.shared.back()
                         loadingState = .done
                     }
@@ -179,15 +189,10 @@ struct ActivityViewCreate: View {
                 await model?.createForOneGroup(listOfOtherUsersIds: [], myIdUser: idUser, idGroup: idGroup, listOfImages: images){ activity,images in
                     if let activity = activity{
                         controller.activityController.activities.append(activity)
-                        var friendsInActivityModel : [UserModel] = []
-                        for friend in listOfFriends {
-                            if listOfAdded.contains(friend.id){
-                                friendsInActivityModel.append(friend)
-                            }
-                        }
+                        
                         if let myUser = controller.userController.myUser, let group = controller.groupController.readMainGroupOfUser(){
                             let activityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: myUser, usersOfthisActivity: friendsInActivityModel, groupsOfthisActivity: [group], images: images, reactions: [], comments: [], activity: activity)
-                            DispatchQueue.main.async{
+                            DispatchQueue.main.sync{
                                 controller.activityCompleteList.append(activityComplete)
                             }
                             ViewsController.shared.back()

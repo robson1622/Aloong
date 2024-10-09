@@ -16,7 +16,7 @@ struct CommentModel : Codable, Hashable{
     
     
     func create()async -> Bool?{
-        if let idServer = DatabaseInterface.shared.create(model: self, table: .activityGroup){
+        if let idServer = DatabaseInterface.shared.create(model: self, table: .comment){
             var new = self
             new.id = idServer
             return await new.update()
@@ -26,7 +26,7 @@ struct CommentModel : Codable, Hashable{
     
     func update() async -> Bool?{
         if(self.id != nil){
-            return await DatabaseInterface.shared.update(model: self, id: self.id!, table: .user)
+            return await DatabaseInterface.shared.update(model: self, id: self.id!, table: .comment)
         }
         else{
             print("ERRO AO CRIAR USUÁRIO - UserModel/update")
@@ -36,7 +36,7 @@ struct CommentModel : Codable, Hashable{
     
     func delete() async -> Bool?{
         if(self.id != nil){
-            return await DatabaseInterface.shared.delete(id: self.id!, table: .user)
+            return await DatabaseInterface.shared.delete(id: self.id!, table: .comment)
         }
         else{
             print("ERRO AO CRIAR USUÁRIO - UserModel/delete")
@@ -46,7 +46,7 @@ struct CommentModel : Codable, Hashable{
     
     func read() async -> CommentModel?{
         if(self.id != nil){
-            return await DatabaseInterface.shared.read(id: self.id!, table: .user)
+            return await DatabaseInterface.shared.read(id: self.id!, table: .comment)
         }
         else{
             print("ERRO AO CRIAR USUÁRIO - UserModel/read")

@@ -12,9 +12,10 @@ struct ActivityImageModel : Codable, Hashable, Identifiable{
     var id : String?
     var idActivity : String?
     var imageURL : String?
+    var number : Int?
     
     func create()async -> String?{
-        if let idServer = DatabaseInterface.shared.create(model: self, table: .activityGroup){
+        if let idServer = DatabaseInterface.shared.create(model: self, table: .activityImage){
             var new = self
             new.id = idServer
             _ = await new.update()

@@ -18,7 +18,7 @@ struct GroupModel:  Codable, Hashable, Identifiable{
     var invitationCode : String?
     
     func create()async -> GroupModel?{
-        if let idServer = DatabaseInterface.shared.create(model: self, table: .activityGroup){
+        if let idServer = DatabaseInterface.shared.create(model: self, table: .group){
             var newGroup = self
             newGroup.id = idServer
             newGroup.invitationCode = await generateInvitationCode()

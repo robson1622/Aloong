@@ -98,6 +98,8 @@ struct UserViewCreate: View {
         let user = UserModel(id: idApple, name: name, email: email, userimage: userimage)
         _ = await user.create()
         UserLocalSave().saveUser(user: user)
+        controller.userController.myUser = user
+        controller.userController.saveUser()
         ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
     }
 }

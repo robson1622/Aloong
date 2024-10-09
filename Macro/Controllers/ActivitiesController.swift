@@ -25,19 +25,20 @@ class ActivitiesController: ObservableObject{
     func readActivitiesOfGroup(idGroup : String) async -> [ActivityModel]{
         if let index = activitiesOfGroups.firstIndex(where: { $0.idGroup == idGroup }){
             //primeiro pegamos todas as relacoes de atividades com grupos
-            if activitiesOfGroups[index].activities.isEmpty{
-                let relations = await activityGroupController.readAllActivityGroupsOfGroup(idGroup: idGroup)
-                for relation in relations{
-                    if let activity : ActivityModel = await DatabaseInterface.shared.read(id: relation.idActivity, table: .activity){
-                        if let indexInActivity = activitiesOfGroups[index].activities.firstIndex(where: {$0.id == activity.id}){
-                            activitiesOfGroups[index].activities[indexInActivity] = activity
+            let relations = await activityGroupController.readAllActivityGroupsOfGroup(idGroup: idGroup)
+            for relation in relations{
+                if let activity : ActivityModel = await DatabaseInterface.shared.read(id: relation.idActivity, table: .activity){
+                    if let indexInActivity = activitiesOfGroups[index].activities.firstIndex(where: {$0.id == activity.id}){
+                        DispatchQueue.main.sync {
+                            self.activitiesOfGroups[index].activities[indexInActivity] = activity
                         }
-                        else{
-                            activitiesOfGroups[index].activities.append(activity)
+                    }
+                    else{
+                        DispatchQueue.main.sync {
+                            self.activitiesOfGroups[index].activities.append(activity)
                         }
                     }
                 }
-                return activitiesOfGroups[index].activities
             }
             return activitiesOfGroups[index].activities
             

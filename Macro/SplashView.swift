@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SplashView: View {
-    @Binding var isPresented: Bool
     @State var isAnimating : Bool = false
     var body: some View {
         VStack{
@@ -36,5 +35,5 @@ struct SplashView: View {
 }
 
 #Preview {
-    SplashView(isPresented: .constant(true))
+    SplashView()
 }
