@@ -23,7 +23,7 @@ struct ProgressView: View {
                     HStack{
                         Rectangle()
                             .frame(width: progresBarPercent ,height: 5)
-                            .foregroundColor(.azul4)
+                            .foregroundColor(.roxo3)
                             .cornerRadius(3)
                             .onChange(of: percent){ newvalue in
                                 self.calculate(width: geometry.size.width)

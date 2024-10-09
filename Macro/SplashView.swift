@@ -12,7 +12,7 @@ struct SplashView: View {
     @State var isAnimating : Bool = false
     var body: some View {
         VStack{
-            Image("aloong_logo_png")
+            Image("aloong_logo_texto")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 250)
@@ -28,8 +28,9 @@ struct SplashView: View {
         .background(
         Image("backgroudSignIn")
             .resizable()
-            .scaledToFill()
             .ignoresSafeArea()
+            .scaledToFill()
+
         )
         
     }

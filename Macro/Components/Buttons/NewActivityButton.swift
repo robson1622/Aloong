@@ -21,7 +21,7 @@ struct NewActivityButton: View {
             ZStack{
                 Circle()
                     .frame(width: 70, height: 70)
-                    .foregroundStyle( Color(.azul4))
+                    .foregroundStyle( Color(.roxo3))
                 Image(systemName: "plus")
                     .font(.title)
                     .bold()

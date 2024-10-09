@@ -12,7 +12,7 @@ struct OkButton: View {
     var text : String = "Ok"
     let onTap : () -> Void
     let backColor = Color(.verde)
-    let textColor = Color(.azul3)
+    let textColor = Color(.roxo3)
     var body: some View {
         Button(action:{
             if(active){

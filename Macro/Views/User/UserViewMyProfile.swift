@@ -34,7 +34,7 @@ struct UserViewMyProfile: View {
                     }){
                         Text(saveText)
                             .font(.body)
-                            .foregroundColor(.azul4)
+                            .foregroundColor(.roxo3)
                     }
                 )],onTapBack: {})
                 VStack (alignment: .center, spacing:16){
@@ -53,7 +53,7 @@ struct UserViewMyProfile: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 130)
                                     .inset(by: 4)
-                                    .stroke(.azul4, lineWidth: 8)
+                                    .stroke(.roxo3, lineWidth: 8)
                             )
                         VStack{
                             Spacer()
@@ -73,7 +73,7 @@ struct UserViewMyProfile: View {
                                                 .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8) // Ajustes na sombra
                                             Image(systemName: "square.and.pencil")
                                                 .font(.title2)
-                                                .foregroundColor(.azul4)
+                                                .foregroundColor(.roxo3)
                                                 .bold()
                                         }
                                         .frame(width: 38, height: 38)
@@ -99,14 +99,14 @@ struct UserViewMyProfile: View {
                     VStack(){
                         Text(user?.name ?? "Unamed")
                             .font(.title2)
-                            .foregroundColor(.azul4)
+                            .foregroundColor(.roxo3)
                         HStack (alignment: .center, spacing: 4){
                             Image(systemName: "hands.and.sparkles")
                                 .font(.callout)
-                                .foregroundColor(.azul4)
+                                .foregroundColor(.roxo3)
                             Text(activeDays)
                                 .font(.callout)
-                                .foregroundColor(.azul4)
+                                .foregroundColor(.roxo3)
                         }
                         .padding(0)
                     }
@@ -178,7 +178,7 @@ struct UserViewMyProfile: View {
                                     .padding(.vertical)
                                 Spacer()
                             }
-                            .background(.azul4)
+                            .background(.roxo3)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .cornerRadius(8)
                             .padding(0)
@@ -200,7 +200,7 @@ struct UserViewMyProfile: View {
                                     .padding(.vertical)
                                 Spacer()
                             }
-                            .background(.azul4)
+                            .background(.roxo3)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .cornerRadius(8)
                             .padding(0)

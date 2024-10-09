@@ -60,12 +60,12 @@ struct ActivityViewCreate: View {
                     if loadingState == .idle{
                         Text(model?.id == nil ? publish : save)
                             .font(.body)
-                            .foregroundStyle(Color(.azul4))
+                            .foregroundStyle(Color(.roxo3))
                     }
                     else{
                         Text(LoadingStateString(loadingState))
                             .font(.body)
-                            .foregroundStyle(Color(.azul4))
+                            .foregroundStyle(Color(.roxo3))
                     }
                     
                 })],onTapBack: {})

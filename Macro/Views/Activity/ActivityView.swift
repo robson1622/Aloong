@@ -28,7 +28,7 @@ struct ActivityView: View {
                         }){
                             Text(edit)
                                 .font(.callout)
-                                .foregroundColor(.azul4)
+                                .foregroundColor(.roxo3)
                         }
                     }
                 }

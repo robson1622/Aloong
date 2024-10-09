@@ -22,14 +22,14 @@ struct DecisionCreateOrAloongGroupView: View {
                     Spacer()
                     Text(textTitle)
                         .font(.degularLargeSemiBold)
-                        .foregroundColor(.azul4)
+                        .foregroundColor(.roxo3)
                         .multilineTextAlignment(.center)
                     Spacer()
                 }
                 HStack{
                     Text(textDescriptio)
                         .font(.subheadline)
-                        .foregroundColor(.azul4)
+                        .foregroundColor(.roxo3)
                         .multilineTextAlignment(.center)
                 }
                 Button(action:{
@@ -53,7 +53,7 @@ struct DecisionCreateOrAloongGroupView: View {
                     }
                     .padding()
                     .frame(width: 317,height: 199)
-                    .background(Color(.azul4))
+                    .background(Color(.roxo3))
                     .cornerRadius(11)
                     .padding(.top,24)
                 }

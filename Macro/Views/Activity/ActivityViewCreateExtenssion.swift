@@ -37,7 +37,7 @@ extension ActivityViewCreate {
                         TextField("Adicione um Titulo...", text: $title)
                             .lineLimit(2)
                             .font(.title2)
-                            .foregroundColor(pinFocusState == .title ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .title ? .roxo3 : .preto)
                             .focused($pinFocusState, equals: .title)
                             .multilineTextAlignment(.leading)
                     }
@@ -52,14 +52,14 @@ extension ActivityViewCreate {
                                 .font(.callout)
                                 .background(Color(.systemGray6))
                                 .frame(minHeight: 100, maxHeight: 300)
-                                .foregroundColor(pinFocusState == .description ? .azul4 : .preto)
+                                .foregroundColor(pinFocusState == .description ? .roxo3 : .preto)
                                 .focused($pinFocusState, equals: .description)
                                 .cornerRadius(8)
                                 .multilineTextAlignment(.leading)
                             if description.isEmpty {
                                 Text("Escreva uma legenda...")
                                     .font(.callout)
-                                    .foregroundColor(pinFocusState == .description ? .azul4 : .preto)
+                                    .foregroundColor(pinFocusState == .description ? .roxo3 : .preto)
                                     .padding(.top,8)
                                     .padding(.leading,5)
                             }
@@ -93,11 +93,11 @@ extension ActivityViewCreate {
                     HStack{
                         Text(ActivityModelNames.date)
                             .font(.callout)
-                            .foregroundColor(pinCounter == 2 ? .azul4 : .preto)
+                            .foregroundColor(pinCounter == 2 ? .roxo3 : .preto)
                         Spacer()
                         Text("\(today), \(timeIntervalForString(date))")
                             .font(.callout)
-                            .foregroundColor(pinCounter == 2 ? .azul4 : .preto)
+                            .foregroundColor(pinCounter == 2 ? .roxo3 : .preto)
                     }
                 }
                 Divider()
@@ -112,11 +112,11 @@ extension ActivityViewCreate {
                     HStack{
                         Text(ActivityModelNames.otherPeople)
                             .font(.callout)
-                            .foregroundColor(pinCounter == 3 ? .azul4 : .preto)
+                            .foregroundColor(pinCounter == 3 ? .roxo3 : .preto)
                         Spacer()
                         Image(systemName: ActivityModelNames.addOtherUserIcon)
                             .font(.callout)
-                            .foregroundColor(pinCounter == 3 ? .azul4 : .preto)
+                            .foregroundColor(pinCounter == 3 ? .roxo3 : .preto)
                     }
                 }
                 
@@ -147,14 +147,14 @@ extension ActivityViewCreate {
                     HStack{
                         Text(ActivityModelNames.duration)
                             .font(.callout)
-                            .foregroundColor(pinCounter == 4 ? .azul4 : .preto)
+                            .foregroundColor(pinCounter == 4 ? .roxo3 : .preto)
                         Spacer()
                         Image(systemName: ActivityModelNames.durationIcon)
                             .font(.callout)
-                            .foregroundColor(pinCounter == 4 ? .azul4 : .preto)
+                            .foregroundColor(pinCounter == 4 ? .roxo3 : .preto)
                         Text(timeIntervalForString(duration))
                             .font(.callout)
-                            .foregroundColor(pinCounter == 4 ? .azul4 : .preto)
+                            .foregroundColor(pinCounter == 4 ? .roxo3 : .preto)
                     }
                 }
                 Divider()
@@ -167,22 +167,22 @@ extension ActivityViewCreate {
                     HStack{
                         Text(ActivityModelNames.distance)
                             .font(.callout)
-                            .foregroundColor(pinFocusState == .distance ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .distance ? .roxo3 : .preto)
                         Spacer()
                         Image(systemName: getNameOfSymbol(.distance))
                             .font(.callout)
-                            .foregroundColor(pinFocusState == .distance ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .distance ? .roxo3 : .preto)
                         TextField("--", text: $distanceString)
                             .font(.callout)
                             .keyboardType(.decimalPad)
                             .frame(width: 15 + (8 * CGFloat(distanceString.count)))
                             .multilineTextAlignment(.trailing)
-                            .foregroundColor(pinFocusState == .distance ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .distance ? .roxo3 : .preto)
                             .focused($pinFocusState,equals: .distance)
                             
                         Text("KM")
                             .font(.callout)
-                            .foregroundColor(pinFocusState == .distance ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .distance ? .roxo3 : .preto)
                     }
                 }
                 Divider()
@@ -195,21 +195,21 @@ extension ActivityViewCreate {
                     HStack{
                         Text(ActivityModelNames.steps)
                             .font(.callout)
-                            .foregroundColor(pinFocusState == .steps ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .steps ? .roxo3 : .preto)
                         Spacer()
                         Image(systemName: getNameOfSymbol(.steps))
                             .font(.callout)
-                            .foregroundColor(pinFocusState == .steps ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .steps ? .roxo3 : .preto)
                         TextField("--", text: $stepsString)
                             .font(.callout)
                             .keyboardType(.decimalPad)
                             .frame(width: 15 + (8 * CGFloat(stepsString.count)))
-                            .foregroundColor(pinFocusState == .steps ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .steps ? .roxo3 : .preto)
                             .multilineTextAlignment(.trailing)
                             .focused($pinFocusState,equals: .steps)
                         Text("K")
                             .font(.callout)
-                            .foregroundColor(pinFocusState == .steps ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .steps ? .roxo3 : .preto)
                     }
                 }
                 Divider()
@@ -222,7 +222,7 @@ extension ActivityViewCreate {
                     HStack{
                         Text(ActivityModelNames.calories)
                             .font(.callout)
-                            .foregroundColor(pinFocusState == .calories ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .calories ? .roxo3 : .preto)
                         Spacer()
                         Image(systemName: getNameOfSymbol(.calories))
                             .font(.callout)
@@ -231,12 +231,12 @@ extension ActivityViewCreate {
                             .font(.callout)
                             .keyboardType(.decimalPad)
                             .frame(width: 15 + (8 * CGFloat(caloriesString.count)))
-                            .foregroundColor(pinFocusState == .calories ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .calories ? .roxo3 : .preto)
                             .multilineTextAlignment(.trailing)
                             .focused($pinFocusState,equals: .calories)
                         Text("CAL")
                             .font(.callout)
-                            .foregroundColor(pinFocusState == .calories ? .azul4 : .preto)
+                            .foregroundColor(pinFocusState == .calories ? .roxo3 : .preto)
                     }
                 }
                 

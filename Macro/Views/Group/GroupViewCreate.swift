@@ -40,12 +40,12 @@ struct GroupViewCreate: View {
                 VStack{
                     Text(personalize)
                         .font(.degularLargeSemiBold)
-                        .foregroundColor(.azul4)
+                        .foregroundColor(.roxo3)
                         .padding(.top,24)
                         .multilineTextAlignment(.center)
                     Text(personalizeSubTitle)
                         .font(.subheadline)
-                        .foregroundColor(.azul4)
+                        .foregroundColor(.roxo3)
                         .padding(.bottom,24)
                         .multilineTextAlignment(.center)
                 }
@@ -62,7 +62,7 @@ struct GroupViewCreate: View {
                                 .padding(.top,15)
                                 .focused($pinFocusState, equals: .name)
                                 .multilineTextAlignment(.leading)
-                                .foregroundColor(pinFocusState == .name ? .azul4 : .preto)
+                                .foregroundColor(pinFocusState == .name ? .roxo3 : .preto)
                             Spacer()
                         }
                     }
@@ -80,7 +80,7 @@ struct GroupViewCreate: View {
                                 .padding(.top,15)
                                 .focused($pinFocusState, equals: .description)
                                 .multilineTextAlignment(.leading)
-                                .foregroundColor(pinFocusState == .description ? .azul4 : .preto)
+                                .foregroundColor(pinFocusState == .description ? .roxo3 : .preto)
                             Spacer()
                         }
                         .frame(maxWidth: .infinity)
@@ -98,11 +98,11 @@ struct GroupViewCreate: View {
                         HStack{
                             Text(durationText)
                                 .font(.body)
-                                .foregroundColor(showKeyboardInteger ? .azul4 : .preto)
+                                .foregroundColor(showKeyboardInteger ? .roxo3 : .preto)
                             Spacer()
                             Text("\(durations) \(days)")
                                 .font(.body)
-                                .foregroundColor(showKeyboardInteger ? .azul4 : .preto)
+                                .foregroundColor(showKeyboardInteger ? .roxo3 : .preto)
                             
                         }
                         .pickerStyle(MenuPickerStyle())
