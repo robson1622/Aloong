@@ -51,7 +51,7 @@ struct ImageLoader: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 130)
                                 .inset(by: 2)
-                                .stroke(Color(.azul4), lineWidth: 8)
+                                .stroke(Color(.roxo3), lineWidth: 8)
                         )
                 }
                 else{
@@ -71,7 +71,7 @@ struct ImageLoader: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 44)
                                 .inset(by: 2)
-                                .stroke(Color(.azul4), lineWidth: 4)
+                                .stroke(Color(.roxo3), lineWidth: 4)
                         )
                 }
             }

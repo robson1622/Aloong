@@ -40,7 +40,7 @@ struct UserHeader: View {
                 }){
                     Image(systemName: "square.and.arrow.up")
                         .font(.title2)
-                        .foregroundColor(.azul4)
+                        .foregroundColor(.roxo3)
                         .padding(.horizontal,10)
                 }
             }

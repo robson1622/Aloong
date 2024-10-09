@@ -52,7 +52,7 @@ struct PhotoPickerButton: View {
                         .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8) // Ajustes na sombra
                     Image(systemName: "square.and.pencil")
                         .font(.title2)
-                        .foregroundColor(.azul3)
+                        .foregroundColor(.roxo3)
                         .bold()
                 }
                 .frame(width: 38, height: 38)

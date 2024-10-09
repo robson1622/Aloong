@@ -94,7 +94,7 @@ struct GroupViewDetails: View {
                     }
                     .padding(.horizontal,20)
                     .padding(.vertical,14)
-                    .background(Color(.azul4))
+                    .background(Color(.roxo3))
                     .cornerRadius(12)
                     .padding(.top,35)
                 }

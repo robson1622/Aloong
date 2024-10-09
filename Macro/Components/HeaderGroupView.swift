@@ -11,7 +11,8 @@ struct HeaderGroupView: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         HStack(alignment: .center) {//logo + perfil
-            Image( colorScheme == .dark ? "aloong_logo_branco" :"aloong_logo")
+            Image( colorScheme == .dark ? "aloong_logo_verde" :"aloong_logo_roxa")
+                .interpolation(.high)
                 .resizable()
                 .scaledToFill()
                 .frame(width: 134, height: 41.07149)

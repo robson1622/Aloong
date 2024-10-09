@@ -64,13 +64,13 @@ struct AloongGroupView: View {
                     Spacer()
                     Text(typeTheCode)
                         .font(.degularLargeSemiBold)
-                        .foregroundColor(colorScheme == .dark ? .white : Color.azul4)
+                        .foregroundColor(colorScheme == .dark ? .white : Color.roxo3)
                     Spacer()
                 }
                    
                 Text(typeTheCodeSubtitle)
                     .font(.subheadline)
-                    .foregroundColor(colorScheme == .dark ? .white : Color.azul4)
+                    .foregroundColor(colorScheme == .dark ? .white : Color.roxo3)
                
                 HStack(spacing:16, content: {
                     
@@ -184,7 +184,7 @@ struct AloongGroupView: View {
                 if loading == .loading{
                     Text(LoadingStateString(loading))
                         .font(.callout)
-                        .foregroundColor(.azul4)
+                        .foregroundColor(.roxo3)
                         .italic()
                         .padding()
                 }

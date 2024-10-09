@@ -40,10 +40,10 @@ struct Header: View {
                         } label: {
                             HStack {
                                 Image(systemName: "chevron.left")
-                                    .foregroundStyle(.azul4)
+                                    .foregroundStyle(.roxo3)
                                 
                                 Text("back")
-                                    .foregroundStyle(.azul4)
+                                    .foregroundStyle(.roxo3)
                             }
                             .tint(.white)
                             .foregroundStyle(.black)

@@ -44,7 +44,7 @@ struct SelectorOfImages: View {
                 }){
                     Text(saveText)
                         .font(.headline)
-                        .foregroundColor(Color.azul4)
+                        .foregroundColor(Color.roxo3)
                         .padding()
                 }
             }
@@ -64,7 +64,7 @@ struct SelectorOfImages: View {
                             }) {
                                 ZStack{
                                     Circle()
-                                        .foregroundStyle(Color.azul4)
+                                        .foregroundStyle(Color.roxo3)
                                         .frame(width: 25)
                                     Image(systemName:"x.circle.fill")
                                         .foregroundStyle( colorScheme == .dark ? Color.black : Color.white)
@@ -89,7 +89,7 @@ struct SelectorOfImages: View {
                     ) {
                         Text(addPlusImageText)
                             .font(.headline)
-                            .foregroundColor(newListOfImages.count <= limitOfImages ? Color.azul4 : Color.gray)
+                            .foregroundColor(newListOfImages.count <= limitOfImages ? Color.roxo3 : Color.gray)
                         
                     }
                 }

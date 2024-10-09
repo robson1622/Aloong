@@ -21,7 +21,7 @@ struct SaveButton: View {
                 .font(.callout)
                 .foregroundColor( active ? .branco : .white)
                 .padding()
-                .background( active ? .azul4 : Color(.systemGray4))
+                .background( active ? .roxo3 : Color(.systemGray4))
                 .cornerRadius(10)
         }
     }

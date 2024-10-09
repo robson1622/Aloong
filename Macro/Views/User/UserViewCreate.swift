@@ -42,10 +42,10 @@ struct UserViewCreate: View {
                         HStack{
                             Text(nextText)
                                 .font(.body)
-                                .foregroundColor(name.count < 3 ? Color(.systemGray) : .azul4)
+                                .foregroundColor(name.count < 3 ? Color(.systemGray) : .roxo3)
                             Image(systemName: "chevron.right")
                                 .font(.body)
-                                .foregroundColor(name.count < 3 ? Color(.systemGray) : .azul4)
+                                .foregroundColor(name.count < 3 ? Color(.systemGray) : .roxo3)
                         }
                     }
                     .disabled(name.count < 3)
@@ -57,10 +57,10 @@ struct UserViewCreate: View {
             VStack{
                 Text(tellUsMore)
                     .font(.degularLargeSemiBold)
-                    .foregroundColor(colorScheme == .dark ? .white : .azul4)
+                    .foregroundColor(colorScheme == .dark ? .white : .roxo3)
                 Text(setYourName)
                     .font(.subheadline)
-                    .foregroundColor(colorScheme == .dark ? .white : .azul4)
+                    .foregroundColor(colorScheme == .dark ? .white : .roxo3)
             }
             HStack{
                 TextField(placeholderName, text: $name)
@@ -73,7 +73,7 @@ struct UserViewCreate: View {
                 }){
                     Image(systemName: "x.circle.fill")
                         .font(.body)
-                        .foregroundColor(name.count > 0 ? .azul4 : Color(.systemGray))
+                        .foregroundColor(name.count > 0 ? .roxo3 : Color(.systemGray))
                         .padding(.trailing,16)
                         
                 }

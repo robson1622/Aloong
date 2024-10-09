@@ -24,7 +24,7 @@ struct AloongComponent: View {
                 ZStack{
                     Circle()
                         .frame(width: 35,height: 35)
-                        .foregroundColor(active ? .azul2 : Color(.systemGray4))
+                        .foregroundColor(active ? .roxo3 : Color(.systemGray4))
                     Image(systemName: "hands.and.sparkles")
                         .font(.callout)
                         .foregroundColor(.white)
@@ -32,7 +32,7 @@ struct AloongComponent: View {
                 ZStack{
                     Circle()
                         .frame(width: 16,height: 16)
-                        .foregroundColor(active ? .azul4 : Color(.systemGray))
+                        .foregroundColor(active ? .roxo3 : Color(.systemGray))
                     Text("\(marcador)")
                         .font(.caption)
                         .foregroundColor(.white)
