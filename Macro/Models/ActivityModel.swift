@@ -19,7 +19,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
     var steps : Float?
     
     func creste()async -> ActivityModel?{
-        if let idServer = DatabaseInterface.shared.create(model: self, table: .activityGroup){
+        if let idServer = DatabaseInterface.shared.create(model: self, table: .activity){
             var new = self
             new.id = idServer
             _ = await new.update()
@@ -32,7 +32,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
         var idActivityCreated : String = ""
         var relationWithUserId : String = ""
         var listOfRelationsGroupCreated : [String] = []
-        var listOfRelationsImageCreated : [String] = []
+        var listOfActivityImageModel : [ActivityImageModel] = []
         if let idServer = DatabaseInterface.shared.create(model: self, table: .activity){
             var new = self
             new.id = idServer
@@ -51,31 +51,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
                 }
             }
             // criar as relações image-atividade
-            var firstUrl : String? = nil
-            var othersUrls : String = ""
-            var counter : Int = 2
-            for image in listOfImages{
-                if firstUrl != nil{
-                    othersUrls = firstUrl! + "\(counter)"
-                    counter += 1
-                }
-                BucketOfImages.shared.upload(image: image, type: .activity,url: firstUrl){ url in
-                    if firstUrl == nil, let url = url{
-                        firstUrl = url
-                        othersUrls = url
-                    }
-                    Task{
-                        let newRelation = ActivityImageModel(idActivity: idServer,imageURL: othersUrls)
-                        if let relationId = await newRelation.create(){
-                            listOfRelationsImageCreated.append(relationId)
-                        }
-                        else{
-                            print("ERRO AO TENTAR CRIAR RELAÇÃO DE ATIVIDADE COM IMAGEM EM ActivityModel/createForManyGroups")
-                            erro = true
-                        }
-                    }
-                }
-            }
+            listOfActivityImageModel = await self.uploadImages(listOfImages,idServer: idServer)
             // criar relação com o usuário
             var newRelationWithUser = ActivityUserModel(idUser: myIdUser, idActivity: idServer, state: statesOfActivityRelation.owner)
             if let idRelation = DatabaseInterface.shared.create(model: newRelationWithUser, table: .activityUser){
@@ -96,8 +72,10 @@ struct ActivityModel : Codable, Hashable, Identifiable{
                 for activitygroupid in listOfRelationsGroupCreated{
                     _ = await DatabaseInterface.shared.delete(id: activitygroupid, table: .activityGroup)
                 }
-                for imageId in listOfRelationsImageCreated{
-                    _ = await DatabaseInterface.shared.delete(id: imageId, table: .activityImage)
+                for image in listOfActivityImageModel{
+                    if let id = image.id{
+                        _ = await DatabaseInterface.shared.delete(id: id, table: .activityImage)
+                    }
                 }
             }
         }
@@ -111,7 +89,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
         var ownerRelation : String = ""
         var listOfRelationsUserCreated : [String] = []
         var idrelationsGroupCreated : String = ""
-        var listOfRelationsImageCreated : [String] = []
+        var listOfActivityImageModel : [ActivityImageModel] = []
         var listOfIdsImages : [String] = []
         if let idServer = DatabaseInterface.shared.create(model: self, table: .activity){
             idActivityCreated = idServer
@@ -148,31 +126,8 @@ struct ActivityModel : Codable, Hashable, Identifiable{
                 erro = true
             }
             // criar as relações image-atividade
-            var firstUrl : String? = nil
-            var othersUrls : String = ""
-            var counter : Int = 2
-            for image in listOfImages{
-                if firstUrl != nil{
-                    othersUrls = firstUrl! + "\(counter)"
-                    counter += 1
-                }
-                BucketOfImages.shared.upload(image: image, type: .activity,url: firstUrl){ url in
-                    if firstUrl == nil, let url = url{
-                        firstUrl = url
-                        othersUrls = url
-                    }
-                    Task{
-                        let newRelation = ActivityImageModel(idActivity: idServer,imageURL: othersUrls)
-                        if let relationId = await newRelation.create(){
-                            listOfRelationsImageCreated.append(relationId)
-                        }
-                        else{
-                            print("ERRO AO TENTAR CRIAR RELAÇÃO DE ATIVIDADE COM IMAGEM EM ActivityModel/createForManyGroups")
-                            erro = true
-                        }
-                    }
-                }
-            }
+            listOfActivityImageModel = await self.uploadImages(listOfImages,idServer: idServer)
+            
             completion(new,listOfIdsImages)
         }
         else{
@@ -188,15 +143,33 @@ struct ActivityModel : Codable, Hashable, Identifiable{
                 for relation in listOfRelationsUserCreated{
                     _ = await DatabaseInterface.shared.delete(id: relation, table: .activityUser)
                 }
-                for relation in listOfRelationsImageCreated{
-                    _ = await DatabaseInterface.shared.delete(id: relation, table: .activityImage)
+                for relation in listOfActivityImageModel{
+                    if let id = relation.id{
+                        _ = await DatabaseInterface.shared.delete(id: id, table: .activityImage)
+                    }
                 }
             }
         }
     }
     
-    private func uploadImages(_ images : UIImage ) async {
-        
+    private func uploadImages(_ images : [UIImage], idServer : String) async -> [ActivityImageModel]{
+        var relations : [ActivityImageModel] = []
+        var imageNumber = 0
+        for image in images{
+            BucketOfImages.shared.upload(image: image, type: .activity){ url in
+                Task{
+                    let newRelation = ActivityImageModel(idActivity: idServer,imageURL: url,number: imageNumber)
+                    if let relationId = await newRelation.create(){
+                        relations.append(ActivityImageModel(id: relationId,idActivity: idServer,imageURL: url,number: imageNumber))
+                    }
+                    else{
+                        print("ERRO AO TENTAR CRIAR RELAÇÃO DE ATIVIDADE COM IMAGEM EM ActivityModel/createForManyGroups")
+                    }
+                }
+            }
+            imageNumber += 1
+        }
+        return relations
     }
     
     func update() async -> Bool?{

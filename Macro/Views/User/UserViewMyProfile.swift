@@ -240,6 +240,8 @@ struct UserViewMyProfile: View {
                         let oldImage = user?.userimage
                         user?.userimage = url
                         user?.name = name
+                        controller.userController.myUser = user
+                        controller.userController.saveUser()
                         continuation.resume()
                         Task{
                             _ = await user?.update()

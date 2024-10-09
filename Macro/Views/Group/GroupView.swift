@@ -108,29 +108,31 @@ struct GroupView: View {
             }
         }
         .refreshable {
-            self.update()
+            self.update(reload: true)
         }
         .onAppear{
-            self.update(reload: true)
+            self.update()
         }
         .background(Color(.branco))
     }
-    private func update(reload: Bool = false){
+    private func update(reload : Bool = false){
         Task{
-            if reload{
-                await controller.loadAllLists()
-            }
-            self.listActivities = controller.activityCompleteList
-            you = controller.statisticController.you ?? PointsOfUser(user: usermodelexemple, points: 0)
-            lider = controller.statisticController.lider ?? you
-            if let userImageUrl = controller.userController.myUser?.userimage{
-                BucketOfImages.shared.download(from: userImageUrl) { image in
-                    youImage = image
+            if let id = model.id{
+                if reload{
+                    await self.controller.loadAllLists(idGroup: id)
                 }
-            }
-            if let liderImageUrl = controller.statisticController.lider?.user.userimage{
-                BucketOfImages.shared.download(from: liderImageUrl) { image in
-                    liderImage = image
+                self.listActivities = controller.activityCompleteList
+                you = controller.statisticController.you ?? PointsOfUser(user: usermodelexemple, points: 0)
+                lider = controller.statisticController.lider ?? you
+                if let userImageUrl = controller.userController.myUser?.userimage{
+                    BucketOfImages.shared.download(from: userImageUrl) { image in
+                        youImage = image
+                    }
+                }
+                if let liderImageUrl = controller.statisticController.lider?.user.userimage{
+                    BucketOfImages.shared.download(from: liderImageUrl) { image in
+                        liderImage = image
+                    }
                 }
             }
         }

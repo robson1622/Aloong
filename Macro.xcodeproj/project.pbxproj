@@ -138,6 +138,7 @@
 		9796B9F82C779962000F0520 /* UserViewMyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9796B9F72C779962000F0520 /* UserViewMyProfile.swift */; };
 		9796B9FA2C77DE1E000F0520 /* MembersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9796B9F92C77DE1E000F0520 /* MembersController.swift */; };
 		9796B9FC2C77E04A000F0520 /* MemberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9796B9FB2C77E04A000F0520 /* MemberModel.swift */; };
+		97AAF8972CB55C6D00EEDCA2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 97AAF8962CB55C6D00EEDCA2 /* FirebaseAuth */; };
 		97C223032C73881B00470068 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97C223022C73881B00470068 /* GoogleService-Info.plist */; };
 		97C223062C73889400470068 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 97C223052C73889400470068 /* FirebaseAnalytics */; };
 		97C223082C73889400470068 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 97C223072C73889400470068 /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -322,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C223062C73889400470068 /* FirebaseAnalytics in Frameworks */,
+				97AAF8972CB55C6D00EEDCA2 /* FirebaseAuth in Frameworks */,
 				97DF22622C90818D00B98695 /* FirebaseStorage in Frameworks */,
 				97C223082C73889400470068 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				97C2230A2C73FC3100470068 /* FirebaseFirestore in Frameworks */,
@@ -716,6 +718,7 @@
 				97C223072C73889400470068 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				97C223092C73FC3100470068 /* FirebaseFirestore */,
 				97DF22612C90818D00B98695 /* FirebaseStorage */,
+				97AAF8962CB55C6D00EEDCA2 /* FirebaseAuth */,
 			);
 			productName = Macro;
 			productReference = 9705ADB32C64F53900E73123 /* Macro.app */;
@@ -1342,6 +1345,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		97AAF8962CB55C6D00EEDCA2 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 97C223042C73889400470068 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		97C223052C73889400470068 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 97C223042C73889400470068 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

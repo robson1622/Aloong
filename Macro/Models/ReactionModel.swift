@@ -15,7 +15,7 @@ struct ReactionModel : Codable, Hashable{
     var idComment : String?
     
     func create()async -> Bool?{
-        if let idServer = DatabaseInterface.shared.create(model: self, table: .activityGroup){
+        if let idServer = DatabaseInterface.shared.create(model: self, table: .reaction){
             var new = self
             new.id = idServer
             return await new.update()
@@ -25,7 +25,7 @@ struct ReactionModel : Codable, Hashable{
     
     func update() async -> Bool?{
         if(self.id != nil){
-            return await DatabaseInterface.shared.update(model: self, id: self.id!, table: .activityUser)
+            return await DatabaseInterface.shared.update(model: self, id: self.id!, table: .reaction)
         }
         else{
             print("ERRO AO CRIAR USUÁRIO - ActivityUserModel/update")
@@ -35,7 +35,7 @@ struct ReactionModel : Codable, Hashable{
     
     func delete() async -> Bool?{
         if(self.id != nil){
-            return await DatabaseInterface.shared.delete(id: self.id!, table: .activityUser)
+            return await DatabaseInterface.shared.delete(id: self.id!, table: .reaction)
         }
         else{
             print("ERRO AO CRIAR USUÁRIO - ActivityUserModel/delete")
@@ -45,7 +45,7 @@ struct ReactionModel : Codable, Hashable{
     
     func read() async -> ReactionModel?{
         if(self.id != nil){
-            return await DatabaseInterface.shared.read(id: self.id!, table: .activityUser)
+            return await DatabaseInterface.shared.read(id: self.id!, table: .reaction)
         }
         else{
             print("ERRO AO CRIAR USUÁRIO - ActivityUserModel/read")

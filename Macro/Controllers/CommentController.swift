@@ -90,7 +90,9 @@ class CommentController: ObservableObject{
         }
         else{
             let newRelations : CommitsPerGroup = CommitsPerGroup(idGroup: idGroup, listOfCommits: [])
-            listOfCommitsPerGroup.append(newRelations)
+            DispatchQueue.main.sync {
+                listOfCommitsPerGroup.append(newRelations)
+            }
             if let index = listOfCommitsPerGroup.firstIndex(where: {$0.idGroup == idGroup}){
                 await insertInlistOfCommitsPerGroup(index: index, idGroup: idGroup)
                 return listOfCommitsPerGroup[index].listOfCommits

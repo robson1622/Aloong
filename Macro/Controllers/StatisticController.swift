@@ -15,14 +15,14 @@ struct PointsOfUser : Decodable, Encodable, Equatable, Hashable{
 class StatisticController: ObservableObject{
     static var shared = StatisticController()
     private let idUserActivityGroupFieldName = "idUser"
-//   private var listOfActivities : Activity?
+    //  private var listOfActivities : Activity?
     @Published var listOfPositionUser : [PointsOfUser]?
     
     @Published var lider : PointsOfUser?
     @Published var you : PointsOfUser?
     
     // calcula todas as estatísticas do grupo
-    func calculate(idGroup: String, idMyUser: String, activitiesCompleteList: [ActivityCompleteModel], listOfUsers: [UserModel]) async -> [PointsOfUser] {
+    func calculate(idGroup: String, idMyUser: String, activitiesCompleteList: [ActivityCompleteModel], listOfUsers: [UserModel]) async {
         // Dicionário para armazenar a pontuação dos usuários
         var userScores: [UserModel: Set<Date>] = [:]
 
@@ -63,13 +63,15 @@ class StatisticController: ObservableObject{
 
         // Armazena o usuário atual e o líder (opcional, se estiver usando essas variáveis em outro lugar)
         if let index = result.firstIndex(where: { $0.user.id == idMyUser }) {
-            you = result[index] // Atualiza a variável com o usuário atual
+            DispatchQueue.main.sync{
+                self.you = result[index] // Atualiza a variável com o usuário atual
+            }
         }
         if let topUser = result.max(by: { $0.points < $1.points }) {
-            lider = topUser // Atualiza a variável com o líder
+            DispatchQueue.main.sync{
+                self.lider = topUser // Atualiza a variável com o líder
+            }
         }
-
-        return result
     }
 
     

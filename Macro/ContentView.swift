@@ -9,13 +9,12 @@ import SwiftUI
 import FirebaseAnalytics
 
 struct ContentView: View {
-    @State var loading : Bool = true
     @StateObject var router = ViewsController.shared
     @StateObject var controller : GeneralController = GeneralController.shared
     
     var body: some View {
         NavigationStack(path: $router.navPath){
-            SplashView(isPresented: $loading).navigationDestination(for: ViewsController.Destination.self){ destination in
+            SplashView().navigationDestination(for: ViewsController.Destination.self){ destination in
                 let hide = true
                 
                 switch destination{
@@ -66,7 +65,7 @@ struct ContentView: View {
                     CameraView().navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                 case .splash:
-                    SplashView(isPresented: $loading)
+                    SplashView()
                     
                 }
                 
@@ -76,20 +75,26 @@ struct ContentView: View {
                     ViewsController.shared.navigateTo(to: .createActivity("", ""), reset: true)
                 }
                 else{
-                    Task{ 
-                        await self.controller.loadAllLists()  // Carrega listas do controller
-                        loading = false
+                    Task{
                         if let group = self.controller.groupController.readMainGroupOfUser() {
-                            ViewsController.shared.navigateTo(to: .group(group), reset: true)
                             controller.groupController.saveLocalMainGroup(group: group)
+                            if let idGroup = group.id {
+                                await self.controller.loadAllLists(idGroup: idGroup)  // Carrega listas do controller
+                                ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                            }
                         }
                         else if let group = await self.controller.groupController.readAllGroupsOfUser().first {
-                            ViewsController.shared.navigateTo(to: .group(group), reset: true)
                             controller.groupController.saveLocalMainGroup(group: group)
+                            if let idGroup = group.id {
+                                await self.controller.loadAllLists(idGroup: idGroup)  // Carrega listas do controller
+                                ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                            }
                         }
                         else{
                             ViewsController.shared.navigateTo(to: .onboardingSignIn,reset: true)
                         }
+                        
+                        
                     }
                 }
             }
