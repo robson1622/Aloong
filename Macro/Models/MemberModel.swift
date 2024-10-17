@@ -16,7 +16,7 @@ struct MemberModel : Codable, Hashable{
 
     
     func create()async -> MemberModel?{
-        if let idServer = DatabaseInterface.shared.create(model: self, table: .activityGroup){
+        if let idServer = DatabaseInterface.shared.create(model: self, table: .member){
             var newMember = self
             newMember.id = idServer
             if let _ = await newMember.update(){

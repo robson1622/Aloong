@@ -9,13 +9,12 @@ import SwiftUI
 import FirebaseAnalytics
 
 struct ContentView: View {
-    @State var loading : Bool = true
     @StateObject var router = ViewsController.shared
     @StateObject var controller : GeneralController = GeneralController.shared
     
     var body: some View {
         NavigationStack(path: $router.navPath){
-            SplashView(isPresented: $loading).navigationDestination(for: ViewsController.Destination.self){ destination in
+            SplashView().navigationDestination(for: ViewsController.Destination.self){ destination in
                 let hide = true
                 
                 switch destination{
@@ -47,11 +46,11 @@ struct ContentView: View {
                     GroupViewDetails(listOfPositions: listOfPoints,group:group).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                     //activity part
-                case .activity(let activity, let user, let listImagesString):
-                    ActivityView(activity: activity, user: user,imagesString : listImagesString).navigationBarBackButtonHidden(hide)
+                case .activity(let activity, let user,let otherUser,let group,let reactions, let listImagesString):
+                    ActivityView(activity: activity, user: user,otherUser: otherUser,group: group,reactions:reactions,imagesString : listImagesString).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
-                case .createActivity(let idUser, let idGroup):
-                    ActivityViewCreate(idUser: idUser,idGroup: idGroup).navigationBarBackButtonHidden(hide)
+                case .createActivity(let idUser, let idGroup,let activity):
+                    ActivityViewCreate(idUser: idUser,idGroup: idGroup,model :activity).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                     
                     
@@ -66,30 +65,36 @@ struct ContentView: View {
                     CameraView().navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                 case .splash:
-                    SplashView(isPresented: $loading)
+                    SplashView()
                     
                 }
                 
             }
             .onAppear {
                 if false{
-                    ViewsController.shared.navigateTo(to: .createActivity("", ""), reset: true)
+                    ViewsController.shared.navigateTo(to: .createActivity("", "",nil), reset: true)
                 }
                 else{
-                    Task{ 
-                        await self.controller.loadAllLists()  // Carrega listas do controller
-                        loading = false
+                    Task{
                         if let group = self.controller.groupController.readMainGroupOfUser() {
-                            ViewsController.shared.navigateTo(to: .group(group), reset: true)
                             controller.groupController.saveLocalMainGroup(group: group)
+                            if let idGroup = group.id {
+                                await self.controller.loadAllLists(idGroup: idGroup)  // Carrega listas do controller
+                                ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                            }
                         }
                         else if let group = await self.controller.groupController.readAllGroupsOfUser().first {
-                            ViewsController.shared.navigateTo(to: .group(group), reset: true)
                             controller.groupController.saveLocalMainGroup(group: group)
+                            if let idGroup = group.id {
+                                await self.controller.loadAllLists(idGroup: idGroup)  // Carrega listas do controller
+                                ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                            }
                         }
                         else{
                             ViewsController.shared.navigateTo(to: .onboardingSignIn,reset: true)
                         }
+                        
+                        
                     }
                 }
             }

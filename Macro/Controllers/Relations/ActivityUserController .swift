@@ -59,7 +59,9 @@ class ActivityUserController: ObservableObject{
         }
         else{
             let newRelations : RelationsWithActivity = RelationsWithActivity(idActivity: idActivity, listOfActivityUser: [])
-            listOfRelationsWithActivity.append(newRelations)
+            DispatchQueue.main.sync{
+                self.listOfRelationsWithActivity.append(newRelations)
+            }
             if let index = listOfRelationsWithActivity.firstIndex(where: {$0.idActivity == idActivity}){
                 await insertRelationsInListActivity(index: index, idActivity: idActivity)
                 return listOfRelationsWithActivity[index].listOfActivityUser
@@ -72,10 +74,14 @@ class ActivityUserController: ObservableObject{
         let relations : [ActivityUserModel] = await DatabaseInterface.shared.readDocuments(isEqualValue: idActivity, table: .activityUser, field: idActivityFieldName)
         for relation in relations{
             if let indexRelation = listOfRelationsWithActivity[index].listOfActivityUser.firstIndex(where:{$0.id == relation.id}){
-                listOfRelationsWithActivity[index].listOfActivityUser[indexRelation] = relation
+                DispatchQueue.main.sync{
+                    self.listOfRelationsWithActivity[index].listOfActivityUser[indexRelation] = relation
+                }
             }
             else if index < listOfRelationsWithActivity.count{
-                listOfRelationsWithActivity[index].listOfActivityUser.append(relation)
+                DispatchQueue.main.sync{
+                    self.listOfRelationsWithActivity[index].listOfActivityUser.append(relation)
+                }
             }
         }
     }
@@ -85,10 +91,14 @@ class ActivityUserController: ObservableObject{
         let relations : [ActivityUserModel] = await DatabaseInterface.shared.readDocuments(isEqualValue: idUser, table: .activityUser, field: idUserFieldName)
         for relation in relations{
             if let indexRelation = listOfRelationsWithUser[index].listOfActivityUser.firstIndex(where:{$0.id == relation.id}){
-                listOfRelationsWithUser[index].listOfActivityUser[indexRelation] = relation
+                DispatchQueue.main.sync{
+                    self.listOfRelationsWithUser[index].listOfActivityUser[indexRelation] = relation
+                }
             }
             else{
-                listOfRelationsWithUser[index].listOfActivityUser.append(relation)
+                DispatchQueue.main.sync{
+                    self.listOfRelationsWithUser[index].listOfActivityUser.append(relation)
+                }
             }
         }
     }

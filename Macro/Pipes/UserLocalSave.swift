@@ -13,6 +13,7 @@ class UserLocalSave{
     
     let userKey : String = "user"
     let onboardingSkip : String = "onboard skip"
+    let pointsKey : String = "points"
     
     func saveUser(user : UserModel) {
         do {
@@ -67,4 +68,29 @@ class UserLocalSave{
     func deleteOnboardingSkip(){
         UserDefaults.standard.removeObject(forKey: onboardingSkip)
     }
+    
+    func savePoints(points : Int){
+        do {
+            let data = try JSONEncoder().encode(points)
+            UserDefaults.standard.set(data, forKey: pointsKey)
+        } catch {
+            print("Erro ao salvar o usuário: \(error)")
+        }
+    }
+    
+    func loadPoints() -> Int?{
+        guard let data = UserDefaults.standard.data(forKey: pointsKey) else {
+            return nil
+        }
+        
+        do {
+            let result = try JSONDecoder().decode(Int.self, from: data)
+            return result
+        } catch {
+            print("Erro ao carregar o Onboarding Skip: \(error)")
+        }
+        return nil
+    }
 }
+
+

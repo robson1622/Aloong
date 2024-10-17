@@ -21,9 +21,11 @@ struct CameraView: View {
                     .resizable()
                     .scaledToFit()
                     .onAppear{
-                        if let idUser = controller.userController.myUser?.id{
-                            controller.activityController.imagesForNewActivity.append(selectedImage)
-                            ViewsController.shared.navigateTo(to: .createActivity(idUser, (controller.groupController.groupsOfThisUser.first?.id)!))
+                        if let idUser = controller.userController.myUser?.id,let group = controller.groupController.readMainGroupOfUser(){
+                            if let idGroup = group.id{
+                                controller.activityController.imagesForNewActivity.append(selectedImage)
+                                ViewsController.shared.navigateTo(to: .createActivity(idUser,idGroup,nil))
+                            }
                         }
                         else{
                             print("ERRO EM CamaeraView/.onAppear , id ou grupo nulo")

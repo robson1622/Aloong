@@ -7,6 +7,7 @@
 
 import Foundation
 import PhotosUI
+import FirebaseAuth
 import FirebaseStorage
 import UIKit
 
@@ -115,19 +116,33 @@ class BucketOfImages: ObservableObject{
             }
         }
     }
-    
     func download(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        if let savedImage = self.images.first(where: { $0.id == urlString}){
-            completion(savedImage.image)
+        // Verifica se o usuário está autenticado
+        guard let currentUser = Auth.auth().currentUser else {
+            print("User not authenticated.")
+            completion(nil)
+            return
         }
-        else if let imageLocal = self.loadImageLocally(fileName: urlString){
-            let newImageCash = ImageCash(id: urlString, image: imageLocal,date: Date())
+        
+        // Verifica se o usuário foi autenticado via Apple SignIn
+        guard currentUser.providerData.first?.providerID == "apple.com" else {
+            print("User is not authenticated with Apple SignIn.")
+            completion(nil)
+            return
+        }
+        
+        // Verifica se a imagem já foi carregada em cache ou localmente
+        if let savedImage = self.images.first(where: { $0.id == urlString}) {
+            completion(savedImage.image)
+        } else if let imageLocal = self.loadImageLocally(fileName: urlString) {
+            let newImageCash = ImageCash(id: urlString, image: imageLocal, date: Date())
             self.images.append(newImageCash)
             completion(imageLocal)
             return
-        }
-        else{
+        } else {
+            // Obtém referência ao arquivo no Firebase Storage
             let ref = storage.reference(forURL: localStorageImages + urlString)
+            
             // Faz o download dos dados da imagem
             ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
                 if let error = error {
@@ -138,14 +153,16 @@ class BucketOfImages: ObservableObject{
                 
                 // Converte os dados baixados em uma UIImage
                 if let data = data, let image = UIImage(data: data) {
-                    let newImageCash = ImageCash(id: urlString, image: image,date: Date())
+                    let newImageCash = ImageCash(id: urlString, image: image, date: Date())
                     self.images.append(newImageCash)
+                    
+                    // Salva a imagem baixada localmente
                     let imageSaved = ImagesSaved(url: urlString, date: Date())
                     var list = self.readImageDocument()
                     list.append(imageSaved)
                     self.saveImageDocument(list)
-                    
                     _ = self.saveImageLocally(image: image, fileName: urlString)
+                    
                     completion(image)
                 } else {
                     completion(nil)
@@ -153,7 +170,45 @@ class BucketOfImages: ObservableObject{
             }
         }
     }
-    
+//
+//    func download(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+//        if let savedImage = self.images.first(where: { $0.id == urlString}){
+//            completion(savedImage.image)
+//        }
+//        else if let imageLocal = self.loadImageLocally(fileName: urlString){
+//            let newImageCash = ImageCash(id: urlString, image: imageLocal,date: Date())
+//            self.images.append(newImageCash)
+//            completion(imageLocal)
+//            return
+//        }
+//        else{
+//            let ref = storage.reference(forURL: localStorageImages + urlString)
+//            // Faz o download dos dados da imagem
+//            ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+//                if let error = error {
+//                    print("Error downloading image: \(error.localizedDescription)")
+//                    completion(nil)
+//                    return
+//                }
+//                
+//                // Converte os dados baixados em uma UIImage
+//                if let data = data, let image = UIImage(data: data) {
+//                    let newImageCash = ImageCash(id: urlString, image: image,date: Date())
+//                    self.images.append(newImageCash)
+//                    let imageSaved = ImagesSaved(url: urlString, date: Date())
+//                    var list = self.readImageDocument()
+//                    list.append(imageSaved)
+//                    self.saveImageDocument(list)
+//                    
+//                    _ = self.saveImageLocally(image: image, fileName: urlString)
+//                    completion(image)
+//                } else {
+//                    completion(nil)
+//                }
+//            }
+//        }
+//    }
+//    
     private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
 

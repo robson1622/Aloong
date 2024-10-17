@@ -16,7 +16,7 @@ struct ActivityUserModel: Codable, Hashable{
     var state : String
     
     func create()async -> String?{
-        if let idServer = DatabaseInterface.shared.create(model: self, table: .activityGroup){
+        if let idServer = DatabaseInterface.shared.create(model: self, table: .activityUser){
             var new = self
             new.id = idServer
             _ = await new.update()

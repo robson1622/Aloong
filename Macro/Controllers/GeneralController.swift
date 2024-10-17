@@ -23,63 +23,42 @@ class GeneralController: ObservableObject{
     @Published var statisticController = StatisticController.shared
     
     @Published var activityCompleteList : [ActivityCompleteModel] = []
+    private var serverList : [ActivityCompleteModel] = []
     @Published var update : Bool = false
     
     
-    func loadAllLists() async{
+    func loadAllLists(idGroup : String) async{
         _ = self.userController.loadUser()
-        if let groupId = self.groupController.readMainGroupOfUser()?.id{
-            await self.loadGroup(idGroup: groupId)
-            let listOfActivities = await activityController.readActivitiesOfGroup(idGroup: groupId)
-            if let savedlist = self.loadActivityCompleteList(){
-                DispatchQueue.main.async{
-                    self.activityCompleteList = savedlist
-                }
-                if let idUser = UserLocalSave().loadUser()?.id{
-                    _ = await statisticController.calculate(idGroup: groupId, idMyUser: idUser, activitiesCompleteList: activityCompleteList, listOfUsers: userController.readAllUsersOfGroup(idGroup: groupId, reset: false))
-                }
-            }
-            
-            Task{
-                for activity in listOfActivities{
-                    if let completeAcitivity = await getActivityCompleteOfActivity(activity: activity, idGroup: groupId){
-                        if let index = activityCompleteList.firstIndex(where: {$0.activity?.id == completeAcitivity.activity?.id}){
-                            DispatchQueue.main.async{
-                                self.activityCompleteList[index] = completeAcitivity
-                            }
-                        }
-                        else{
-                            DispatchQueue.main.async{
-                                self.activityCompleteList.append(completeAcitivity)
-                            }
-                        }
+        await self.loadGroup(idGroup: idGroup)
+        let listOfActivities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
+        for activity in listOfActivities{
+            if let completeAcitivity = await getActivityCompleteOfActivity(activity: activity, idGroup: idGroup){
+                if let index = activityCompleteList.firstIndex(where: {$0.activity?.id == completeAcitivity.activity?.id}){
+                    DispatchQueue.main.sync{
+                        self.activityCompleteList[index] = completeAcitivity
                     }
                 }
-                self.saveActivityCompleteList(activityCompleteList)
-                if let idUser = UserLocalSave().loadUser()?.id{
-                    _ = await statisticController.calculate(idGroup: groupId, idMyUser: idUser, activitiesCompleteList: activityCompleteList, listOfUsers: userController.readAllUsersOfGroup(idGroup: groupId, reset: false))
+                else{
+                    DispatchQueue.main.sync{
+                        self.activityCompleteList.append(completeAcitivity)
+                    }
                 }
             }
         }
-        else{
-            if let groupId = await self.groupController.readAllGroupsOfUser().first?.id{
-                self.groupController.saveLocalMainGroup(group: await self.groupController.readAllGroupsOfUser().first!)
-                await self.loadGroup(idGroup: groupId)
-            }
+        if let idUser = userController.myUser?.id{
+            await statisticController.calculate(idGroup: idGroup, idMyUser: idUser, activitiesCompleteList: activityCompleteList, listOfUsers: userController.readAllUsersOfGroup(idGroup: idGroup, reset: false))
         }
-        
         
         
     }
     
     func loadGroup(idGroup: String) async {
-        _ = await activityController.readActivitiesOfGroup(idGroup: idGroup)
         _ = await commentController.readAllCommitsOfGroup(idGroup: idGroup)
         _ = await reactionController.readAllReactionsOfAGroup(idGroup: idGroup)
     }
     
     func readPlusTenActivities(idGroup: String) async -> [ActivityCompleteModel]{
-            print("FALTA CODAR A REQUISIÇÃO DE MAIS 10 ATIVIDADES EM GeneralController/readPlusTenActivities")
+        print("FALTA CODAR A REQUISIÇÃO DE MAIS 10 ATIVIDADES EM GeneralController/readPlusTenActivities")
         return []
     }
     
@@ -135,37 +114,12 @@ class GeneralController: ObservableObject{
                 result = ActivityCompleteModel(owner: userOwner, usersOfthisActivity: users, groupsOfthisActivity: groups,images: images, activity: activity)
             }
         }
+        let reactions = reactionController.listOfReactions.filter{ $0.idActivity == activity.id}
+        result?.reactions = reactions
+        result?.numberOfReactions = reactions.count
+        if reactions.contains(where: {$0.idUser == userController.myUser?.id}){
+            result?.thisUserReacted = true
+        }
         return result
-    }
-    
-    func readActivitiesOfUser(idUser: Int) async{
-        
-    }
-    
-    private func saveActivityCompleteList(_ list : [ActivityCompleteModel]) {
-        do {
-            let data = try JSONEncoder().encode(list)
-            UserDefaults.standard.set(data, forKey: "main_list")
-        } catch {
-            print("Erro ao salvar o usuário: \(error)")
-        }
-    }
-    
-    private func loadActivityCompleteList() -> [ActivityCompleteModel]? {
-        guard let data = UserDefaults.standard.data(forKey: "main_list") else {
-            return nil
-        }
-        
-        do {
-            let user = try JSONDecoder().decode([ActivityCompleteModel].self, from: data)
-            return user
-        } catch {
-            print("Erro ao carregar o usuário: \(error)")
-            return nil
-        }
-    }
-    
-    private func deleteUser() {
-        UserDefaults.standard.removeObject(forKey: "main_list")
     }
 }

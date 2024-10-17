@@ -13,7 +13,7 @@ struct GroupsAndActivitiesModel : Hashable, Codable, Identifiable{
     var activitiesComplete : [ActivityCompleteModel] = []
 }
 
-struct ActivityCompleteModel : Hashable, Codable,Identifiable{
+struct ActivityCompleteModel : Hashable, Codable,Identifiable,Observable{
     var id = UUID()
     var owner : UserModel
     var usersOfthisActivity : [UserModel] = []
@@ -22,4 +22,6 @@ struct ActivityCompleteModel : Hashable, Codable,Identifiable{
     var reactions : [ReactionModel] = []
     var comments : [CommentModel] = []
     var activity : ActivityModel?
+    var numberOfReactions : Int = 0
+    var thisUserReacted : Bool = false
 }

@@ -51,6 +51,7 @@ struct UserViewCreate: View {
                     .disabled(name.count < 3)
                 }
             )],onTapBack: {})
+            .padding(.horizontal,24)
             //
             Spacer()
             
@@ -98,6 +99,8 @@ struct UserViewCreate: View {
         let user = UserModel(id: idApple, name: name, email: email, userimage: userimage)
         _ = await user.create()
         UserLocalSave().saveUser(user: user)
+        controller.userController.myUser = user
+        controller.userController.saveUser()
         ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
     }
 }

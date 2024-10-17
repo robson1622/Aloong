@@ -54,10 +54,7 @@ struct AddFriendActivityView: View {
             
             ScrollView{
                 ForEach(searchResults.indices, id: \.self){ index in
-                    if idOfThisUser == searchResults[index].id{
-                        
-                    }
-                    else{
+                    if idOfThisUser != searchResults[index].id{
                         HStack{
                             ImageLoader(url:searchResults[index].userimage)
                             Text(searchResults[index].name)
@@ -78,7 +75,7 @@ struct AddFriendActivityView: View {
                                 Image(systemName: listOfAdded.contains(searchResults[index].id) ? "circle.inset.filled" : "circle")
                                     .font(.title2)
                                     .bold()
-                                    .foregroundColor(listOfAdded.contains(searchResults[index].id) ? .purple : .branco)
+                                    .foregroundColor(listOfAdded.contains(searchResults[index].id) ? .purple : .preto)
                             }
                         }
                         .padding(.horizontal,16)

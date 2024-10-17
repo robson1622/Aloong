@@ -14,7 +14,6 @@ class ActivityImageController: ObservableObject{
     private let activityIdFieldName : String = "idActivity"
     
     func readAllActivityImagesOfActivity(idActivity : String?,reload : Bool = false) async -> [ActivityImageModel]{
-        print("FALTA FAZER SALVAR OS DOCUMENTOS LOCALMENTE NA VARIÁVEL shared - ActivityImageController/readAllActivityImagesOfActivity")
         if idActivity != nil{
             if(self.listOfActivityImages.isEmpty){
                 return await DatabaseInterface.shared.readDocuments(isEqualValue: idActivity!, table: .activityImage, field: activityIdFieldName)
@@ -34,7 +33,6 @@ class ActivityImageController: ObservableObject{
     }
     
     func readAllActivityImagesOfGroup(idGroup : String?,reload : Bool = false) async -> [ActivityImageModel]{
-        print("FALTA FAZER SALVAR OS DOCUMENTOS LOCALMENTE NA VARIÁVEL shared - ActivityImageController/readAllActivityImagesOfGroup")
         if idGroup == nil{ return [] }
         if(reload || !listOfActivityImages.isEmpty){
             listOfActivityImages.removeAll()
