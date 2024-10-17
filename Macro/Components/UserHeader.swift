@@ -8,20 +8,44 @@
 import SwiftUI
 
 struct UserHeader: View {
-    let model : UserModel
+    let owner : UserModel
+    let othersUsers : [UserModel]
     var subtitle : String?
-    var activieShare : Bool = false
-    let onTapShare : () -> Void
+    
+    let morePersonsText : String = NSLocalizedString("and more ", comment: "")
     var body: some View {
         HStack{
-            ImageLoader(url: model.userimage ?? "")
-                .frame(width: 44,height: 44)
-                .padding(.horizontal,8)
+            ZStack(alignment: .leading){
+                if othersUsers.count > 0{
+                    ForEach(0..<(othersUsers.count > 3 ? 3 : othersUsers.count)){ index in
+                        if index < othersUsers.count{
+                            ImageLoader(url: othersUsers[index].userimage ?? "")
+                                .frame(width: 44,height: 44)
+                                .padding(.leading,22 * CGFloat(index))
+                        }
+                    }
+                }
+                ImageLoader(url : owner.userimage,squere: false,largeImage: false)
+            }
+            
             VStack{
                 HStack{
-                    Text(model.name)
-                        .font(.title2)
-                        .foregroundColor(.preto)
+                    if othersUsers.count <= 3 && othersUsers.count > 0{
+                        ForEach(0..<othersUsers.count){ index in
+                            if index < othersUsers.count{
+                                Text("\(othersUsers[index].name)\(index == othersUsers.count - 1 ? "" : ", ")")
+                                    .font(.title2)
+                                    .foregroundColor(.preto)
+                            }
+                        }
+                    }
+                    else{
+                        
+                        Text("\(owner.name) \(othersUsers.count > 3 ? morePersonsText + "\(othersUsers.count)" : "")")
+                            .font(.title2)
+                            .foregroundColor(.preto)
+                    }
+                    
                     Spacer()
                 }
                 HStack{
@@ -34,21 +58,11 @@ struct UserHeader: View {
                 }
             }
             Spacer()
-            if activieShare{
-                Button(action:{
-                    onTapShare()
-                }){
-                    Image(systemName: "square.and.arrow.up")
-                        .font(.title2)
-                        .foregroundColor(.roxo3)
-                        .padding(.horizontal,10)
-                }
-            }
         }
     }
     
 }
 
 #Preview {
-    UserHeader(model: usermodelexemple,subtitle: "aaAaaaaAAA",onTapShare: {})
+    UserHeader(owner: usermodelexemple ,othersUsers : [usermodelexemple],subtitle: "aaAaaaaAAA")
 }

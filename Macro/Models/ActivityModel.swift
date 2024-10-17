@@ -90,7 +90,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
         var listOfRelationsUserCreated : [String] = []
         var idrelationsGroupCreated : String = ""
         var listOfActivityImageModel : [ActivityImageModel] = []
-        var listOfIdsImages : [String] = []
+        let listOfIdsImages : [String] = []
         if let idServer = DatabaseInterface.shared.create(model: self, table: .activity){
             idActivityCreated = idServer
             var new = self
@@ -152,6 +152,22 @@ struct ActivityModel : Codable, Hashable, Identifiable{
         }
     }
     
+    func addNewUserInActivity(idUser: String) async -> Bool?{
+        if let id = self.id{
+            var newRelation = ActivityUserModel(idUser: idUser, idActivity: id, state: statesOfActivityRelation.aloong)
+            if let idRelatio = DatabaseInterface.shared.create(model: newRelation, table: .activityUser){
+                newRelation.id = idRelatio
+                _ = await DatabaseInterface.shared.update(model: newRelation, id: idRelatio, table: .activityUser)
+                return true
+            }
+            else{
+                print("ERRO AO TENTAR CRIAR RELAÇÃO DE ATIVIDADE COM USUÁRIO EM ActivityModel/addNewUserInActivity")
+                return false
+            }
+        }
+        return nil
+    }
+    
     private func uploadImages(_ images : [UIImage], idServer : String) async -> [ActivityImageModel]{
         var relations : [ActivityImageModel] = []
         var imageNumber = 0
@@ -177,7 +193,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
             return await DatabaseInterface.shared.update(model: self, id: self.id!, table: .activity)
         }
         else{
-            print("ERRO AO CRIAR USUÁRIO - ActivityModel/update")
+            print("ERRO AO ATUALIZAR ATIVIDADE - ActivityModel/update")
         }
         return nil
     }

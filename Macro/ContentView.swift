@@ -46,11 +46,11 @@ struct ContentView: View {
                     GroupViewDetails(listOfPositions: listOfPoints,group:group).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                     //activity part
-                case .activity(let activity, let user, let listImagesString):
-                    ActivityView(activity: activity, user: user,imagesString : listImagesString).navigationBarBackButtonHidden(hide)
+                case .activity(let activity, let user,let otherUser,let group,let reactions, let listImagesString):
+                    ActivityView(activity: activity, user: user,otherUser: otherUser,group: group,reactions:reactions,imagesString : listImagesString).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
-                case .createActivity(let idUser, let idGroup):
-                    ActivityViewCreate(idUser: idUser,idGroup: idGroup).navigationBarBackButtonHidden(hide)
+                case .createActivity(let idUser, let idGroup,let activity):
+                    ActivityViewCreate(idUser: idUser,idGroup: idGroup,model :activity).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                     
                     
@@ -72,7 +72,7 @@ struct ContentView: View {
             }
             .onAppear {
                 if false{
-                    ViewsController.shared.navigateTo(to: .createActivity("", ""), reset: true)
+                    ViewsController.shared.navigateTo(to: .createActivity("", "",nil), reset: true)
                 }
                 else{
                     Task{

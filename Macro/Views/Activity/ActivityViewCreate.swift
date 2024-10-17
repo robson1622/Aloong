@@ -26,7 +26,6 @@ struct ActivityViewCreate: View {
     let idGroup : String
     @State var model : ActivityModel?
     
-    
     @State var listOfFriends : [UserModel] = []
     @State var listOfAdded : [String] = []
     
@@ -35,7 +34,7 @@ struct ActivityViewCreate: View {
     @State var date : Date = Date()
     @State var distanceString : String = ""
     @State var caloriesString : String = ""
-    @State var duration : Date = Date()
+    @State var duration : Date = Calendar.current.startOfDay(for: Date())
     @State var stepsString : String = ""
     
     @State var showPiker : [Bool] = [false,false,false]
@@ -49,12 +48,22 @@ struct ActivityViewCreate: View {
     let publish : String = NSLocalizedString("Publish", comment: "Botão de ação de publicar a atividade")
     let save: String = NSLocalizedString("Save changes", comment: "Botão de salvar modificações ao editar uma atividade")
     let today : String = NSLocalizedString("Today", comment: "Texto que fala Hoje na view de criar atividade")
+    let addDescriptionText : String = NSLocalizedString("Add a description", comment: "")
+    let addAnTitleText : String = NSLocalizedString("Add an title", comment: "")
+    let stepsText : String = NSLocalizedString("Steps", comment: "")
     var body: some View {
         NavigationView{
             VStack{
                 Header(title: "Activity",trailing: [AnyView(Button(action:{
                     if(model?.id == nil){
                         self.create()
+                    }
+                    else{
+                        Task{
+                            if let idGroup = model?.id{
+                                await self.update(idGroup: idGroup)
+                            }
+                        }
                     }
                 }){
                     if loadingState == .idle{
@@ -69,6 +78,7 @@ struct ActivityViewCreate: View {
                     }
                     
                 })],onTapBack: {})
+                
                 ScrollView{
                     header
                     informations
@@ -86,6 +96,27 @@ struct ActivityViewCreate: View {
                     listOfFriends = await controller.userController.readAllUsersOfGroup(idGroup: idGroup, reset: false)
                     images = controller.activityController.imagesForNewActivity
                     controller.activityController.imagesForNewActivity.removeAll()
+                }
+                if let activity = model{
+                    title = activity.title
+                    description = activity.description
+                    date = activity.date
+                    if let distance = activity.distance{
+                        distanceString = distance.description
+                    }
+                    if let durationModel = activity.duration{
+                        if let date = convertTimeIntervalToTodayDate(durationModel){
+                            duration = date
+                        }
+                    }
+                    if let steps = activity.steps?.description{
+                        stepsString = steps
+                    }
+                    if let index = controller.activityCompleteList.firstIndex(where: {$0.activity?.id == activity.id}){
+                        for user in controller.activityCompleteList[index].usersOfthisActivity{
+                            listOfAdded.append(user.id)
+                        }
+                    }
                 }
             }
             .sheet(isPresented:$showEditImageSheet){
@@ -162,36 +193,22 @@ struct ActivityViewCreate: View {
     }
     
     func create(){
-        loadingState = .loading
-        var friendsInActivityModel : [UserModel] = []
-        for friend in listOfFriends {
-            if listOfAdded.contains(friend.id){
-                friendsInActivityModel.append(friend)
-            }
-        }
-        Task{
-            self.insertInModel()
-            if listOfAdded.count > 0{
-                // cria a atividade em grupo
-                await model?.createForOneGroup(listOfOtherUsersIds: listOfAdded, myIdUser: idUser, idGroup: idGroup, listOfImages: images){ activity,images in
-                    if let activity = activity,let myUser = controller.userController.myUser, let group = controller.groupController.readMainGroupOfUser(){
-                        let activityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: myUser, usersOfthisActivity: friendsInActivityModel, groupsOfthisActivity: [group], images: images, reactions: [], comments: [], activity: activity)
-                        controller.activityController.activities.append(activity)
-                        DispatchQueue.main.sync{
-                            controller.activityCompleteList.append(activityComplete)
-                        }
-                        ViewsController.shared.back()
-                        loadingState = .done
-                    }
+        if model == nil{
+            loadingState = .loading
+            var friendsInActivityModel : [UserModel] = []
+            for friend in listOfFriends {
+                if listOfAdded.contains(friend.id){
+                    friendsInActivityModel.append(friend)
                 }
             }
-            else{
-                await model?.createForOneGroup(listOfOtherUsersIds: [], myIdUser: idUser, idGroup: idGroup, listOfImages: images){ activity,images in
-                    if let activity = activity{
-                        controller.activityController.activities.append(activity)
-                        
-                        if let myUser = controller.userController.myUser, let group = controller.groupController.readMainGroupOfUser(){
+            Task{
+                self.insertInModel()
+                if listOfAdded.count > 0{
+                    // cria a atividade em grupo
+                    await model?.createForOneGroup(listOfOtherUsersIds: listOfAdded, myIdUser: idUser, idGroup: idGroup, listOfImages: images){ activity,images in
+                        if let activity = activity,let myUser = controller.userController.myUser, let group = controller.groupController.readMainGroupOfUser(){
                             let activityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: myUser, usersOfthisActivity: friendsInActivityModel, groupsOfthisActivity: [group], images: images, reactions: [], comments: [], activity: activity)
+                            controller.activityController.activities.append(activity)
                             DispatchQueue.main.sync{
                                 controller.activityCompleteList.append(activityComplete)
                             }
@@ -200,13 +217,86 @@ struct ActivityViewCreate: View {
                         }
                     }
                 }
+                else{
+                    await model?.createForOneGroup(listOfOtherUsersIds: [], myIdUser: idUser, idGroup: idGroup, listOfImages: images){ activity,images in
+                        if let activity = activity{
+                            controller.activityController.activities.append(activity)
+                            
+                            if let myUser = controller.userController.myUser, let group = controller.groupController.readMainGroupOfUser(){
+                                let activityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: myUser, usersOfthisActivity: friendsInActivityModel, groupsOfthisActivity: [group], images: images, reactions: [], comments: [], activity: activity)
+                                DispatchQueue.main.sync{
+                                    controller.activityCompleteList.append(activityComplete)
+                                }
+                                ViewsController.shared.back()
+                                loadingState = .done
+                            }
+                        }
+                    }
+                }
             }
         }
     }
     
+    func update(idGroup : String) async{
+        loadingState = .loading
+        self.insertInModel()
+        if let index = controller.activityCompleteList.firstIndex(where: {$0.activity?.id == idGroup}){
+            // se houver usuários que foram removidos
+                // removemos relaçoes
+            if let idActivity = model?.id{
+                let listOfRelationsWithUser = await controller.activityUserController.readAllActivityUserOfActivity(idActivity: idActivity)
+                
+                for userIndex in (0..<controller.activityCompleteList[index].usersOfthisActivity.count).reversed() {
+                    // se o usuário já existia e ainda está lá
+                    let idUser = controller.activityCompleteList[index].usersOfthisActivity[userIndex].id
+                    if let indexRemove = listOfAdded.firstIndex(where: {$0 == idUser}){
+                        listOfAdded.remove(at: indexRemove)
+                    }
+                    
+                    else{
+                        // se o usuário foi removido
+                        if let indexToRemove = listOfRelationsWithUser.firstIndex(where: {$0.idUser == idUser}){
+                            let relation = listOfRelationsWithUser[indexToRemove]
+                            if let _ = await relation.delete(){
+                                print("RELAÇÃO REMOVIDA COM SUCESSO EM ActivityViewCreate/update")
+                            }
+                            controller.activityCompleteList[index].usersOfthisActivity.remove(at: userIndex)
+                        }
+                    }
+                }
+                // se houver usuários que foram adicionados
+                let users = await controller.userController.readAllUsersOfGroup(idGroup: self.idGroup,reset: false)
+                for idUser in self.listOfAdded{
+                    if let _ = await model?.addNewUserInActivity(idUser: idUser){
+                        if let indexUserForJoin = users.firstIndex(where: {$0.id == idUser}){
+                            controller.activityCompleteList[index].usersOfthisActivity.append(users[indexUserForJoin])
+                        }
+                    }
+                }
+            }
+            // salva a nova atividade
+            if let _ = await model?.update(){
+                print("ATIVIDADE ATUALIZADA COM SUCESSO EM ActivityViewCreate/update")
+                ViewsController.shared.back()
+                ViewsController.shared.back()
+                if let group = controller.groupController.readMainGroupOfUser(){
+                    let completeActivity = controller.activityCompleteList[index]
+                    if let group = completeActivity.groupsOfthisActivity.first , let activity = model{
+                        ViewsController.shared.navigateTo(to: .activity(activity , completeActivity.owner, completeActivity.usersOfthisActivity, group, completeActivity.reactions, completeActivity.images))
+                        controller.activityCompleteList[index].activity = activity
+                    }
+                    
+                }
+            }
+            loadingState = .done
+        }
+        
+    }
+    
     private func insertInModel(){
         let durationInSeconds = timeIntervalFromDate(duration)
-        model = ActivityModel(title: title, description: description, date: date, distance: Float(distanceString), calories: Float(caloriesString), duration: durationInSeconds, steps: Float(stepsString))
+        let id : String? = model?.id ?? nil
+        model = ActivityModel(id:id,title: title, description: description, date: date, distance: Float(distanceString), calories: Float(caloriesString), duration: durationInSeconds, steps: Float(stepsString))
         
     }
 }

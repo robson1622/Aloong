@@ -111,6 +111,10 @@ struct OnboardSignInView: View {
         }
     }
     
+    let itsWeText : String = NSLocalizedString("ItsWe", comment: "")
+    let letsDoItText : String = NSLocalizedString("ItsWe", comment: "")
+    let yeh : String = NSLocalizedString("ItsWe", comment: "")
+    
     var first : some View{
         VStack{
             ZStack {

@@ -24,8 +24,8 @@ class ViewsController : ObservableObject{
         case decisionCreateOrAloong
         case groupDetails([PointsOfUser],GroupModel)
         //atividade
-        case createActivity(String,String)
-        case activity(ActivityModel,UserModel,[String])
+        case createActivity(String,String,ActivityModel?)
+        case activity(ActivityModel,UserModel,[UserModel],GroupModel,[ReactionModel],[String])
         //geral
         case onboardingSignIn
         case camera

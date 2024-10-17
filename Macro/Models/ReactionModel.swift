@@ -14,11 +14,12 @@ struct ReactionModel : Codable, Hashable{
     var idActivity : String?
     var idComment : String?
     
-    func create()async -> Bool?{
+    func create()async -> ReactionModel?{
         if let idServer = DatabaseInterface.shared.create(model: self, table: .reaction){
             var new = self
             new.id = idServer
-            return await new.update()
+            _ = await new.update()
+            return new
         }
         return nil
     }

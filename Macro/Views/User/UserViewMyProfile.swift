@@ -37,6 +37,7 @@ struct UserViewMyProfile: View {
                             .foregroundColor(.roxo3)
                     }
                 )],onTapBack: {})
+                .padding(.top,56)
                 VStack (alignment: .center, spacing:16){
                     ZStack {
                         Rectangle()
@@ -211,10 +212,9 @@ struct UserViewMyProfile: View {
                 }
             Spacer()
             }
-            .padding(.vertical, 18)
         }
-        .padding(24)
-        .padding(.vertical,18)
+        .ignoresSafeArea()
+        .padding(.horizontal,24)
         .frame(width: 390, height: 844)
         .background(.branco)
         .onAppear{

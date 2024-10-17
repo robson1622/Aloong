@@ -33,7 +33,6 @@ struct UserModel:  Codable, Hashable{
             let activitiesRelations = await ActivityUserController.shared.readAllActivityUserOfUser(idUser: self.id)
             let groupsRelaction = await GroupController.shared.readAllGroupsOfUser()
             let comments = await CommentController.shared.readAllCommitsOfUser(idUser: self.id)
-            let reactions = await ReactionController.shared.readAllReactionsOfAUser(idUser: self.id)
             // se le for dono em alguma, verifica se existem outros usuários referenciados nessa atividade
             // se houver, então passe o dono para um outro usuário
             // se não houver, apaga a atividade e em seguida a relação

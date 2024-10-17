@@ -12,8 +12,12 @@ struct ActivityView: View {
     @State var userOwner : Bool = false
     let activity : ActivityModel
     let user : UserModel
+    let otherUser : [UserModel]
+    let group : GroupModel
+    @State var reactions : [ReactionModel]
     let imagesString : [String]
-    @State var numberOfAloongs : Int = 12
+    
+    @State var numberOfAloongs : Int = 0
     @State var aloongActive : Bool = false
     @State var atualTab : Int = 0
     
@@ -24,6 +28,16 @@ struct ActivityView: View {
                 VStack{
                     if(userOwner){
                         Button(action:{
+                            if let idGroup = group.id{
+                                for image in imagesString{
+                                    BucketOfImages.shared.download(from: image){ uiimage in
+                                        if let uiimage = uiimage{
+                                            controller.activityController.imagesForNewActivity.append(uiimage)
+                                        }
+                                    }
+                                }
+                                ViewsController.shared.navigateTo(to: .createActivity(user.id, idGroup, activity))
+                            }
                             
                         }){
                             Text(edit)
@@ -33,11 +47,12 @@ struct ActivityView: View {
                     }
                 }
             )],onTapBack: {
-                for image in imagesString{
-                    BucketOfImages.shared.removeImageOfRAM(url: image)
+                for index in 1..<imagesString.count{
+                    BucketOfImages.shared.removeImageOfRAM(url: imagesString[index])
                 }
             })
-            UserHeader(model: user, subtitle: dateToLocalizedString( activity.date), activieShare: false, onTapShare: {})
+            .padding(.top,56)
+            UserHeader(owner: user,othersUsers: otherUser, subtitle: dateToLocalizedString( activity.date))
             ZStack{
                 TabView {
                     ForEach(imagesString.indices, id: \.self) { i in
@@ -97,13 +112,21 @@ struct ActivityView: View {
                 Spacer()
             }
             HStack{
-                //AloongComponent(marcador: $numberOfAloongs, active: $aloongActive)
+                if let indexAct = controller.activityCompleteList.firstIndex(where: {$0.activity?.id == activity.id}){
+                    AloongComponent(group: group, user: user, activity: activity,reactions:$controller.activityCompleteList[indexAct].reactions, numberOfReactions: $controller.activityCompleteList[indexAct].numberOfReactions, isActive: $controller.activityCompleteList[indexAct].thisUserReacted,cardMode: false)
+                        .environmentObject(controller)
+                }
+                
                 Spacer()
             }
             Spacer()
         }
-        .padding(24)
+        .padding(.horizontal,24)
         .onAppear{
+            if let idMyUser = controller.userController.myUser?.id{
+                userOwner = idMyUser == user.id
+            }
+            numberOfAloongs = reactions.count
         }
         .refreshable {
             
@@ -133,5 +156,5 @@ struct ActivityView: View {
 }
 
 #Preview {
-    ActivityView(activity: activityexemple, user: usermodelexemple5,imagesString: [])
+    ActivityView(activity: activityexemple, user: usermodelexemple5,otherUser: [],group: exempleGroup, reactions: [], imagesString: [])
 }

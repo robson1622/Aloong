@@ -17,17 +17,21 @@ struct GroupViewDetails: View {
     @State private var showShare = false
     @State private var totalDays : Int = 0
     @State private var lastDays : Int = 0
+    @State private var sucessoncopy : Bool = false
     
     let inviteFrindText : String = NSLocalizedString("Invite friends", comment: "Texto do botão de convidar amigo")
     let leftDays : String = NSLocalizedString("Left days", comment: "Marcador de dias que faltam")
     let ranking : String = NSLocalizedString("RANKING", comment: "Texto do titulo da view de details que mostra a classificação")
     let detailsOfGroupText : String = NSLocalizedString("Details of group", comment: "Texto do titulo da view de details que mostra os detalhes do grupo")
     let daysLeft : String = NSLocalizedString("Days left", comment: "texto da contagem de dias restantes")
+    let copyCode : String = NSLocalizedString("Copy code", comment: "texto do botão de copiar o código")
+    let sucessText : String = NSLocalizedString("Sucess on copy", comment: "Texto que informa que o texto foi copiado com sucesso")
     var body: some View {
         
         ZStack (alignment: .center){
             VStack(spacing: 36){
                 Header(title: detailsOfGroupText,onTapBack: {} )
+                    .padding(.top,56)
                 VStack(spacing: 10){
                     HStack(alignment: .center) {//seu desafio
                         Text(group.title)
@@ -79,31 +83,66 @@ struct GroupViewDetails: View {
                     .cornerRadius(8)
                     .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8)
                 }
-                
-                Button(action:{
-                    showShare.toggle()
-                }){
-                    HStack{
-                        Image(systemName: "square.and.arrow.up")
-                            .font(.body)
-                            .foregroundColor(colorScheme == .dark ? .black : .white)
-                        
-                        Text(inviteFrindText)
-                            .font(.body)
-                            .foregroundColor(colorScheme == .dark ? .black : .white)
+                HStack{
+                    Button(action:{
+                        showShare.toggle()
+                    }){
+                        HStack{
+                            Image(systemName: "square.and.arrow.up")
+                                .font(.body)
+                                .foregroundColor(colorScheme == .dark ? .black : .white)
+                            
+                            Text(inviteFrindText)
+                                .font(.body)
+                                .foregroundColor(colorScheme == .dark ? .black : .white)
+                        }
+                        .padding(.horizontal,20)
+                        .padding(.vertical,14)
+                        .background(Color(.roxo3))
+                        .cornerRadius(12)
+                        .padding(.top,35)
                     }
-                    .padding(.horizontal,20)
-                    .padding(.vertical,14)
-                    .background(Color(.roxo3))
-                    .cornerRadius(12)
-                    .padding(.top,35)
+                    
+                    Button(action:{
+                        UIPasteboard.general.string = group.invitationCode
+                        sucessoncopy = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            sucessoncopy = false
+                        }
+                    }){
+                        HStack{
+                            Image(systemName: "document.on.document")
+                                .font(.body)
+                                .foregroundColor(colorScheme == .dark ? .black : .white)
+                            
+                            Text("\(copyCode)")
+                                .font(.body)
+                                .foregroundColor(colorScheme == .dark ? .black : .white)
+                            
+                        }
+                        .padding(.horizontal,20)
+                        .padding(.vertical,14)
+                        .background(Color(.roxo3))
+                        .cornerRadius(12)
+                        .padding(.top,35)
+                    }
                 }
                 Spacer()
+                if sucessoncopy{
+                    Text(sucessText)
+                        .foregroundStyle(Color(.roxo3))
+                        .font(.callout)
+                        .italic()
+                        .padding(8)
+                        .background(Color(.roxo))
+                        .cornerRadius(10)
+                        .padding(.bottom,35)
+                }
+                
             }
-            .padding(.vertical, 18)
         }
-        .padding(24)
-        .padding(.vertical,18)
+        .ignoresSafeArea()
+        .padding(.horizontal,24)
         .frame(width: 390, height: 844)
         .background(.branco)
         .onAppear{

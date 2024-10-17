@@ -22,14 +22,13 @@ struct GroupView: View {
     @State var liderImage : UIImage?
     @State var youImage : UIImage?
     @State var you : PointsOfUser?
-    @State var listActivities : [ActivityCompleteModel] = []
     
     let youCgallenge : String = NSLocalizedString("Your challenger", comment: "Caso não haja nome no grupo, este nome será mostrado")
     let liderText : String = NSLocalizedString("Líder", comment: "Titulo da view de grupo que denota o lider")
     let youText : String = NSLocalizedString("You", comment: "Titulo da view de grupo que denota o lider")
     let daysLeft : String = NSLocalizedString("Days left", comment: "texto da contagem de dias restantes")
     let withoutActivityText : String = NSLocalizedString("Oops, \n there's nothing here yet...", comment: "Texto que fala que não há atividadesainda")
-    
+    let todayText : String = NSLocalizedString("Today", comment: "")
     var body: some View {
         ZStack (alignment: .center){//fundo
             ScrollView{
@@ -40,13 +39,21 @@ struct GroupView: View {
                             if let pointsList = controller.statisticController.listOfPositionUser{
                                 ViewsController.shared.navigateTo(to: .groupDetails(pointsList, model))
                             }
+                            else if let id = model.id{
+                                Task{
+                                    await controller.loadAllLists(idGroup: id)
+                                    if let pointsList = controller.statisticController.listOfPositionUser{
+                                        ViewsController.shared.navigateTo(to: .groupDetails(pointsList, model))
+                                    }
+                                }
+                            }
                         }){
                             GroupScoreBoardView(model: model, lider: lider, you: you)
                         }
                     }
                     
-                    if !listActivities.isEmpty{
-                        ActivitiesList(listOfActivitiesComplete: listActivities)
+                    if !controller.activityCompleteList.isEmpty{
+                        listOfActivities
                     }
                     else{
                         Text(withoutActivityText)
@@ -103,7 +110,7 @@ struct GroupView: View {
                 controller.activityController.imagesForNewActivity.removeAll()
                 controller.activityController.imagesForNewActivity.append(image!)
                 if let idUser = controller.userController.myUser?.id, let idGroup = model.id{
-                    ViewsController.shared.navigateTo(to: .createActivity(idUser,idGroup))
+                    ViewsController.shared.navigateTo(to: .createActivity(idUser,idGroup,nil))
                 }
             }
         }
@@ -121,7 +128,7 @@ struct GroupView: View {
                 if reload{
                     await self.controller.loadAllLists(idGroup: id)
                 }
-                self.listActivities = controller.activityCompleteList
+                self.controller.activityCompleteList = controller.activityCompleteList
                 you = controller.statisticController.you ?? PointsOfUser(user: usermodelexemple, points: 0)
                 lider = controller.statisticController.lider ?? you
                 if let userImageUrl = controller.userController.myUser?.userimage{
@@ -135,8 +142,8 @@ struct GroupView: View {
                     }
                 }
             }
-        }
         
+        }
     }
     
 }
@@ -172,7 +179,7 @@ struct CameraButton : View{
                         if !pickerPhoto.images.isEmpty {
                             onPhotosAdded()
                             controller.activityController.imagesForNewActivity = pickerPhoto.images
-                            ViewsController.shared.navigateTo(to: .createActivity(idUser,idGroup))
+                            ViewsController.shared.navigateTo(to: .createActivity(idUser,idGroup,nil))
                         }
                     }
                 }

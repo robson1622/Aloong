@@ -114,37 +114,12 @@ class GeneralController: ObservableObject{
                 result = ActivityCompleteModel(owner: userOwner, usersOfthisActivity: users, groupsOfthisActivity: groups,images: images, activity: activity)
             }
         }
+        let reactions = reactionController.listOfReactions.filter{ $0.idActivity == activity.id}
+        result?.reactions = reactions
+        result?.numberOfReactions = reactions.count
+        if reactions.contains(where: {$0.idUser == userController.myUser?.id}){
+            result?.thisUserReacted = true
+        }
         return result
-    }
-    
-    func readActivitiesOfUser(idUser: Int) async{
-        
-    }
-    
-    private func saveActivityCompleteList(_ list : [ActivityCompleteModel]) {
-        do {
-            let data = try JSONEncoder().encode(list)
-            UserDefaults.standard.set(data, forKey: "main_list")
-        } catch {
-            print("Erro ao salvar o usuário: \(error)")
-        }
-    }
-    
-    private func loadActivityCompleteList() -> [ActivityCompleteModel]? {
-        guard let data = UserDefaults.standard.data(forKey: "main_list") else {
-            return nil
-        }
-        
-        do {
-            let user = try JSONDecoder().decode([ActivityCompleteModel].self, from: data)
-            return user
-        } catch {
-            print("Erro ao carregar o usuário: \(error)")
-            return nil
-        }
-    }
-    
-    private func deleteUser() {
-        UserDefaults.standard.removeObject(forKey: "main_list")
     }
 }

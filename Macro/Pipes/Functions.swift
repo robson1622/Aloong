@@ -23,6 +23,15 @@ func differenceInDays(start: Date?, end : Date?) -> Int{
     return Calendar.current.dateComponents([.day], from: start!, to: end!).day ?? 0
 }
 
+func convertTimeIntervalToTodayDate(_ timeInterval: TimeInterval) -> Date? {
+    let calendar = Calendar.current
+    // Pega a data de hoje às 00:00 (início do dia)
+    let startOfDay = calendar.startOfDay(for: Date())
+    // Adiciona o timeInterval à data de hoje
+    let newDate = startOfDay.addingTimeInterval(timeInterval)
+    return newDate
+}
+
 func timeIntervalForString(_ interval : TimeInterval) -> String{
     // Converter o TimeInterval para horas, minutos e segundos
     let hours = Int(interval) / 3600

@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension ActivityViewCreate {
-    
     var header: some View{
         VStack{
             HStack(alignment: .top){
@@ -23,6 +22,7 @@ extension ActivityViewCreate {
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 115, height: 144)
                                 .clipped()
+                                .cornerRadius(3)
                         }
                     }
                 }
@@ -34,7 +34,7 @@ extension ActivityViewCreate {
                         pinFocusState = .title
                         especialKeyboard = false
                     }){
-                        TextField("Adicione um Titulo...", text: $title)
+                        TextField(addAnTitleText, text: $title)
                             .lineLimit(2)
                             .font(.title2)
                             .foregroundColor(pinFocusState == .title ? .roxo3 : .preto)
@@ -57,9 +57,9 @@ extension ActivityViewCreate {
                                 .cornerRadius(8)
                                 .multilineTextAlignment(.leading)
                             if description.isEmpty {
-                                Text("Escreva uma legenda...")
+                                Text(addDescriptionText)
                                     .font(.callout)
-                                    .foregroundColor(pinFocusState == .description ? .roxo3 : .preto)
+                                    .foregroundColor(pinFocusState == .description ? .roxo3.opacity(0.5) : Color(.systemGray4))
                                     .padding(.top,8)
                                     .padding(.leading,5)
                             }
@@ -207,36 +207,9 @@ extension ActivityViewCreate {
                             .foregroundColor(pinFocusState == .steps ? .roxo3 : .preto)
                             .multilineTextAlignment(.trailing)
                             .focused($pinFocusState,equals: .steps)
-                        Text("K")
+                        Text("K \(stepsText)")
                             .font(.callout)
                             .foregroundColor(pinFocusState == .steps ? .roxo3 : .preto)
-                    }
-                }
-                Divider()
-                    .padding(.vertical,4)
-                Button(action:{
-                    pinFocusState = .calories
-                    pinCounter = 7
-                    especialKeyboard = false
-                }){
-                    HStack{
-                        Text(ActivityModelNames.calories)
-                            .font(.callout)
-                            .foregroundColor(pinFocusState == .calories ? .roxo3 : .preto)
-                        Spacer()
-                        Image(systemName: getNameOfSymbol(.calories))
-                            .font(.callout)
-                            .foregroundColor(.preto)
-                        TextField("--", text: $caloriesString)
-                            .font(.callout)
-                            .keyboardType(.decimalPad)
-                            .frame(width: 15 + (8 * CGFloat(caloriesString.count)))
-                            .foregroundColor(pinFocusState == .calories ? .roxo3 : .preto)
-                            .multilineTextAlignment(.trailing)
-                            .focused($pinFocusState,equals: .calories)
-                        Text("CAL")
-                            .font(.callout)
-                            .foregroundColor(pinFocusState == .calories ? .roxo3 : .preto)
                     }
                 }
                 

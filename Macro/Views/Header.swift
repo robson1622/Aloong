@@ -52,7 +52,7 @@ struct Header: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(16)
+            .padding(.vertical,16)
         }
     }
 }

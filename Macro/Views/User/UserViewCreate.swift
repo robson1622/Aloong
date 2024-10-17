@@ -51,6 +51,7 @@ struct UserViewCreate: View {
                     .disabled(name.count < 3)
                 }
             )],onTapBack: {})
+            .padding(.horizontal,24)
             //
             Spacer()
             

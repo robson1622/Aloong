@@ -7,6 +7,9 @@
     "--" : {
 
     },
+    "%@" : {
+
+    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -33,6 +36,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@: %2$@"
+          }
+        }
+      }
+    },
+    "%@%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@%2$@"
           }
         }
       }
@@ -82,6 +95,12 @@
     "Activities" : {
       "comment" : "Titulo do botão que leva para a view de atividades"
     },
+    "Add a description" : {
+
+    },
+    "Add an title" : {
+
+    },
     "Add new friend" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -108,7 +127,7 @@
     "Add plus image" : {
 
     },
-    "Adicione um Titulo..." : {
+    "and more " : {
 
     },
     "back" : {
@@ -150,9 +169,6 @@
     "Cal" : {
 
     },
-    "CAL" : {
-
-    },
     "Calories" : {
 
     },
@@ -187,6 +203,9 @@
     },
     "Competir nunca foi tão fácil!" : {
 
+    },
+    "Copy code" : {
+      "comment" : "texto do botão de copiar o código"
     },
     "Create" : {
       "comment" : "Create button text"
@@ -313,9 +332,6 @@
     "Enter your name" : {
 
     },
-    "Escreva uma legenda..." : {
-
-    },
     "Final date" : {
       "comment" : "texto que fala a data de fim do desafio"
     },
@@ -354,7 +370,10 @@
     "Invite friends" : {
       "comment" : "Texto do botão de convidar amigo"
     },
-    "K" : {
+    "ItsWe" : {
+
+    },
+    "K %@" : {
 
     },
     "K Steps" : {
@@ -532,6 +551,9 @@
     },
     "Steps" : {
 
+    },
+    "Sucess on copy" : {
+      "comment" : "Texto que informa que o texto foi copiado com sucesso"
     },
     "Tell us more" : {
       "comment" : "Botão de prosseguir com a criação do perfil"
