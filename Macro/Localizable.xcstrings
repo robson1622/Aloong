@@ -397,6 +397,9 @@
     "Líder" : {
       "comment" : "Titulo da view de grupo que denota o lider"
     },
+    "Loading..." : {
+      "comment" : "Texto que aparece enquanto a view está carregando"
+    },
     "Logue suas atividades diárias e desafie seus amigos!" : {
 
     },

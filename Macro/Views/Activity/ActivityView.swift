@@ -47,8 +47,10 @@ struct ActivityView: View {
                     }
                 }
             )],onTapBack: {
-                for index in 1..<imagesString.count{
-                    BucketOfImages.shared.removeImageOfRAM(url: imagesString[index])
+                if imagesString.count > 1{
+                    for index in 1..<imagesString.count{
+                        BucketOfImages.shared.removeImageOfRAM(url: imagesString[index])
+                    }
                 }
             })
             .padding(.top,56)
