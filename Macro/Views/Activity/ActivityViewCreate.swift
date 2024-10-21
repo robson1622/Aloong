@@ -12,10 +12,10 @@ struct ActivityViewCreate: View {
     @State var loadingState : LoadingStates = .idle
     
     enum FocusPin {
-        case  title,description,date,people,duration,distance,steps,calories
+        case  title,description,date,people,duration,distance,steps
     }
     
-    let focusPinList = [FocusPin.title,FocusPin.description,FocusPin.date,FocusPin.people,FocusPin.duration,FocusPin.distance,FocusPin.steps,FocusPin.calories]
+    let focusPinList = [FocusPin.title,FocusPin.description,FocusPin.date,FocusPin.people,FocusPin.duration,FocusPin.distance,FocusPin.steps]
     @State var pinCounter : Int = 0
     @FocusState var pinFocusState : FocusPin?
     @State var especialKeyboard : Bool = false
@@ -168,7 +168,7 @@ struct ActivityViewCreate: View {
                 else{ especialKeyboard = false}
                 pinFocusState = focusPinList[pinCounter]
             })
-            OkButton(active: pinFocusState != .calories,text: "Next", onTap: {
+            OkButton(active: pinFocusState != .steps,text: "Next", onTap: {
                 pinCounter += 1
                 if pinCounter >= 2 && pinCounter <= 4{
                     self.hideKeyboard()

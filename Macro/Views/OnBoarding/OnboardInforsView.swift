@@ -16,6 +16,7 @@ struct OnboardSignInView: View {
     
     let firstText : String = NSLocalizedString("Logue suas atividades diárias e desafie seus amigos!", comment: "")
     let secondText : String = NSLocalizedString("Competir nunca foi tão fácil!", comment: "")
+    let testVersion : Bool = true
     var body: some View {
         
         ZStack {
@@ -94,6 +95,19 @@ struct OnboardSignInView: View {
                                         }
                                     } catch {
                                         print("ERRO AO TENTAR SIGNIN NO FIREBASE EM OnboardSignInView \n\(error.localizedDescription)")
+                                        if testVersion{
+                                            let idApple = appleIDCredential.user
+                                            if let user: UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user) {
+                                                controller.userController.myUser = user
+                                                controller.userController.saveUser()
+                                                if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
+                                                    ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
+                                                }
+                                            } else {
+                                                // Se o usuário não existir, redirecionar para a tela de criação de conta
+                                                ViewsController.shared.navigateTo(to: .createUser(idApple, name, email), reset: true)
+                                            }
+                                        }
                                     }
                                 }
                             }
