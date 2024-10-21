@@ -5,10 +5,24 @@
 
     },
     "--" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "--"
+          }
+        }
+      }
     },
     "%@" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%@ %@" : {
       "localizations" : {
@@ -16,6 +30,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ %2$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@%2$@"
           }
         }
       }
@@ -27,6 +47,12 @@
             "state" : "new",
             "value" : "%1$@, %2$@"
           }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@"
+          }
         }
       }
     },
@@ -36,6 +62,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@: %2$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
           }
         }
       }
@@ -47,11 +79,24 @@
             "state" : "new",
             "value" : "%1$@%2$@"
           }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@%@"
+          }
         }
       }
     },
     "%lld" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "%lld / %lld" : {
       "localizations" : {
@@ -59,6 +104,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$lld / %2$lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld / %lld"
           }
         }
       }
@@ -70,6 +121,12 @@
             "state" : "new",
             "value" : "%1$lld %2$@"
           }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %@"
+          }
         }
       }
     },
@@ -80,26 +137,76 @@
             "state" : "new",
             "value" : "%1$lldº   %2$@"
           }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldº   %@"
+          }
         }
       }
     },
     "1.2km" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1.2Km"
+          }
+        }
+      }
     },
     "2.2K steps" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2.2K passos"
+          }
+        }
+      }
     },
     "Active days" : {
-      "comment" : "Texto que descreve os dias ativos da pessoa no seu perfil"
+      "comment" : "Texto que descreve os dias ativos da pessoa no seu perfil",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dias ativos"
+          }
+        }
+      }
     },
     "Activities" : {
-      "comment" : "Titulo do botão que leva para a view de atividades"
+      "comment" : "Titulo do botão que leva para a view de atividades",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atividades"
+          }
+        }
+      }
     },
     "Add a description" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar descrição"
+          }
+        }
+      }
     },
     "Add an title" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar titulo"
+          }
+        }
+      }
     },
     "Add new friend" : {
       "extractionState" : "manual",
@@ -125,10 +232,24 @@
       }
     },
     "Add plus image" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicione amigos"
+          }
+        }
+      }
     },
     "and more " : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e mais"
+          }
+        }
+      }
     },
     "back" : {
       "localizations" : {
@@ -147,7 +268,15 @@
       }
     },
     "Back" : {
-      "comment" : " texto do botão de voltar na barra do teclado "
+      "comment" : " texto do botão de voltar na barra do teclado ",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "voltar"
+          }
+        }
+      }
     },
     "Birth date" : {
       "extractionState" : "manual",
@@ -167,10 +296,24 @@
       }
     },
     "Cal" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cal"
+          }
+        }
+      }
     },
     "Calories" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calorias"
+          }
+        }
+      }
     },
     "Cancel" : {
       "comment" : "texto de cancelamento da ação",
@@ -190,77 +333,143 @@
       }
     },
     "Challenge not found" : {
-      "comment" : "Mensagem de erro ao não encontrar desafio"
-    },
-    "Choose the name, description and duration of the challenge" : {
-      "comment" : "Texto de descrição da criação do desafio"
-    },
-    "Click here" : {
-      "comment" : "Texto do botão para entrar em um grupo com o código"
-    },
-    "Click me!" : {
-
-    },
-    "Competir nunca foi tão fácil!" : {
-
-    },
-    "Copy code" : {
-      "comment" : "texto do botão de copiar o código"
-    },
-    "Create" : {
-      "comment" : "Create button text"
-    },
-    "Create a challenge" : {
-      "comment" : "Texto do botão para criar um novo desafio no onboarding"
-    },
-    "Create User" : {
-      "extractionState" : "stale",
+      "comment" : "Mensagem de erro ao não encontrar desafio",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create User"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Criar conta"
+            "value" : "Desafio não encontrado"
           }
         }
       }
     },
-    "Data selecionada: %@" : {
-      "extractionState" : "stale",
+    "Choose the name, description and duration of the challenge" : {
+      "comment" : "Texto de descrição da criação do desafio",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Selected date"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Data selecionada"
+            "value" : "Escolha o nome, descrição e duração do desafio"
+          }
+        }
+      }
+    },
+    "Click here" : {
+      "comment" : "Texto do botão para entrar em um grupo com o código",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clique aquí"
+          }
+        }
+      }
+    },
+    "Click me!" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clique aquí"
+          }
+        }
+      }
+    },
+    "Competir nunca foi tão fácil!" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Competir nunca foi tão fácil"
+          }
+        }
+      }
+    },
+    "Copy code" : {
+      "comment" : "texto do botão de copiar o código",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar código"
+          }
+        }
+      }
+    },
+    "Create" : {
+      "comment" : "Create button text",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar"
+          }
+        }
+      }
+    },
+    "Create a challenge" : {
+      "comment" : "Texto do botão para criar um novo desafio no onboarding",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar desafio"
           }
         }
       }
     },
     "Date" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data"
+          }
+        }
+      }
     },
     "days" : {
-      "comment" : "texto da unidade de medida da duação do desafio"
+      "comment" : "texto da unidade de medida da duação do desafio",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dias"
+          }
+        }
+      }
     },
     "Days left" : {
-      "comment" : "texto da contagem de dias restantes"
+      "comment" : "texto da contagem de dias restantes",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dias restantes"
+          }
+        }
+      }
     },
     "Delete" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apagar"
+          }
+        }
+      }
     },
     "Delete account" : {
-      "comment" : "texto do botão de deletar conta"
+      "comment" : "texto do botão de deletar conta",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apagar conta"
+          }
+        }
+      }
     },
     "Delete accout" : {
       "extractionState" : "manual",
@@ -280,34 +489,109 @@
       }
     },
     "Descrição" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descrição"
+          }
+        }
+      }
     },
     "Descriptio" : {
-      "comment" : "Nome do desafio placeholder"
+      "comment" : "Nome do desafio placeholder",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descrição"
+          }
+        }
+      }
     },
     "Description" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descrição"
+          }
+        }
+      }
     },
     "DESCRIPTION" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DESCRIÇÃO"
+          }
+        }
+      }
     },
     "Details of group" : {
-      "comment" : "Texto do titulo da view de details que mostra os detalhes do grupo"
+      "comment" : "Texto do titulo da view de details que mostra os detalhes do grupo",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalhes do desafio"
+          }
+        }
+      }
     },
     "Distance" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distância"
+          }
+        }
+      }
     },
     "Do you have a code?" : {
-      "comment" : "Texto que questiona se a pessoa tem um código"
+      "comment" : "Texto que questiona se a pessoa tem um código",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você tem um código"
+          }
+        }
+      }
     },
     "Duração" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duração"
+          }
+        }
+      }
     },
     "Duration" : {
-      "comment" : "Nome do desafio placeholder"
+      "comment" : "Nome do desafio placeholder",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duração"
+          }
+        }
+      }
     },
     "Edit" : {
-      "comment" : "Texto do botão para editar a atividade"
+      "comment" : "Texto do botão para editar a atividade",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar"
+          }
+        }
+      }
     },
     "Email" : {
       "extractionState" : "manual",
@@ -327,13 +611,35 @@
       }
     },
     "End date" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data final"
+          }
+        }
+      }
     },
     "Enter your name" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digite seu nome"
+          }
+        }
+      }
     },
     "Final date" : {
-      "comment" : "texto que fala a data de fim do desafio"
+      "comment" : "texto que fala a data de fim do desafio",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data final"
+          }
+        }
+      }
     },
     "First step" : {
       "extractionState" : "manual",
@@ -353,58 +659,195 @@
       }
     },
     "Get out" : {
-      "comment" : "Texto do botão de sair da conta"
+      "comment" : "Texto do botão de sair da conta",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sair"
+          }
+        }
+      }
     },
     "Hello, World!" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Olá mundo"
+          }
+        }
+      }
     },
     "INFORMATIONS" : {
-      "comment" : "Texto do titulo da lista de informações das atividades"
+      "comment" : "Texto do titulo da lista de informações das atividades",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IFORMAÇÕES"
+          }
+        }
+      }
     },
     "Insert the code sent by your friend here" : {
-      "comment" : "Texto da tela de inserção do código, headline"
+      "comment" : "Texto da tela de inserção do código, headline",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insira o código que seu amigo enviou aquí"
+          }
+        }
+      }
     },
     "Intensity" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intensidade"
+          }
+        }
+      }
     },
     "Invite friends" : {
-      "comment" : "Texto do botão de convidar amigo"
+      "comment" : "Texto do botão de convidar amigo",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convidar amigos"
+          }
+        }
+      }
     },
     "ItsWe" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "é nóis"
+          }
+        }
+      }
     },
     "K %@" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "K %@"
+          }
+        }
+      }
     },
     "K Steps" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "K passos"
+          }
+        }
+      }
     },
     "KM" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KM"
+          }
+        }
+      }
     },
     "Left days" : {
-      "comment" : "Marcador de dias que faltam"
+      "comment" : "Marcador de dias que faltam",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dias restantes"
+          }
+        }
+      }
     },
     "Let's get to the challenge" : {
-      "comment" : "Texto que explica o que fazer na view de escolha entre criar um grupo e entrar em um"
+      "comment" : "Texto que explica o que fazer na view de escolha entre criar um grupo e entrar em um",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vamos começar o desafio !"
+          }
+        }
+      }
     },
     "Let's go " : {
-      "comment" : "Texto do botão de criar grupo"
+      "comment" : "Texto do botão de criar grupo",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vamos lá"
+          }
+        }
+      }
     },
     "Let's go..." : {
-      "comment" : "Texto que explica por que criar o grupo, está dentro do botão de criar"
+      "comment" : "Texto que explica por que criar o grupo, está dentro do botão de criar",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vamos lá..."
+          }
+        }
+      }
     },
     "Líder" : {
-      "comment" : "Titulo da view de grupo que denota o lider"
+      "comment" : "Titulo da view de grupo que denota o lider",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Líder"
+          }
+        }
+      }
     },
     "Loading..." : {
-      "comment" : "Texto que aparece enquanto a view está carregando"
+      "comment" : "Texto que aparece enquanto a view está carregando",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carregando..."
+          }
+        }
+      }
     },
     "Logue suas atividades diárias e desafie seus amigos!" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logue suas atividades diárias e desafie seus amigos!"
+          }
+        }
+      }
     },
     "METRICS" : {
-      "comment" : "Texto do titulo da lista de metricas das atividades"
+      "comment" : "Texto do titulo da lista de metricas das atividades",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MÉTRICAS"
+          }
+        }
+      }
     },
     "Name" : {
       "extractionState" : "manual",
@@ -424,7 +867,15 @@
       }
     },
     "Next" : {
-      "comment" : " texto do botão de próximo na barra do teclado \nBotão de prosseguir com a criação do perfil"
+      "comment" : " texto do botão de próximo na barra do teclado \nBotão de prosseguir com a criação do perfil",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximo"
+          }
+        }
+      }
     },
     "Nick name" : {
       "extractionState" : "manual",
@@ -444,31 +895,100 @@
       }
     },
     "Nome" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome"
+          }
+        }
+      }
     },
     "Ok" : {
-      "comment" : " texto do botão OK na barra do teclado "
+      "comment" : " texto do botão OK na barra do teclado ",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ok"
+          }
+        }
+      }
     },
     "Oops, \n there's nothing here yet..." : {
-      "comment" : "Texto que fala que não há atividadesainda"
+      "comment" : "Texto que fala que não há atividadesainda",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oops, ainda não há nada aquí"
+          }
+        }
+      }
     },
     "Other people" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outras pessoas"
+          }
+        }
+      }
     },
     "Personalize your challenge" : {
-      "comment" : "Texto da criação de grupo, título"
+      "comment" : "Texto da criação de grupo, título",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personalize seu desafio"
+          }
+        }
+      }
     },
     "Points system" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistema de pontos"
+          }
+        }
+      }
     },
     "Publish" : {
-      "comment" : "Botão de ação de publicar a atividade"
+      "comment" : "Botão de ação de publicar a atividade",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postar"
+          }
+        }
+      }
     },
     "RANKING" : {
-      "comment" : "Texto do titulo da view de details que mostra a classificação"
+      "comment" : "Texto do titulo da view de details que mostra a classificação",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RANKING"
+          }
+        }
+      }
     },
     "REFERENCES" : {
-      "comment" : "Titulo do cabeçalho da view do perfil do usuário"
+      "comment" : "Titulo do cabeçalho da view do perfil do usuário",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REFERENCIAS"
+          }
+        }
+      }
     },
     "Save" : {
       "extractionState" : "manual",
@@ -488,128 +1008,209 @@
       }
     },
     "Save changes" : {
-      "comment" : "Botão de salvar modificações ao editar uma atividade"
+      "comment" : "Botão de salvar modificações ao editar uma atividade",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvar mudanças"
+          }
+        }
+      }
     },
     "Search" : {
-
-    },
-    "Search a challeger" : {
-      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Procurar desafiante"
-          }
-        }
-      }
-    },
-    "search un user or name" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "procure por usuário ou nome"
-          }
-        }
-      }
-    },
-    "Selecionar Data" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select date"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Selecione a data"
-          }
-        }
-      }
-    },
-    "Selecione sua data de nascimento:" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select your birth date"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Selecione sua data de aniversário"
+            "value" : "Procurar"
           }
         }
       }
     },
     "Start date" : {
-
-    },
-    "Steps" : {
-
-    },
-    "Sucess on copy" : {
-      "comment" : "Texto que informa que o texto foi copiado com sucesso"
-    },
-    "Tell us more" : {
-      "comment" : "Botão de prosseguir com a criação do perfil"
-    },
-    "Temporary Loading..." : {
-      "extractionState" : "stale",
+      "comment" : "Data de inicio do desafio",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Load temporário..."
+            "value" : "Data de início"
+          }
+        }
+      }
+    },
+    "Steps" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passos"
+          }
+        }
+      }
+    },
+    "Sucess on copy" : {
+      "comment" : "Texto que informa que o texto foi copiado com sucesso",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiado com sucesso"
+          }
+        }
+      }
+    },
+    "Tell us more" : {
+      "comment" : "Botão de prosseguir com a criação do perfil",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nos conte mais"
           }
         }
       }
     },
     "Title" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titulo"
+          }
+        }
+      }
     },
     "Today" : {
-      "comment" : "Texto que fala Hoje na view de criar atividade"
+      "comment" : "Texto que fala Hoje na view de criar atividade",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoje"
+          }
+        }
+      }
     },
     "Type the code" : {
-      "comment" : "Texto da tela de inserção do código"
+      "comment" : "Texto da tela de inserção do código",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digite o código"
+          }
+        }
+      }
     },
     "Type your name or nickname" : {
-      "comment" : " placeholder da caixa de texto de nome"
+      "comment" : " placeholder da caixa de texto de nome",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digite seu nome ou apelido"
+          }
+        }
+      }
     },
     "Welcome" : {
-      "comment" : "texto de bem vindo da tela de criar conta"
+      "comment" : "texto de bem vindo da tela de criar conta",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bem vindo"
+          }
+        }
+      }
     },
     "What do you want to be called?" : {
-      "comment" : " subtitulo da tela de criar perfil"
+      "comment" : " subtitulo da tela de criar perfil",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Como você gostaria de ser chamado?"
+          }
+        }
+      }
     },
     "Without text" : {
-      "comment" : "texto para se caso haja campos vazios"
+      "comment" : "texto para se caso haja campos vazios",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem texto"
+          }
+        }
+      }
     },
     "Yehh, sucess!!" : {
-      "comment" : "Mensagem de sucesso ao procurar desafio"
+      "comment" : "Mensagem de sucesso ao procurar desafio",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yehh, sucesso !"
+          }
+        }
+      }
     },
     "You" : {
-      "comment" : "Titulo da view de grupo que denota o lider"
+      "comment" : "Titulo da view de grupo que denota o lider",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você"
+          }
+        }
+      }
     },
     "You can choose to create a challenge or enter one with a code" : {
-      "comment" : "Texto a baixo do titulo na tela de criar ou entrar em um grupo"
+      "comment" : "Texto a baixo do titulo na tela de criar ou entrar em um grupo",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você pode escolher criar um desafio ou entrar em um com um código"
+          }
+        }
+      }
     },
     "Your age" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sua idade"
+          }
+        }
+      }
     },
     "Your challenger" : {
-      "comment" : "Caso não haja nome no grupo, este nome será mostrado"
+      "comment" : "Caso não haja nome no grupo, este nome será mostrado",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seu desafio"
+          }
+        }
+      }
     },
     "Your profile" : {
-      "comment" : "Titulo da tela de perfil"
+      "comment" : "Titulo da tela de perfil",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seu perfil"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
