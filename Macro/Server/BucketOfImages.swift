@@ -21,7 +21,7 @@ ImageSaved registra onde está salva a imagem localmente(offline) na ROM
 class BucketOfImages: ObservableObject{
     static var shared : BucketOfImages = BucketOfImages()
     private var storage = Storage.storage()
-    
+    var testVersion : Bool = true
     private struct ImageCash {
         var id : String
         var image : UIImage
@@ -117,20 +117,21 @@ class BucketOfImages: ObservableObject{
         }
     }
     func download(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        // Verifica se o usuário está autenticado
-        guard let currentUser = Auth.auth().currentUser else {
-            print("User not authenticated.")
-            completion(nil)
-            return
+        if !testVersion{
+            // Verifica se o usuário está autenticado
+            guard let currentUser = Auth.auth().currentUser else {
+                print("User not authenticated.")
+                completion(nil)
+                return
+            }
+            
+            // Verifica se o usuário foi autenticado via Apple SignIn
+            guard currentUser.providerData.first?.providerID == "apple.com" else {
+                print("User is not authenticated with Apple SignIn.")
+                completion(nil)
+                return
+            }
         }
-        
-        // Verifica se o usuário foi autenticado via Apple SignIn
-        guard currentUser.providerData.first?.providerID == "apple.com" else {
-            print("User is not authenticated with Apple SignIn.")
-            completion(nil)
-            return
-        }
-        
         // Verifica se a imagem já foi carregada em cache ou localmente
         if let savedImage = self.images.first(where: { $0.id == urlString}) {
             completion(savedImage.image)

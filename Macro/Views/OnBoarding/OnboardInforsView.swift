@@ -7,7 +7,7 @@
 
 import SwiftUI
 import AuthenticationServices
-import FirebaseAuth
+//import FirebaseAuth
 
 struct OnboardSignInView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -59,57 +59,68 @@ struct OnboardSignInView: View {
                         switch result {
                         case .success(let authorization):
                             if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                                guard let identityToken = appleIDCredential.identityToken else {
-                                    print("ERRO DE AUTENTICAÇÃO DO TOKEN EM OnboardSignInView \n")
-                                    return
-                                }
-                                guard let idTokenString = String(data: identityToken, encoding: .utf8) else {
-                                    print("ERRO IDTOKEN EM OnboardSignInView \n")
-                                    return
-                                }
                                 
-                                // Usar `idToken` corretamente no OAuthProvider
-                                let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: "")
-
-                                // Nome e email são opcionais, pode haver casos onde eles não são retornados
-                                var name = appleIDCredential.fullName?.givenName ?? ""
-                                var email = appleIDCredential.email ?? ""
-
-                                // Firebase Sign In com o Credential
-                                Task {
-                                    do {
-                                        let result = try await Auth.auth().signIn(with: credential)
-                                        print("Usuário autenticado no Firebase com Apple ID: \(result.user.uid)")
-
-                                        // Depois de autenticar, verificar se o usuário existe no seu Firestore
-                                        let idApple = appleIDCredential.user
-                                        if let user: UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user) {
-                                            controller.userController.myUser = user
-                                            controller.userController.saveUser()
-                                            if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
-                                                ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
-                                            }
-                                        } else {
-                                            // Se o usuário não existir, redirecionar para a tela de criação de conta
-                                            ViewsController.shared.navigateTo(to: .createUser(idApple, name, email), reset: true)
-                                        }
-                                    } catch {
-                                        print("ERRO AO TENTAR SIGNIN NO FIREBASE EM OnboardSignInView \n\(error.localizedDescription)")
-                                        if testVersion{
-                                            let idApple = appleIDCredential.user
-                                            if let user: UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user) {
-                                                controller.userController.myUser = user
-                                                controller.userController.saveUser()
-                                                if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
-                                                    ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
-                                                }
-                                            } else {
-                                                // Se o usuário não existir, redirecionar para a tela de criação de conta
-                                                ViewsController.shared.navigateTo(to: .createUser(idApple, name, email), reset: true)
-                                            }
+                                
+                                if testVersion{
+                                    var name : String = ""
+                                    if appleIDCredential.authorizedScopes.contains(.fullName) {
+                                        if let hasName = appleIDCredential.fullName?.namePrefix{
+                                            name = hasName
                                         }
                                     }
+                                    let idApple = appleIDCredential.user
+                                    Task{
+                                    if let user : UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user){
+                                        controller.userController.myUser = user
+                                        controller.userController.saveUser()
+                                        if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
+                                            ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
+                                        }
+                                    }
+                                    else{
+                                        ViewsController.shared.navigateTo(to: .createUser(idApple, name, ""), reset: true)
+                                    }
+                                                                                          }
                                 }
+//                                else{
+//                                    guard let identityToken = appleIDCredential.identityToken else {
+//                                        print("ERRO DE AUTENTICAÇÃO DO TOKEN EM OnboardSignInView \n")
+//                                        return
+//                                    }
+//                                    guard let idTokenString = String(data: identityToken, encoding: .utf8) else {
+//                                        print("ERRO IDTOKEN EM OnboardSignInView \n")
+//                                        return
+//                                    }
+//                                    // Usar `idToken` corretamente no OAuthProvider
+//                                    let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: "")
+//                                    
+//                                    // Nome e email são opcionais, pode haver casos onde eles não são retornados
+//                                    var name = appleIDCredential.fullName?.givenName ?? ""
+//                                    var email = appleIDCredential.email ?? ""
+//                                    
+//                                    // Firebase Sign In com o Credential
+//                                    Task {
+//                                        do {
+//                                            let result = try await Auth.auth().signIn(with: credential)
+//                                            print("Usuário autenticado no Firebase com Apple ID: \(result.user.uid)")
+//                                            
+//                                            // Depois de autenticar, verificar se o usuário existe no seu Firestore
+//                                            let idApple = appleIDCredential.user
+//                                            if let user: UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user) {
+//                                                controller.userController.myUser = user
+//                                                controller.userController.saveUser()
+//                                                if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
+//                                                    ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
+//                                                }
+//                                            } else {
+//                                                // Se o usuário não existir, redirecionar para a tela de criação de conta
+//                                                ViewsController.shared.navigateTo(to: .createUser(idApple, name, email), reset: true)
+//                                            }
+//                                        } catch {
+//                                            print("ERRO AO TENTAR SIGNIN NO FIREBASE EM OnboardSignInView \n\(error.localizedDescription)")
+//                                        }
+//                                    }
+//                                }
                             }
                             
                         case .failure(let error):

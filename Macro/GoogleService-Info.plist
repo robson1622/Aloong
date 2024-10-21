@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>Robson.Macro.test</string>
+	<string>Robson.Macro</string>
 	<key>PROJECT_ID</key>
 	<string>aloong-40645</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:435514465112:ios:1dfe09935137431fd8632d</string>
+	<string>1:435514465112:ios:6269cccc1a49e0cad8632d</string>
 </dict>
 </plist>
