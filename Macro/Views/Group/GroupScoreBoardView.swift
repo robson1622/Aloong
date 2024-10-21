@@ -12,7 +12,10 @@ struct GroupScoreBoardView: View {
     let model : GroupModel
     @State var totalDays : Int = 0
     @State var lastDays : Int = 0
-    @State var lider : PointsOfUser
+    @State var first : PointsOfUser
+    @State var second : PointsOfUser
+    @State var third : PointsOfUser
+    
     @State var you : PointsOfUser
     
     let liderText : String = NSLocalizedString("Líder", comment: "Titulo da view de grupo que denota o lider")
@@ -31,19 +34,7 @@ struct GroupScoreBoardView: View {
             HStack (alignment:.center, spacing: 22){
                 
                 HStack (spacing: 9){
-                    ImageLoader(url : lider.user.userimage,squere: false,largeImage: false)
-                    VStack (alignment:.leading){
-                        // Callout/Emphasized
-                        Text("\(lider.points)")
-                            .font(.callout)
-                            .foregroundColor(.preto)
-                            .bold()
-                        
-                        // Caption1/Regular
-                        Text(liderText)
-                            .font(.caption)
-                            .foregroundColor(.preto)
-                    }
+                    
                     Spacer()
                 }
                 
@@ -56,19 +47,7 @@ struct GroupScoreBoardView: View {
                     )
                 
                 HStack (spacing: 9){
-                    ImageLoader(url: you.user.userimage, squere: false,largeImage: false)
-                    VStack (alignment:.leading){
-                        // Callout/Emphasized
-                        Text("\(you.points)")
-                            .font(.callout)
-                            .foregroundColor(.preto)
-                            .bold()
-                        
-                        // Caption1/Regular
-                        Text(youText)
-                            .font(.caption)
-                            .foregroundColor(.preto)
-                    }
+                    
                     Spacer()
                 }
                 
@@ -79,7 +58,7 @@ struct GroupScoreBoardView: View {
         }
         .padding(24)
         .frame(width:342, alignment: .top)
-        .background( colorScheme == .dark ? .cinza : .branco)
+        .background( Image("backgradiente"))
         .cornerRadius(6)
         .shadow(color: .black.opacity(0.1), radius: 24.88501, x: 0, y: 8.295)
         .onAppear {
@@ -94,6 +73,56 @@ struct GroupScoreBoardView: View {
     }
 }
 
+struct PlaceChallengerComponet : View{
+    let image : String?
+    enum position{
+        case first, second, third
+    }
+    let positionImage : position
+    let name : String
+    @State var uiimage : UIImage?
+    var body : some View{
+        ZStack{
+            if let uiimage{
+                Image(uiImage: uiimage)
+                    .resizable()
+                    .scaledToFit()
+            }
+            else{
+                Image(self.getImage())
+            }
+        }
+        
+        VStack (alignment:.leading){
+            // Callout/Emphasized
+            Text(name)
+                .font(.callout)
+                .foregroundColor(.preto)
+                .bold()
+        }
+        .onAppear{
+            if let image = image{
+                BucketOfImages.shared.download(from: image){ response in
+                    uiimage = response
+                }
+            }
+        }
+    }
+    
+    func getImage() -> String{
+        switch positionImage{
+        case .first:
+            return "firstplace"
+        case .second:
+            return "secondplace"
+        case .third:
+            return "thirdplace"
+        }
+    }
+    
+}
+
 #Preview {
-    GroupScoreBoardView(model: exempleGroup, lider: PointsOfUser(user: usermodelexemple, points: 3), you: PointsOfUser(user: usermodelexemple4, points: 10))
+    PlaceChallengerComponet(image: "", positionImage: .first, name: "Fulano")
+    //GroupScoreBoardView(model: exempleGroup, first: PointsOfUser(user: usermodelexemple, points: 3), second: PointsOfUser(user: usermodelexemple, points: 3),third: PointsOfUser(user: usermodelexemple, points: 3), you: PointsOfUser(user: usermodelexemple4, points: 10))
 }

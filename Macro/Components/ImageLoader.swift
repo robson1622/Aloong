@@ -12,6 +12,7 @@ struct ImageLoader: View {
     @State var url : String?
     var squere : Bool = false
     var largeImage : Bool = false
+    var withEdge : Bool = true
     @State var image : UIImage?
     var body: some View {
         VStack{
@@ -71,7 +72,7 @@ struct ImageLoader: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 44)
                                 .inset(by: 2)
-                                .stroke(Color(.roxo3), lineWidth: 4)
+                                .stroke( withEdge ?  Color(.roxo3) : Color.clear, lineWidth: 4)
                         )
                 }
             }

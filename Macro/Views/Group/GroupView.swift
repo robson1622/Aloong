@@ -56,6 +56,9 @@ struct GroupView: View {
                         listOfActivities
                     }
                     else{
+                        Image("withoutactivity")
+                            .frame(width: 238, height:247)
+                            .padding(.top, 50)
                         Text(withoutActivityText)
                             .font(.subheadline)
                             .italic()
