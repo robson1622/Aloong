@@ -71,8 +71,8 @@ struct ContentView: View {
                 
             }
             .onAppear {
-                if false{
-                    ViewsController.shared.navigateTo(to: .createActivity("", "",nil), reset: true)
+                if true{
+                    ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
                 }
                 else{
                     Task{
