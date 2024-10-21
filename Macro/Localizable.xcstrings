@@ -130,6 +130,9 @@
     "and more " : {
 
     },
+    "Anote tudo e veja sua evolução! Convide seus amigos e veja quem chega mais longe" : {
+
+    },
     "back" : {
       "localizations" : {
         "en" : {
@@ -557,6 +560,9 @@
     },
     "Sucess on copy" : {
       "comment" : "Texto que informa que o texto foi copiado com sucesso"
+    },
+    "Supere seus limites com desafios em grupo!" : {
+
     },
     "Tell us more" : {
       "comment" : "Botão de prosseguir com a criação do perfil"

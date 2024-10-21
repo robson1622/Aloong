@@ -16,6 +16,9 @@ struct OnboardSignInView: View {
     
     let firstText : String = NSLocalizedString("Logue suas atividades diárias e desafie seus amigos!", comment: "")
     let secondText : String = NSLocalizedString("Competir nunca foi tão fácil!", comment: "")
+    let thirdText : String = NSLocalizedString("Anote tudo e veja sua evolução! Convide seus amigos e veja quem chega mais longe", comment: "")
+    let fourthText : String = NSLocalizedString("Supere seus limites com desafios em grupo!", comment: "")
+    
     var body: some View {
         
         ZStack {
@@ -27,20 +30,21 @@ struct OnboardSignInView: View {
             VStack{
                 VStack {
                     // Custom page indicator
-                    HStack {
-                        Circle()
-                            .fill(selectedTab == 0 ? Color.white : Color.clear) // Cor customizada
-                            .frame(width: 10)
-                            .overlay(
-                                Circle().stroke(Color.white, lineWidth: 2) // Borda arredondada
-                            )
-                        Circle()
-                            .fill(selectedTab == 1 ? Color.white : Color.clear) // Cor customizada
-                            .frame(width: 10, height: 10)
-                            .overlay(
-                                Circle().stroke(Color.white, lineWidth: 2) // Borda arredondada
-                            )
-                    }
+//                    HStack {
+//                        Circle()
+//                            .fill(selectedTab == 0 ? Color.white : Color.clear) // Cor customizada
+//                            .frame(width: 10)
+//                            .overlay(
+//                                Circle().stroke(Color.white, lineWidth: 2) // Borda arredondada
+//                            )
+//                        Circle()
+//                            .fill(selectedTab == 1 ? Color.white : Color.clear) // Cor customizada
+//                            .frame(width: 10, height: 10)
+//                            .overlay(
+//                                Circle().stroke(Color.white, lineWidth: 2) // Borda arredondada
+//                            )
+//                    }
+                    
                     
                     TabView(selection: $selectedTab) {
                         first
@@ -49,65 +53,13 @@ struct OnboardSignInView: View {
                             .tag(1)
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // Esconde o indicador padrão
-                    .frame(height: 550)
+                    .frame(height: .infinity)
                     
-                    //botão de signin
-                    SignInWithAppleButton(.signUp) { request in
-                        request.requestedScopes = [.fullName, .email]
-                    } onCompletion: { result in
-                        switch result {
-                        case .success(let authorization):
-                            if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                                guard let identityToken = appleIDCredential.identityToken else {
-                                    print("ERRO DE AUTENTICAÇÃO DO TOKEN EM OnboardSignInView \n")
-                                    return
-                                }
-                                guard let idTokenString = String(data: identityToken, encoding: .utf8) else {
-                                    print("ERRO IDTOKEN EM OnboardSignInView \n")
-                                    return
-                                }
-                                
-                                // Usar `idToken` corretamente no OAuthProvider
-                                let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: "")
-
-                                // Nome e email são opcionais, pode haver casos onde eles não são retornados
-                                var name = appleIDCredential.fullName?.givenName ?? ""
-                                var email = appleIDCredential.email ?? ""
-
-                                // Firebase Sign In com o Credential
-                                Task {
-                                    do {
-                                        let result = try await Auth.auth().signIn(with: credential)
-                                        print("Usuário autenticado no Firebase com Apple ID: \(result.user.uid)")
-
-                                        // Depois de autenticar, verificar se o usuário existe no seu Firestore
-                                        let idApple = appleIDCredential.user
-                                        if let user: UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user) {
-                                            controller.userController.myUser = user
-                                            controller.userController.saveUser()
-                                            if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
-                                                ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
-                                            }
-                                        } else {
-                                            // Se o usuário não existir, redirecionar para a tela de criação de conta
-                                            ViewsController.shared.navigateTo(to: .createUser(idApple, name, email), reset: true)
-                                        }
-                                    } catch {
-                                        print("ERRO AO TENTAR SIGNIN NO FIREBASE EM OnboardSignInView \n\(error.localizedDescription)")
-                                    }
-                                }
-                            }
-                            
-                        case .failure(let error):
-                            print("Falha ao autenticar: \(error.localizedDescription)")
-                            ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
-                        }
-                    }
-                    .frame(width: 350, height: 60)
-
                 }
                 
             }
+            .frame(maxHeight: .infinity)
+            .ignoresSafeArea()
         }
     }
     
@@ -118,33 +70,51 @@ struct OnboardSignInView: View {
     var first : some View{
         VStack{
             ZStack {
-                Image("art3")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 330, height:  330)
-                    .padding()
                 VStack{
-                    HStack{
-                        Ballon(text:"é nóis",leftBorder: false)
-                        Spacer()
+                    Image("logo_branca")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 92, height: 27)
+                    
+                    Image("art3")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 330, height:  330)
+                        .padding()
+                    
+                    // Custom page indicator
+                    HStack(alignment: .center, spacing: 4.8) {
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 145, height: 7)
+                            .background(selectedTab == 0 ? Color.white : Color.white.opacity(0.2))
+                            .cornerRadius(9)
+                        
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 145, height: 7)
+                            .background(selectedTab == 1 ? Color.white : Color.white.opacity(0.2))
+                            .cornerRadius(9)
                     }
-                    HStack{
-                        Ballon(leftBorder: false)
-                            .padding(.leading,32)
-                        Spacer()
-                    }
-                    HStack{
-                        Spacer()
-                        Ballon(text:"arrasou!",leftBorder: true)
-                            .padding(.leading,32)
-                    }
+                    .padding(0)
+                    .frame(width: 293, alignment: .center)
                 }
             }
-            
-            HStack{
-                Text(firstText)
-                    .font(.degularLargeSemiBold)
-                    .foregroundColor(.white)
+            VStack{
+                HStack{
+                    Text(firstText)
+                        .font(.degularLargeSemiBold)
+                        .foregroundColor(.white)
+                        .frame(width: 309, alignment: .topLeading)
+                        .lineLimit(3)
+                }
+                HStack{
+                    Text(thirdText)
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .frame(width: 309, alignment: .topLeading)
+                        .lineLimit(3)
+                }
             }
         }
         .padding(.horizontal,35)
@@ -153,33 +123,101 @@ struct OnboardSignInView: View {
     var second : some View{
         VStack{
             ZStack {
-                Image("art2")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 330, height:  330)
-                    .padding()
                 VStack{
-                    HStack{
-                        Spacer()
-                        Ballon(text:"é nóis",leftBorder: true)
+                    Image("art2")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 330, height:  330)
+                        .padding()
+                    
+                    // Custom page indicator
+                    HStack(alignment: .center, spacing: 4.8) {
+                        Rectangle()
+                          .foregroundColor(.clear)
+                          .frame(width: 145, height: 7)
+                          .background(selectedTab == 0 ? Color.white : Color.white.opacity(0.2))
+                          .cornerRadius(9)
+                        
+                        Rectangle()
+                          .foregroundColor(.clear)
+                          .frame(width: 145, height: 7)
+                          .background(selectedTab == 1 ? Color.white : Color.white.opacity(0.2))
+                          .cornerRadius(9)
                     }
-                    HStack{
-                        Spacer()
-                        Ballon(leftBorder: true)
-                            .padding(.leading,32)
-                    }
-                    HStack{
-                        Ballon(text:"arrasou!",leftBorder: false)
-                            .padding(.leading,32)
-                        Spacer()
-                    }
+                    .padding(0)
+                    .frame(width: 293, alignment: .center)
                 }
             }
-            
-            HStack{
-                Text(secondText)
-                    .font(.degularLargeSemiBold)
-                    .foregroundColor(.white)
+            VStack{
+                HStack{
+                    Text(secondText)
+                        .font(.degularLargeSemiBold)
+                        .foregroundColor(.white)
+                        .frame(width: 309, alignment: .topLeading)
+                        .lineLimit(3)
+                }
+                HStack{
+                    Text(fourthText)
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .frame(width: 309, alignment: .topLeading)
+                        .lineLimit(3)
+                }
+                
+                
+                //botão de signin
+                SignInWithAppleButton(.signUp) { request in
+                    request.requestedScopes = [.fullName, .email]
+                } onCompletion: { result in
+                    switch result {
+                    case .success(let authorization):
+                        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+                            guard let identityToken = appleIDCredential.identityToken else {
+                                print("ERRO DE AUTENTICAÇÃO DO TOKEN EM OnboardSignInView \n")
+                                return
+                            }
+                            guard let idTokenString = String(data: identityToken, encoding: .utf8) else {
+                                print("ERRO IDTOKEN EM OnboardSignInView \n")
+                                return
+                            }
+                            
+                            // Usar `idToken` corretamente no OAuthProvider
+                            let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: "")
+
+                            // Nome e email são opcionais, pode haver casos onde eles não são retornados
+                            var name = appleIDCredential.fullName?.givenName ?? ""
+                            var email = appleIDCredential.email ?? ""
+
+                            // Firebase Sign In com o Credential
+                            Task {
+                                do {
+                                    let result = try await Auth.auth().signIn(with: credential)
+                                    print("Usuário autenticado no Firebase com Apple ID: \(result.user.uid)")
+
+                                    // Depois de autenticar, verificar se o usuário existe no seu Firestore
+                                    let idApple = appleIDCredential.user
+                                    if let user: UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user) {
+                                        controller.userController.myUser = user
+                                        controller.userController.saveUser()
+                                        if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
+                                            ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
+                                        }
+                                    } else {
+                                        // Se o usuário não existir, redirecionar para a tela de criação de conta
+                                        ViewsController.shared.navigateTo(to: .createUser(idApple, name, email), reset: true)
+                                    }
+                                } catch {
+                                    print("ERRO AO TENTAR SIGNIN NO FIREBASE EM OnboardSignInView \n\(error.localizedDescription)")
+                                }
+                            }
+                        }
+                        
+                    case .failure(let error):
+                        print("Falha ao autenticar: \(error.localizedDescription)")
+                        ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
+                    }
+                }
+                .frame(width: 268, height: 50)
             }
         }
         .padding(.horizontal,35)
