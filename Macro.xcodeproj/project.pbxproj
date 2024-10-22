@@ -141,10 +141,10 @@
 		97AAF8972CB55C6D00EEDCA2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 97AAF8962CB55C6D00EEDCA2 /* FirebaseAuth */; };
 		97BC74602CB6CAAB000E7ED5 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 97BC745F2CB6CAAB000E7ED5 /* FirebaseMessaging */; };
 		97BC74622CB94F29000E7ED5 /* GroupViewExtenssion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BC74612CB94F29000E7ED5 /* GroupViewExtenssion.swift */; };
-		97C223032C73881B00470068 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97C223022C73881B00470068 /* GoogleService-Info.plist */; };
 		97C223062C73889400470068 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 97C223052C73889400470068 /* FirebaseAnalytics */; };
 		97C223082C73889400470068 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 97C223072C73889400470068 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		97C2230A2C73FC3100470068 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 97C223092C73FC3100470068 /* FirebaseFirestore */; };
+		97C79E882CC69BAA00E5387D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97C79E872CC69BAA00E5387D /* GoogleService-Info.plist */; };
 		97C88F772CA77413009711D5 /* Ballon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C88F762CA77413009711D5 /* Ballon.swift */; };
 		97D07EFB2C9A35B500D52669 /* ReactionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D07EFA2C9A35B500D52669 /* ReactionController.swift */; };
 		97D07EFE2C9F8F9200D52669 /* ActivitiesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D07EFD2C9F8F8200D52669 /* ActivitiesList.swift */; };
@@ -310,7 +310,7 @@
 		9796B9F92C77DE1E000F0520 /* MembersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersController.swift; sourceTree = "<group>"; };
 		9796B9FB2C77E04A000F0520 /* MemberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberModel.swift; sourceTree = "<group>"; };
 		97BC74612CB94F29000E7ED5 /* GroupViewExtenssion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewExtenssion.swift; sourceTree = "<group>"; };
-		97C223022C73881B00470068 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		97C79E872CC69BAA00E5387D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		97C88F762CA77413009711D5 /* Ballon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ballon.swift; sourceTree = "<group>"; };
 		97D07EFA2C9A35B500D52669 /* ReactionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionController.swift; sourceTree = "<group>"; };
 		97D07EFD2C9F8F8200D52669 /* ActivitiesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesList.swift; sourceTree = "<group>"; };
@@ -377,7 +377,7 @@
 				970821302C8B2A39009975F6 /* Info.plist */,
 				9705AE232C65794000E73123 /* Macro.entitlements */,
 				9705ADE02C64F55A00E73123 /* Localizable.xcstrings */,
-				97C223022C73881B00470068 /* GoogleService-Info.plist */,
+				97C79E872CC69BAA00E5387D /* GoogleService-Info.plist */,
 				9705ADB62C64F53900E73123 /* MacroApp.swift */,
 				9705ADB82C64F53900E73123 /* ContentView.swift */,
 				9705AE0C2C64FBD800E73123 /* SplashView.swift */,
@@ -876,8 +876,8 @@
 				970821062C8B28C1009975F6 /* Degular-BoldItalic.otf in Resources */,
 				970820FA2C8B28C1009975F6 /* DegularText-Medium.otf in Resources */,
 				9708210B2C8B28C1009975F6 /* Degular-Regular.otf in Resources */,
+				97C79E882CC69BAA00E5387D /* GoogleService-Info.plist in Resources */,
 				970821032C8B28C1009975F6 /* Degular-Black.otf in Resources */,
-				97C223032C73881B00470068 /* GoogleService-Info.plist in Resources */,
 				9708210D2C8B28C1009975F6 /* Degular-Semibold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1142,7 +1142,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Macro/Preview Content\"";
-				DEVELOPMENT_TEAM = VBHLLSPJ65;
+				DEVELOPMENT_TEAM = 7P8CW3852J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Macro/Info.plist;
@@ -1159,7 +1159,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.6.5;
-				PRODUCT_BUNDLE_IDENTIFIER = Nicole.Macro;
+				PRODUCT_BUNDLE_IDENTIFIER = Robson.Macro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1180,7 +1180,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Macro/Preview Content\"";
-				DEVELOPMENT_TEAM = VBHLLSPJ65;
+				DEVELOPMENT_TEAM = 7P8CW3852J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Macro/Info.plist;
@@ -1197,7 +1197,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.6.5;
-				PRODUCT_BUNDLE_IDENTIFIER = Nicole.Macro;
+				PRODUCT_BUNDLE_IDENTIFIER = Robson.Macro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

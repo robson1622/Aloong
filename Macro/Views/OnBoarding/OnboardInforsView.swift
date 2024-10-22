@@ -174,6 +174,7 @@ struct OnboardSignInView: View {
                                 controller.userController.saveUser()
                                 if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
                                     ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
+                                    controller.groupController.saveLocalMainGroup(group: idGroup)
                                 }
                             }
                             else{

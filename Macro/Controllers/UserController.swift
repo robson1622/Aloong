@@ -176,7 +176,7 @@ class UserController: ObservableObject{
         if let imageData = try? Data(contentsOf: fileURL) {
             return UIImage(data: imageData)
         } else {
-            print("Não foi possível recuperar a imagem.")
+            print("\n Não foi possível recuperar a imagem. \n")
             return nil
         }
     }

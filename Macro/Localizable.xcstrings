@@ -251,6 +251,9 @@
         }
       }
     },
+    "Anote tudo e veja sua evolução! Convide seus amigos e veja quem chega mais longe" : {
+
+    },
     "back" : {
       "localizations" : {
         "en" : {
@@ -376,6 +379,7 @@
       }
     },
     "Competir nunca foi tão fácil!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -417,6 +421,9 @@
           }
         }
       }
+    },
+    "Crie competições personalizadas" : {
+
     },
     "Date" : {
       "localizations" : {
@@ -829,6 +836,7 @@
       }
     },
     "Logue suas atividades diárias e desafie seus amigos!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -990,6 +998,9 @@
         }
       }
     },
+    "Registre suas conquistas e desafie seus amigos!" : {
+
+    },
     "Save" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1059,6 +1070,9 @@
           }
         }
       }
+    },
+    "Supere seus limites com desafios em grupo!" : {
+
     },
     "Tell us more" : {
       "comment" : "Botão de prosseguir com a criação do perfil",

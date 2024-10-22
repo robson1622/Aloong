@@ -66,12 +66,11 @@ struct ContentView: View {
                         .environmentObject(controller)
                 case .splash:
                     SplashView()
-                    
                 }
                 
             }
             .onAppear {
-                if true{
+                if false{
                     ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
                 }
                 else{
