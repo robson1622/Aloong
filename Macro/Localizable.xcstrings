@@ -686,6 +686,9 @@
         }
       }
     },
+    "Inappropriate content" : {
+      "comment" : "Texto do botão de report por conteúdo impróprio"
+    },
     "INFORMATIONS" : {
       "comment" : "Texto do titulo da lista de informações das atividades",
       "localizations" : {
@@ -1001,6 +1004,9 @@
     "Registre suas conquistas e desafie seus amigos!" : {
 
     },
+    "Report" : {
+      "comment" : "Texto do botão para reportar a atividade"
+    },
     "Save" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1085,6 +1091,9 @@
         }
       }
     },
+    "The group moderator will receive the report in order to moderate." : {
+      "comment" : "Descrição da aba de reportar nas atividades."
+    },
     "Title" : {
       "localizations" : {
         "pt-BR" : {
@@ -1149,6 +1158,9 @@
           }
         }
       }
+    },
+    "What's wrong with this activity?" : {
+      "comment" : "Título da aba de reportar nas atividades."
     },
     "Without text" : {
       "comment" : "texto para se caso haja campos vazios",

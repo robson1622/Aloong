@@ -80,6 +80,11 @@ class BucketOfImages: ObservableObject{
         }
     }
     
+    private func saveImageInCash(image: UIImage,local : String){
+        let newImage = ImageCash(id: local,image: image, date: Date())
+        self.images.append(newImage)
+    }
+    
     func upload(image: UIImage,type: localImage,url: String? = nil, completion: @escaping(String?) -> Void) {
         let imageResized = type == .profile ? self.resizeImage(image: image, targetSize: CGSize(width: 260, height: 260)) : image
         guard let imageData = imageResized.jpegData(compressionQuality: type == .profile ? 1.0 : 0.55) else {return}
@@ -88,14 +93,17 @@ class BucketOfImages: ObservableObject{
             fileName = url
         }
         var ref = storage.reference(withPath: profileImageReference + fileName)
+        var local = profileImageReference + fileName
         if(type == .activity){
             ref = storage.reference(withPath: activityImageReference + fileName)
+            local = activityImageReference + fileName
         }
         ref.putData(imageData, metadata: nil) { metadata, error in
             if let error = error {
                 print("Err: Failed to upload image \(error.localizedDescription)")
                 return
             }
+            self.saveImageInCash(image: image, local: local )
             completion(ref.fullPath)
         }
         

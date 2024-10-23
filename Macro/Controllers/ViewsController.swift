@@ -36,7 +36,9 @@ class ViewsController : ObservableObject{
     @Published var navPath = NavigationPath()
     
     func back(){
-        navPath.removeLast()
+        DispatchQueue.main.async{
+            self.navPath.removeLast()
+        }
     }
     
     func navigateTo(to : Destination,reset : Bool = false){

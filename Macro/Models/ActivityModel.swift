@@ -90,7 +90,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
         var listOfRelationsUserCreated : [String] = []
         var idrelationsGroupCreated : String = ""
         var listOfActivityImageModel : [ActivityImageModel] = []
-        let listOfIdsImages : [String] = []
+        var listOfIdsImages : [String] = []
         if let idServer = DatabaseInterface.shared.create(model: self, table: .activity){
             idActivityCreated = idServer
             var new = self
@@ -127,7 +127,12 @@ struct ActivityModel : Codable, Hashable, Identifiable{
             }
             // criar as relações image-atividade
             listOfActivityImageModel = await self.uploadImages(listOfImages,idServer: idServer)
-            
+            for imageElement in listOfActivityImageModel{
+                if let url = imageElement.imageURL{
+                    listOfIdsImages.append(url)
+                }
+                
+            }
             completion(new,listOfIdsImages)
         }
         else{

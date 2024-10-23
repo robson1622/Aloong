@@ -21,13 +21,19 @@ struct ActivityView: View {
     @State var aloongActive : Bool = false
     @State var atualTab : Int = 0
     
+    @State var showRepportAlertTab : Bool = false
+    
     let edit : String = NSLocalizedString("Edit", comment: "Texto do botão para editar a atividade")
+    let reportText : String = NSLocalizedString("Report", comment: "Texto do botão para reportar a atividade")
+    let titleTextRepportTab : String = NSLocalizedString("What's wrong with this activity?", comment: "Título da aba de reportar nas atividades.")
+    let descriptionTextRepportTab : String = NSLocalizedString("The group moderator will receive the report in order to moderate.", comment: "Descrição da aba de reportar nas atividades.")
+    let explicitContentText : String = NSLocalizedString("Inappropriate content", comment: "Texto do botão de report por conteúdo impróprio")
     var body: some View {
         VStack{
             Header(trailing: [AnyView(
                 VStack{
-                    if(userOwner){
-                        Button(action:{
+                    Button(action:{
+                        if userOwner{
                             if let idGroup = group.id{
                                 for image in imagesString{
                                     BucketOfImages.shared.download(from: image){ uiimage in
@@ -38,13 +44,16 @@ struct ActivityView: View {
                                 }
                                 ViewsController.shared.navigateTo(to: .createActivity(user.id, idGroup, activity))
                             }
-                            
-                        }){
-                            Text(edit)
-                                .font(.callout)
-                                .foregroundColor(.roxo3)
                         }
+                        else{
+                            showRepportAlertTab = true
+                        }
+                    }){
+                        Text( userOwner ? edit : reportText)
+                            .font(.callout)
+                            .foregroundColor(.roxo3)
                     }
+                    
                 }
             )],onTapBack: {
                 if imagesString.count > 1{
@@ -130,9 +139,24 @@ struct ActivityView: View {
             }
             numberOfAloongs = reactions.count
         }
-        .refreshable {
+        .alert(titleTextRepportTab, isPresented: $showRepportAlertTab, actions: {
+            Button(action:{
+                
+            }){
+                Text(explicitContentText)
+                    .foregroundStyle(Color.red)
+            }
             
-        }
+            Button(action:{
+                
+            }){
+                Text(explicitContentText)
+                    .foregroundStyle(Color.red)
+            }
+        }, message: {
+            Text(descriptionTextRepportTab)
+            
+        })
         .ignoresSafeArea()
         .background(Color(.branco))
     }
