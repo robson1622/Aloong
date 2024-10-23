@@ -204,7 +204,7 @@
     "Competir nunca foi tão fácil!" : {
 
     },
-    "Copy code" : {
+    "Copy code :" : {
       "comment" : "texto do botão de copiar o código"
     },
     "Create" : {
@@ -291,7 +291,10 @@
     "DESCRIPTION" : {
 
     },
-    "Details of group" : {
+    "Details" : {
+      "comment" : "Texto do botão de detalhes do painel de colocações na groupview"
+    },
+    "DETAILS" : {
       "comment" : "Texto do titulo da view de details que mostra os detalhes do grupo"
     },
     "Distance" : {
@@ -370,6 +373,9 @@
     "Invite friends" : {
       "comment" : "Texto do botão de convidar amigo"
     },
+    "It's more fun with friends!" : {
+      "comment" : "Texto de descrição do alerta da popUp da home, para convidar amigos"
+    },
     "ItsWe" : {
 
     },
@@ -402,6 +408,9 @@
     },
     "Logue suas atividades diárias e desafie seus amigos!" : {
 
+    },
+    "Lonely around here?" : {
+      "comment" : "Texto de alerta da popUp da home, para convidar amigos"
     },
     "METRICS" : {
       "comment" : "Texto do titulo da lista de metricas das atividades"
@@ -584,6 +593,9 @@
     "Type your name or nickname" : {
       "comment" : " placeholder da caixa de texto de nome"
     },
+    "Use this code for aloong with my challenge :" : {
+      "comment" : "Texto que vai ser enviado para os amigos com o código"
+    },
     "Welcome" : {
       "comment" : "texto de bem vindo da tela de criar conta"
     },
@@ -607,6 +619,9 @@
     },
     "Your challenger" : {
       "comment" : "Caso não haja nome no grupo, este nome será mostrado"
+    },
+    "Your position" : {
+      "comment" : "Texto do painel de colocações na groupview"
     },
     "Your profile" : {
       "comment" : "Titulo da tela de perfil"

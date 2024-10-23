@@ -23,6 +23,11 @@ struct HeaderGroupView: View {
                 if let image = UserController.shared.myUser?.userimage {
                     ImageLoader(url: image ,squere: false,largeImage: false)
                 }
+                else{
+                    Image("plaveholderuserblue")
+                        .resizable()
+                        .frame(width: 44,height: 44)
+                }
                 
             }
 

@@ -108,7 +108,6 @@
 		973303012C664F0200E6A1D9 /* Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973303002C664F0200E6A1D9 /* Definitions.swift */; };
 		9745A92E2C6AC08F00578FEC /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A92D2C6AC08F00578FEC /* GroupView.swift */; };
 		9745A9302C6AC37B00578FEC /* StatisticController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A92F2C6AC37B00578FEC /* StatisticController.swift */; };
-		9745A9342C6B86D800578FEC /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9745A9332C6B86D800578FEC /* ProgressView.swift */; };
 		974C92042C80A64C004F1627 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92032C80A64C004F1627 /* ActivityModel.swift */; };
 		974C92082C80A8A4004F1627 /* ActivityUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92072C80A8A4004F1627 /* ActivityUserModel.swift */; };
 		974C920A2C80AACA004F1627 /* ActivityViewCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974C92092C80AACA004F1627 /* ActivityViewCreate.swift */; };
@@ -279,7 +278,6 @@
 		973303002C664F0200E6A1D9 /* Definitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definitions.swift; sourceTree = "<group>"; };
 		9745A92D2C6AC08F00578FEC /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
 		9745A92F2C6AC37B00578FEC /* StatisticController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticController.swift; sourceTree = "<group>"; };
-		9745A9332C6B86D800578FEC /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		974C92032C80A64C004F1627 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
 		974C92072C80A8A4004F1627 /* ActivityUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityUserModel.swift; sourceTree = "<group>"; };
 		974C92092C80AACA004F1627 /* ActivityViewCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewCreate.swift; sourceTree = "<group>"; };
@@ -440,7 +438,6 @@
 				970820B02C8A6258009975F6 /* AloongComponent.swift */,
 				975074FB2CA1CE190002D408 /* HeaderGroupView.swift */,
 				975075022CA372720002D408 /* AloongColors.swift */,
-				9745A9332C6B86D800578FEC /* ProgressView.swift */,
 				97C88F762CA77413009711D5 /* Ballon.swift */,
 				970821372C8D2A07009975F6 /* KeyboardBar.swift */,
 				9705ADF42C64F65F00E73123 /* ImageLoader.swift */,
@@ -963,7 +960,6 @@
 				97C88F772CA77413009711D5 /* Ballon.swift in Sources */,
 				974C920E2C80B5DF004F1627 /* ActivityView.swift in Sources */,
 				9705ADF52C64F65F00E73123 /* ImageLoader.swift in Sources */,
-				9745A9342C6B86D800578FEC /* ProgressView.swift in Sources */,
 				9786F59B2C99AFDD00B9E2BA /* CommentModel.swift in Sources */,
 				970821322C8B2B5A009975F6 /* Fonts.swift in Sources */,
 				975074FA2CA04DF90002D408 /* GroupScoreBoardView.swift in Sources */,

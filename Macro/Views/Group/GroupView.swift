@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 struct GroupView: View {
     @EnvironmentObject var controller : GeneralController
+    @Environment(\.colorScheme) var colorScheme
     @State var updateView = GeneralController.shared.update
     
     @State var isCameraPresented : Bool = false
@@ -23,17 +24,24 @@ struct GroupView: View {
     @State var youImage : UIImage?
     @State var you : PointsOfUser?
     
+    @State var showAlertInviteFriends : Bool = false
+    @State var showSheetForShare : Bool = false
+    
     let youCgallenge : String = NSLocalizedString("Your challenger", comment: "Caso não haja nome no grupo, este nome será mostrado")
     let liderText : String = NSLocalizedString("Líder", comment: "Titulo da view de grupo que denota o lider")
     let youText : String = NSLocalizedString("You", comment: "Titulo da view de grupo que denota o lider")
     let daysLeft : String = NSLocalizedString("Days left", comment: "texto da contagem de dias restantes")
     let withoutActivityText : String = NSLocalizedString("Oops, \n there's nothing here yet...", comment: "Texto que fala que não há atividadesainda")
     let todayText : String = NSLocalizedString("Today", comment: "")
+    let lonelyHereText : String = NSLocalizedString("Lonely around here?", comment: "Texto de alerta da popUp da home, para convidar amigos")
+    let descriptionLonelyHereText : String = NSLocalizedString("It's more fun with friends!", comment: "Texto de descrição do alerta da popUp da home, para convidar amigos")
+    let textForInvitation : String = NSLocalizedString("Use this code for aloong with my challenge :",comment: "Texto que vai ser enviado para os amigos com o código")
     var body: some View {
         ZStack (alignment: .center){//fundo
             ScrollView{
                 VStack(spacing: 24){ //vstack geral
                     HeaderGroupView()
+                        .padding(.top,16)
                     if let lider = lider, let you = you{
                         Button(action:{
                             if let pointsList = controller.statisticController.listOfPositionUser{
@@ -48,7 +56,9 @@ struct GroupView: View {
                                 }
                             }
                         }){
-                            GroupScoreBoardView(model: model, lider: lider, you: you)
+                            GroupScoreBoardView(model: model, totalDays: totalDays, lastDays: lastDays, first: lider, second: lider, third: lider, you: you)
+                                .frame(width: 342, height: 231)
+                                .padding(.top,24)
                         }
                     }
                     
@@ -57,8 +67,9 @@ struct GroupView: View {
                     }
                     else{
                         Image("withoutactivity")
+                            .resizable()
                             .frame(width: 238, height:247)
-                            .padding(.top, 50)
+                            .padding(.top, 44)
                         Text(withoutActivityText)
                             .font(.subheadline)
                             .italic()
@@ -68,7 +79,6 @@ struct GroupView: View {
             }
             .ignoresSafeArea()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(.branco)
             
             
             VStack{
@@ -93,6 +103,25 @@ struct GroupView: View {
                 }, groupId: model.id,navigateAuto: false)
             }
         }
+        .alert(lonelyHereText, isPresented: $showAlertInviteFriends, actions: {
+            Button(action:{
+                showSheetForShare = true
+                showAlertInviteFriends = false
+            }){
+                HStack{
+                    Text("Invite friends")
+                        .font(.callout)
+                }
+            }
+                   
+        }, message: {
+            Text(descriptionLonelyHereText)
+                .font(.callout)
+        })
+        .sheet(isPresented: $showSheetForShare, content: {
+            ShareSheet(activityItems: [textForInvitation,model.invitationCode ?? ""])
+                .presentationDetents([.fraction(0.55)])
+        })
         .fullScreenCover(isPresented: self.$showCamera) {
             ZStack{
                 accessCameraView(selectedImage: $image)
@@ -122,8 +151,17 @@ struct GroupView: View {
         }
         .onAppear{
             self.update()
+            if controller.activityCompleteList.count == 0{
+                showAlertInviteFriends = true
+            }
         }
-        .background(Color(.branco))
+        .background(
+            Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+        )
+        
     }
     private func update(reload : Bool = false){
         Task{

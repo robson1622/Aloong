@@ -15,4 +15,7 @@ extension Font{
     static var degularLargeSemiBold: Font {
             return Font.custom("Degular-Semibold", size: 33)
         }
+    static var degular22 : Font{
+        return Font.custom("Degular-Regular", size: 22)
+    }
 }

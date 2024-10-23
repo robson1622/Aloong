@@ -22,39 +22,44 @@ struct GroupScoreBoardView: View {
     let youText : String = NSLocalizedString("You", comment: "Titulo da view de grupo que denota o lider")
     let daysLeft : String = NSLocalizedString("Days left", comment: "texto da contagem de dias restantes")
     let withoutActivityText : String = NSLocalizedString("Oops, \n there's nothing here yet...", comment: "Texto que fala que não há atividadesainda")
+    let detailsText : String = NSLocalizedString("Details", comment: "Texto do botão de detalhes do painel de colocações na groupview")
+    let yourposition : String = NSLocalizedString("Your position", comment: "Texto do painel de colocações na groupview")
     var body: some View {
         VStack(alignment: .center, spacing: 24) {//card
             
             HStack(alignment: .center) {//seu desafio
                 Text(model.title)
-                    .font(.title2)
-                    .foregroundColor(.preto)
+                    .font(.degular22)
+                    .foregroundColor(.branco)
                 Spacer()
-            }
-            HStack (alignment:.center, spacing: 22){
                 
-                HStack (spacing: 9){
-                    
-                    Spacer()
-                }
-                
-                RoundedRectangle(cornerRadius: 5) // Ajuste o cornerRadius conforme necessário
-                    .frame(width: 0.5, height: 44) // Altere o width conforme necessário
-                    .foregroundColor(.preto) // Define a cor de preenchimento como transparente
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color.black, lineWidth: 0.75) // Define a borda do retângulo
-                    )
-                
-                HStack (spacing: 9){
-                    
-                    Spacer()
-                }
+                Text(detailsText)
+                    .font(.body)
+                    .foregroundColor(.verde)
                 
             }
-            ProgressView(percent: $lastDays, total: $totalDays, unity: daysLeft)
-                .padding(.top, 10)
-                .frame(maxWidth: .infinity, alignment: .center)
+            HStack(alignment:.bottom){
+                PlaceChallengerComponet(image: second.user.userimage, positionImage: .second, name: second.user.name)
+                PlaceChallengerComponet(image: first.user.userimage, positionImage: .first, name: first.user.name)
+                PlaceChallengerComponet(image: third.user.userimage, positionImage: .third, name: third.user.name)
+            }
+            .padding(.top,-16)
+            
+            HStack{
+                Text(yourposition)
+                    .fontWeight(.medium)
+                    .foregroundStyle(Color(.branco))
+                Spacer()
+                Image(systemName: "clock")
+                    .fontWeight(.medium)
+                    .foregroundStyle(Color(.branco))
+                
+                Text("\(lastDays) \(daysLeft)")
+                    .fontWeight(.medium)
+                    .foregroundStyle(Color(.branco))
+            }
+            
+            
         }
         .padding(24)
         .frame(width:342, alignment: .top)
@@ -81,29 +86,41 @@ struct PlaceChallengerComponet : View{
     let positionImage : position
     let name : String
     @State var uiimage : UIImage?
+    let dimenssionFirst : CGFloat = 66
+    let dimenssionOthers : CGFloat = 44
+    let dimenssionMedalFirst : [CGFloat] = [31,41]
+    let dimenssionMedalOthers : [CGFloat] = [23,30]
+    
     var body : some View{
-        ZStack{
-            if let uiimage{
-                Image(uiImage: uiimage)
-                    .resizable()
-                    .scaledToFit()
-            }
-            else{
+        VStack (alignment:.center){
+            ZStack{
+                if let uiimage{
+                    Image(uiImage: uiimage)
+                        .resizable()
+                        .frame(width: positionImage == .first ? dimenssionFirst : dimenssionOthers , height: positionImage == .first ? dimenssionFirst : dimenssionOthers )
+                        .clipShape(Circle())
+                }
                 Image(self.getImage())
+                    .resizable()
+                    .frame(width: positionImage == .first ? dimenssionMedalFirst[0] : dimenssionMedalOthers[0] ,height: positionImage == .first ? dimenssionMedalFirst[1] : dimenssionMedalOthers[1] )
+                    .padding(.top,positionImage == .first ? dimenssionFirst/1.2 : dimenssionOthers/1.2)
+                    .padding(.trailing,positionImage == .first ? dimenssionFirst/1.2 : dimenssionOthers/1.2)
+                
             }
-        }
-        
-        VStack (alignment:.leading){
             // Callout/Emphasized
             Text(name)
-                .font(.callout)
-                .foregroundColor(.preto)
-                .bold()
+                .font(.footnote)
+                .foregroundColor(.branco)
         }
         .onAppear{
             if let image = image{
                 BucketOfImages.shared.download(from: image){ response in
-                    uiimage = response
+                    if let response = response{
+                        uiimage = response
+                    }
+                    else{
+                        uiimage = self.placeholderImage()
+                    }
                 }
             }
         }
@@ -116,13 +133,26 @@ struct PlaceChallengerComponet : View{
         case .second:
             return "secondplace"
         case .third:
-            return "thirdplace"
+            return "threeplace"
+        }
+    }
+    
+    func placeholderImage() -> UIImage{
+        switch positionImage{
+        case .first:
+            return UIImage(named: "plaveholderuserblue")!
+        case .second:
+            return UIImage(named: "plaveholderuserpink")!
+        case .third:
+            return UIImage(named: "plaveholderusergreen")!
         }
     }
     
 }
 
 #Preview {
-    PlaceChallengerComponet(image: "", positionImage: .first, name: "Fulano")
-    //GroupScoreBoardView(model: exempleGroup, first: PointsOfUser(user: usermodelexemple, points: 3), second: PointsOfUser(user: usermodelexemple, points: 3),third: PointsOfUser(user: usermodelexemple, points: 3), you: PointsOfUser(user: usermodelexemple4, points: 10))
+    //PlaceChallengerComponet(image: "plaveholderuserblue", positionImage: .first, name: "Fulano")
+    
+    
+    GroupScoreBoardView(model: exempleGroup, first: PointsOfUser(user: usermodelexemple, points: 3), second: PointsOfUser(user: usermodelexemple2, points: 3),third: PointsOfUser(user: usermodelexemple3, points: 3), you: PointsOfUser(user: usermodelexemple4, points: 10))
 }

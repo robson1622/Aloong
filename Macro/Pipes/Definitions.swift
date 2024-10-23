@@ -17,11 +17,11 @@ struct UserModelNames {
 }
 
 //let aniversario = Date("2023-05-19 10:30:00 +0000")
-let usermodelexemple : UserModel = UserModel(id: "ebv7e128hdixnws", name: "barbs",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lij324w")
-let usermodelexemple2 : UserModel = UserModel(id: "hew9829823giucgosa", name: "nico",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
-let usermodelexemple3 : UserModel = UserModel(id: "dnvuudbvscw98yw-0", name: "robis",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
-let usermodelexemple4 : UserModel = UserModel(id: "cnkjbsdg8y8quwh", name: "yan",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
-let usermodelexemple5 : UserModel = UserModel(id: "vcbdy8729ihdoih", name: "flor",email: "@mail.com",userimage: "cnevduavcnajncjawg019jx1?.'lijw")
+let usermodelexemple : UserModel = UserModel(id: "ebv7e128hdixnws", name: "brabs",email: "@mail.com",userimage: "/21e11c0e43f2ab517949d1834ef5e43f.jpg")
+let usermodelexemple2 : UserModel = UserModel(id: "hew9829823giucgosa", name: "nico",email: "@mail.com",userimage: "/21e11c0e43f2ab517949d1834ef5e43f.jpg")
+let usermodelexemple3 : UserModel = UserModel(id: "dnvuudbvscw98yw-0", name: "robis",email: "@mail.com",userimage: "/21e11c0e43f2ab517949d1834ef5e43f.jpg")
+let usermodelexemple4 : UserModel = UserModel(id: "cnkjbsdg8y8quwh", name: "yan",email: "@mail.com",userimage: "/21e11c0e43f2ab517949d1834ef5e43f.jpg")
+let usermodelexemple5 : UserModel = UserModel(id: "vcbdy8729ihdoih", name: "flor",email: "@mail.com",userimage: "/21e11c0e43f2ab517949d1834ef5e43f.jpg")
 
 
 

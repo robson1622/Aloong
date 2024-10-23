@@ -18,8 +18,8 @@ struct Header: View {
                 HStack {
                     if title != nil {
                         Text(title!)
-                            .foregroundStyle(Color(.preto))
-                            .bold()
+                            .foregroundStyle(Color(.systemGray))
+                            
                     }
                 }
                 
@@ -52,7 +52,10 @@ struct Header: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.vertical,16)
+            .padding(.top,16)
+            .padding(.horizontal,24)
+            Divider()
+                .padding(.top,16)
         }
     }
 }
