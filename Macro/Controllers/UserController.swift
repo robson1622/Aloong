@@ -34,7 +34,7 @@ class UserController: ObservableObject{
                 Task{
                     if let _ = await user.read(){}
                     else{
-                        DispatchQueue.main.sync {
+                        DispatchQueue.main.async {
                             self.myUser = nil
                         }
                     }

@@ -38,12 +38,13 @@ struct Header: View {
                             ViewsController.shared.back()
                             onTapBack()
                         } label: {
-                            HStack {
+                            HStack(spacing:4) {
                                 Image(systemName: "chevron.left")
                                     .foregroundStyle(.roxo3)
                                 
                                 Text("back")
                                     .foregroundStyle(.roxo3)
+                                    .font(.system(size:17))
                             }
                             .tint(.white)
                             .foregroundStyle(.black)

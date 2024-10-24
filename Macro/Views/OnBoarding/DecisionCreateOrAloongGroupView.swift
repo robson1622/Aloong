@@ -68,7 +68,7 @@ struct DecisionCreateOrAloongGroupView: View {
                 }){
                     Text(clickHere)
                         .font(.subheadline)
-                        .foregroundColor(.branco)
+                        .foregroundColor(.azul4)
                         .padding(.top,6)
                 }
             }

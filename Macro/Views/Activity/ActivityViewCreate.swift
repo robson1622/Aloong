@@ -68,12 +68,12 @@ struct ActivityViewCreate: View {
                 }){
                     if loadingState == .idle{
                         Text(model?.id == nil ? publish : save)
-                            .font(.body)
+                            .font(.system(size:17))
                             .foregroundStyle(Color(.roxo3))
                     }
                     else{
                         Text(LoadingStateString(loadingState))
-                            .font(.body)
+                            .font(.system(size:17))
                             .foregroundStyle(Color(.roxo3))
                     }
                     

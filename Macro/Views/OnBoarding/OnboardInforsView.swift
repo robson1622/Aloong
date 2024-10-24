@@ -13,6 +13,8 @@ struct OnboardSignInView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var controller : GeneralController
     @State var selectedTab = 0
+    @State var view : String = "Idle"
+    @State var state : String = "Idle"
     
     let testVersion : Bool = true
     let firstText : String = NSLocalizedString("Registre suas conquistas e desafie seus amigos!", comment: "")
@@ -38,7 +40,7 @@ struct OnboardSignInView: View {
                             .tag(1)
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // Esconde o indicador padrão
-                    .frame(height: .infinity)
+                    .frame(maxHeight: .infinity)
                 }
                 
             }
@@ -158,30 +160,67 @@ struct OnboardSignInView: View {
                 switch result {
                 case .success(let authorization):
                     if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                        
-                        
-                        if testVersion{
-                            var name : String = ""
-                            if appleIDCredential.authorizedScopes.contains(.fullName) {
-                                if let hasName = appleIDCredential.fullName?.namePrefix{
-                                    name = hasName
+                        state = "Loading..."
+                        let idApple = appleIDCredential.user
+                                    
+                        // Verifica se é possível obter o nome completo
+                        let fullName = appleIDCredential.fullName
+                        let email = appleIDCredential.email
+
+                        var userName: String = "Unknown"
+                        Task {
+                            // Tenta obter o nome completo
+                            if let fullName = fullName {
+                                if let givenName = fullName.givenName{
+                                    userName = "\(givenName)"
+                                }
+                            } else {
+                                // Aqui você pode buscar o nome salvo anteriormente
+                                if let userSaved : UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user){
+                                    userName = userSaved.name
+                                }
+                                else{
+                                    userName = controller.userController.myUser?.name ?? "Aloonguer"
                                 }
                             }
-                            let idApple = appleIDCredential.user
-                            Task{
-                            if let user : UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user){
-                                controller.userController.myUser = user
+                            
+                            let newUser = UserModel(id: idApple, name: userName, email: email)
+
+                        
+                            if let _ = await newUser.create() {
+                                controller.userController.myUser = newUser
                                 controller.userController.saveUser()
-                                if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
-                                    ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
-                                    controller.groupController.saveLocalMainGroup(group: idGroup)
-                                }
+                                ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
                             }
-                            else{
-                                ViewsController.shared.navigateTo(to: .createUser(idApple, name, ""), reset: true)
-                            }
-                                                                                  }
                         }
+//                        if testVersion{
+//                            let idApple = appleIDCredential.user
+//                            Task{
+//                            if let user : UserModel = await DatabaseInterface.shared.read(id: idApple, table: .user){
+//                                controller.userController.myUser = user
+//                                controller.userController.saveUser()
+//                                if let idGroup = await controller.groupController.readAllGroupsOfUser().first {
+//                                    controller.groupController.saveLocalMainGroup(group: idGroup)
+//                                    ViewsController.shared.navigateTo(to: .group(idGroup), reset: true)
+//                                }
+//                            }
+//                            else{
+//                                if !name.isEmpty{
+//                                    let newuser = UserModel(id: idApple, name: name)
+//                                    Task{
+//                                        if let _ = await newuser.create(){
+//                                            controller.userController.myUser = newuser
+//                                            controller.userController.saveUser()
+//                                            ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
+//                                        }
+//                                    }
+//                                }
+//                                else{
+//                                    ViewsController.shared.navigateTo(to: .createUser(idApple, name, ""), reset: true)
+//                                }
+//                            }
+//                                                                                  }
+//                        }
 //                                else{
 //                                    guard let identityToken = appleIDCredential.identityToken else {
 //                                        print("ERRO DE AUTENTICAÇÃO DO TOKEN EM OnboardSignInView \n")

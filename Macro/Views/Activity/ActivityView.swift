@@ -50,7 +50,7 @@ struct ActivityView: View {
                         }
                     }){
                         Text( userOwner ? edit : reportText)
-                            .font(.callout)
+                            .font(.system(size:17))
                             .foregroundColor(.roxo3)
                     }
                     
