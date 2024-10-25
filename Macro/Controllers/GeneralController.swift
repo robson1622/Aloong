@@ -28,9 +28,10 @@ class GeneralController: ObservableObject{
     
     
     func loadAllLists(idGroup : String) async{
+        print("\n loadAllLists - GeneralController \n")
         _ = self.userController.loadUser()
         await self.loadGroup(idGroup: idGroup)
-        let listOfActivities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
+        let listOfActivities = await activityController.readPlusTenActivities(idGroup: idGroup)
         for activity in listOfActivities{
             if let completeAcitivity = await getActivityCompleteOfActivity(activity: activity, idGroup: idGroup){
                 if let index = activityCompleteList.firstIndex(where: {$0.activity?.id == completeAcitivity.activity?.id}){
@@ -58,8 +59,13 @@ class GeneralController: ObservableObject{
     }
     
     func readPlusTenActivities(idGroup: String) async -> [ActivityCompleteModel]{
-        print("FALTA CODAR A REQUISIÇÃO DE MAIS 10 ATIVIDADES EM GeneralController/readPlusTenActivities")
-        return []
+        if activityCompleteList.isEmpty{
+            
+        }
+        else{
+            
+        }
+        return activityCompleteList
     }
     
     func updateActivitiesComplete(idGroup: String) async{

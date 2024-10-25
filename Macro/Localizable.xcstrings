@@ -149,6 +149,9 @@
     "Back" : {
       "comment" : " texto do botão de voltar na barra do teclado "
     },
+    "Bem vindo!" : {
+      "comment" : "Texto que explica o que fazer na view de escolha entre criar um grupo e entrar em um"
+    },
     "Birth date" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -194,9 +197,6 @@
     },
     "Choose the name, description and duration of the challenge" : {
       "comment" : "Texto de descrição da criação do desafio"
-    },
-    "Click here" : {
-      "comment" : "Texto do botão para entrar em um grupo com o código"
     },
     "Click me!" : {
 
@@ -300,9 +300,6 @@
     "Distance" : {
 
     },
-    "Do you have a code?" : {
-      "comment" : "Texto que questiona se a pessoa tem um código"
-    },
     "Duração" : {
 
     },
@@ -334,6 +331,9 @@
     },
     "Enter your name" : {
 
+    },
+    "Entrar em desafio" : {
+      "comment" : "Texto do botão para entrar em um desafio com o código"
     },
     "Final date" : {
       "comment" : "texto que fala a data de fim do desafio"
@@ -379,6 +379,9 @@
     "ItsWe" : {
 
     },
+    "Já tenho um código" : {
+
+    },
     "K %@" : {
 
     },
@@ -391,14 +394,8 @@
     "Left days" : {
       "comment" : "Marcador de dias que faltam"
     },
-    "Let's get to the challenge" : {
-      "comment" : "Texto que explica o que fazer na view de escolha entre criar um grupo e entrar em um"
-    },
     "Let's go " : {
       "comment" : "Texto do botão de criar grupo"
-    },
-    "Let's go..." : {
-      "comment" : "Texto que explica por que criar o grupo, está dentro do botão de criar"
     },
     "Líder" : {
       "comment" : "Titulo da view de grupo que denota o lider"
@@ -472,6 +469,9 @@
     },
     "Publish" : {
       "comment" : "Botão de ação de publicar a atividade"
+    },
+    "Quero criar um desafio" : {
+      "comment" : "Texto que explica por que criar o grupo, está dentro do botão de criar"
     },
     "RANKING" : {
       "comment" : "Texto do titulo da view de details que mostra a classificação"
@@ -610,9 +610,6 @@
     },
     "You" : {
       "comment" : "Titulo da view de grupo que denota o lider"
-    },
-    "You can choose to create a challenge or enter one with a code" : {
-      "comment" : "Texto a baixo do titulo na tela de criar ou entrar em um grupo"
     },
     "Your age" : {
 

@@ -90,7 +90,13 @@ struct OnboardSignInView: View {
                                             }
                                         } else {
                                             // Se o usuário não existir, redirecionar para a tela de criação de conta
-                                            ViewsController.shared.navigateTo(to: .createUser(idApple, name, email), reset: true)
+                                            var newUser = UserModel(id: idApple, name: name, email: email)
+                                            if let _ = await newUser.create(){
+                                                controller.userController.myUser = newUser
+                                                controller.userController.saveUser()
+                                                ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
+                                            }
+                                            
                                         }
                                     } catch {
                                         print("ERRO AO TENTAR SIGNIN NO FIREBASE EM OnboardSignInView \n\(error.localizedDescription)")

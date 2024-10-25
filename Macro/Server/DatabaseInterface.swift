@@ -103,6 +103,31 @@ class DatabaseInterface: ObservableObject{
             return []
         }
     }
+    
+    func loadMoreDocuments<T: Decodable>(isEqualValue: String,table: DatabaseTable, lastDocumentId: String?, field: String) async throws -> [T] {
+        var query = db.collection(getTableName(type: table))
+            .order(by: field, descending: true)
+            .whereField(field, isEqualTo: isEqualValue)
+
+        if let lastDocumentId = lastDocumentId {
+            let lastVisible = try await db.collection(getTableName(type: table))
+                .document(lastDocumentId)
+                .getDocument()
+            
+            query = query.start(afterDocument: lastVisible)
+        }
+
+        query = query.limit(to: 10)
+
+        let querySnapshot = try await query.getDocuments()
+        var results: [T] = []
+        for document in querySnapshot.documents {
+            results.append(try document.data(as: T.self))
+        }
+        return results
+    }
+
+
     //
     func deleteDocuments(listOfIds : [String],table: DatabaseTable) async -> Bool?{
         var sucess : Bool? = nil

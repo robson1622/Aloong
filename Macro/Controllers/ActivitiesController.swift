@@ -15,45 +15,46 @@ class ActivitiesController: ObservableObject{
     @Published var activities : [ActivityModel] = []
     @Published var imagesForNewActivity : [UIImage] = []
     
-    private struct ActivitiesOfGroups {
-        var idGroup : String
-        var activities : [ActivityModel]
-    }
-    
-    @Published private var activitiesOfGroups : [ActivitiesOfGroups] = []
     //retorna todas as atividades do grupo
     func readActivitiesOfGroup(idGroup : String) async -> [ActivityModel]{
-        if let index = activitiesOfGroups.firstIndex(where: { $0.idGroup == idGroup }){
-            //primeiro pegamos todas as relacoes de atividades com grupos
-            let relations = await activityGroupController.readAllActivityGroupsOfGroup(idGroup: idGroup)
-            for relation in relations{
-                if let activity : ActivityModel = await DatabaseInterface.shared.read(id: relation.idActivity, table: .activity){
-                    if let indexInActivity = activitiesOfGroups[index].activities.firstIndex(where: {$0.id == activity.id}){
-                        DispatchQueue.main.sync {
-                            self.activitiesOfGroups[index].activities[indexInActivity] = activity
-                        }
+        //primeiro pegamos todas as relacoes de atividades com grupos
+        let relations = await activityGroupController.readAllActivityGroupsOfGroup(idGroup: idGroup)
+        for relation in relations{
+            if let activity : ActivityModel = await DatabaseInterface.shared.read(id: relation.idActivity, table: .activity){
+                if let indexInActivity = activities.firstIndex(where: {$0.id == activity.id}){
+                    DispatchQueue.main.sync {
+                        self.activities[indexInActivity] = activity
                     }
-                    else{
-                        DispatchQueue.main.sync {
-                            self.activitiesOfGroups[index].activities.append(activity)
-                        }
+                }
+                else{
+                    DispatchQueue.main.sync {
+                        self.activities.append(activity)
                     }
                 }
             }
-            return activitiesOfGroups[index].activities
+        }
+        return activities
             
-        }
-        else{
-            var newGroupActivities : ActivitiesOfGroups = ActivitiesOfGroups(idGroup: idGroup, activities: [])
-            let relations = await activityGroupController.readAllActivityGroupsOfGroup(idGroup: idGroup)
-            for relation in relations{
-                if let activity : ActivityModel = await DatabaseInterface.shared.read(id: relation.idActivity, table: .activity){
-                    newGroupActivities.activities.append(activity)
+    }
+    //
+    func readPlusTenActivities(idGroup : String) async -> [ActivityModel]{
+        let idLastDocumento : String? = activities.last?.id
+        let relations = await activityGroupController.readPlusActivityGroupOfGroup(idGroup: idGroup)
+        for relation in relations{
+            if let activity : ActivityModel = await DatabaseInterface.shared.read(id: relation.idActivity, table: .activity){
+                if let indexInActivity = activities.firstIndex(where: {$0.id == activity.id}){
+                    DispatchQueue.main.sync {
+                        self.activities[indexInActivity] = activity
+                    }
+                }
+                else{
+                    DispatchQueue.main.sync {
+                        self.activities.append(activity)
+                    }
                 }
             }
-            activitiesOfGroups.append(newGroupActivities)
-            return newGroupActivities.activities
         }
+        return activities
     }
     //atividades de um usuário especifico
     func readActivitiesOfUser(idUser : String) async -> [ActivityModel]{

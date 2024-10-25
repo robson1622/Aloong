@@ -72,7 +72,7 @@ struct ContentView: View {
             }
             .onAppear {
                 if false{
-                    ViewsController.shared.navigateTo(to: .createActivity("", "",nil), reset: true)
+                    ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
                 }
                 else{
                     Task{
