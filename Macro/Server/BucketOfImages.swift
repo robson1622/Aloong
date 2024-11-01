@@ -21,7 +21,7 @@ ImageSaved registra onde está salva a imagem localmente(offline) na ROM
 class BucketOfImages: ObservableObject{
     static var shared : BucketOfImages = BucketOfImages()
     private var storage = Storage.storage()
-    
+    private var ongoingDownloads: [String: [(UIImage?) -> Void]] = [:]
     private struct ImageCash {
         var id : String
         var image : UIImage
@@ -139,36 +139,43 @@ class BucketOfImages: ObservableObject{
             self.images.append(newImageCash)
             completion(imageLocal)
             return
-        } else {
-            // Obtém referência ao arquivo no Firebase Storage
-            let ref = storage.reference(forURL: localStorageImages + urlString)
+        }
+        // Verifica se já existe um download em andamento para a mesma URL
+//        if ongoingDownloads[urlString] != nil {
+//            ongoingDownloads[urlString]?.append(completion)
+//            return
+//        } else {
+//            ongoingDownloads[urlString] = [completion]
+//        }
+
+        // Obtém referência ao arquivo no Firebase Storage
+        let ref = storage.reference(forURL: localStorageImages + urlString)
+        
+        // Faz o download dos dados da imagem
+        ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("Error downloading image: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
             
-            // Faz o download dos dados da imagem
-            ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
-                if let error = error {
-                    print("Error downloading image: \(error.localizedDescription)")
-                    completion(nil)
-                    return
-                }
+            // Converte os dados baixados em uma UIImage
+            if let data = data, let image = UIImage(data: data) {
+                let newImageCash = ImageCash(id: urlString, image: image, date: Date())
+                self.images.append(newImageCash)
                 
-                // Converte os dados baixados em uma UIImage
-                if let data = data, let image = UIImage(data: data) {
-                    let newImageCash = ImageCash(id: urlString, image: image, date: Date())
-                    self.images.append(newImageCash)
-                    
-                    // Salva a imagem baixada localmente
-                    let imageSaved = ImagesSaved(url: urlString, date: Date())
-                    var list = self.readImageDocument()
-                    list.append(imageSaved)
-                    self.saveImageDocument(list)
-                    _ = self.saveImageLocally(image: image, fileName: urlString)
-                    
-                    completion(image)
-                } else {
-                    completion(nil)
-                }
+                // Salva a imagem baixada localmente
+                let imageSaved = ImagesSaved(url: urlString, date: Date())
+                var list = self.readImageDocument()
+                list.append(imageSaved)
+                self.saveImageDocument(list)
+                
+                completion(image)
+            } else {
+                completion(nil)
             }
         }
+        
     }
 //
 //    func download(from urlString: String, completion: @escaping (UIImage?) -> Void) {
@@ -238,29 +245,6 @@ class BucketOfImages: ObservableObject{
     ///     FUNÇÕES QUE SALVAM OFILINE
     ///
     ///
-
-    private func saveImageLocally(image: UIImage, fileName: String) -> URL? {
-        let bucketLocal : [ImagesSaved] = self.readImageDocument()
-        
-        
-        
-        guard let data = image.jpegData(compressionQuality: 1.0) else { return nil }
-        
-        // Caminho para o diretório de documentos
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        
-        // Cria o URL para salvar a imagem
-        if let fileURL = documentsDirectory?.appendingPathComponent(fileName) {
-            do {
-                try data.write(to: fileURL)
-                print(fileURL)
-                return fileURL // Retorna o caminho da imagem salva
-            } catch {
-                print("Erro ao salvar a imagem: \(error)")
-            }
-        }
-        return nil
-    }
     
     private func loadImageLocally(fileName: String) -> UIImage? {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first

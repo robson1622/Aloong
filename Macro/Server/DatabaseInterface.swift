@@ -106,7 +106,7 @@ class DatabaseInterface: ObservableObject{
     
     func loadMoreDocuments<T: Decodable>(isEqualValue: String,table: DatabaseTable, lastDocumentId: String?, field: String) async throws -> [T] {
         var query = db.collection(getTableName(type: table))
-            .order(by: field, descending: true)
+            .order(by: "date", descending: true)
             .whereField(field, isEqualTo: isEqualValue)
 
         if let lastDocumentId = lastDocumentId {

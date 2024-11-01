@@ -26,6 +26,7 @@ struct GroupView: View {
     
     @State var showAlertInviteFriends : Bool = false
     @State var showSheetForShare : Bool = false
+    @State var loadingState : String = "Idle"
     
     let youCgallenge : String = NSLocalizedString("Your challenger", comment: "Caso não haja nome no grupo, este nome será mostrado")
     let liderText : String = NSLocalizedString("Líder", comment: "Titulo da view de grupo que denota o lider")
@@ -36,6 +37,10 @@ struct GroupView: View {
     let lonelyHereText : String = NSLocalizedString("Lonely around here?", comment: "Texto de alerta da popUp da home, para convidar amigos")
     let descriptionLonelyHereText : String = NSLocalizedString("It's more fun with friends!", comment: "Texto de descrição do alerta da popUp da home, para convidar amigos")
     let textForInvitation : String = NSLocalizedString("Use this code for aloong with my challenge :",comment: "Texto que vai ser enviado para os amigos com o código")
+    let inviteFriendsText : String = NSLocalizedString("Invite friends", comment: "Texto que vai ser enviado para os amigos com o código")
+    let loadMoreText : String = NSLocalizedString("Load more", comment: "Texto para carregar mais 10 atividades")
+    let loadingActivities : String = NSLocalizedString("Loading activities...", comment: "Texto de carregando atividades")
+    let loadingText : String = NSLocalizedString("Loading...", comment: "Texto de carregando")
     var body: some View {
         ZStack (alignment: .center){//fundo
             ScrollView{
@@ -76,6 +81,21 @@ struct GroupView: View {
                             .foregroundColor(.black)
                     }
                 }
+                if !controller.activityCompleteList.isEmpty{
+                    Button(action:{
+                        self.update(reload: true)
+                        if loadingState == "Idle"{
+                            loadingState = "Loading"
+                        }
+                    }){
+                        Text(loadingState == "Loading" ? loadingText : loadMoreText )
+                            .font(.headline)
+                            .foregroundColor(.azul4)
+                    }
+                    .padding(.bottom,150)
+                    .padding(.top,24)
+                }
+                
             }
             .ignoresSafeArea()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -109,7 +129,7 @@ struct GroupView: View {
                 showAlertInviteFriends = false
             }){
                 HStack{
-                    Text("Invite friends")
+                    Text(inviteFriendsText)
                         .font(.callout)
                 }
             }
@@ -147,11 +167,11 @@ struct GroupView: View {
             }
         }
         .refreshable {
-            self.update(reload: true)
+            self.update()
         }
         .onAppear{
             self.update()
-            if controller.activityCompleteList.count == 0{
+            if controller.activityCompleteList.count == 0 && self.showAlert(){
                 showAlertInviteFriends = true
             }
         }
@@ -166,9 +186,12 @@ struct GroupView: View {
     private func update(reload : Bool = false){
         Task{
             if let id = model.id{
+                loadingState = "Loading"
                 if reload{
+                    self.controller.activityCompleteList.removeAll()
                     await self.controller.loadAllLists(idGroup: id)
                 }
+                
                 self.controller.activityCompleteList = controller.activityCompleteList
                 you = controller.statisticController.you ?? PointsOfUser(user: usermodelexemple, points: 0)
                 lider = controller.statisticController.lider ?? you
@@ -182,9 +205,19 @@ struct GroupView: View {
                         liderImage = image
                     }
                 }
+                loadingState = "Done"
             }
         
         }
+    }
+    
+    private func showAlert() -> Bool{
+        let key = "showAlertInviteFriends"
+        if UserDefaults.standard.object(forKey: key) == nil {
+            UserDefaults.standard.set(true, forKey: key)
+            return true
+        }
+        return false
     }
     
 }

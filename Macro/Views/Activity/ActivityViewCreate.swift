@@ -53,44 +53,46 @@ struct ActivityViewCreate: View {
     let stepsText : String = NSLocalizedString("Steps", comment: "")
     var body: some View {
         NavigationView{
-            VStack{
-                Header(title: "Activity",trailing: [AnyView(Button(action:{
-                    if(model?.id == nil){
-                        self.create()
-                    }
-                    else{
-                        Task{
-                            if let idGroup = model?.id{
-                                await self.update(idGroup: idGroup)
+            VStack {
+                VStack{
+                    Header(title: "Activity",trailing: [AnyView(Button(action:{
+                        if(model?.id == nil){
+                            self.create()
+                        }
+                        else{
+                            Task{
+                                if let idGroup = model?.id{
+                                    await self.update(idGroup: idGroup)
+                                }
                             }
                         }
-                    }
-                }){
-                    if loadingState == .idle{
-                        Text(model?.id == nil ? publish : save)
-                            .font(.body)
-                            .foregroundStyle(Color(.roxo3))
-                    }
-                    else{
-                        Text(LoadingStateString(loadingState))
-                            .font(.body)
-                            .foregroundStyle(Color(.roxo3))
-                    }
+                    }){
+                        if loadingState == .idle{
+                            Text(model?.id == nil ? publish : save)
+                                .font(.body)
+                                .foregroundStyle(Color(.roxo3))
+                        }
+                        else{
+                            Text(LoadingStateString(loadingState))
+                                .font(.body)
+                                .foregroundStyle(Color(.roxo3))
+                        }
+                        
+                    })],onTapBack: {})
                     
-                })],onTapBack: {})
-                
-                ScrollView{
-                    header
-                    informations
-                    metrics
+                    ScrollView{
+                        header
+                        informations
+                        metrics
+                    }
                 }
+                .padding(.horizontal,24)
             }
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
                     toolbar
                 }
             }
-            .padding(.horizontal,24)
             .onAppear{
                 Task{
                     listOfFriends = await controller.userController.readAllUsersOfGroup(idGroup: idGroup, reset: false)
@@ -152,7 +154,6 @@ struct ActivityViewCreate: View {
                 }
             }
             .background(Color(.branco))
-            
         }
         
     }

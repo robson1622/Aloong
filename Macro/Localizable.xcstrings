@@ -130,6 +130,9 @@
     "and more " : {
 
     },
+    "Anote tudo e veja sua evolução! Convide seus amigos e veja quem chega mais longe" : {
+
+    },
     "back" : {
       "localizations" : {
         "en" : {
@@ -201,9 +204,6 @@
     "Click me!" : {
 
     },
-    "Competir nunca foi tão fácil!" : {
-
-    },
     "Copy code :" : {
       "comment" : "texto do botão de copiar o código"
     },
@@ -229,6 +229,9 @@
           }
         }
       }
+    },
+    "Crie competições personalizadas" : {
+
     },
     "Data selecionada: %@" : {
       "extractionState" : "stale",
@@ -371,7 +374,7 @@
 
     },
     "Invite friends" : {
-      "comment" : "Texto do botão de convidar amigo"
+      "comment" : "Texto do botão de convidar amigo\nTexto que vai ser enviado para os amigos com o código"
     },
     "It's more fun with friends!" : {
       "comment" : "Texto de descrição do alerta da popUp da home, para convidar amigos"
@@ -400,11 +403,14 @@
     "Líder" : {
       "comment" : "Titulo da view de grupo que denota o lider"
     },
-    "Loading..." : {
-      "comment" : "Texto que aparece enquanto a view está carregando"
+    "Load more" : {
+      "comment" : "Texto para carregar mais 10 atividades"
     },
-    "Logue suas atividades diárias e desafie seus amigos!" : {
-
+    "Loading activities..." : {
+      "comment" : "Texto de carregando atividades"
+    },
+    "Loading..." : {
+      "comment" : "Texto de carregando\nTexto que aparece enquanto a view está carregando"
     },
     "Lonely around here?" : {
       "comment" : "Texto de alerta da popUp da home, para convidar amigos"
@@ -478,6 +484,9 @@
     },
     "REFERENCES" : {
       "comment" : "Titulo do cabeçalho da view do perfil do usuário"
+    },
+    "Registre suas conquistas e desafie seus amigos!" : {
+
     },
     "Save" : {
       "extractionState" : "manual",
@@ -566,6 +575,9 @@
     },
     "Sucess on copy" : {
       "comment" : "Texto que informa que o texto foi copiado com sucesso"
+    },
+    "Supere seus limites com desafios em grupo!" : {
+
     },
     "Tell us more" : {
       "comment" : "Botão de prosseguir com a criação do perfil"

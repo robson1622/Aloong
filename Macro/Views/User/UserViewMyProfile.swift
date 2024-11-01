@@ -30,7 +30,7 @@ struct UserViewMyProfile: View {
     var body: some View {
         
         ZStack (alignment: .center){
-            VStack(spacing: 24){
+            VStack {
                 Header(title: yourProfileText, trailing: [AnyView(
                     Button(action:{
                         if stateOfSaving == nil{
@@ -43,183 +43,186 @@ struct UserViewMyProfile: View {
                     }
                 )],onTapBack: {})
                 .padding(.top,56)
-                VStack (alignment: .center, spacing:16){
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(width: 130, height: 130)
-                            .background(
-                                Image(uiImage: image ?? UIImage())
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 130, height: 130)
-                                    .clipped()
-                            )
-                            .cornerRadius(130)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 130)
-                                    .inset(by: 4)
-                                    .stroke(.roxo3, lineWidth: 8)
-                            )
-                        VStack{
-                            Spacer()
-                            HStack{
+                VStack(spacing: 24){
+                    
+                    VStack (alignment: .center, spacing:16){
+                        ZStack {
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 130, height: 130)
+                                .background(
+                                    Image(uiImage: image ?? UIImage())
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 130, height: 130)
+                                        .clipped()
+                                )
+                                .cornerRadius(130)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 130)
+                                        .inset(by: 4)
+                                        .stroke(.roxo3, lineWidth: 8)
+                                )
+                            VStack{
                                 Spacer()
-                                VStack {
-                                    PhotosPicker(
-                                        selection: $pickerPhoto.selectedPhotos, // holds the selected photos from the picker
-                                        maxSelectionCount: 1, // sets the max number of photos the user can select
-                                        selectionBehavior: .ordered, // ensures we get the photos in the same order that the user selected them
-                                        matching: .images // filter the photos library to only show images
-                                    ) {
-                                        ZStack(alignment:.center){
-                                            Circle()
-                                                .frame(width: 38, height: 38) // Define o tamanho do círculo
-                                                .foregroundColor(.branco) // Define a cor de preenchimento do círculo
-                                                .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8) // Ajustes na sombra
-                                            Image(systemName: "square.and.pencil")
-                                                .font(.title2)
-                                                .foregroundColor(.roxo3)
-                                                .bold()
-                                        }
-                                        .frame(width: 38, height: 38)
-                                        .padding(0)
-                                    }
-                                }
-                                .padding()
-                                .onChange(of: pickerPhoto.selectedPhotos) { _ in
-                                    Task{
-                                        await pickerPhoto.convertDataToImage()
-                                        if let newImage = pickerPhoto.images.first{
-                                            image = newImage
+                                HStack{
+                                    Spacer()
+                                    VStack {
+                                        PhotosPicker(
+                                            selection: $pickerPhoto.selectedPhotos, // holds the selected photos from the picker
+                                            maxSelectionCount: 1, // sets the max number of photos the user can select
+                                            selectionBehavior: .ordered, // ensures we get the photos in the same order that the user selected them
+                                            matching: .images // filter the photos library to only show images
+                                        ) {
+                                            ZStack(alignment:.center){
+                                                Circle()
+                                                    .frame(width: 38, height: 38) // Define o tamanho do círculo
+                                                    .foregroundColor(.branco) // Define a cor de preenchimento do círculo
+                                                    .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8) // Ajustes na sombra
+                                                Image(systemName: "square.and.pencil")
+                                                    .font(.title2)
+                                                    .foregroundColor(.roxo3)
+                                                    .bold()
+                                            }
+                                            .frame(width: 38, height: 38)
+                                            .padding(0)
                                         }
                                     }
-                                }
+                                    .padding()
+                                    .onChange(of: pickerPhoto.selectedPhotos) { _ in
+                                        Task{
+                                            await pickerPhoto.convertDataToImage()
+                                            if let newImage = pickerPhoto.images.first{
+                                                image = newImage
+                                            }
+                                        }
+                                    }
                                     
-                            }
-                        }
-                    }
-                    .frame(width: 130, height: 130)
-                    .padding(0)
-                    
-                    VStack(){
-                        Text(user?.name ?? "Unamed")
-                            .font(.title2)
-                            .foregroundColor(.roxo3)
-                        HStack (alignment: .center, spacing: 4){
-                            Image(systemName: "hands.and.sparkles")
-                                .font(.callout)
-                                .foregroundColor(.roxo3)
-                            Text(activeDays)
-                                .font(.callout)
-                                .foregroundColor(.roxo3)
-                        }
-                        .padding(0)
-                    }
-                    .padding(0)
-                }
-                
-                //resto
-                VStack(spacing:32){
-                    HStack(alignment: .top, spacing: 20) {
-                        // Body/Regular
-                        TextField(user?.name ?? "Unamed", text: $name)
-                            .font(.body)
-                            .foregroundColor(.preto)
-                            .padding()
-                            .background(Color(.systemGray5))
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
-                            .cornerRadius(8)
-                            .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 8)
-                    }
-                    .padding(0)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    
-                    VStack(spacing:8){
-//                        HStack{
-//                            Text(references)
-//                                .font(.caption)
-//                                .foregroundColor(.cinza3)
-//                                .padding(.leading, 4)
-//                            Spacer()
-//                        }
-//                        .padding(0)
-                        
-//                        HStack(alignment: .center, spacing: 20) {
-//                            // Body/Regular
-//                            Text("Dark Mode")
-//                                .font(.body)
-//                                .foregroundColor(.cinza3)
-//                                .padding(.vertical,0)
-//                                .padding(.leading,16)
-//                            Spacer()
-//                            Toggle("", isOn: $toggle)
-//                                .padding(.vertical, 11)
-//                                .padding(.trailing,16)
-//                        }
-//                        .background(.branco)
-//                        .frame(maxWidth: .infinity, alignment: .topLeading)
-//                        .cornerRadius(8)
-//                        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 8)
-//                        .padding(0)
-                        
-                        Button(action: {
-                            Task{
-                                if let _ = await controller.userController.myUser?.delete(){
-                                    UserLocalSave().deleteUser()
-                                    ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
                                 }
                             }
-                        }) {
-                            HStack(alignment: .center, spacing: 4) {
-                                Spacer()
-                                Image(systemName: "rectangle.portrait.and.arrow.forward")
-                                    .font(.body)
-                                    .foregroundColor(.branco)
-                                    .padding(.horizontal,0)
-                                Text(getOut)
-                                    .font(.body)
-                                    .foregroundColor(.branco)
-                                    .padding(.horizontal,0)
-                                    .padding(.vertical)
-                                Spacer()
-                            }
-                            .background(.roxo3)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .cornerRadius(8)
-                            .padding(0)
                         }
+                        .frame(width: 130, height: 130)
+                        .padding(0)
                         
-                        Button(action: {
-                        }) {
-                            HStack(alignment: .center, spacing: 4) {
-                                // Body/Regular
-                                Spacer()
-                                Image(systemName: "x.circle")
-                                    .font(.body)
-                                    .foregroundColor(.branco)
-                                    .padding(.horizontal,0)
-                                Text(deleteAccount)
-                                    .font(.body)
-                                    .foregroundColor(.branco)
-                                    .padding(.horizontal,0)
-                                    .padding(.vertical)
-                                Spacer()
+                        VStack(){
+                            Text(user?.name ?? "Unamed")
+                                .font(.title2)
+                                .foregroundColor(.roxo3)
+                            HStack (alignment: .center, spacing: 4){
+                                Image(systemName: "hands.and.sparkles")
+                                    .font(.callout)
+                                    .foregroundColor(.roxo3)
+                                Text(activeDays)
+                                    .font(.callout)
+                                    .foregroundColor(.roxo3)
                             }
-                            .background(.roxo3)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .cornerRadius(8)
                             .padding(0)
                         }
                         .padding(0)
                     }
+                    
+                    //resto
+                    VStack(spacing:32){
+                        HStack(alignment: .top, spacing: 20) {
+                            // Body/Regular
+                            TextField(user?.name ?? "Unamed", text: $name)
+                                .font(.body)
+                                .foregroundColor(.preto)
+                                .padding()
+                                .background(Color(.systemGray5))
+                                .frame(maxWidth: .infinity, alignment: .topLeading)
+                                .cornerRadius(8)
+                                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 8)
+                        }
+                        .padding(0)
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
                         
+                        VStack(spacing:8){
+                            //                        HStack{
+                            //                            Text(references)
+                            //                                .font(.caption)
+                            //                                .foregroundColor(.cinza3)
+                            //                                .padding(.leading, 4)
+                            //                            Spacer()
+                            //                        }
+                            //                        .padding(0)
+                            
+                            //                        HStack(alignment: .center, spacing: 20) {
+                            //                            // Body/Regular
+                            //                            Text("Dark Mode")
+                            //                                .font(.body)
+                            //                                .foregroundColor(.cinza3)
+                            //                                .padding(.vertical,0)
+                            //                                .padding(.leading,16)
+                            //                            Spacer()
+                            //                            Toggle("", isOn: $toggle)
+                            //                                .padding(.vertical, 11)
+                            //                                .padding(.trailing,16)
+                            //                        }
+                            //                        .background(.branco)
+                            //                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                            //                        .cornerRadius(8)
+                            //                        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 8)
+                            //                        .padding(0)
+                            
+                            Button(action: {
+                                Task{
+                                    if let _ = await controller.userController.myUser?.delete(){
+                                        UserLocalSave().deleteUser()
+                                        ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
+                                    }
+                                }
+                            }) {
+                                HStack(alignment: .center, spacing: 4) {
+                                    Spacer()
+                                    Image(systemName: "rectangle.portrait.and.arrow.forward")
+                                        .font(.body)
+                                        .foregroundColor(.branco)
+                                        .padding(.horizontal,0)
+                                    Text(getOut)
+                                        .font(.body)
+                                        .foregroundColor(.branco)
+                                        .padding(.horizontal,0)
+                                        .padding(.vertical)
+                                    Spacer()
+                                }
+                                .background(.roxo3)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .cornerRadius(8)
+                                .padding(0)
+                            }
+                            
+                            Button(action: {
+                            }) {
+                                HStack(alignment: .center, spacing: 4) {
+                                    // Body/Regular
+                                    Spacer()
+                                    Image(systemName: "x.circle")
+                                        .font(.body)
+                                        .foregroundColor(.branco)
+                                        .padding(.horizontal,0)
+                                    Text(deleteAccount)
+                                        .font(.body)
+                                        .foregroundColor(.branco)
+                                        .padding(.horizontal,0)
+                                        .padding(.vertical)
+                                    Spacer()
+                                }
+                                .background(.roxo3)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .cornerRadius(8)
+                                .padding(0)
+                            }
+                            .padding(0)
+                        }
+                        
+                    }
+                    Spacer()
                 }
-            Spacer()
+                .padding(.horizontal,24)
             }
         }
         .ignoresSafeArea()
-        .padding(.horizontal,24)
         .frame(width: 390, height: 844)
         .background(.branco)
         .onAppear{

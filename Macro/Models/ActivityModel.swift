@@ -39,7 +39,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
             idActivityCreated = idServer
             // criar as relações grupo-atividade
             for groupId in listOfGroupsIds {
-                var newRelation = ActivityGroupModel(idActivity: idServer, idGroup: groupId)
+                var newRelation = ActivityGroupModel(date : Date(), idActivity: idServer, idGroup: groupId)
                 if let idRelation = DatabaseInterface.shared.create(model: newRelation, table: .activityGroup){
                     newRelation.id = idRelation
                     _ = await DatabaseInterface.shared.update(model: newRelation, id: idRelation, table: .activityGroup)
@@ -111,7 +111,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
                 }
             }
             // criar relação com o grupo
-            if let idRelationGroup = await ActivityGroupModel(idActivity: idServer, idGroup: idGroup).create(){
+            if let idRelationGroup = await ActivityGroupModel(date: Date(),idActivity: idServer, idGroup: idGroup).create(){
                 idrelationsGroupCreated = idRelationGroup
             }else{
                 print("ERRO AO TENTAR CRIAR RELACAO DA ATIVIDADE COM O GRUPO EM ActivityModel/createForOneGroup")

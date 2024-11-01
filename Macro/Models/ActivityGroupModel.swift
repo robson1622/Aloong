@@ -11,12 +11,13 @@ import Foundation
 
 struct ActivityGroupModel : Codable, Hashable{
     var id : String?
+    var date : Date
     var idActivity : String
     var idGroup : String
     
     func create()async -> String?{
         if let idServer = DatabaseInterface.shared.create(model: self, table: .activityGroup){
-            let newActivity = ActivityGroupModel(id: idServer, idActivity: self.idActivity, idGroup: self.idGroup)
+            let newActivity = ActivityGroupModel(id: idServer,date: Date(), idActivity: self.idActivity, idGroup: self.idGroup)
             _ = await newActivity.update()
             return idServer
         }

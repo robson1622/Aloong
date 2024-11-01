@@ -54,7 +54,7 @@ class ActivityGroupController: ObservableObject{
             print("\n SUCESSO AO TENTAR BAIXAR 10 ACTIVITY GROUP em ActivityGroupController/readPlusActivityGroupOfGroup \n")
         }
         catch{
-            print("NÃO FOI POSSÍVEL CARREGAR MAIS ACTIVITY GROUP em ActivityGroupController/readPlusActivityGroupOfGroup")
+            print("NÃO FOI POSSÍVEL CARREGAR MAIS ACTIVITY GROUP em ActivityGroupController/readPlusActivityGroupOfGroup : \(error.localizedDescription)")
         }
         return listOfActivityGroup
     }

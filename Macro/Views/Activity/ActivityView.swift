@@ -23,7 +23,7 @@ struct ActivityView: View {
     
     let edit : String = NSLocalizedString("Edit", comment: "Texto do botão para editar a atividade")
     var body: some View {
-        VStack{
+        VStack {
             Header(trailing: [AnyView(
                 VStack{
                     if(userOwner){
@@ -47,83 +47,86 @@ struct ActivityView: View {
                     }
                 }
             )],onTapBack: {
-                if imagesString.count > 1{
-                    for index in 1..<imagesString.count{
-                        BucketOfImages.shared.removeImageOfRAM(url: imagesString[index])
-                    }
-                }
+//                if imagesString.count > 1{
+//                    for index in 1..<imagesString.count{
+//                        BucketOfImages.shared.removeImageOfRAM(url: imagesString[index])
+//                    }
+//                }
             })
             .padding(.top,56)
-            UserHeader(owner: user,othersUsers: otherUser, subtitle: dateToLocalizedString( activity.date))
-            ZStack{
-                TabView {
-                    ForEach(imagesString.indices, id: \.self) { i in
-                        ImageLoader(url: imagesString[i], squere: true, largeImage: true)
-                            .overlay(
-                                VStack {
-                                    HStack {
-                                        Spacer()
-                                        // Indicador de páginas dentro da imagem
-                                        Text("\(i + 1) / \(imagesString.count)")
-                                            .font(.footnote)
-                                            .bold()
-                                            .padding(4)
-                                            .background(Color.branco.opacity(0.8))
-                                            .foregroundColor(.preto)
-                                            .cornerRadius(4)
-                                            .padding(8)
-                                    }
-                                    Spacer()
-                                }
-                            )
-                    }
-                }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                VStack{
-                    Spacer()
-                    HStack{
-                        if let duration = activity.duration{
-                            MetricsComponent(icon: .duration, value:timeIntervalToString( duration))
-                        }
-                        if(activity.distance != nil){
-                            MetricsComponent(icon: .distance, value: String(format: "%.1f", activity.distance!))
-                        }
-                        if(activity.steps != nil){
-                            MetricsComponent(icon: .steps, value: String(format: "%.1f", activity.steps!))
-                        }
-                        Spacer()
-                    }
-                    .padding(.bottom,8)
-                    .padding(.leading,12)
-                }
-            }
-            .frame(width: 342, height: 426)
-            .padding(.vertical,12)
-            
-            HStack{
-                Text(activity.title)
-                    .font(.title3)
-                    .foregroundColor(.preto)
-                Spacer()
-            }
-            .padding(.top,12)
-            HStack{
-                Text(activity.description)
-                    .font(.footnote)
-                    .foregroundColor(Color(.systemGray))
-                Spacer()
-            }
-            HStack{
-                if let indexAct = controller.activityCompleteList.firstIndex(where: {$0.activity?.id == activity.id}){
-                    AloongComponent(group: group, user: user, activity: activity,reactions:$controller.activityCompleteList[indexAct].reactions, numberOfReactions: $controller.activityCompleteList[indexAct].numberOfReactions, isActive: $controller.activityCompleteList[indexAct].thisUserReacted,cardMode: false)
-                        .environmentObject(controller)
-                }
+            VStack{
                 
+                UserHeader(owner: user,othersUsers: otherUser, subtitle: dateToLocalizedString( activity.date))
+                ZStack{
+                    TabView {
+                        ForEach(imagesString.indices, id: \.self) { i in
+                            ImageLoader(url: imagesString[i], squere: true, largeImage: true)
+                                .overlay(
+                                    VStack {
+                                        HStack {
+                                            Spacer()
+                                            // Indicador de páginas dentro da imagem
+                                            Text("\(i + 1) / \(imagesString.count)")
+                                                .font(.footnote)
+                                                .bold()
+                                                .padding(4)
+                                                .background(Color.branco.opacity(0.8))
+                                                .foregroundColor(.preto)
+                                                .cornerRadius(4)
+                                                .padding(8)
+                                        }
+                                        Spacer()
+                                    }
+                                )
+                        }
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    VStack{
+                        Spacer()
+                        HStack{
+                            if let duration = activity.duration{
+                                MetricsComponent(icon: .duration, value:timeIntervalToString( duration))
+                            }
+                            if(activity.distance != nil){
+                                MetricsComponent(icon: .distance, value: String(format: "%.1f", activity.distance!))
+                            }
+                            if(activity.steps != nil){
+                                MetricsComponent(icon: .steps, value: String(format: "%.1f", activity.steps!))
+                            }
+                            Spacer()
+                        }
+                        .padding(.bottom,8)
+                        .padding(.leading,12)
+                    }
+                }
+                .frame(width: 342, height: 426)
+                .padding(.vertical,12)
+                
+                HStack{
+                    Text(activity.title)
+                        .font(.title3)
+                        .foregroundColor(.preto)
+                    Spacer()
+                }
+                .padding(.top,12)
+                HStack{
+                    Text(activity.description)
+                        .font(.footnote)
+                        .foregroundColor(Color(.systemGray))
+                    Spacer()
+                }
+                HStack{
+                    if let indexAct = controller.activityCompleteList.firstIndex(where: {$0.activity?.id == activity.id}){
+                        AloongComponent(group: group, user: user, activity: activity,reactions:$controller.activityCompleteList[indexAct].reactions, numberOfReactions: $controller.activityCompleteList[indexAct].numberOfReactions, isActive: $controller.activityCompleteList[indexAct].thisUserReacted,cardMode: false)
+                            .environmentObject(controller)
+                    }
+                    
+                    Spacer()
+                }
                 Spacer()
             }
-            Spacer()
+            .padding(.horizontal,24)
         }
-        .padding(.horizontal,24)
         .onAppear{
             if let idMyUser = controller.userController.myUser?.id{
                 userOwner = idMyUser == user.id

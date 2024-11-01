@@ -29,7 +29,7 @@ class UserController: ObservableObject{
     
     init(){
         DispatchQueue.main.async {
-            self.myUser = UserLocalSave().loadUser()
+            self.myUser = self.loadUser()
             if let user = self.myUser{
                 Task{
                     if let _ = await user.read(){}
@@ -115,7 +115,6 @@ class UserController: ObservableObject{
                 BucketOfImages.shared.download(from: localImage){ image in
                     if let image = image{
                         self.image = image
-                        _ = self.saveImage(image)
                     }
                 }
             }
@@ -131,7 +130,6 @@ class UserController: ObservableObject{
     func loadUser() -> UserModel?{
         if let myUser = UserLocalSave().loadUser(){
             self.myUser = myUser
-            _ = self.loadImage()
             _ = self.loadPoints()
             return myUser
         }
@@ -147,39 +145,6 @@ class UserController: ObservableObject{
         return nil
     }
     
-    private func saveImage(_ image: UIImage) -> URL? {
-        guard let data = image.jpegData(compressionQuality: 1.0) else { return nil }
-        let name = "myimage"
-        // Diretório local para salvar a imagem
-        let fileManager = FileManager.default
-        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-        
-        let fileURL = documentsURL.appendingPathComponent("\(name).jpg")
-        
-        // Salva a imagem no diretório
-        do {
-            try data.write(to: fileURL)
-            return fileURL
-        } catch {
-            return nil
-        }
-    }
-    
-    private func loadImage() -> UIImage? {
-        let fileManager = FileManager.default
-        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-        let name = "myimage"
-        
-        let fileURL = documentsURL.appendingPathComponent("\(name).jpg")
-        
-        // Tenta carregar a imagem
-        if let imageData = try? Data(contentsOf: fileURL) {
-            return UIImage(data: imageData)
-        } else {
-            print("Não foi possível recuperar a imagem.")
-            return nil
-        }
-    }
 
 }
 

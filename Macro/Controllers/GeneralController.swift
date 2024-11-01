@@ -58,16 +58,6 @@ class GeneralController: ObservableObject{
         _ = await reactionController.readAllReactionsOfAGroup(idGroup: idGroup)
     }
     
-    func readPlusTenActivities(idGroup: String) async -> [ActivityCompleteModel]{
-        if activityCompleteList.isEmpty{
-            
-        }
-        else{
-            
-        }
-        return activityCompleteList
-    }
-    
     func updateActivitiesComplete(idGroup: String) async{
         let activities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
         for activity in activities{
