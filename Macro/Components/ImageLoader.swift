@@ -13,6 +13,7 @@ struct ImageLoader: View {
     var squere : Bool = false
     var largeImage : Bool = false
     var withEdge : Bool = true
+    var noCropBorder : Bool = false
     @State var image : UIImage?
     var body: some View {
         VStack{
@@ -31,7 +32,7 @@ struct ImageLoader: View {
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 97, height: 121)
                         .clipped()
-                        .cornerRadius(8)
+                        .cornerRadius( noCropBorder ? 0 : 8)
                 }
             }
             else{

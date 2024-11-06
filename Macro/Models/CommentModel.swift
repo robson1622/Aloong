@@ -13,13 +13,15 @@ struct CommentModel : Codable, Hashable{
     var idUser : String
     var idActivity : String
     var date : Date
+    var comment : String
     
     
-    func create()async -> Bool?{
+    func create()async -> String?{
         if let idServer = DatabaseInterface.shared.create(model: self, table: .comment){
             var new = self
             new.id = idServer
-            return await new.update()
+            _ = await new.update()
+            return idServer
         }
         return nil
     }

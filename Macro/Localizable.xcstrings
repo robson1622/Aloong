@@ -10,6 +10,16 @@
     "%@" : {
 
     },
+    "%@ : %lld°" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ : %2$lld°"
+          }
+        }
+      }
+    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -617,6 +627,9 @@
     "Without text" : {
       "comment" : "texto para se caso haja campos vazios"
     },
+    "Write a comment..." : {
+
+    },
     "Yehh, sucess!!" : {
       "comment" : "Mensagem de sucesso ao procurar desafio"
     },
@@ -632,7 +645,7 @@
     "Your position" : {
       "comment" : "Texto do painel de colocações na groupview"
     },
-    "Your profile" : {
+    "YOUR PROFILE" : {
       "comment" : "Titulo da tela de perfil"
     }
   },

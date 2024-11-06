@@ -41,8 +41,11 @@ extension GroupView {
                             
                         }) {
                             if let indexForReactions = controller.activityCompleteList.firstIndex(where: {$0.activity?.id == index.activity?.id}){
-                                ActivityCard(imageURL: index.images.first, group: model, activity: activity, user: index.owner,reactions: $controller.activityCompleteList[indexForReactions].reactions,thisUserReacted:$controller.activityCompleteList[indexForReactions].thisUserReacted,numberOfReactions: $controller.activityCompleteList[indexForReactions].numberOfReactions)
-                                    .environmentObject(controller)
+                                ZStack{
+                                    ActivityCard(imageURL: index.images.first, group: model, activity: activity, user: index.owner,reactions: $controller.activityCompleteList[indexForReactions].reactions,thisUserReacted:$controller.activityCompleteList[indexForReactions].thisUserReacted,numberOfReactions: $controller.activityCompleteList[indexForReactions].numberOfReactions)
+                                        .environmentObject(controller)
+                                }
+                                .zIndex(1)
                             }
                         }
                     }
@@ -66,8 +69,9 @@ extension GroupView {
                             }
                         }) {
                             if let indexForReactions = controller.activityCompleteList.firstIndex(where: {$0.activity?.id == index.activity?.id}){
-                                ActivityCard(imageURL: index.images.first, group: model, activity: activity, user: index.owner,reactions: $controller.activityCompleteList[indexForReactions].reactions,thisUserReacted:$controller.activityCompleteList[indexForReactions].thisUserReacted,numberOfReactions: $controller.activityCompleteList[indexForReactions].numberOfReactions)
-                                    .environmentObject(controller)
+                                    ActivityCard(imageURL: index.images.first, group: model, activity: activity, user: index.owner,reactions: $controller.activityCompleteList[indexForReactions].reactions,thisUserReacted:$controller.activityCompleteList[indexForReactions].thisUserReacted,numberOfReactions: $controller.activityCompleteList[indexForReactions].numberOfReactions)
+                                        .environmentObject(controller)
+                                        .compositingGroup()
                             }
                         }
                     }

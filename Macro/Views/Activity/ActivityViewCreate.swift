@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ActivityViewCreate: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var controller : GeneralController
     @State var loadingState : LoadingStates = .idle
     
@@ -82,11 +83,14 @@ struct ActivityViewCreate: View {
                     
                     ScrollView{
                         header
+                            .padding(.horizontal,24)
                         informations
                         metrics
+                            .padding(.horizontal,24)
                     }
+                    
                 }
-                .padding(.horizontal,24)
+                
             }
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
@@ -153,7 +157,12 @@ struct ActivityViewCreate: View {
                     pinCounter = 0
                 }
             }
-            .background(Color(.branco))
+            .background(
+                Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            )
         }
         
     }
@@ -167,7 +176,9 @@ struct ActivityViewCreate: View {
                     especialKeyboard = true
                 }
                 else{ especialKeyboard = false}
-                pinFocusState = focusPinList[pinCounter]
+                if pinCounter >= 0{
+                    pinFocusState = focusPinList[pinCounter]
+                }
             })
             OkButton(active: pinFocusState != .calories,text: "Next", onTap: {
                 pinCounter += 1
@@ -176,7 +187,9 @@ struct ActivityViewCreate: View {
                     especialKeyboard = true
                 }
                 else{ especialKeyboard = false}
-                pinFocusState = focusPinList[pinCounter]
+                if pinCounter < focusPinList.count{
+                    pinFocusState = focusPinList[pinCounter]
+                }
             })
             
             Spacer()
@@ -211,7 +224,7 @@ struct ActivityViewCreate: View {
                             let activityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: myUser, usersOfthisActivity: friendsInActivityModel, groupsOfthisActivity: [group], images: images, reactions: [], comments: [], activity: activity)
                             controller.activityController.activities.append(activity)
                             DispatchQueue.main.sync{
-                                controller.activityCompleteList.append(activityComplete)
+                                controller.activityCompleteList.insert(activityComplete, at: 0)
                             }
                             ViewsController.shared.back()
                             loadingState = .done
@@ -226,7 +239,7 @@ struct ActivityViewCreate: View {
                             if let myUser = controller.userController.myUser, let group = controller.groupController.readMainGroupOfUser(){
                                 let activityComplete : ActivityCompleteModel = ActivityCompleteModel(owner: myUser, usersOfthisActivity: friendsInActivityModel, groupsOfthisActivity: [group], images: images, reactions: [], comments: [], activity: activity)
                                 DispatchQueue.main.sync{
-                                    controller.activityCompleteList.append(activityComplete)
+                                    controller.activityCompleteList.insert(activityComplete, at: 0)
                                 }
                                 ViewsController.shared.back()
                                 loadingState = .done
@@ -280,7 +293,7 @@ struct ActivityViewCreate: View {
                 print("ATIVIDADE ATUALIZADA COM SUCESSO EM ActivityViewCreate/update")
                 ViewsController.shared.back()
                 ViewsController.shared.back()
-                if let group = controller.groupController.readMainGroupOfUser(){
+                if let _ = controller.groupController.readMainGroupOfUser(){
                     let completeActivity = controller.activityCompleteList[index]
                     if let group = completeActivity.groupsOfthisActivity.first , let activity = model{
                         ViewsController.shared.navigateTo(to: .activity(activity , completeActivity.owner, completeActivity.usersOfthisActivity, group, completeActivity.reactions, completeActivity.images))

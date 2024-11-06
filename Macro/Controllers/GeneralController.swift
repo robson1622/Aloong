@@ -24,74 +24,108 @@ class GeneralController: ObservableObject{
     
     @Published var activityCompleteList : [ActivityCompleteModel] = []
     private var serverList : [ActivityCompleteModel] = []
-    @Published var update : Bool = false
+    @Published var loadComplete : Bool = false
     
+    func calculateMetrics(idGroup: String, idUser: String) async{
+        let listOfUsers = await self.userController.readAllUsersOfGroup(idGroup: idGroup, reset: false)
+        statisticController.calculate(idGroup: idGroup, idMyUser: idUser, activitiesCompleteList: self.activityCompleteList, listOfUsers: listOfUsers)
+    }
     
     func loadAllLists(idGroup : String) async{
-        print("\n loadAllLists - GeneralController \n")
+        DispatchQueue.main.async{
+            self.loadComplete = false
+        }
         _ = self.userController.loadUser()
-        await self.loadGroup(idGroup: idGroup)
         let listOfActivities = await activityController.readPlusTenActivities(idGroup: idGroup)
-        for activity in listOfActivities{
-            if let completeAcitivity = await getActivityCompleteOfActivity(activity: activity, idGroup: idGroup){
-                if let index = activityCompleteList.firstIndex(where: {$0.activity?.id == completeAcitivity.activity?.id}){
-                    DispatchQueue.main.sync{
-                        self.activityCompleteList[index] = completeAcitivity
+        Task{
+            if let group = groupController.readMainGroupOfUser() {
+                if let idGroup = group.id{
+                    _ = await self.userController.readAllUsersOfGroup(idGroup: idGroup, reset: true)
+                    for activity in listOfActivities{
+                        if let completeAcitivity = await getActivityCompleteOfActivity(activity: activity, group: group){
+                            if let index = activityCompleteList.firstIndex(where: {$0.activity?.id == completeAcitivity.activity?.id}){
+                                DispatchQueue.main.sync{
+                                    self.activityCompleteList[index] = completeAcitivity
+                                }
+                            }
+                            else{
+                                DispatchQueue.main.sync{
+                                    self.activityCompleteList.append(completeAcitivity)
+                                }
+                            }
+                        }
+                    }
+                    if let idUser = userController.myUser?.id{
+                        await self.calculateMetrics(idGroup: idGroup, idUser: idUser)
+                    }
+                }
+                DispatchQueue.main.async{
+                    self.loadComplete = true
+                }
+            }
+        }
+    }
+    
+    func loadComments(idGroup: String) async {
+        let comments = await commentController.readAllCommitsOfGroup(idGroup: idGroup)
+        
+        for index in 0..<activityCompleteList.count {
+            // Verifica se o id da atividade está presente
+            if let idActivity = activityCompleteList[index].activity?.id {
+                // Filtra comentários que possuem o mesmo idActivity e idGroup
+                let commentsOfActivity = comments.filter { comment in
+                    comment.idActivity == idActivity //&& comment.idGroup == idGroup <- já foi verificado antes
+                }
+                // Adiciona os comentários filtrados à lista de comentários da atividade
+                DispatchQueue.main.async{
+                    self.activityCompleteList[index].comments = commentsOfActivity
+                }
+            }
+        }
+    }
+    
+    func loadReactions(idGroup: String) async {
+        _ = await reactionController.readAllReactionsOfAGroup(idGroup: idGroup)
+    }
+
+    
+    func updateActivitiesComplete(group : GroupModel) async{
+        if let idGroup = group.id{
+            let activities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
+            for activity in activities{
+                //se já houver a atividade a gente só subistitui
+                if let activityIndex = activityCompleteList.firstIndex(where: {$0.activity?.id == activity.id}){
+                    if let activitycomplete = await self.getActivityCompleteOfActivity(activity: activity, group: group){
+                        activityCompleteList[activityIndex] = activitycomplete
                     }
                 }
                 else{
-                    DispatchQueue.main.sync{
-                        self.activityCompleteList.append(completeAcitivity)
+                    if let activitycomplete = await self.getActivityCompleteOfActivity(activity: activity, group: group){
+                        activityCompleteList.append(activitycomplete)
                     }
                 }
             }
         }
-        if let idUser = userController.myUser?.id{
-            await statisticController.calculate(idGroup: idGroup, idMyUser: idUser, activitiesCompleteList: activityCompleteList, listOfUsers: userController.readAllUsersOfGroup(idGroup: idGroup, reset: false))
-        }
-        
         
     }
     
-    func loadGroup(idGroup: String) async {
-        _ = await commentController.readAllCommitsOfGroup(idGroup: idGroup)
-        _ = await reactionController.readAllReactionsOfAGroup(idGroup: idGroup)
-    }
-    
-    func updateActivitiesComplete(idGroup: String) async{
-        let activities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
-        for activity in activities{
-            //se já houver a atividade a gente só subistitui
-            if let activityIndex = activityCompleteList.firstIndex(where: {$0.activity?.id == activity.id}){
-                if let activitycomplete = await self.getActivityCompleteOfActivity(activity: activity, idGroup: idGroup){
-                    activityCompleteList[activityIndex] = activitycomplete
-                }
-            }
-            else{
-                if let activitycomplete = await self.getActivityCompleteOfActivity(activity: activity, idGroup: idGroup){
-                    activityCompleteList.append(activitycomplete)
-                }
-            }
-        }
-    }
-    
-    private func getActivityCompleteOfActivity(activity : ActivityModel, idGroup : String) async -> ActivityCompleteModel?{
+    private func getActivityCompleteOfActivity(activity : ActivityModel, group : GroupModel) async -> ActivityCompleteModel?{
         var result : ActivityCompleteModel? = nil
         let activityUsersRelations = await activityUserController.readAllActivityUserOfActivity(idActivity: activity.id!)
         var users : [UserModel] = []
+        let groups : [GroupModel] = [group]
         for activityUserRelation in activityUsersRelations{
             if let user : UserModel = await DatabaseInterface.shared.read(id: activityUserRelation.idUser, table: .user){
                 users.append(user)
             }
         }
-        
-        let activityGroupRelations = await activityGroupController.readAllActivityGroupsOfActivity(idActivity: activity.id!)
-        var groups : [GroupModel] = []
-        for activityGroupRelation in activityGroupRelations{
-            if let group : GroupModel = await DatabaseInterface.shared.read(id: activityGroupRelation.idGroup, table: .group){
-                groups.append(group)
-            }
-        }
+        // está comentado por que não vai ter vários grupos ainda
+//        let activityGroupRelations = await activityGroupController.readAllActivityGroupsOfActivity(idActivity: activity.id!)
+//        for activityGroupRelation in activityGroupRelations{
+//            if let group : GroupModel = await DatabaseInterface.shared.read(id: activityGroupRelation.idGroup, table: .group){
+//                groups.append(group)
+//            }
+//        }
         
         let activityImageRelations = await activityImageController.readAllActivityImagesOfActivity(idActivity: activity.id)
         var images : [String] = []
@@ -104,12 +138,12 @@ class GeneralController: ObservableObject{
                 }
             }
         }
-        
-        if let actuserrelindex = activityUsersRelations.firstIndex(where: {$0.state == statesOfActivityRelation.owner}){
-            if let userOwner : UserModel = await DatabaseInterface.shared.read(id: activityUsersRelations[actuserrelindex].idUser, table: .user){
+        if let owner = activityUserController.findOwnerOfActivity(idActivity: activity.id!){
+            if let userOwner = userController.findUserInGroupById(idGroup: group.id!, userId: owner.idUser){
                 result = ActivityCompleteModel(owner: userOwner, usersOfthisActivity: users, groupsOfthisActivity: groups,images: images, activity: activity)
             }
         }
+        
         let reactions = reactionController.listOfReactions.filter{ $0.idActivity == activity.id}
         result?.reactions = reactions
         result?.numberOfReactions = reactions.count

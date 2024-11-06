@@ -52,11 +52,16 @@ struct Header: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.top,16)
+            .padding(.top,72)
             .padding(.horizontal,24)
             Divider()
                 .padding(.top,16)
         }
+        .background(
+            Color.branco.opacity(0.3)
+                .blur(radius: 10)
+                .background(.ultraThinMaterial)
+        )
     }
 }
 

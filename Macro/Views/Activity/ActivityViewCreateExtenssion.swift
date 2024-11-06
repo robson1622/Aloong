@@ -50,12 +50,11 @@ extension ActivityViewCreate {
                             
                             TextEditor(text: $description)
                                 .font(.callout)
-                                .background(Color(.systemGray6))
                                 .frame(minHeight: 100, maxHeight: 300)
                                 .foregroundColor(pinFocusState == .description ? .roxo3 : .preto)
                                 .focused($pinFocusState, equals: .description)
-                                .cornerRadius(8)
                                 .multilineTextAlignment(.leading)
+                                .background(Color.clear)
                             if description.isEmpty {
                                 Text(addDescriptionText)
                                     .font(.callout)
@@ -122,11 +121,13 @@ extension ActivityViewCreate {
                 
             }
             .padding()
-            .background(Color(.systemGray6))
+            .background(Color(.white))
             .cornerRadius(8)
-            
+            .shadow(color: .black.opacity(0.1), radius: 25, x: 0, y: 8)
+
         }
         .padding(.top,16)
+        .padding(.horizontal,24)
     }
     
     var metrics: some View{
@@ -215,8 +216,9 @@ extension ActivityViewCreate {
                 
             }
             .padding()
-            .background(Color(.systemGray6))
+            .background(Color(.white))
             .cornerRadius(8)
+            .shadow(color: .black.opacity(0.1), radius: 25, x: 0, y: 8)
         }
         .padding(.top,16)
     }

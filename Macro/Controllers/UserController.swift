@@ -145,6 +145,15 @@ class UserController: ObservableObject{
         return nil
     }
     
-
+    func findUserInGroupById(idGroup: String, userId: String) -> UserModel? {
+        // Busca o grupo com o ID especificado
+        if let group = usersGroups.first(where: { $0.idGroup == idGroup }) {
+            // Busca o usuário com o ID especificado na lista do grupo
+            return group.users.first(where: { $0.id == userId })
+        }
+        
+        print("No user found with ID \(userId) in group \(idGroup)")
+        return nil
+    }
 }
 

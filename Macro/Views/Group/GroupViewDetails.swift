@@ -31,8 +31,7 @@ struct GroupViewDetails: View {
         
         ZStack (alignment: .center){
             VStack {
-                Header(title: detailsOfGroupText,onTapBack: {} )
-                    .padding(.top,56)
+                
                 VStack(spacing: 36){
                     
                     VStack(spacing: 10){
@@ -152,10 +151,22 @@ struct GroupViewDetails: View {
                 
                 .padding(.horizontal,24)
             }
+            .padding(.top,110)
+            .background(
+                Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            )
+            
+            VStack{
+                Header(title: detailsOfGroupText,onTapBack: {} )
+                Spacer()
+            }
+            
         }
         .ignoresSafeArea()
         .frame(width: 390, height: 844)
-        .background(.branco)
         .onAppear{
             let list = listOfPositions.sorted(by: { $0.points > $1.points})
             listOfPositions = list
@@ -188,8 +199,8 @@ struct ShareSheet: UIViewControllerRepresentable {
 }
 
 #Preview {
-    GroupViewDetails(listOfPositions: [PointsOfUser(user: usermodelexemple, points: 12),
-                                       PointsOfUser(user: usermodelexemple2, points: 8),
-                                       PointsOfUser(user: usermodelexemple3, points: 6),
-                                       PointsOfUser(user: usermodelexemple4, points: 24)], group: exempleGroup)
+    GroupViewDetails(listOfPositions: [PointsOfUser(user: usermodelexemple, points: 12,position: 1),
+                                       PointsOfUser(user: usermodelexemple2, points: 8,position: 1),
+                                       PointsOfUser(user: usermodelexemple3, points: 6,position: 2),
+                                       PointsOfUser(user: usermodelexemple4, points: 24,position: 3)], group: exempleGroup)
 }

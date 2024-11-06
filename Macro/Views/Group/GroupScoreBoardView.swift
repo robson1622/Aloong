@@ -12,9 +12,9 @@ struct GroupScoreBoardView: View {
     let model : GroupModel
     @State var totalDays : Int = 0
     @State var lastDays : Int = 0
-    @State var first : PointsOfUser
-    @State var second : PointsOfUser
-    @State var third : PointsOfUser
+    @State var first : PointsOfUser?
+    @State var second : PointsOfUser?
+    @State var third : PointsOfUser?
     
     @State var you : PointsOfUser
     
@@ -39,14 +39,14 @@ struct GroupScoreBoardView: View {
                 
             }
             HStack(alignment:.bottom){
-                PlaceChallengerComponet(image: second.user.userimage, positionImage: .second, name: second.user.name)
-                PlaceChallengerComponet(image: first.user.userimage, positionImage: .first, name: first.user.name)
-                PlaceChallengerComponet(image: third.user.userimage, positionImage: .third, name: third.user.name)
+                PlaceChallengerComponet(image: second?.user.userimage ?? you.user.userimage, positionImage: .second, name: second?.user.name ?? you.user.name)
+                PlaceChallengerComponet(image: first?.user.userimage ?? you.user.userimage, positionImage: .first, name: first?.user.name ?? you.user.name)
+                PlaceChallengerComponet(image: third?.user.userimage ?? you.user.userimage, positionImage: .third, name: third?.user.name ?? you.user.name)
             }
             .padding(.top,-16)
             
             HStack{
-                Text(yourposition)
+                Text("\(yourposition) : \(you.position)°")
                     .fontWeight(.medium)
                     .foregroundStyle(Color(.branco))
                 Spacer()
@@ -154,5 +154,5 @@ struct PlaceChallengerComponet : View{
     //PlaceChallengerComponet(image: "plaveholderuserblue", positionImage: .first, name: "Fulano")
     
     
-    GroupScoreBoardView(model: exempleGroup, first: PointsOfUser(user: usermodelexemple, points: 3), second: PointsOfUser(user: usermodelexemple2, points: 3),third: PointsOfUser(user: usermodelexemple3, points: 3), you: PointsOfUser(user: usermodelexemple4, points: 10))
+    GroupScoreBoardView(model: exempleGroup, first: PointsOfUser(user: usermodelexemple, points: 3,position: 1), second: PointsOfUser(user: usermodelexemple2, points: 3,position: 2),third: PointsOfUser(user: usermodelexemple3, points: 3,position: 2), you: PointsOfUser(user: usermodelexemple4, points: 10,position: 3))
 }

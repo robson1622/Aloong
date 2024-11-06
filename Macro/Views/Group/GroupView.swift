@@ -10,7 +10,6 @@ import PhotosUI
 struct GroupView: View {
     @EnvironmentObject var controller : GeneralController
     @Environment(\.colorScheme) var colorScheme
-    @State var updateView = GeneralController.shared.update
     
     @State var isCameraPresented : Bool = false
     @State var isGalleryPresented : Bool = false
@@ -19,10 +18,14 @@ struct GroupView: View {
     let model : GroupModel
     @State var totalDays : Int = 0
     @State var lastDays : Int = 0
-    @State var lider : PointsOfUser?
-    @State var liderImage : UIImage?
-    @State var youImage : UIImage?
+    @State var first : PointsOfUser?
+    @State var firstImage : UIImage?
+    @State var second : PointsOfUser?
+    @State var secondImage : UIImage?
+    @State var third : PointsOfUser?
+    @State var thirdImage : UIImage?
     @State var you : PointsOfUser?
+    @State var youImage : UIImage?
     
     @State var showAlertInviteFriends : Bool = false
     @State var showSheetForShare : Bool = false
@@ -47,28 +50,31 @@ struct GroupView: View {
                 VStack(spacing: 24){ //vstack geral
                     HeaderGroupView()
                         .padding(.top,16)
-                    if let lider = lider, let you = you{
-                        Button(action:{
-                            if let pointsList = controller.statisticController.listOfPositionUser{
-                                ViewsController.shared.navigateTo(to: .groupDetails(pointsList, model))
-                            }
-                            else if let id = model.id{
-                                Task{
-                                    await controller.loadAllLists(idGroup: id)
-                                    if let pointsList = controller.statisticController.listOfPositionUser{
-                                        ViewsController.shared.navigateTo(to: .groupDetails(pointsList, model))
-                                    }
+                    Button(action:{
+                        if let pointsList = controller.statisticController.listOfPositionUser{
+                            ViewsController.shared.navigateTo(to: .groupDetails(pointsList, model))
+                        }
+                        else if let id = model.id{
+                            Task{
+                                await controller.loadAllLists(idGroup: id)
+                                if let pointsList = controller.statisticController.listOfPositionUser{
+                                    ViewsController.shared.navigateTo(to: .groupDetails(pointsList, model))
                                 }
                             }
-                        }){
-                            GroupScoreBoardView(model: model, totalDays: totalDays, lastDays: lastDays, first: lider, second: lider, third: lider, you: you)
+                        }
+                    }){
+                        if let you = controller.statisticController.you{
+                            GroupScoreBoardView(model: model, totalDays: totalDays, lastDays: lastDays, first: first, second: second, third: third, you: you)
                                 .frame(width: 342, height: 231)
                                 .padding(.top,24)
                         }
+                        
                     }
+                    
                     
                     if !controller.activityCompleteList.isEmpty{
                         listOfActivities
+                            .shadow(color: .black.opacity(0.1), radius: 25, x: 0, y: 8)
                     }
                     else{
                         Image("withoutactivity")
@@ -157,6 +163,17 @@ struct GroupView: View {
             }
             .background(Color(.black))
         }
+        .onChange(of: GeneralController.shared.loadComplete){ loadComplete in
+            if loadComplete{
+                self.update()
+                if let idGroup = model.id{
+                    Task{
+                        await controller.loadComments(idGroup: idGroup)
+                        await controller.loadReactions(idGroup: idGroup)
+                    }
+                }
+            }
+        }
         .onChange(of: image) { _ in
             if image != nil{
                 controller.activityController.imagesForNewActivity.removeAll()
@@ -191,18 +208,33 @@ struct GroupView: View {
                     self.controller.activityCompleteList.removeAll()
                     await self.controller.loadAllLists(idGroup: id)
                 }
+                if let idGroup = model.id, let idMyUser = controller.userController.myUser?.id{
+                    await self.controller.calculateMetrics(idGroup: idGroup, idUser: idMyUser)
+                }
                 
                 self.controller.activityCompleteList = controller.activityCompleteList
-                you = controller.statisticController.you ?? PointsOfUser(user: usermodelexemple, points: 0)
-                lider = controller.statisticController.lider ?? you
+                you = controller.statisticController.you ?? PointsOfUser(user: usermodelexemple, points: 0,position: 1)
+                first = controller.statisticController.first
+                second = controller.statisticController.second
+                third = controller.statisticController.third
                 if let userImageUrl = controller.userController.myUser?.userimage{
                     BucketOfImages.shared.download(from: userImageUrl) { image in
                         youImage = image
                     }
                 }
-                if let liderImageUrl = controller.statisticController.lider?.user.userimage{
-                    BucketOfImages.shared.download(from: liderImageUrl) { image in
-                        liderImage = image
+                if let firstUrl = controller.statisticController.first?.user.userimage{
+                    BucketOfImages.shared.download(from: firstUrl) { image in
+                        firstImage = image
+                    }
+                }
+                if let secondUrl = controller.statisticController.second?.user.userimage{
+                    BucketOfImages.shared.download(from: secondUrl) { image in
+                        secondImage = image
+                    }
+                }
+                if let thirdUrl = controller.statisticController.third?.user.userimage{
+                    BucketOfImages.shared.download(from: thirdUrl) { image in
+                        thirdImage = image
                     }
                 }
                 loadingState = "Done"

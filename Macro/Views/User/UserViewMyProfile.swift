@@ -8,6 +8,7 @@ import PhotosUI
 import SwiftUI
 
 struct UserViewMyProfile: View {
+    @Environment(\.colorScheme) var colorScheme
     @StateObject var controller : GeneralController = GeneralController()
     @State var user : UserModel?
     @State var name : String = ""
@@ -19,7 +20,7 @@ struct UserViewMyProfile: View {
     @State var toggle : Bool = false
     @State var stateOfSaving : Bool? = nil
     
-    let yourProfileText : String = NSLocalizedString("Your profile", comment: "Titulo da tela de perfil")
+    let yourProfileText : String = NSLocalizedString("YOUR PROFILE", comment: "Titulo da tela de perfil")
     let saveText : String = NSLocalizedString("Save", comment: "Texto do botão para salvar as mudanças do perfil")
     let deleteAccount : String = NSLocalizedString("Delete account", comment: "texto do botão de deletar conta")
     let getOut : String = NSLocalizedString("Get out", comment: "Texto do botão de sair da conta")
@@ -31,18 +32,7 @@ struct UserViewMyProfile: View {
         
         ZStack (alignment: .center){
             VStack {
-                Header(title: yourProfileText, trailing: [AnyView(
-                    Button(action:{
-                        if stateOfSaving == nil{
-                            self.saveChanges()
-                        }
-                    }){
-                        Text(stateOfSaving == false ? loadingText : saveText)
-                            .font(.body)
-                            .foregroundColor(.roxo3)
-                    }
-                )],onTapBack: {})
-                .padding(.top,56)
+                
                 VStack(spacing: 24){
                     
                     VStack (alignment: .center, spacing:16){
@@ -129,7 +119,7 @@ struct UserViewMyProfile: View {
                                 .font(.body)
                                 .foregroundColor(.preto)
                                 .padding()
-                                .background(Color(.systemGray5))
+                                .background(Color(.systemGray6))
                                 .frame(maxWidth: .infinity, alignment: .topLeading)
                                 .cornerRadius(8)
                                 .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 8)
@@ -221,10 +211,32 @@ struct UserViewMyProfile: View {
                 }
                 .padding(.horizontal,24)
             }
+            .padding(.top,130)
+            
+            VStack{
+                Header(title: yourProfileText, trailing: [AnyView(
+                    Button(action:{
+                        if stateOfSaving == nil{
+                            self.saveChanges()
+                        }
+                    }){
+                        Text(stateOfSaving == false ? loadingText : saveText)
+                            .font(.body)
+                            .foregroundColor(.roxo3)
+                    }
+                )],onTapBack: {})
+                Spacer()
+            }
+            
         }
         .ignoresSafeArea()
         .frame(width: 390, height: 844)
-        .background(.branco)
+        .background(
+            Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+        )
         .onAppear{
             user = usermodelexemple
             if let savedUser = controller.userController.loadUser() {

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -318,6 +318,10 @@
 		97DF22672C9312DF00B98695 /* GroupViewDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		977844F02CD515D7002A11C8 /* Commit */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Commit; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		9705ADB02C64F53900E73123 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -471,6 +475,7 @@
 		9705ADE72C64F58E00E73123 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				977844F02CD515D7002A11C8 /* Commit */,
 				970820B22C8B251C009975F6 /* OnBoarding */,
 				974C92022C80A60F004F1627 /* Activity */,
 				9705AE142C655D7B00E73123 /* Group */,
@@ -713,6 +718,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				977844F02CD515D7002A11C8 /* Commit */,
 			);
 			name = Macro;
 			packageProductDependencies = (

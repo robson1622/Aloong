@@ -96,6 +96,7 @@ class BucketOfImages: ObservableObject{
                 print("Err: Failed to upload image \(error.localizedDescription)")
                 return
             }
+            self.images.append(ImageCash(id: ref.fullPath, image: image, date: Date()))
             completion(ref.fullPath)
         }
         
@@ -172,7 +173,14 @@ class BucketOfImages: ObservableObject{
                 
                 completion(image)
             } else {
-                completion(nil)
+                if urlString.contains(self.profileImageReference){
+                    let list = ["plaveholderuserblue","plaveholderusergreen","plaveholderuserpink"]
+                    let imagePlaceHolder = UIImage(named: list[Int.random(in: 0..<list.count)])
+                    completion(imagePlaceHolder)
+                }
+                else{
+                    completion(nil)
+                }
             }
         }
         

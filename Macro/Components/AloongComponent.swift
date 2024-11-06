@@ -15,7 +15,7 @@ struct AloongComponent: View {
     @Binding var reactions : [ReactionModel]
     @Binding var numberOfReactions : Int
     @Binding var isActive : Bool
-    var cardMode : Bool = true
+    var cardMode : Bool = false
     
     
     var body: some View {
@@ -80,7 +80,7 @@ struct AloongComponent: View {
 struct AloongComponentImage : View{
     @Binding var numberOfReactions : Int
     @Binding var isActive : Bool
-    var cardMode : Bool = true
+    var cardMode : Bool = false
     var body: some View{
         if cardMode{
             ZStack{
@@ -92,27 +92,36 @@ struct AloongComponentImage : View{
             }
         }
         else{
-            ZStack{
-                ZStack{
-                    Circle()
-                        .frame(width: 35,height: 35)
-                        .foregroundColor(isActive ? .roxo : Color(.systemGray4))
-                    
-                    Image(systemName: "hands.and.sparkles")
-                        .font(.callout)
-                        .foregroundColor(isActive ? .white : Color(.systemGray2))
+            HStack{
+                HStack{
+                    Spacer()
+                    ZStack{
+                        Image(systemName: "hands.and.sparkles")
+                            .font(.callout)
+                            .foregroundColor(isActive ? .white : Color(.systemGray2))
+                    }
+                    .padding(.vertical,6)
+                    Spacer()
                 }
+                .padding(.horizontal,4)
+                .background(Color.roxo3)
+                .cornerRadius(6)
+                
                 ZStack{
                     Circle()
-                        .frame(width: 16,height: 16)
-                        .foregroundColor(isActive ? .roxo3 : Color(.systemGray))
+                        .frame(width: 24,height: 24)
+                        .foregroundColor(.branco)
+                    
+                    Circle()
+                        .frame(width: 20,height: 20)
+                        .foregroundColor(isActive ? .rosa3 : Color(.systemGray))
+                    
                     Text("\(numberOfReactions)")
                         .font(.caption)
                         .foregroundColor(.white)
                 }
-                .padding(.bottom,24)
-                .padding(.leading,24)
-                
+                .padding(.leading, -20)
+                .padding(.top, -25)
             }
         }
     }

@@ -10,6 +10,7 @@ import Foundation
 struct PointsOfUser : Decodable, Encodable, Equatable, Hashable{
     var user : UserModel
     var points : Int
+    var position : Int
 }
 
 class StatisticController: ObservableObject{
@@ -17,62 +18,56 @@ class StatisticController: ObservableObject{
     private let idUserActivityGroupFieldName = "idUser"
     //  private var listOfActivities : Activity?
     @Published var listOfPositionUser : [PointsOfUser]?
+
+    @Published var first : PointsOfUser?
+    @Published var second : PointsOfUser?
+    @Published var third : PointsOfUser?
     
-    @Published var lider : PointsOfUser?
     @Published var you : PointsOfUser?
-    
     // calcula todas as estatísticas do grupo
-    func calculate(idGroup: String, idMyUser: String, activitiesCompleteList: [ActivityCompleteModel], listOfUsers: [UserModel]) async {
-        // Dicionário para armazenar a pontuação dos usuários
-        var userScores: [UserModel: Set<Date>] = [:]
+    // Calcula todas as estatísticas do grupo
+    func calculate(idGroup: String, idMyUser: String, activitiesCompleteList: [ActivityCompleteModel], listOfUsers: [UserModel]) {
+            var userScores: [UserModel: Set<Date>] = [:]
 
-        // Inicializa o dicionário de pontuação com todos os usuários e zero atividades
-        for user in listOfUsers {
-            userScores[user] = Set()
-        }
+            for user in listOfUsers {
+                userScores[user] = Set()
+            }
 
-        // Itera sobre cada atividade completa
-        for activityComplete in activitiesCompleteList {
-            // Verifica se a atividade tem um valor válido
-            if let activity = activityComplete.activity {
-                let activityDate = Calendar.current.startOfDay(for: activity.date)
+            for activityComplete in activitiesCompleteList {
+                if let activity = activityComplete.activity {
+                    let activityDate = Calendar.current.startOfDay(for: activity.date)
 
-                // Conta o criador da atividade (owner)
-                if userScores[activityComplete.owner] == nil {
-                    userScores[activityComplete.owner] = Set()
-                }
-                userScores[activityComplete.owner]?.insert(activityDate)
-
-                // Conta os participantes da atividade (usersOfthisActivity)
-                for user in activityComplete.usersOfthisActivity {
-                    if userScores[user] == nil {
-                        userScores[user] = Set()
+                    userScores[activityComplete.owner]?.insert(activityDate)
+                    for user in activityComplete.usersOfthisActivity {
+                        userScores[user]?.insert(activityDate)
                     }
-                    userScores[user]?.insert(activityDate)
                 }
             }
-        }
 
-        // Converte o dicionário de pontuação para uma lista de PointsOfUser
-        var result: [PointsOfUser] = userScores.map { (user, dates) in
-            PointsOfUser(user: user, points: dates.count) // A pontuação é a quantidade de dias únicos
-        }
-        listOfPositionUser = result
-        // Ordena os resultados por pontuação (opcional, caso queira já ordenar por pontos)
-        result.sort { $0.points > $1.points }
+            var result: [PointsOfUser] = userScores.map { (user, dates) in
+                PointsOfUser(user: user, points: dates.count, position: 0)
+            }
+            result.sort { $0.points > $1.points }
 
-        // Armazena o usuário atual e o líder (opcional, se estiver usando essas variáveis em outro lugar)
-        if let index = result.firstIndex(where: { $0.user.id == idMyUser }) {
-            DispatchQueue.main.sync{
-                self.you = result[index] // Atualiza a variável com o usuário atual
+            for i in 0..<result.count {
+                if i == 0 {
+                    self.first = result[i]
+                } else if i == 1 {
+                    self.second = result[i]
+                } else if i == 2 {
+                    self.third = result[i]
+                }
+                if result[i].user.id == idMyUser {
+                    self.you = result[i]
+                }
+                result[i].position = i + 1
+            }
+
+            DispatchQueue.main.sync {
+                self.listOfPositionUser = result
             }
         }
-        if let topUser = result.max(by: { $0.points < $1.points }) {
-            DispatchQueue.main.sync{
-                self.lider = topUser // Atualiza a variável com o líder
-            }
-        }
-    }
+
 
     
 }

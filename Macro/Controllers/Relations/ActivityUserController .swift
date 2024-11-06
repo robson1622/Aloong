@@ -102,4 +102,15 @@ class ActivityUserController: ObservableObject{
             }
         }
     }
+    
+    func findOwnerOfActivity(idActivity: String) -> ActivityUserModel? {
+        // Verifica se há alguma relação para o idActivity especificado
+        if let activityRelation = listOfRelationsWithActivity.first(where: { $0.idActivity == idActivity }) {
+            // Busca o primeiro usuário com state "owner" na lista da atividade encontrada
+            return activityRelation.listOfActivityUser.first(where: { $0.state == "owner" })
+        } else {
+            print("No relations found for activity with ID: \(idActivity)")
+            return nil
+        }
+    }
 }
