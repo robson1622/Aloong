@@ -17,7 +17,7 @@ struct UserViewMyProfile: View {
     var active : String = NSLocalizedString("Activities", comment: "Titulo do botão que leva para a view de atividades")
     @State private var text: String = ""
     @State var toggle : Bool = false
-    @State var stateOfSaving : Bool? = nil
+    @State var state : String = "Idle"
     
     let yourProfileText : String = NSLocalizedString("Your profile", comment: "Titulo da tela de perfil")
     let saveText : String = NSLocalizedString("Save", comment: "Texto do botão para salvar as mudanças do perfil")
@@ -33,11 +33,11 @@ struct UserViewMyProfile: View {
             VStack(spacing: 24){
                 Header(title: yourProfileText, trailing: [AnyView(
                     Button(action:{
-                        if stateOfSaving == nil{
+                        if state == "Idle"{
                             self.saveChanges()
                         }
                     }){
-                        Text(stateOfSaving == false ? loadingText : saveText)
+                        Text(state == "Loading" ? loadingText : saveText)
                             .font(.body)
                             .foregroundColor(.roxo3)
                     }
@@ -191,6 +191,9 @@ struct UserViewMyProfile: View {
                         }
                         
                         Button(action: {
+                            Task{
+                                await self.deleteAccout()
+                            }
                         }) {
                             HStack(alignment: .center, spacing: 4) {
                                 // Body/Regular
@@ -238,7 +241,7 @@ struct UserViewMyProfile: View {
     }
                        
     private func saveChanges(){
-        stateOfSaving = false
+        state = "Loading"
         Task{
             await withCheckedContinuation { continuation in
                 if let uiimage = image{
@@ -253,7 +256,7 @@ struct UserViewMyProfile: View {
                             _ = await user?.update()
                             if let oldImage{
                                 BucketOfImages.shared.deleteImage(url: oldImage){ _ in
-                                    stateOfSaving = true
+                                    state = "Done"
                                     if let user = user{
                                         controller.userController.myUser = user
                                     }
@@ -267,6 +270,15 @@ struct UserViewMyProfile: View {
             }
             
         }
+    }
+    
+    private func deleteAccout() async{
+        state = "Loading"
+        _ = await user?.delete()
+        UserLocalSave().deleteUser()
+        controller.userController.myUser = nil
+        ViewsController.shared.navigateTo(to: .onboardingSignIn,reset: true)
+        state = "Done"
     }
 }
 #Preview {

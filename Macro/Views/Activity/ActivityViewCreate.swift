@@ -51,6 +51,7 @@ struct ActivityViewCreate: View {
     let addDescriptionText : String = NSLocalizedString("Add a description", comment: "")
     let addAnTitleText : String = NSLocalizedString("Add an title", comment: "")
     let stepsText : String = NSLocalizedString("Steps", comment: "")
+    let deleteText : String = NSLocalizedString("Delete", comment: "")
     var body: some View {
         NavigationView{
             VStack{
@@ -83,6 +84,32 @@ struct ActivityViewCreate: View {
                     header
                     informations
                     metrics
+                    
+                    Button(action: {
+                        Task{
+                            await self.deleteActivity()
+                        }
+                    }) {
+                        HStack(alignment: .center, spacing: 4) {
+                            // Body/Regular
+                            Spacer()
+                            Image(systemName: "x.circle")
+                                .font(.body)
+                                .foregroundColor(.branco)
+                                .padding(.horizontal,0)
+                            Text(deleteText)
+                                .font(.body)
+                                .foregroundColor(.branco)
+                                .padding(.horizontal,0)
+                                .padding(.vertical)
+                            Spacer()
+                        }
+                        .background(.roxo3)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .cornerRadius(8)
+                        .padding(0)
+                    }
+                    .padding(.vertical,32)
                 }
             }
             .toolbar {
@@ -279,7 +306,7 @@ struct ActivityViewCreate: View {
                 print("ATIVIDADE ATUALIZADA COM SUCESSO EM ActivityViewCreate/update")
                 ViewsController.shared.back()
                 ViewsController.shared.back()
-                if let group = controller.groupController.readMainGroupOfUser(){
+                if let _ = controller.groupController.readMainGroupOfUser(){
                     let completeActivity = controller.activityCompleteList[index]
                     if let group = completeActivity.groupsOfthisActivity.first , let activity = model{
                         ViewsController.shared.navigateTo(to: .activity(activity , completeActivity.owner, completeActivity.usersOfthisActivity, group, completeActivity.reactions, completeActivity.images))
@@ -298,6 +325,17 @@ struct ActivityViewCreate: View {
         let id : String? = model?.id ?? nil
         model = ActivityModel(id:id,title: title, description: description, date: date, distance: Float(distanceString), calories: Float(caloriesString), duration: durationInSeconds, steps: Float(stepsString))
         
+    }
+    
+    private func deleteActivity() async {
+        if let idCompleteActivity = controller.activityCompleteList.firstIndex(where : {$0.activity?.id == model?.id}){
+            if let _ = await model?.delete(complete: controller.activityCompleteList[idCompleteActivity]){
+                controller.activityCompleteList.remove(at: idCompleteActivity)
+                if let group = controller.groupController.readMainGroupOfUser(){
+                    ViewsController.shared.navigateTo(to: .group(group))
+                }
+            }
+        }
     }
 }
 

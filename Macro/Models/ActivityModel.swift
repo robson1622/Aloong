@@ -79,7 +79,7 @@ struct ActivityModel : Codable, Hashable, Identifiable{
                 }
             }
         }
-
+        
         return erro
     }
     
@@ -203,17 +203,57 @@ struct ActivityModel : Codable, Hashable, Identifiable{
         return nil
     }
     
-    func delete() async -> Bool?{
-        if(self.id != nil){
-            // só é possível apagar atividade se voce for o criador
-            // se não for o criador então só se pode apagar a sua relação com a atividade
-            return await DatabaseInterface.shared.delete(id: self.id!, table: .activity)
+    func delete(complete: ActivityCompleteModel) async -> Bool? {
+        guard let activityID = self.id else {
+            print("ERRO AO TENTAR APAGAR ATIVIDADE - ActivityModel/delete")
+            return nil
         }
-        else{
-            print("ERRO AO CRIAR USUÁRIO - ActivityModel/delete")
+        
+        // Apaga todas as relações de usuários com a atividade
+        for user in complete.usersOfthisActivity {
+            _ = await DatabaseInterface.shared.delete(id: user.id, table: .activityUser)
         }
-        return nil
+        
+        // Apaga todas as relações de grupos com a atividade
+        for group in complete.groupsOfthisActivity {
+            if let id = group.id {
+                _ = await DatabaseInterface.shared.delete(id: id, table: .activityGroup)
+            }
+        }
+        // Apagar relações de imagem com atividade
+        for image in complete.images {
+            let relations : [ActivityImageModel] = await DatabaseInterface.shared.readDocuments(isEqualValue: image, table: .activityImage, field: "imageURL")
+            for relation in relations{
+                _ = await relation.delete()
+            }
+        }
+        // Apaga todas as imagens da atividade
+        for image in complete.images {
+            BucketOfImages.shared.deleteImage(url: image){ erro in
+                if erro != nil {
+                    print(erro as Any)
+                }
+            }
+        }
+        
+        // Apaga todas as reações associadas à atividade
+        for reaction in complete.reactions {
+            if let id = reaction.id {
+                _ = await DatabaseInterface.shared.delete(id: id, table: .reaction)
+            }
+        }
+        
+        // Apaga todos os comentários associados à atividade
+        for comment in complete.comments {
+            if let id = comment.id {
+                _ = await DatabaseInterface.shared.delete(id: id, table: .comment)
+            }
+        }
+        
+        // Por fim, apaga a atividade em si
+        return await DatabaseInterface.shared.delete(id: activityID, table: .activity)
     }
+    
     
     func read() async -> ActivityModel?{
         if(self.id != nil){

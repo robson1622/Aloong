@@ -41,7 +41,11 @@ struct UserModel:  Codable, Hashable{
             // apaga todas as reações do usuário
             // apaga as ligações com grupos
             //
-            return await DatabaseInterface.shared.delete(id: self.id, table: .user)
+            let deletedUser = UserModel(id: UUID().uuidString, name: "User deleted")
+            
+            if let _ = await DatabaseInterface.shared.update(model: deletedUser, id: self.id, table: .user){
+                print("Deletado com sucesso em UserModel/delete")
+            }
         }
         return nil
     }
