@@ -128,14 +128,23 @@ class UserController: ObservableObject{
         }
     }
     
-    func loadUser() -> UserModel?{
+    func loadUser() async -> UserModel?{
+        
+        
+        
         if let myUser = UserLocalSave().loadUser(){
             self.myUser = myUser
             _ = self.loadImage()
             _ = self.loadPoints()
-            return myUser
+            if let user : UserModel = await DatabaseInterface.shared.read(id: myUser.id, table: .user){
+                return myUser
+            }
+            else{
+                return nil
+            }
         }
         return nil
+        
     }
     
     private func loadPoints() -> Int?{

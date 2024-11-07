@@ -190,7 +190,12 @@ struct OnboardSignInView: View {
                             if let _ = await newUser.create() {
                                 controller.userController.myUser = newUser
                                 controller.userController.saveUser()
-                                ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
+                                if let group = await controller.groupController.readAllGroupsOfUser().first {
+                                    ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                                }
+                                else{
+                                    ViewsController.shared.navigateTo(to: .decisionCreateOrAloong, reset: true)
+                                }
                             }
                         }
 //                        if testVersion{

@@ -227,7 +227,7 @@ struct UserViewMyProfile: View {
         .background(.branco)
         .onAppear{
             user = usermodelexemple
-            if let savedUser = controller.userController.loadUser() {
+            if let savedUser = controller.userController.myUser {
                 user = savedUser
                 name = user?.name ?? ""
                 if let imagename = user?.userimage{

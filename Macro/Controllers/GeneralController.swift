@@ -28,7 +28,9 @@ class GeneralController: ObservableObject{
     
     
     func loadAllLists(idGroup : String) async{
-        _ = self.userController.loadUser()
+        if userController.myUser == nil{
+            _ = await self.userController.loadUser()
+        }
         await self.loadGroup(idGroup: idGroup)
         let listOfActivities = await activityController.readActivitiesOfGroup(idGroup: idGroup)
         for activity in listOfActivities{

@@ -75,18 +75,20 @@ struct ContentView: View {
                 }
                 else{
                     Task{
-                        if let group = self.controller.groupController.readMainGroupOfUser() {
-                            controller.groupController.saveLocalMainGroup(group: group)
-                            if let idGroup = group.id {
-                                await self.controller.loadAllLists(idGroup: idGroup)  // Carrega listas do controller
-                                ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                        if let _ = await controller.userController.loadUser() {
+                            if let group = self.controller.groupController.readMainGroupOfUser() {
+                                controller.groupController.saveLocalMainGroup(group: group)
+                                if let idGroup = group.id {
+                                    await self.controller.loadAllLists(idGroup: idGroup)  // Carrega listas do controller
+                                    ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                                }
                             }
-                        }
-                        else if let group = await self.controller.groupController.readAllGroupsOfUser().first {
-                            controller.groupController.saveLocalMainGroup(group: group)
-                            if let idGroup = group.id {
-                                await self.controller.loadAllLists(idGroup: idGroup)  // Carrega listas do controller
-                                ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                            else if let group = await self.controller.groupController.readAllGroupsOfUser().first {
+                                controller.groupController.saveLocalMainGroup(group: group)
+                                if let idGroup = group.id {
+                                    await self.controller.loadAllLists(idGroup: idGroup)  // Carrega listas do controller
+                                    ViewsController.shared.navigateTo(to: .group(group), reset: true)
+                                }
                             }
                         }
                         else{
