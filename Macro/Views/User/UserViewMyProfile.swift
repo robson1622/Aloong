@@ -164,12 +164,9 @@ struct UserViewMyProfile: View {
 //                        .padding(0)
                         
                         Button(action: {
-                            Task{
-                                if let _ = await controller.userController.myUser?.delete(){
-                                    UserLocalSave().deleteUser()
-                                    ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
-                                }
-                            }
+                            UserLocalSave().deleteUser()
+                            controller.groupController.deleteMainGroupOfUser()
+                            ViewsController.shared.navigateTo(to: .onboardingSignIn, reset: true)
                         }) {
                             HStack(alignment: .center, spacing: 4) {
                                 Spacer()

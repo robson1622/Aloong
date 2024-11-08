@@ -27,6 +27,10 @@ class GroupController: ObservableObject{
         }
     }
     
+    func deleteMainGroupOfUser(){
+        UserDefaults.standard.removeObject(forKey: keyLocalMainGroup)
+    }
+    
     func searchGroup(code : String) async -> [GroupModel]{
         return await DatabaseInterface.shared.readDocuments(isEqualValue: code, table: .group, field: invitationFieldName)
     }

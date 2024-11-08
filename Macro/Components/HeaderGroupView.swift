@@ -20,12 +20,9 @@ struct HeaderGroupView: View {
             Button(action:{
                 ViewsController.shared.navigateTo(to: .myProfile)
             }){
-                if let image = UserController.shared.myUser?.userimage {
-                    ImageLoader(url: image ,squere: false,largeImage: false)
-                }
-                
+                let image = UserController.shared.myUser?.userimage
+                ImageLoader(url: image ,squere: false,largeImage: false)
             }
-
         }
         .padding(.horizontal,24)
         .padding(.top,45)
