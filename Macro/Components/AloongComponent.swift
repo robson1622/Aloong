@@ -32,7 +32,7 @@ struct AloongComponent: View {
             }
             isActive.toggle()
         }){
-            AloongComponentImage(numberOfReactions: $numberOfReactions, isActive: $isActive, cardMode: cardMode)
+            ActivityButtonsComponnent(numberOfReactions: $numberOfReactions, isActive: $isActive, cardMode: cardMode)
         }
     }
     
@@ -77,10 +77,12 @@ struct AloongComponent: View {
     
 }
 
-struct AloongComponentImage : View{
+struct ActivityButtonsComponnent : View{
+    @Environment(\.colorScheme) var colorScheme
     @Binding var numberOfReactions : Int
     @Binding var isActive : Bool
     var cardMode : Bool = false
+    var share : Bool = false
     var body: some View{
         if cardMode{
             ZStack{
@@ -92,25 +94,37 @@ struct AloongComponentImage : View{
             }
         }
         else{
+            ActivityButton(numberOfReactions: numberOfReactions, isActive: isActive)
+        }
+    }
+}
+
+struct ActivityButton : View{
+    @Environment(\.colorScheme) var colorScheme
+    var numberOfReactions : Int = 0
+    var isActive : Bool = false
+    var share : Bool = false
+    var body: some View{
+        HStack{
             HStack{
-                HStack{
-                    Spacer()
-                    ZStack{
-                        Image(systemName: "hands.and.sparkles")
-                            .font(.callout)
-                            .foregroundColor(isActive ? .white : Color(.systemGray2))
-                    }
-                    .padding(.vertical,6)
-                    Spacer()
+                Spacer()
+                ZStack{
+                    Image(systemName: share ? "square.and.arrow.up" : "hands.and.sparkles")
+                        .font(.callout)
+                        .foregroundColor(.white)
                 }
-                .padding(.horizontal,4)
-                .background(Color.roxo3)
-                .cornerRadius(6)
-                
+                .padding(.vertical,6)
+                Spacer()
+            }
+            .padding(.horizontal,4)
+            .frame(height: 44)
+            .background(Color.roxo3)
+            .cornerRadius(6)
+            if !share{
                 ZStack{
                     Circle()
                         .frame(width: 24,height: 24)
-                        .foregroundColor(.branco)
+                        .foregroundColor( colorScheme == .dark ? .preto : .branco)
                     
                     Circle()
                         .frame(width: 20,height: 20)
@@ -124,6 +138,7 @@ struct AloongComponentImage : View{
                 .padding(.top, -25)
             }
         }
+        .padding(.trailing, share ? -8 : -12)
     }
 }
 

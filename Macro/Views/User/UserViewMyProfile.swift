@@ -242,10 +242,15 @@ struct UserViewMyProfile: View {
             if let savedUser = controller.userController.loadUser() {
                 user = savedUser
                 name = user?.name ?? ""
-                if let imagename = user?.userimage{
-                    BucketOfImages.shared.download(from: imagename){ response in
-                        image = response
-                    }
+            }
+            else if let myUser = controller.userController.myUser{
+                user = myUser
+                name = myUser.name
+            }
+            
+            if let imagename = user?.userimage{
+                BucketOfImages.shared.download(from: imagename){ response in
+                    image = response
                 }
             }
         }

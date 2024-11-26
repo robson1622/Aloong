@@ -9,8 +9,10 @@ import SwiftUI
 
 struct GroupViewDetails: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var controller : GeneralController
     @State var listOfPositions : [PointsOfUser]
     let group : GroupModel
+    @State var thisUserIsOwner : Bool
     @State var total : Int = 0
     @State var percent : Int = 0
     
@@ -27,140 +29,183 @@ struct GroupViewDetails: View {
     let copyCode : String = NSLocalizedString("Copy code :", comment: "texto do botão de copiar o código")
     let sucessText : String = NSLocalizedString("Sucess on copy", comment: "Texto que informa que o texto foi copiado com sucesso")
     let textForInvitation : String = NSLocalizedString("Use this code for aloong with my challenge :",comment: "Texto que vai ser enviado para os amigos com o código")
+    let editText : String = NSLocalizedString("Edit", comment: "Texto do botão de editar")
+    let showAllText : String = NSLocalizedString("Show all", comment: "Texto do botão de mostrar todos os detalhes")
+    let activeDaysText : String = NSLocalizedString("active days", comment: "Texto do titulo da view de details que mostra os detalhes do grupo")
     var body: some View {
         
         ZStack (alignment: .center){
-            VStack {
-                
-                VStack(spacing: 36){
+            ScrollView{
+                VStack {
                     
-                    VStack(spacing: 10){
-                        HStack(alignment: .center) {//seu desafio
-                            Text(group.title)
-                                .font(.degular22)
-                                .fontWeight(.medium)
+                    VStack(spacing: 36){
+                        
+                        VStack(spacing: 10){
+                            HStack(alignment: .center) {//seu desafio
+                                Text(group.title)
+                                    .font(.degular22)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.preto)
+                                Spacer()
+                                Image(systemName: "clock")
+                                    .foregroundStyle(Color(.preto))
+                                
+                                Text("\(lastDays) \(daysLeft)")
+                                    .foregroundStyle(Color(.preto))
+                            }
+                            Text(group.description)
+                                .font(.callout)
                                 .foregroundColor(.preto)
-                            Spacer()
-                            Image(systemName: "clock")
-                                .foregroundStyle(Color(.preto))
+                                .multilineTextAlignment(.leading)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            HStack{
+                                Button(action:{
+                                    UIPasteboard.general.string = group.invitationCode
+                                    sucessoncopy = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                        sucessoncopy = false
+                                    }
+                                }){
+                                    HStack{
+                                        Text("\(copyCode)")
+                                            .font(.body)
+                                            .foregroundColor(Color(.systemGray))
+                                        
+                                        Image(systemName: "document.on.document")
+                                            .font(.body)
+                                            .foregroundColor(.roxo3)
+                                        
+                                        Text("\(group.invitationCode ?? "")")
+                                            .font(.body)
+                                            .foregroundColor(.roxo3)
+                                        
+                                    }
+                                }
+                                Spacer()
+                            }
                             
-                            Text("\(lastDays) \(daysLeft)")
-                                .foregroundStyle(Color(.preto))
                         }
-                        Text(group.description)
-                            .font(.callout)
-                            .foregroundColor(.preto)
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top,24)
+                        
+                        VStack(spacing: 8){
+                            HStack{
+                                Text(ranking)
+                                    .font(.caption)
+                                    .foregroundColor(.cinza2)
+                                    .padding(.leading, 4)
+                                Spacer()
+                            }
+                            .padding(0)
+                            
+                            VStack(spacing:0){
+                                ForEach(listOfPositions.indices, id: \.self) { index in
+                                    HStack{
+                                        if (listOfPositions[index].position == 1){
+                                            Image("firstplace")
+                                                .resizable()
+                                                .frame(width: 29, height: 38)
+                                        }
+                                        else if (listOfPositions[index].position == 2){
+                                            Image("secondplace")
+                                                .resizable()
+                                                .frame(width: 29, height: 38)
+                                        }
+                                        else if (listOfPositions[index].position == 3){
+                                            Image("threeplace")
+                                                .resizable()
+                                                .frame(width: 29, height: 38)
+                                        }
+                                        else{
+                                            Text("\(listOfPositions[index].position)º")
+                                                .font(.body)
+                                                .foregroundColor(.preto)
+                                        }
+                                        HStack{
+                                            ImageLoader(url: listOfPositions[index].user.userimage, squere: false, largeImage: false, withEdge: false, noCropBorder: true)
+                                            Text("\(listOfPositions[index].user.name)")
+                                                .font(.body)
+                                                .foregroundColor( listOfPositions[index].user.id == controller.userController.myUser?.id ? .branco : .preto)
+                                            Spacer()
+                                            Text("\(listOfPositions[index].points) \(activeDaysText)")
+                                                .font(.body)
+                                                .foregroundColor( listOfPositions[index].user.id == controller.userController.myUser?.id ? .branco : .preto)
+                                                .padding(.trailing,16)
+                                        }
+                                        .background(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: listOfPositions[index].user.id == controller.userController.myUser?.id
+                                                                   ? [Color.roxo3.opacity(0.9), Color.roxo3.opacity(0.6)]
+                                                                   : [Color.branco, Color.branco]),
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
+                                        .cornerRadius(44)
+                                    }
+                                }
+                                
+                            }
+                            .cornerRadius(8)
+                            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8)
+                            
+                            Text(showAllText)
+                                .foregroundStyle(Color.roxo3)
+                        }
                         HStack{
                             Button(action:{
-                                UIPasteboard.general.string = group.invitationCode
-                                sucessoncopy = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                    sucessoncopy = false
-                                }
+                                showShare.toggle()
                             }){
                                 HStack{
-                                    Text("\(copyCode)")
+                                    Image(systemName: "square.and.arrow.up")
                                         .font(.body)
-                                        .foregroundColor(Color(.systemGray))
+                                        .foregroundColor(colorScheme == .dark ? .black : .white)
                                     
-                                    Image(systemName: "document.on.document")
+                                    Text(inviteFrindText)
                                         .font(.body)
-                                        .foregroundColor(.roxo3)
-                                    
-                                    Text("\(group.invitationCode ?? "")")
-                                        .font(.body)
-                                        .foregroundColor(.roxo3)
-                                    
+                                        .foregroundColor(colorScheme == .dark ? .black : .white)
                                 }
+                                .padding(.horizontal,20)
+                                .padding(.vertical,14)
+                                .background(Color(.roxo3))
+                                .cornerRadius(12)
+                                .padding(.top,35)
                             }
-                            Spacer()
+                            
+                            
+                        }
+                        Spacer()
+                        if sucessoncopy{
+                            Text(sucessText)
+                                .foregroundStyle(Color(.roxo3))
+                                .font(.callout)
+                                .italic()
+                                .padding(8)
+                                .background(Color(.roxo))
+                                .cornerRadius(10)
+                                .padding(.bottom,35)
                         }
                         
-                    }
-                    .padding(.top,24)
-                    
-                    VStack(spacing: 8){
-                        HStack{
-                            Text(ranking)
-                                .font(.caption)
-                                .foregroundColor(.cinza2)
-                                .padding(.leading, 4)
-                            Spacer()
-                        }
-                        .padding(0)
-                        
-                        VStack(spacing:0){
-                            ForEach(listOfPositions.indices, id: \.self) { index in
-                                HStack{
-                                    Text("\(index + 1)º   \(listOfPositions[index].user.name)")
-                                        .font(.body)
-                                        .foregroundColor(.preto)
-                                    Spacer()
-                                    Text("\(listOfPositions[index].points)")
-                                        .font(.body)
-                                        .foregroundColor(.cinza2)
-                                }
-                                .padding()
-                                .background(.branco)
-                                if(index != (listOfPositions.count-1)) {
-                                    Divider()
-                                        .padding(.leading, 16)
-                                }
-                            }
-                        }
-                        .cornerRadius(8)
-                        .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 8)
-                    }
-                    HStack{
-                        Button(action:{
-                            showShare.toggle()
-                        }){
-                            HStack{
-                                Image(systemName: "square.and.arrow.up")
-                                    .font(.body)
-                                    .foregroundColor(colorScheme == .dark ? .black : .white)
-                                
-                                Text(inviteFrindText)
-                                    .font(.body)
-                                    .foregroundColor(colorScheme == .dark ? .black : .white)
-                            }
-                            .padding(.horizontal,20)
-                            .padding(.vertical,14)
-                            .background(Color(.roxo3))
-                            .cornerRadius(12)
-                            .padding(.top,35)
-                        }
-                        
-                        
-                    }
-                    Spacer()
-                    if sucessoncopy{
-                        Text(sucessText)
-                            .foregroundStyle(Color(.roxo3))
-                            .font(.callout)
-                            .italic()
-                            .padding(8)
-                            .background(Color(.roxo))
-                            .cornerRadius(10)
-                            .padding(.bottom,35)
                     }
                     
+                    .padding(.horizontal,24)
                 }
-                
-                .padding(.horizontal,24)
+                .padding(.top,110)
+                .background(
+                    Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
+                )
             }
-            .padding(.top,110)
-            .background(
-                Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-            )
-            
             VStack{
-                Header(title: detailsOfGroupText,onTapBack: {} )
+                Header(title: detailsOfGroupText,trailing: [AnyView(
+                    Button(action:{
+                        
+                    }){
+                        Text(editText)
+                            .foregroundStyle( .roxo3)
+                    }
+                )], onTapBack: {})
                 Spacer()
             }
             
@@ -202,5 +247,5 @@ struct ShareSheet: UIViewControllerRepresentable {
     GroupViewDetails(listOfPositions: [PointsOfUser(user: usermodelexemple, points: 12,position: 1),
                                        PointsOfUser(user: usermodelexemple2, points: 8,position: 1),
                                        PointsOfUser(user: usermodelexemple3, points: 6,position: 2),
-                                       PointsOfUser(user: usermodelexemple4, points: 24,position: 3)], group: exempleGroup)
+                                       PointsOfUser(user: usermodelexemple4, points: 24,position: 3)], group: exempleGroup,thisUserIsOwner: false)
 }

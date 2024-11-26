@@ -89,8 +89,17 @@ struct ActivityView: View {
                     }
                     HStack{
                         if let indexAct = controller.activityCompleteList.firstIndex(where: {$0.activity?.id == activity.id}){
-                            AloongComponent(group: group, user: user, activity: activity,reactions:$controller.activityCompleteList[indexAct].reactions, numberOfReactions: $controller.activityCompleteList[indexAct].numberOfReactions, isActive: $controller.activityCompleteList[indexAct].thisUserReacted,cardMode: false)
-                                .environmentObject(controller)
+                            HStack(spacing: 20){
+                                AloongComponent(group: group, user: user, activity: activity,reactions:$controller.activityCompleteList[indexAct].reactions, numberOfReactions: $controller.activityCompleteList[indexAct].numberOfReactions, isActive: $controller.activityCompleteList[indexAct].thisUserReacted,cardMode: false)
+                                    .environmentObject(controller)
+                                if userOwner{
+                                    Button(action:{
+                                        
+                                    }){
+                                        ActivityButton(share: true)
+                                    }
+                                }
+                            }
                         }
                         
                         Spacer()
@@ -106,7 +115,9 @@ struct ActivityView: View {
                             }
                         }
                     }
-                    Spacer()
+                    Rectangle()
+                        .foregroundStyle(Color.clear)
+                        .frame(height: 60)
                     
                 }
                 .padding(.horizontal,24)

@@ -12,11 +12,12 @@ struct GroupScoreBoardView: View {
     let model : GroupModel
     @State var totalDays : Int = 0
     @State var lastDays : Int = 0
-    @State var first : PointsOfUser?
-    @State var second : PointsOfUser?
-    @State var third : PointsOfUser?
+    @Binding var first : PointsOfUser?
+    @Binding var second : PointsOfUser?
+    @Binding var third : PointsOfUser?
     
-    @State var you : PointsOfUser
+    @Binding var you : PointsOfUser?
+    let userPlaceHolde : PointsOfUser = PointsOfUser(user: usermodelexemple, points: 1, position: 1)
     
     let liderText : String = NSLocalizedString("Líder", comment: "Titulo da view de grupo que denota o lider")
     let youText : String = NSLocalizedString("You", comment: "Titulo da view de grupo que denota o lider")
@@ -39,14 +40,14 @@ struct GroupScoreBoardView: View {
                 
             }
             HStack(alignment:.bottom){
-                PlaceChallengerComponet(image: second?.user.userimage ?? you.user.userimage, positionImage: .second, name: second?.user.name ?? you.user.name)
-                PlaceChallengerComponet(image: first?.user.userimage ?? you.user.userimage, positionImage: .first, name: first?.user.name ?? you.user.name)
-                PlaceChallengerComponet(image: third?.user.userimage ?? you.user.userimage, positionImage: .third, name: third?.user.name ?? you.user.name)
+                PlaceChallengerComponet(image: second?.user.userimage ?? userPlaceHolde.user.userimage, positionImage: .second, name: second?.user.name ?? you?.user.name ?? userPlaceHolde.user.name)
+                PlaceChallengerComponet(image: first?.user.userimage ?? userPlaceHolde.user.userimage, positionImage: .first, name: first?.user.name ?? userPlaceHolde.user.name)
+                PlaceChallengerComponet(image: third?.user.userimage ?? userPlaceHolde.user.userimage, positionImage: .third, name: third?.user.name ?? userPlaceHolde.user.name)
             }
             .padding(.top,-16)
             
             HStack{
-                Text("\(yourposition) : \(you.position)°")
+                Text("\(yourposition) : \(you?.position ?? userPlaceHolde.position)°")
                     .fontWeight(.medium)
                     .foregroundStyle(Color(.branco))
                 Spacer()
@@ -97,11 +98,20 @@ struct PlaceChallengerComponet : View{
                 if let uiimage{
                     Image(uiImage: uiimage)
                         .resizable()
+                        .scaledToFill()
+                        .frame(width: positionImage == .first ? dimenssionFirst : dimenssionOthers , height: positionImage == .first ? dimenssionFirst : dimenssionOthers )
+                        .clipShape(Circle())
+                }
+                else{
+                    Image(uiImage: self.placeholderImage())
+                        .resizable()
+                        .scaledToFill()
                         .frame(width: positionImage == .first ? dimenssionFirst : dimenssionOthers , height: positionImage == .first ? dimenssionFirst : dimenssionOthers )
                         .clipShape(Circle())
                 }
                 Image(self.getImage())
                     .resizable()
+                    .scaledToFill()
                     .frame(width: positionImage == .first ? dimenssionMedalFirst[0] : dimenssionMedalOthers[0] ,height: positionImage == .first ? dimenssionMedalFirst[1] : dimenssionMedalOthers[1] )
                     .padding(.top,positionImage == .first ? dimenssionFirst/1.2 : dimenssionOthers/1.2)
                     .padding(.trailing,positionImage == .first ? dimenssionFirst/1.2 : dimenssionOthers/1.2)
@@ -117,9 +127,6 @@ struct PlaceChallengerComponet : View{
                 BucketOfImages.shared.download(from: image){ response in
                     if let response = response{
                         uiimage = response
-                    }
-                    else{
-                        uiimage = self.placeholderImage()
                     }
                 }
             }
@@ -154,5 +161,5 @@ struct PlaceChallengerComponet : View{
     //PlaceChallengerComponet(image: "plaveholderuserblue", positionImage: .first, name: "Fulano")
     
     
-    GroupScoreBoardView(model: exempleGroup, first: PointsOfUser(user: usermodelexemple, points: 3,position: 1), second: PointsOfUser(user: usermodelexemple2, points: 3,position: 2),third: PointsOfUser(user: usermodelexemple3, points: 3,position: 2), you: PointsOfUser(user: usermodelexemple4, points: 10,position: 3))
+    GroupScoreBoardView(model: exempleGroup, first: .constant(PointsOfUser(user: usermodelexemple, points: 3,position: 1)), second: .constant(PointsOfUser(user: usermodelexemple2, points: 3,position: 2)),third: .constant(PointsOfUser(user: usermodelexemple3, points: 3,position: 2)), you: .constant(PointsOfUser(user: usermodelexemple4, points: 10,position: 3)))
 }

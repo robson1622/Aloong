@@ -22,7 +22,7 @@ class ViewsController : ObservableObject{
         case editGroup(GroupModel)
         case aloongInGroup
         case decisionCreateOrAloong
-        case groupDetails([PointsOfUser],GroupModel)
+        case groupDetails([PointsOfUser],GroupModel,Bool)
         //atividade
         case createActivity(String,String,ActivityModel?)
         case activity(ActivityModel,UserModel,[UserModel],GroupModel,[ReactionModel],[String])

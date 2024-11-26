@@ -19,6 +19,7 @@ struct CommitView: View {
             
             Image(uiImage: uiimage ?? self.placeholderImage())
                 .resizable()
+                .scaledToFill()
                 .frame(width: 50, height: 50)
                 .clipShape(Circle())
                 

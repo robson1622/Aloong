@@ -17,7 +17,7 @@ struct UserModelNames {
 }
 
 //let aniversario = Date("2023-05-19 10:30:00 +0000")
-let usermodelexemple : UserModel = UserModel(id: "ebv7e128hdixnws", name: "brabs",email: "@mail.com",userimage: "/21e11c0e43f2ab517949d1834ef5e43f.jpg")
+let usermodelexemple : UserModel = UserModel(id: "ebv7e128hdixnws", name: "brabs",email: "@mail.com",userimage: nil)
 let usermodelexemple2 : UserModel = UserModel(id: "hew9829823giucgosa", name: "nico",email: "@mail.com",userimage: "/21e11c0e43f2ab517949d1834ef5e43f.jpg")
 let usermodelexemple3 : UserModel = UserModel(id: "dnvuudbvscw98yw-0", name: "robis",email: "@mail.com",userimage: "/21e11c0e43f2ab517949d1834ef5e43f.jpg")
 let usermodelexemple4 : UserModel = UserModel(id: "cnkjbsdg8y8quwh", name: "yan",email: "@mail.com",userimage: "/21e11c0e43f2ab517949d1834ef5e43f.jpg")

@@ -42,8 +42,8 @@ struct ContentView: View {
                 case .aloongInGroup:
                     AloongGroupView().navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
-                case .groupDetails(let listOfPoints, let group):
-                    GroupViewDetails(listOfPositions: listOfPoints,group:group).navigationBarBackButtonHidden(hide)
+                case .groupDetails(let listOfPoints, let group, let thisUserIsOwner):
+                    GroupViewDetails(listOfPositions: listOfPoints,group:group,thisUserIsOwner:thisUserIsOwner).navigationBarBackButtonHidden(hide)
                         .environmentObject(controller)
                     //activity part
                 case .activity(let activity, let user,let otherUser,let group,let reactions, let listImagesString):

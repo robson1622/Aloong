@@ -83,21 +83,17 @@
         }
       }
     },
-    "%lldº   %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lldº   %2$@"
-          }
-        }
-      }
+    "%lldº" : {
+
     },
     "1.2km" : {
 
     },
     "2.2K steps" : {
 
+    },
+    "active days" : {
+      "comment" : "Texto do titulo da view de details que mostra os detalhes do grupo"
     },
     "Active days" : {
       "comment" : "Texto que descreve os dias ativos da pessoa no seu perfil"
@@ -320,7 +316,7 @@
       "comment" : "Nome do desafio placeholder"
     },
     "Edit" : {
-      "comment" : "Texto do botão para editar a atividade"
+      "comment" : "Texto do botão de editar\nTexto do botão para editar a atividade"
     },
     "Email" : {
       "extractionState" : "manual",
@@ -576,6 +572,9 @@
           }
         }
       }
+    },
+    "Show all" : {
+      "comment" : "Texto do botão de mostrar todos os detalhes"
     },
     "Start date" : {
 

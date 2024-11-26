@@ -15,6 +15,7 @@ struct GroupView: View {
     @State var isGalleryPresented : Bool = false
     @State var image : UIImage?
     @State var showCamera : Bool = false
+    @State var thisUserIsOwner : Bool = false
     let model : GroupModel
     @State var totalDays : Int = 0
     @State var lastDays : Int = 0
@@ -26,6 +27,7 @@ struct GroupView: View {
     @State var thirdImage : UIImage?
     @State var you : PointsOfUser?
     @State var youImage : UIImage?
+    @State var myUser : UserModel?
     
     @State var showAlertInviteFriends : Bool = false
     @State var showSheetForShare : Bool = false
@@ -48,7 +50,7 @@ struct GroupView: View {
         ZStack (alignment: .center){//fundo
             ScrollView{
                 VStack(spacing: 24){ //vstack geral
-                    HeaderGroupView()
+                    HeaderGroupView(myUser:$myUser)
                         .padding(.top,16)
                     Button(action:{
                         if let pointsList = controller.statisticController.listOfPositionUser{
@@ -63,12 +65,9 @@ struct GroupView: View {
                             }
                         }
                     }){
-                        if let you = controller.statisticController.you{
-                            GroupScoreBoardView(model: model, totalDays: totalDays, lastDays: lastDays, first: first, second: second, third: third, you: you)
-                                .frame(width: 342, height: 231)
-                                .padding(.top,24)
-                        }
-                        
+                        GroupScoreBoardView(model: model, totalDays: totalDays, lastDays: lastDays, first: $first, second: $second, third: $third, you: $you)
+                            .frame(width: 342, height: 231)
+                            .padding(.top,24)
                     }
                     
                     
@@ -183,14 +182,19 @@ struct GroupView: View {
                 }
             }
         }
+        .onChange(of: controller.userController.myUser) { newvalue in
+            myUser = newvalue
+        }
         .refreshable {
             self.update()
         }
         .onAppear{
+            myUser = controller.userController.myUser
             self.update()
             if controller.activityCompleteList.count == 0 && self.showAlert(){
                 showAlertInviteFriends = true
             }
+            
         }
         .background(
             Image(colorScheme == .dark ? "background_dark" : "backgroundLacoVerde")
